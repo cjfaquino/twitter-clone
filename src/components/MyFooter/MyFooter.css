@@ -1,0 +1,29 @@
+:root {
+  --footer-size: 40px;
+}
+
+footer {
+  flex-shrink: 0;
+  height: var(--footer-size);
+  width: 100%;
+  background-color: rgb(45, 45, 45);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+footer a {
+  display: inline-block;
+  color: rgb(184, 184, 184);
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: white;
+}
+
+footer img {
+  height: 20px;
+}

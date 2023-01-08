@@ -7,7 +7,7 @@ function App() {
   const [isSignedIn, currentUser] = useAuthStateObserver();
 
   return (
-    <div className='App'>
+    <div className='app'>
       App
       <div>
         {currentUser && currentUser.displayName}
