@@ -1,28 +1,22 @@
 import React from 'react';
 import './App.css';
-import { signIn, signOutUser } from './firebase';
 import useAuthStateObserver from './utils/useAuthStateObserver';
+import LogInBanner from './components/LogInBanner';
+import MyNav from './components/MyNav';
 
 function App() {
   const [isSignedIn, currentUser] = useAuthStateObserver();
 
   return (
-    <div className='app'>
-      App
-      <div>
-        {currentUser && currentUser.displayName}
-
-        {!isSignedIn ? (
-          <button type='button' onClick={signIn}>
-            Sign In
-          </button>
-        ) : (
-          <button type='button' onClick={signOutUser}>
-            Log Out
-          </button>
-        )}
+    <>
+      <div className='app wrapper'>
+        <MyNav currentUser={currentUser} isSignedIn={isSignedIn} />
+        <div>Screen2</div>
+        <div>Screen3</div>
       </div>
-    </div>
+
+      {!isSignedIn && <LogInBanner isSignedIn={isSignedIn} />}
+    </>
   );
 }
 
