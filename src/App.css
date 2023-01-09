@@ -1,10 +1,17 @@
+:root {
+  --login-banner-size: 70px;
+  --menubar-width: 300px;
+  --feed-width: 600px;
+  --sidebar-width: 300px;
+}
+
 #root {
   position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
-  width: 100%;
+  min-height: 100vh;
+  min-width: 100vw;
 }
 
 .wrapper {
@@ -19,13 +26,32 @@
   display: flex;
 }
 
-nav {
-  width: 300px;
-  background-color: grey;
-  display: fixed;
+/* login banner */
+#login-banner {
+  background-color: blue;
+  position: fixed;
+  width: 100%;
+  bottom: var(--footer-size);
 }
 
-nav ul {
+#login-banner ul {
+  display: flex;
+  height: var(--login-banner-size);
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+/* MyNav */
+
+#menubar {
+  height: calc(100vh - var(--footer-size));
+  position: fixed;
+  width: var(--menubar-width);
+  border: 1px solid white;
+}
+
+#menubar ul {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -36,14 +62,21 @@ nav ul {
   margin-bottom: 0;
 }
 
-/* login banner */
-#login-banner {
-  background-color: blue;
+/* Feed */
+
+#feed {
+  margin-left: var(--menubar-width);
+  width: var(--feed-width);
+  border: 1px solid white;
+  margin-bottom: calc(var(--footer-size));
 }
 
-#login-banner ul {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 30px;
+/* MySidebar */
+
+#sidebar {
+  width: var(--sidebar-width);
+  margin-left: calc(var(--menubar-width) + var(--feed-width));
+  border: 1px solid white;
+  height: calc(100vh - var(--footer-size));
+  position: fixed;
 }
