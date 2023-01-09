@@ -19,7 +19,7 @@ function MyNav({ isSignedIn, currentUser }) {
   };
 
   return (
-    <nav>
+    <nav id='options'>
       <ul>
         <li>stuff</li>
         <li>

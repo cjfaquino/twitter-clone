@@ -3,6 +3,7 @@ import './App.css';
 import useAuthStateObserver from './utils/useAuthStateObserver';
 import LogInBanner from './components/LogInBanner';
 import MyNav from './components/MyNav';
+import Feed from './components/Feed';
 
 function App() {
   const [isSignedIn, currentUser] = useAuthStateObserver();
@@ -11,7 +12,7 @@ function App() {
     <>
       <div className='app wrapper'>
         <MyNav currentUser={currentUser} isSignedIn={isSignedIn} />
-        <div>Screen2</div>
+        <Feed />
         <div>Screen3</div>
       </div>
 
