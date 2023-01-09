@@ -1,12 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { signOutUser } from '../firebase';
+import { signOutUser, saveTweet } from '../firebase';
 
 function MyNav({ isSignedIn, currentUser }) {
+  const [tweetInput, setTweetInput] = useState('');
+
+  const handleInput = (e) => {
+    setTweetInput(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    saveTweet(tweetInput).then((success) => {
+      if (success) {
+        setTweetInput('');
+      }
+    });
+  };
+
   return (
     <nav>
       <ul>
         <li>stuff</li>
+        <li>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor='tweet'>
+              <input
+                type='text'
+                name='tweet'
+                id='tweet'
+                onChange={handleInput}
+                value={tweetInput}
+                maxLength='50'
+              />
+            </label>
+            <button type='submit'>Tweet</button>
+          </form>
+        </li>
         <li className='nav-user'>{currentUser && currentUser.displayName}</li>
         {isSignedIn && (
           <li>
