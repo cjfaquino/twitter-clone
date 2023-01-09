@@ -4,7 +4,7 @@ import {
   getAuth,
   signOut,
 } from 'firebase/auth';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 
 import { db } from './firebase-config';
 
@@ -37,10 +37,12 @@ function isUserSignedIn() {
 
 // Save all tweets to tweets doc
 export const saveTweet = async (messageText, setPrivacy = false) => {
+  const uid = crypto.randomUUID();
   try {
-    await addDoc(collection(db, 'tweets'), {
+    await setDoc(doc(db, 'tweets', uid), {
+      uidTweet: uid,
+      uidUser: getUserUid(),
       name: getDisplayName(),
-      uid: getUserUid(),
       text: messageText,
       profilePicUrl: getProfilePicUrl(),
       timestamp: serverTimestamp(),

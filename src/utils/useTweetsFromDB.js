@@ -24,7 +24,7 @@ function useTweetsFromDB() {
       querySnapshot.forEach((dc) => {
         // doc.data() is never undefined for query doc snapshots
         // load all tweets at runtime
-        setTweets((arr) => [...arr, { data: dc.data(), id: dc.id }]);
+        setTweets((arr) => [...arr, dc.data()]);
       });
       setLoading(false);
     })();
@@ -37,8 +37,7 @@ function useTweetsFromDB() {
         } else if (change.type === 'modified') {
           // display new tweet when sent to firestore
           const tweet = change.doc.data();
-          const docID = change.doc.id;
-          setTweets((arr) => [{ data: tweet, id: docID }, ...arr]);
+          setTweets((arr) => [tweet, ...arr]);
         }
       });
     });

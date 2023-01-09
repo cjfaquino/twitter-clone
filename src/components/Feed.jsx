@@ -9,9 +9,7 @@ function Feed() {
       <div>search bar</div>
       <div>
         {tweets.map((twt) => {
-          const {
-            data: { text, name, timestamp },
-          } = twt;
+          const { text, name, timestamp } = twt;
           return (
             <div>
               <div>{name}</div>
