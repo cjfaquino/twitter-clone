@@ -62,7 +62,7 @@
   margin-bottom: 0;
 }
 
-/* Feed */
+/* Center column */
 
 #feed {
   margin-left: var(--menubar-width);
@@ -81,9 +81,10 @@
   position: fixed;
 }
 
-/* Tweet item */
+/* Tweet item  & reply item*/
 
-.tweet-item {
+.tweet-item,
+.reply-item {
   --pfp-size: 50px;
   box-sizing: border-box;
   width: 100%;
@@ -94,7 +95,8 @@
   gap: 10px;
 }
 
-.tweet-item-img-container {
+.tweet-item-img-container,
+.reply-item-img-container {
   width: var(--pfp-size);
   height: var(--pfp-size);
   overflow: hidden;
@@ -103,40 +105,50 @@
   background-color: white;
 }
 
-.tweet-item-img-container img {
+.tweet-item-img-container img,
+.reply-item-img-container img {
   height: 100%;
   width: 100%;
 }
 
-.tweet-item-right-half {
+.tweet-item-right-half,
+.reply-item-right-half {
   width: 100%;
 }
 
-.tweet-item-info {
+.tweet-item-info,
+.reply-item-info {
   display: flex;
   gap: 10px;
 }
 
 .tweet-item-name,
-.tweet-item-time {
+.tweet-item-time,
+.reply-item-name,
+.reply-item-time {
   border-bottom: 1px solid transparent;
 }
 
 .tweet-item-name:hover,
-.tweet-item-time:hover {
+.tweet-item-time:hover,
+.reply-item-name:hover,
+.reply-item-time:hover {
   border-color: grey;
   transition: border-color 0.3s ease-in-out;
 }
 
-.tweet-item-name {
+.tweet-item-name,
+.reply-item-name {
   font-weight: 600;
 }
 
-.tweet-item-time {
+.tweet-item-time,
+.reply-item-time {
   color: grey;
 }
 
-.tweet-item-buttons {
+.tweet-item-buttons,
+.reply-item-buttons {
   height: 35px;
   display: flex;
   margin-right: 150px;

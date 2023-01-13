@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { deleteTweet, saveReply } from '../firebase';
 import Replies from './Replies';
 import useReplies from '../utils/useReplies';
@@ -14,7 +15,12 @@ function TweetItem({ tweetObj }) {
   };
 
   return (
-    <div className='tweet-item' id={uidTweet}>
+    <Link
+      to={`/tweet/${uidTweet}`}
+      state={{ tweetObj }}
+      className='tweet-item'
+      id={uidTweet}
+    >
       <div className='tweet-item-img-container'>
         <img src={profilePicUrl} alt={name} />
       </div>
@@ -39,9 +45,9 @@ function TweetItem({ tweetObj }) {
         <button type='button' onClick={handleDelete}>
           Delete
         </button>
-        <Replies replies={replies} uidTweet={uidTweet} />
+        {/* <Replies replies={replies} uidTweet={uidTweet} /> */}
       </div>
-    </div>
+    </Link>
   );
 }
 
