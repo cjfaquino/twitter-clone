@@ -1,16 +1,10 @@
 import { useEffect, useState } from 'react';
-import {
-  collection,
-  query,
-  getDocs,
-  orderBy,
-  onSnapshot,
-} from 'firebase/firestore';
+import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase-config';
 
 function useReplies(tweetID) {
   const [replies, setReplies] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [allRepliesLoading, setAllRepliesLoading] = useState(true);
   const [length, setLength] = useState(0);
 
   // Delete a Message from the UI.
@@ -22,21 +16,22 @@ function useReplies(tweetID) {
     }
   };
 
+  const updateReplyFromDOM = (id, newTime) => {
+    const replyDOM = document.getElementById(id);
+    const timeDOM = replyDOM.querySelector('.reply-item-time');
+
+    // If an element for that message exists we update it.
+    if (replyDOM) {
+      timeDOM.textContent = newTime.toDate().toLocaleDateString();
+    }
+  };
+
   useEffect(() => {
-    setLoading(true);
+    setAllRepliesLoading(true);
     const replyQuery = query(
       collection(db, 'tweets', tweetID, 'replies'),
-      orderBy('timestamp', 'desc')
+      orderBy('timestamp', 'asc')
     );
-
-    getDocs(replyQuery)
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          setReplies((arr) => [...arr, doc.data()]);
-        });
-      })
-      .catch((e) => console.log(e))
-      .finally(() => setLoading(false));
 
     // Start listening to the query for updates.
     const unsub = onSnapshot(replyQuery, (snapshot) => {
@@ -47,10 +42,15 @@ function useReplies(tweetID) {
           // delete message
           deleteReplyFromDOM(reply.uidReply);
         } else if (change.type === 'modified') {
+          // update message when serverTimestamp finishes
+          updateReplyFromDOM(reply.uidReply, reply.timestamp);
+        } else if (change.type === 'added') {
           // add new tweet
           setReplies((arr) => [reply, ...arr]);
         }
       });
+      // after initial loading of all replies only
+      setAllRepliesLoading(false);
     });
 
     return () => {
@@ -58,7 +58,7 @@ function useReplies(tweetID) {
     };
   }, []);
 
-  return [replies, length, loading];
+  return [replies, length, allRepliesLoading];
 }
 
 export default useReplies;

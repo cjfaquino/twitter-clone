@@ -1,16 +1,10 @@
 import { useEffect, useState } from 'react';
-import {
-  collection,
-  query,
-  getDocs,
-  orderBy,
-  onSnapshot,
-} from 'firebase/firestore';
+import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase-config';
 
 function useTweetsFromDB() {
   const [tweets, setTweets] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [allTweetsLoading, setAllTweetsLoading] = useState(null);
 
   // Delete a Message from the UI.
   const deleteTweetFromDOM = (id) => {
@@ -21,20 +15,22 @@ function useTweetsFromDB() {
     }
   };
 
+  const updateReplyFromDOM = (id, newTime) => {
+    const tweetDOM = document.getElementById(id);
+    const timeDOM = tweetDOM.querySelector('.tweet-item-time');
+
+    // If an element for that message exists we update it.
+    if (tweetDOM) {
+      timeDOM.textContent = newTime.toDate().toLocaleDateString();
+    }
+  };
+
   useEffect(() => {
-    setLoading(true);
+    setAllTweetsLoading(true);
     const tweetQuery = query(
       collection(db, 'tweets'),
-      orderBy('timestamp', 'desc')
+      orderBy('timestamp', 'asc')
     );
-
-    getDocs(tweetQuery)
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          setTweets((arr) => [...arr, doc.data()]);
-        });
-      })
-      .finally(() => setLoading(false));
 
     // Start listening to the query for updates.
     const unsub = onSnapshot(tweetQuery, (snapshot) => {
@@ -45,10 +41,15 @@ function useTweetsFromDB() {
           // delete message
           deleteTweetFromDOM(tweet.uidTweet);
         } else if (change.type === 'modified') {
+          // update message when serverTimestamp finishes
+          updateReplyFromDOM(tweet.uidTweet, tweet.timestamp);
+        } else if (change.type === 'added') {
           // add new tweet
           setTweets((arr) => [tweet, ...arr]);
         }
       });
+      // after inital loading of all tweets only
+      setAllTweetsLoading(false);
     });
 
     return () => {
@@ -56,7 +57,7 @@ function useTweetsFromDB() {
     };
   }, []);
 
-  return [tweets, loading];
+  return [tweets, allTweetsLoading];
 }
 
 export default useTweetsFromDB;

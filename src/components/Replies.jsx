@@ -20,7 +20,7 @@ function Replies({ replies, uidTweet }) {
         <input type='text' value={replyMessage} onChange={handleReplyInput} />
       </form>
       {replies.map((reply) => (
-        <ReplyItem replyObj={reply} uidTweet={uidTweet} />
+        <ReplyItem key={reply.uidReply} replyObj={reply} uidTweet={uidTweet} />
       ))}
     </div>
   );

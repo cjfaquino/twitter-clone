@@ -6,13 +6,13 @@ import useReplies from '../utils/useReplies';
 function TweetItem({ tweetObj }) {
   const [replyMessage, setReplyMessage] = useState('');
   const { text, name, timestamp, profilePicUrl, uidTweet } = tweetObj;
-  const [replies, repliesLength, isRepliesLoading] = useReplies(uidTweet);
+  const [replies, repliesLength, isAllRepliesLoading] = useReplies(uidTweet);
 
   const handleDelete = () => {
     // delete from DB
     deleteTweet(uidTweet);
   };
-  console.log(repliesLength);
+
   return (
     <div className='tweet-item' id={uidTweet}>
       <div className='tweet-item-img-container'>
