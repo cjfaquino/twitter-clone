@@ -1,8 +1,12 @@
-import React from 'react';
-import { deleteTweet } from '../firebase';
+import React, { useState } from 'react';
+import { deleteTweet, saveReply } from '../firebase';
+import Replies from './Replies';
+import useReplies from '../utils/useReplies';
 
 function TweetItem({ tweetObj }) {
+  const [replyMessage, setReplyMessage] = useState('');
   const { text, name, timestamp, profilePicUrl, uidTweet } = tweetObj;
+  const [replies, isRepliesLoading] = useReplies(uidTweet);
 
   const handleDelete = () => {
     // delete from DB
@@ -27,12 +31,15 @@ function TweetItem({ tweetObj }) {
         </div>
         <div className='tweet-item-message'>{text}</div>
         <div className='tweet-item-buttons'>
-          <span>stats</span> <span>retweet</span> <span>like</span>{' '}
-          <span>share</span>
+          <span>stats</span>{' '}
+          <span>reply {replies.length > 0 && replies.length}</span>
+          <span>retweet</span> <span>like</span> <span>share</span>
         </div>
+
         <button type='button' onClick={handleDelete}>
           Delete
         </button>
+        <Replies replies={replies} uidTweet={uidTweet} />
       </div>
     </div>
   );
