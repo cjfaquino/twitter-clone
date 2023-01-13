@@ -4,7 +4,7 @@ import {
   getAuth,
   signOut,
 } from 'firebase/auth';
-import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, setDoc, deleteDoc, serverTimestamp } from 'firebase/firestore';
 
 import { db } from './firebase-config';
 
@@ -52,5 +52,15 @@ export const saveTweet = async (messageText, setPrivacy = false) => {
   } catch (error) {
     console.error('Error writing new message to Firebase Database', error);
     return false;
+  }
+};
+
+// delete tweet by tweet uid from firestore
+export const deleteTweet = async (tweetID) => {
+  const tweet = doc(db, 'tweets', tweetID);
+  try {
+    await deleteDoc(tweet);
+  } catch (error) {
+    console.error('Error deleting message from Firebase Database', error);
   }
 };

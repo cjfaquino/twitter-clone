@@ -1,10 +1,16 @@
 import React from 'react';
+import { deleteTweet } from '../firebase';
 
 function TweetItem({ tweetObj }) {
-  const { text, name, timestamp, profilePicUrl } = tweetObj;
-  console.log(profilePicUrl);
+  const { text, name, timestamp, profilePicUrl, uidTweet } = tweetObj;
+
+  const handleDelete = () => {
+    // delete from DB
+    deleteTweet(uidTweet);
+  };
+
   return (
-    <div className='tweet-item'>
+    <div className='tweet-item' id={uidTweet}>
       <div className='tweet-item-img-container'>
         <img src={profilePicUrl} alt={name} />
       </div>
@@ -14,7 +20,7 @@ function TweetItem({ tweetObj }) {
           <div className='tweet-item-name'>{name}</div>
           <div
             className='tweet-item-time'
-            title={timestamp.toDate().toLocaleString()}
+            title={timestamp && timestamp.toDate().toLocaleString()}
           >
             {timestamp && timestamp.toDate().toLocaleDateString()}
           </div>
@@ -24,6 +30,9 @@ function TweetItem({ tweetObj }) {
           <span>stats</span> <span>retweet</span> <span>like</span>{' '}
           <span>share</span>
         </div>
+        <button type='button' onClick={handleDelete}>
+          Delete
+        </button>
       </div>
     </div>
   );
