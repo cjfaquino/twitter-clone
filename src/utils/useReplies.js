@@ -11,6 +11,7 @@ import { db } from '../firebase-config';
 function useReplies(tweetID) {
   const [replies, setReplies] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [length, setLength] = useState(0);
 
   // Delete a Message from the UI.
   const deleteReplyFromDOM = (id) => {
@@ -41,10 +42,10 @@ function useReplies(tweetID) {
     const unsub = onSnapshot(replyQuery, (snapshot) => {
       snapshot.docChanges().forEach((change) => {
         const reply = change.doc.data();
-
+        setLength(snapshot.size);
         if (change.type === 'removed') {
           // delete message
-          deleteReplyFromDOM(reply.uidTweet);
+          deleteReplyFromDOM(reply.uidReply);
         } else if (change.type === 'modified') {
           // add new tweet
           setReplies((arr) => [reply, ...arr]);
@@ -57,7 +58,7 @@ function useReplies(tweetID) {
     };
   }, []);
 
-  return [replies, loading];
+  return [replies, length, loading];
 }
 
 export default useReplies;

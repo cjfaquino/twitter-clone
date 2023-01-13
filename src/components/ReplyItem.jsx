@@ -1,7 +1,12 @@
 import React from 'react';
+import { deleteReply } from '../firebase';
 
-function ReplyItem({ replyObj }) {
+function ReplyItem({ replyObj, uidTweet }) {
   const { name, text, profilePicUrl, timestamp, uidReply } = replyObj;
+
+  const handleDelete = () => {
+    deleteReply(uidTweet, uidReply);
+  };
 
   return (
     <div className='reply-item' id={uidReply}>
@@ -21,11 +26,11 @@ function ReplyItem({ replyObj }) {
         </div>
         <div className='reply-item-message'>{text}</div>
         <div className='reply-item-buttons'>
-          <span>stats</span> <span>retweet</span> <span>like</span>{' '}
+          <span>stats</span> <span>retweet</span> <span>like</span>
           <span>share</span>
         </div>
 
-        <button type='button' onClick=''>
+        <button type='button' onClick={handleDelete}>
           Delete
         </button>
       </div>

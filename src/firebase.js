@@ -83,3 +83,13 @@ export const saveReply = async (tweetID, messageText) => {
     return false;
   }
 };
+
+// delete reply by tweet id & reply id from firestore
+export const deleteReply = async (tweetID, replyID) => {
+  const reply = doc(db, 'tweets', tweetID, 'replies', replyID);
+  try {
+    await deleteDoc(reply);
+  } catch (error) {
+    console.error('Error deleting message from Firebase Database', error);
+  }
+};

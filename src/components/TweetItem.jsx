@@ -6,13 +6,13 @@ import useReplies from '../utils/useReplies';
 function TweetItem({ tweetObj }) {
   const [replyMessage, setReplyMessage] = useState('');
   const { text, name, timestamp, profilePicUrl, uidTweet } = tweetObj;
-  const [replies, isRepliesLoading] = useReplies(uidTweet);
+  const [replies, repliesLength, isRepliesLoading] = useReplies(uidTweet);
 
   const handleDelete = () => {
     // delete from DB
     deleteTweet(uidTweet);
   };
-
+  console.log(repliesLength);
   return (
     <div className='tweet-item' id={uidTweet}>
       <div className='tweet-item-img-container'>
@@ -32,7 +32,7 @@ function TweetItem({ tweetObj }) {
         <div className='tweet-item-message'>{text}</div>
         <div className='tweet-item-buttons'>
           <span>stats</span>{' '}
-          <span>reply {replies.length > 0 && replies.length}</span>
+          <span>reply {repliesLength > 0 && repliesLength}</span>
           <span>retweet</span> <span>like</span> <span>share</span>
         </div>
 
