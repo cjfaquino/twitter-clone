@@ -46,7 +46,7 @@ function useReplies(tweetID) {
           updateReplyFromDOM(reply.uidReply, reply.timestamp);
         } else if (change.type === 'added') {
           // add new tweet
-          setReplies((arr) => [reply, ...arr]);
+          setReplies((arr) => [...arr, reply]);
         }
       });
       // after initial loading of all replies only
