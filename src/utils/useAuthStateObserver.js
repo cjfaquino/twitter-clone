@@ -4,6 +4,7 @@ import { onAuthStateChanged, getAuth } from 'firebase/auth';
 function useAuthStateObserver() {
   const [isSignedIn, setIsSignedIn] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const authStateObserver = (user) => {
     if (user) {
@@ -27,6 +28,12 @@ function useAuthStateObserver() {
 
     return () => {};
   }, []);
+
+  useEffect(() => {
+    if (currentUser) {
+      setLoading(true);
+    }
+  }, [currentUser]);
 
   return [isSignedIn, currentUser];
 }

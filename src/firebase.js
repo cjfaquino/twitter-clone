@@ -21,17 +21,17 @@ export const signOutUser = () => {
 };
 
 // Returns the signed-in user's profile Pic URL.
-const getProfilePicUrl = () =>
+export const getProfilePicUrl = () =>
   getAuth().currentUser.photoURL || 'add placeholder img here';
 
 // Returns the signed-in user's display name.
-const getDisplayName = () => getAuth().currentUser.displayName;
+export const getDisplayName = () => getAuth().currentUser.displayName;
 
 // Returns the signed-in user's display name.
 const getUserUid = () => getAuth().currentUser.uid;
 
 // Returns true if a user is signed-in.
-function isUserSignedIn() {
+export function isUserSignedIn() {
   return !!getAuth().currentUser;
 }
 

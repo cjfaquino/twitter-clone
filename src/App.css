@@ -6,6 +6,10 @@
   --pfp-size: 50px;
 }
 
+input:focus {
+  outline: none;
+}
+
 #root {
   position: absolute;
   display: flex;
@@ -85,7 +89,8 @@
 /* Tweet item  & reply item & main tweet item*/
 
 .tweet-item,
-.reply-item {
+.reply-item,
+.reply-input-container {
   box-sizing: border-box;
   width: 100%;
   border: 1px solid red;
@@ -97,7 +102,8 @@
 
 .tweet-item-img-container,
 .reply-item-img-container,
-.main-tweet-item-img-container {
+.main-tweet-item-img-container,
+.reply-input-img-container {
   width: var(--pfp-size);
   height: var(--pfp-size);
   aspect-ratio: 1 / 1;
@@ -109,7 +115,8 @@
 
 .tweet-item-img-container img,
 .reply-item-img-container img,
-.main-tweet-item-img-container img {
+.main-tweet-item-img-container img,
+.reply-input-img-container img {
   height: 100%;
   width: 100%;
 }
@@ -187,4 +194,32 @@
   display: flex;
   justify-content: space-between;
   padding: 0 60px;
+}
+
+/* inputs */
+
+.reply-input-container {
+  align-items: center;
+  gap: 0;
+}
+
+.reply-input-img-container {
+  align-self: flex-start;
+}
+
+.reply-input {
+  box-sizing: border-box;
+  padding: 10px;
+  width: 100%;
+  min-height: 45px;
+  font-size: 1.3rem;
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  resize: none;
+}
+
+.reply-input:focus {
+  outline: 1px solid white;
 }
