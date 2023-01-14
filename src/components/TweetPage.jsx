@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { Timestamp } from 'firebase/firestore';
-import TweetItem from './TweetItem';
 import Replies from './Replies';
+import MainTweet from './MainTweet';
 import useOneTweet from '../utils/useOneTweet';
+import useReplies from '../utils/useReplies';
 
 function TweetPage() {
   const location = useLocation();
   const params = useParams();
   const [tweet, setTweet, isTweetLoading] = useOneTweet(params.tweet);
+  const [replies, repLength, allRepliesLoading] = useReplies(params.tweet);
 
   useEffect(() => {
     if (location.state !== null && !tweet) {
@@ -32,8 +34,9 @@ function TweetPage() {
 
   return (
     <div id='feed'>
-      TweetPage
-      <div>{tweet && tweet.text}</div>
+      <div>TweetPage</div>
+      <MainTweet tweetObj={tweet} repLength={repLength} />
+      <Replies replies={replies} uidTweet={params.tweet} />
     </div>
   );
 }

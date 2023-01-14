@@ -3,6 +3,7 @@
   --menubar-width: 300px;
   --feed-width: 600px;
   --sidebar-width: 300px;
+  --pfp-size: 50px;
 }
 
 #root {
@@ -81,11 +82,10 @@
   position: fixed;
 }
 
-/* Tweet item  & reply item*/
+/* Tweet item  & reply item & main tweet item*/
 
 .tweet-item,
 .reply-item {
-  --pfp-size: 50px;
   box-sizing: border-box;
   width: 100%;
   border: 1px solid red;
@@ -96,9 +96,11 @@
 }
 
 .tweet-item-img-container,
-.reply-item-img-container {
+.reply-item-img-container,
+.main-tweet-item-img-container {
   width: var(--pfp-size);
   height: var(--pfp-size);
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   border-radius: 50%;
   flex-shrink: 0;
@@ -106,7 +108,8 @@
 }
 
 .tweet-item-img-container img,
-.reply-item-img-container img {
+.reply-item-img-container img,
+.main-tweet-item-img-container img {
   height: 100%;
   width: 100%;
 }
@@ -122,28 +125,27 @@
   gap: 10px;
 }
 
-.tweet-item-name,
-.tweet-item-time,
-.reply-item-name,
-.reply-item-time {
-  border-bottom: 1px solid transparent;
-}
-
 .tweet-item-name:hover,
 .tweet-item-time:hover,
 .reply-item-name:hover,
-.reply-item-time:hover {
-  border-color: grey;
-  transition: border-color 0.3s ease-in-out;
+.reply-item-time:hover,
+.main-tweet-item-time:hover,
+.main-tweet-item-name:hover {
+  text-decoration: underline;
 }
 
 .tweet-item-name,
-.reply-item-name {
+.reply-item-name,
+.main-tweet-item-name {
   font-weight: 600;
 }
 
 .tweet-item-time,
-.reply-item-time {
+.reply-item-time,
+.main-tweet-item-time,
+.tweet-item-buttons,
+.reply-item-buttons,
+.main-tweet-item-buttons {
   color: grey;
 }
 
@@ -154,4 +156,35 @@
   margin-right: 150px;
   justify-content: space-between;
   align-items: flex-end;
+}
+
+/* main tweet */
+
+#main-tweet-container {
+  min-height: 180px;
+  padding: 15px;
+}
+
+.main-tweet-item-user {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  height: 50px;
+  margin-bottom: 25px;
+}
+
+.main-tweet-item-user button {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.main-tweet-item-message {
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.main-tweet-item-buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 60px;
 }

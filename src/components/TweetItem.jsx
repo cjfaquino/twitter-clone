@@ -6,8 +6,9 @@ import useReplies from '../utils/useReplies';
 
 function TweetItem({ tweetObj }) {
   const [replyMessage, setReplyMessage] = useState('');
+
   const { text, name, timestamp, profilePicUrl, uidTweet } = tweetObj;
-  const [, repLength] = useReplies(uidTweet);
+  const [replies, repLength] = useReplies(uidTweet);
 
   const handleDelete = () => {
     // delete from DB
@@ -17,7 +18,7 @@ function TweetItem({ tweetObj }) {
   return (
     <Link
       to={`/tweet/${uidTweet}`}
-      state={{ tweetObj }}
+      state={{ tweetObj, replies }}
       className='tweet-item'
       id={uidTweet}
     >

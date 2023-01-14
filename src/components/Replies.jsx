@@ -39,7 +39,7 @@ Replies.propTypes = {
       uidReply: PropTypes.string,
     })
   ),
-  uidTweet: PropTypes.string.isRequired,
+  uidTweet: PropTypes.string,
 };
 
 Replies.defaultProps = {
