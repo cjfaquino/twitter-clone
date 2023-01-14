@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { deleteReply } from '../firebase';
 
 function ReplyItem({ replyObj, uidTweet }) {
@@ -19,9 +20,15 @@ function ReplyItem({ replyObj, uidTweet }) {
           <div className='reply-item-name'>{name}</div>
           <div
             className='reply-item-time'
-            title={timestamp && timestamp.toDate().toLocaleString()}
+            title={
+              timestamp
+                ? timestamp.toDate().toLocaleString()
+                : new Date().toLocaleString()
+            }
           >
-            {timestamp && timestamp.toDate().toLocaleDateString()}
+            {timestamp
+              ? timestamp.toDate().toLocaleDateString()
+              : new Date().toLocaleDateString()}
           </div>
         </div>
         <div className='reply-item-message'>{text}</div>
@@ -37,5 +44,18 @@ function ReplyItem({ replyObj, uidTweet }) {
     </div>
   );
 }
+
+ReplyItem.propTypes = {
+  replyObj: PropTypes.shape({
+    text: PropTypes.string,
+    name: PropTypes.string,
+    timestamp: PropTypes.shape({
+      toDate: PropTypes.func,
+    }),
+    profilePicUrl: PropTypes.string,
+    uidReply: PropTypes.string,
+  }).isRequired,
+  uidTweet: PropTypes.string.isRequired,
+};
 
 export default ReplyItem;

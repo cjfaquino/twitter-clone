@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { deleteTweet, saveReply } from '../firebase';
-import Replies from './Replies';
 import useReplies from '../utils/useReplies';
 
 function TweetItem({ tweetObj }) {
   const [replyMessage, setReplyMessage] = useState('');
   const { text, name, timestamp, profilePicUrl, uidTweet } = tweetObj;
-  const [replies, repliesLength, isAllRepliesLoading] = useReplies(uidTweet);
+  const [, repLength] = useReplies(uidTweet);
 
   const handleDelete = () => {
     // delete from DB
@@ -30,25 +30,41 @@ function TweetItem({ tweetObj }) {
           <div className='tweet-item-name'>{name}</div>
           <div
             className='tweet-item-time'
-            title={timestamp && timestamp.toDate().toLocaleString()}
+            title={
+              timestamp
+                ? timestamp.toDate().toLocaleString()
+                : new Date().toLocaleString()
+            }
           >
-            {timestamp && timestamp.toDate().toLocaleDateString()}
+            {timestamp
+              ? timestamp.toDate().toLocaleDateString()
+              : new Date().toLocaleDateString()}
           </div>
         </div>
         <div className='tweet-item-message'>{text}</div>
         <div className='tweet-item-buttons'>
-          <span>stats</span>{' '}
-          <span>reply {repliesLength > 0 && repliesLength}</span>
+          <span>stats</span> <span>reply {repLength > 0 && repLength}</span>
           <span>retweet</span> <span>like</span> <span>share</span>
         </div>
 
         <button type='button' onClick={handleDelete}>
           Delete
         </button>
-        {/* <Replies replies={replies} uidTweet={uidTweet} /> */}
       </div>
     </Link>
   );
 }
+
+TweetItem.propTypes = {
+  tweetObj: PropTypes.shape({
+    text: PropTypes.string,
+    name: PropTypes.string,
+    timestamp: PropTypes.shape({
+      toDate: PropTypes.func,
+    }),
+    profilePicUrl: PropTypes.string,
+    uidTweet: PropTypes.string,
+  }).isRequired,
+};
 
 export default TweetItem;
