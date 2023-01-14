@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { checkMatchingUser } from '../firebase';
 
 function MainTweet({ tweetObj, repLength }) {
@@ -46,5 +47,23 @@ function MainTweet({ tweetObj, repLength }) {
     </div>
   );
 }
+
+MainTweet.propTypes = {
+  tweetObj: PropTypes.shape({
+    text: PropTypes.string,
+    name: PropTypes.string,
+    timestamp: PropTypes.shape({
+      toDate: PropTypes.func,
+    }),
+    profilePicUrl: PropTypes.string,
+    uidTweet: PropTypes.string,
+    uidUser: PropTypes.string,
+  }).isRequired,
+  repLength: PropTypes.number,
+};
+
+MainTweet.defaultProps = {
+  repLength: 0,
+};
 
 export default MainTweet;
