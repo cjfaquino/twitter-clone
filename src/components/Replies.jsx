@@ -22,7 +22,9 @@ function Replies({ replies, uidTweet }) {
 
   const handleReply = (e) => {
     e.preventDefault();
-    saveReply(uidTweet, replyMessage);
+    if (isUserSignedIn()) {
+      saveReply(uidTweet, replyMessage);
+    }
   };
 
   return (

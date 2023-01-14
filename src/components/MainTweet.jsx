@@ -1,4 +1,5 @@
 import React from 'react';
+import { checkMatchingUser } from '../firebase';
 
 function MainTweet({ tweetObj, repLength }) {
   const handleDelete = () => {};
@@ -24,9 +25,11 @@ function MainTweet({ tweetObj, repLength }) {
                 </div>
               </div>
             </div>
-            <button type='button' onClick={handleDelete}>
-              Delete
-            </button>
+            {checkMatchingUser(tweetObj.uidUser) && (
+              <button type='button' onClick={handleDelete}>
+                Delete
+              </button>
+            )}
           </div>
 
           <div className={`${customClass}-item-message`}>{tweetObj.text}</div>

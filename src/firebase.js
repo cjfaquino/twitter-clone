@@ -35,6 +35,12 @@ export function isUserSignedIn() {
   return !!getAuth().currentUser;
 }
 
+// Returns true if matching users
+export const checkMatchingUser = (userID) => {
+  if (!isUserSignedIn()) return false;
+  return getUserUid() === userID;
+};
+
 // Save all tweets to tweets doc
 export const saveTweet = async (messageText, setPrivacy = false) => {
   const uid = crypto.randomUUID();

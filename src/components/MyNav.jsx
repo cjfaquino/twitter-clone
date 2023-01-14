@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { signOutUser, saveTweet } from '../firebase';
+import { signOutUser, saveTweet, isUserSignedIn } from '../firebase';
 
 function MyNav({ isSignedIn, currentUser }) {
   const [tweetInput, setTweetInput] = useState('');
@@ -12,11 +12,15 @@ function MyNav({ isSignedIn, currentUser }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    saveTweet(tweetInput).then((success) => {
-      if (success) {
-        setTweetInput('');
-      }
-    });
+    if (isUserSignedIn()) {
+      saveTweet(tweetInput).then((success) => {
+        if (success) {
+          setTweetInput('');
+        }
+      });
+    } else {
+      // login popup}
+    }
   };
 
   return (
@@ -36,7 +40,7 @@ function MyNav({ isSignedIn, currentUser }) {
                 id='tweet'
                 onChange={handleInput}
                 value={tweetInput}
-                maxLength='50'
+                maxLength='280'
               />
             </label>
             <button type='submit'>Tweet</button>

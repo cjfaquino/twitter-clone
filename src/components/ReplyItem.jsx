@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { deleteReply } from '../firebase';
+import { deleteReply, checkMatchingUser } from '../firebase';
 
 function ReplyItem({ replyObj, uidTweet }) {
   const { name, text, profilePicUrl, timestamp, uidReply } = replyObj;
 
   const handleDelete = () => {
-    deleteReply(uidTweet, uidReply);
+    if (checkMatchingUser(replyObj.uidUser)) {
+      deleteReply(uidTweet, uidReply);
+    }
   };
 
   return (
@@ -37,9 +39,11 @@ function ReplyItem({ replyObj, uidTweet }) {
           <span>share</span>
         </div>
 
-        <button type='button' onClick={handleDelete}>
-          Delete
-        </button>
+        {checkMatchingUser(replyObj.uidUser) && (
+          <button type='button' onClick={handleDelete}>
+            Delete
+          </button>
+        )}
       </div>
     </div>
   );
@@ -54,6 +58,7 @@ ReplyItem.propTypes = {
     }),
     profilePicUrl: PropTypes.string,
     uidReply: PropTypes.string,
+    uidUser: PropTypes.string,
   }).isRequired,
   uidTweet: PropTypes.string.isRequired,
 };

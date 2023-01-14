@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { deleteTweet, saveReply } from '../firebase';
+import { checkMatchingUser, deleteTweet, saveReply } from '../firebase';
 import useReplies from '../utils/useReplies';
 
 function TweetItem({ tweetObj }) {
@@ -12,7 +12,9 @@ function TweetItem({ tweetObj }) {
 
   const handleDelete = () => {
     // delete from DB
-    deleteTweet(uidTweet);
+    if (checkMatchingUser(tweetObj.uidUser)) {
+      deleteTweet(uidTweet);
+    }
   };
 
   return (
@@ -48,9 +50,11 @@ function TweetItem({ tweetObj }) {
           <span>retweet</span> <span>like</span> <span>share</span>
         </div>
 
-        <button type='button' onClick={handleDelete}>
-          Delete
-        </button>
+        {checkMatchingUser(tweetObj.uidUser) && (
+          <button type='button' onClick={handleDelete}>
+            Delete
+          </button>
+        )}
       </div>
     </Link>
   );
@@ -65,6 +69,7 @@ TweetItem.propTypes = {
     }),
     profilePicUrl: PropTypes.string,
     uidTweet: PropTypes.string,
+    uidUser: PropTypes.string,
   }).isRequired,
 };
 
