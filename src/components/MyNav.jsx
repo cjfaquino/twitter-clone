@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { signOutUser, saveTweet } from '../firebase';
 
@@ -21,7 +22,11 @@ function MyNav({ isSignedIn, currentUser }) {
   return (
     <nav id='menubar'>
       <ul>
-        <li>stuff</li>
+        <li>
+          <Link to='/'>
+            <button type='button'>Home</button>
+          </Link>
+        </li>
         <li>
           <form onSubmit={handleSubmit}>
             <label htmlFor='tweet'>
