@@ -2,37 +2,37 @@ import { useEffect, useState } from 'react';
 import { onAuthStateChanged, getAuth } from 'firebase/auth';
 
 function useAuthStateObserver() {
-  const [isSignedIn, setIsSignedIn] = useState(null);
-  const [currentUser, setCurrentUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // will be null when signed out
+  const cUser = JSON.parse(localStorage.getItem('firebaseUser'));
+
+  const [isSignedIn, setIsSignedIn] = useState(!!cUser);
+  const [currentUser, setCurrentUser] = useState(cUser);
 
   const authStateObserver = (user) => {
     if (user) {
       // User is signed in!
-      setIsSignedIn(true);
       setCurrentUser(user);
+      localStorage.setItem('firebaseUser', JSON.stringify(user));
     } else {
       // User is signed out!
-      setIsSignedIn(false);
       setCurrentUser(null);
+      localStorage.removeItem('firebaseUser');
     }
   };
 
-  const initFirebaseAuth = () => {
-    // Listen to auth state changes.
-    onAuthStateChanged(getAuth(), authStateObserver);
-  };
-
   useEffect(() => {
-    initFirebaseAuth();
+    // Listen to auth state changes.
+    const unsub = onAuthStateChanged(getAuth(), authStateObserver);
 
-    return () => {};
+    return () => {
+      unsub();
+    };
   }, []);
 
   useEffect(() => {
     if (currentUser) {
-      setLoading(true);
-    }
+      setIsSignedIn(true);
+    } else setIsSignedIn(false);
   }, [currentUser]);
 
   return [isSignedIn, currentUser];
