@@ -1,19 +1,11 @@
 import { useEffect, useState } from 'react';
 import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase-config';
+import deleteTweetFromDOM from './deleteTweetFromDOM';
 
-function useTweetsFromDB() {
+function useTweetsListener() {
   const [tweets, setTweets] = useState([]);
   const [allTweetsLoading, setAllTweetsLoading] = useState(null);
-
-  // Delete a Message from the UI.
-  const deleteTweetFromDOM = (id) => {
-    const div = document.getElementById(id);
-    // If an element for that message exists we delete it.
-    if (div) {
-      div.parentNode.removeChild(div);
-    }
-  };
 
   const updateReplyFromDOM = (id, newTime) => {
     const tweetDOM = document.getElementById(id);
@@ -60,4 +52,4 @@ function useTweetsFromDB() {
   return [tweets, allTweetsLoading];
 }
 
-export default useTweetsFromDB;
+export default useTweetsListener;
