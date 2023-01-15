@@ -7,8 +7,10 @@ import {
   saveReply,
 } from '../firebase';
 import ReplyItem from './ReplyItem';
+import useReplies from '../utils/useReplies';
 
-function Replies({ replies, uidTweet }) {
+function Replies({ uidTweet }) {
+  const [replies] = useReplies(uidTweet);
   const [replyMessage, setReplyMessage] = useState('');
   const handleReplyInput = (e) => {
     setReplyMessage(e.target.value);

@@ -5,10 +5,8 @@ import { checkMatchingUser, deleteTweet, saveReply } from '../firebase';
 import useReplies from '../utils/useReplies';
 
 function TweetItem({ tweetObj }) {
-  const [replyMessage, setReplyMessage] = useState('');
-
   const { text, name, timestamp, profilePicUrl, uidTweet } = tweetObj;
-  const [replies, repLength] = useReplies(uidTweet);
+  const [, repLength] = useReplies(uidTweet);
 
   const handleDelete = () => {
     // delete from DB
@@ -18,12 +16,7 @@ function TweetItem({ tweetObj }) {
   };
 
   return (
-    <Link
-      to={`/tweet/${uidTweet}`}
-      state={{ tweetObj, replies }}
-      className='tweet-item'
-      id={uidTweet}
-    >
+    <Link to={`/tweet/${uidTweet}`} className='tweet-item' id={uidTweet}>
       <div className='tweet-item-img-container'>
         <img src={profilePicUrl} alt={name} />
       </div>

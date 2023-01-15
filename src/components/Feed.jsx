@@ -1,17 +1,18 @@
 import React from 'react';
-import useTweetsFromDB from '../utils/useTweetsFromDB';
+
+import useTweets from '../utils/useTweets';
 import TweetItem from './TweetItem';
 
 function Feed() {
-  const [tweets, isTweetsLoading] = useTweetsFromDB();
+  const [tweets, isTweetsLoading] = useTweets();
 
   return (
     <div id='feed'>
       <div>search bar</div>
       <div>
-        {tweets.map((twt) => (
-          <TweetItem tweetObj={twt} key={twt.uidTweet} />
-        ))}
+        {isTweetsLoading && <div>loading</div>}
+        {tweets &&
+          tweets.map((twt) => <TweetItem tweetObj={twt} key={twt.uidTweet} />)}
       </div>
     </div>
   );

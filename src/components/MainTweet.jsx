@@ -58,12 +58,13 @@ MainTweet.propTypes = {
     profilePicUrl: PropTypes.string,
     uidTweet: PropTypes.string,
     uidUser: PropTypes.string,
-  }).isRequired,
+  }),
   repLength: PropTypes.number,
 };
 
 MainTweet.defaultProps = {
   repLength: 0,
+  tweetObj: null,
 };
 
 export default MainTweet;
