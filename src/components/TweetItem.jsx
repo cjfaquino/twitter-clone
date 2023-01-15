@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { checkMatchingUser, deleteTweet, saveReply } from '../firebase';
+import { checkMatchingUser, deleteTweet } from '../firebase';
 import useReplies from '../utils/useReplies';
 
 function TweetItem({ tweetObj }) {
+  const navigate = useNavigate();
   const { text, name, timestamp, profilePicUrl, uidTweet } = tweetObj;
   const [, repLength] = useReplies(uidTweet);
 
@@ -15,8 +16,14 @@ function TweetItem({ tweetObj }) {
     }
   };
 
+  const navToPage = (e) => {
+    const targetName = e.target.className;
+    if (targetName.includes('delete' || 'name' || 'time') === false)
+      navigate(`/tweet/${uidTweet}`);
+  };
+
   return (
-    <Link to={`/tweet/${uidTweet}`} className='tweet-item' id={uidTweet}>
+    <div type='button' className='tweet-item' id={uidTweet} onClick={navToPage}>
       <div className='tweet-item-img-container'>
         <img src={profilePicUrl} alt={name} />
       </div>
@@ -44,12 +51,16 @@ function TweetItem({ tweetObj }) {
         </div>
 
         {checkMatchingUser(tweetObj.uidUser) && (
-          <button type='button' onClick={handleDelete}>
+          <button
+            className='btn-delete-tweet'
+            type='button'
+            onClick={handleDelete}
+          >
             Delete
           </button>
         )}
       </div>
-    </Link>
+    </div>
   );
 }
 

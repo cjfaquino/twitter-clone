@@ -165,6 +165,15 @@ input:focus {
   align-items: flex-end;
 }
 
+/* tweet item */
+
+.tweet-item {
+  border-radius: none;
+  cursor: pointer;
+}
+
+.tweet-item:hover {
+}
 /* main tweet */
 
 #main-tweet-container {
