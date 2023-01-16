@@ -7,8 +7,9 @@ import {
   saveReply,
 } from '../firebase';
 import ReplyItem from './ReplyItem';
+import Reply from '../utils/Reply';
 
-function Replies({ TWEET_ID, replies }) {
+function Replies({ TWEET_ID, replies, addReplyToDOM }) {
   const [replyMessage, setReplyMessage] = useState('');
   const handleReplyInput = (e) => {
     setReplyMessage(e.target.value);
@@ -20,10 +21,19 @@ function Replies({ TWEET_ID, replies }) {
     }
   };
 
-  const handleReply = (e) => {
+  const handleSubmitReply = async (e) => {
     e.preventDefault();
-    if (isUserSignedIn()) {
-      saveReply(TWEET_ID, replyMessage);
+    if (!isUserSignedIn()) {
+      return; // show login popup
+    }
+
+    const docID = await saveReply(TWEET_ID, replyMessage);
+    if (docID) {
+      // send to TweetPage
+      addReplyToDOM({ id: docID, data: new Reply(replyMessage) });
+      setReplyMessage('');
+    } else {
+      // error sending
     }
   };
 
@@ -31,7 +41,7 @@ function Replies({ TWEET_ID, replies }) {
     <div>
       Replies
       {isUserSignedIn() && (
-        <form onSubmit={handleReply} className='reply-input-container'>
+        <form onSubmit={handleSubmitReply} className='reply-input-container'>
           <div className='reply-input-img-container'>
             <img src={getProfilePicUrl()} alt={getDisplayName()} />
           </div>

@@ -14,6 +14,7 @@ import {
 } from 'firebase/firestore';
 
 import { db } from './firebase-config';
+import Reply from './utils/Reply';
 import Tweet from './utils/Tweet';
 
 export const signIn = async () => {
@@ -49,7 +50,7 @@ export const checkMatchingUser = (userID) => {
   return getUserUid() === userID;
 };
 
-// converts tweet for firestore
+// converts Tweet for firestore
 const tweetConverter = {
   toFirestore: (tweet) => ({
     USER_ID: tweet.USER_ID,
@@ -94,16 +95,31 @@ export const deleteTweet = async (tweetID) => {
   }
 };
 
-// Save all tweets to tweets doc
+// converts Reply for firestore
+const replyConverter = {
+  toFirestore: (reply) => ({
+    USER_ID: reply.USER_ID,
+    USER_NAME: reply.USER_NAME,
+    USER_ICON: reply.USER_ICON,
+    text: reply.text,
+    timestamp: reply.timestamp,
+  }),
+  // fromFirestore: (snapshot, options) => {
+  //   const data = snapshot.data(options);
+  //   return data;
+  // },
+};
+
+// Save all replies to tweets doc
 export const saveReply = async (tweetID, messageText) => {
   try {
-    const docRef = await addDoc(collection(db, 'tweets', tweetID, 'replies'), {
-      USER_ID: getUserUid(),
-      USER_NAME: getDisplayName(),
-      USER_ICON: getProfilePicUrl(),
-      text: messageText,
-      timestamp: serverTimestamp(),
-    });
+    const collectionRef = collection(
+      db,
+      'tweets',
+      tweetID,
+      'replies'
+    ).withConverter(replyConverter);
+    const docRef = await addDoc(collectionRef, new Reply(messageText));
     return docRef.id;
   } catch (error) {
     console.error('Error writing new message to Firebase Database', error);

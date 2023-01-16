@@ -11,7 +11,7 @@ export default function useReplies(tweetID) {
   useEffect(() => {
     const queryRef = query(
       collection(db, 'tweets', tweetID, 'replies'),
-      orderBy('timestamp', 'desc')
+      orderBy('timestamp', 'asc')
     );
 
     getDocs(queryRef)
@@ -30,5 +30,10 @@ export default function useReplies(tweetID) {
     return () => {};
   }, []);
 
-  return [replies, replies.length, loading];
+  // add reply to DOM as first item until refresh
+  const addReplyToDOM = (replyObj) => {
+    setReplies((prev) => [replyObj, ...prev]);
+  };
+
+  return [replies, replies.length, addReplyToDOM, loading];
 }
