@@ -20,7 +20,7 @@ export default function useTweets() {
 
         qSnap.forEach((item) => {
           if (count === 1) {
-            setTweets((prev) => [...prev, item.data()]);
+            setTweets((prev) => [...prev, { id: item.id, data: item.data() }]);
           }
         });
       })

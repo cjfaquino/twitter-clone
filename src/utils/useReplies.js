@@ -20,7 +20,7 @@ export default function useReplies(tweetID) {
 
         qSnap.forEach((item) => {
           if (count === 1) {
-            setReplies((prev) => [...prev, item.data()]);
+            setReplies((prev) => [...prev, { id: item.id, data: item.data() }]);
           }
         });
       })

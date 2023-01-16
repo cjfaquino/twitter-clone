@@ -12,7 +12,7 @@ function Feed() {
       <div>
         {isTweetsLoading && <div>loading</div>}
         {tweets &&
-          tweets.map((twt) => <TweetItem tweetObj={twt} key={twt.uidTweet} />)}
+          tweets.map((twt) => <TweetItem tweetObj={twt} key={twt.id} />)}
       </div>
     </div>
   );

@@ -4,7 +4,14 @@ import {
   getAuth,
   signOut,
 } from 'firebase/auth';
-import { doc, setDoc, deleteDoc, serverTimestamp } from 'firebase/firestore';
+import {
+  doc,
+  setDoc,
+  collection,
+  deleteDoc,
+  serverTimestamp,
+  addDoc,
+} from 'firebase/firestore';
 
 import { db } from './firebase-config';
 
@@ -43,18 +50,16 @@ export const checkMatchingUser = (userID) => {
 
 // Save all tweets to tweets doc
 export const saveTweet = async (messageText, setPrivacy = false) => {
-  const uid = crypto.randomUUID();
   try {
-    await setDoc(doc(db, 'tweets', uid), {
-      uidTweet: uid,
-      uidUser: getUserUid(),
-      name: getDisplayName(),
+    const docID = await addDoc(collection(db, 'tweets'), {
+      USER_ID: getUserUid(),
+      USER_NAME: getDisplayName(),
+      USER_ICON: getProfilePicUrl(),
       text: messageText,
-      profilePicUrl: getProfilePicUrl(),
       timestamp: serverTimestamp(),
       privacy: setPrivacy,
     });
-    return true;
+    return docID;
   } catch (error) {
     console.error('Error writing new message to Firebase Database', error);
     return false;
@@ -63,27 +68,27 @@ export const saveTweet = async (messageText, setPrivacy = false) => {
 
 // delete tweet by tweet uid from firestore
 export const deleteTweet = async (tweetID) => {
-  const tweet = doc(db, 'tweets', tweetID);
   try {
+    const tweet = doc(db, 'tweets', tweetID);
     await deleteDoc(tweet);
+    return true;
   } catch (error) {
     console.error('Error deleting message from Firebase Database', error);
+    return false;
   }
 };
 
 // Save all tweets to tweets doc
 export const saveReply = async (tweetID, messageText) => {
-  const uid = crypto.randomUUID();
   try {
-    await setDoc(doc(db, 'tweets', tweetID, 'replies', uid), {
-      uidReply: uid,
-      uidUser: getUserUid(),
-      name: getDisplayName(),
+    const docID = await addDoc(collection(db, 'tweets', tweetID, 'replies'), {
+      USER_ID: getUserUid(),
+      USER_NAME: getDisplayName(),
+      USER_ICON: getProfilePicUrl(),
       text: messageText,
-      profilePicUrl: getProfilePicUrl(),
       timestamp: serverTimestamp(),
     });
-    return true;
+    return docID;
   } catch (error) {
     console.error('Error writing new message to Firebase Database', error);
     return false;
@@ -95,7 +100,9 @@ export const deleteReply = async (tweetID, replyID) => {
   const reply = doc(db, 'tweets', tweetID, 'replies', replyID);
   try {
     await deleteDoc(reply);
+    return true;
   } catch (error) {
     console.error('Error deleting message from Firebase Database', error);
+    return false;
   }
 };

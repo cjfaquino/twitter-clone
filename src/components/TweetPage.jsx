@@ -14,7 +14,7 @@ function TweetPage() {
     <div id='feed'>
       <div>TweetPage</div>
       <MainTweet tweetObj={tweet} repLength={repLength} />
-      <Replies replies={replies} uidTweet={params.tweet} />
+      <Replies replies={replies} TWEET_ID={params.tweet} />
     </div>
   );
 }

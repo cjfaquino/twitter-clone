@@ -1,36 +1,42 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { checkMatchingUser, deleteTweet } from '../firebase';
 import useReplies from '../utils/useReplies';
+import deleteTweetFromDOM from '../utils/deleteTweetFromDOM';
 
 function TweetItem({ tweetObj }) {
   const navigate = useNavigate();
-  const { text, name, timestamp, profilePicUrl, uidTweet } = tweetObj;
-  const [, repLength] = useReplies(uidTweet);
+  const { text, timestamp, profilePicUrl, USER_ID, USER_NAME } = tweetObj.data;
+  const { id: TWEET_ID } = tweetObj;
+  const [, repLength] = useReplies(tweetObj.id);
 
   const handleDelete = () => {
     // delete from DB
-    if (checkMatchingUser(tweetObj.uidUser)) {
-      deleteTweet(uidTweet);
+    if (checkMatchingUser(USER_ID)) {
+      deleteTweet(TWEET_ID).then((success) => {
+        if (success) {
+          deleteTweetFromDOM(TWEET_ID);
+        }
+      });
     }
   };
 
   const navToPage = (e) => {
     const targetName = e.target.className;
     if (targetName.includes('delete' || 'name' || 'time') === false)
-      navigate(`/tweet/${uidTweet}`);
+      navigate(`/tweet/${TWEET_ID}`);
   };
 
   return (
-    <div type='button' className='tweet-item' id={uidTweet} onClick={navToPage}>
+    <div type='button' className='tweet-item' id={TWEET_ID} onClick={navToPage}>
       <div className='tweet-item-img-container'>
-        <img src={profilePicUrl} alt={name} />
+        <img src={profilePicUrl} alt={USER_NAME} />
       </div>
 
       <div className='tweet-item-right-half'>
         <div className='tweet-item-info'>
-          <div className='tweet-item-name'>{name}</div>
+          <div className='tweet-item-name'>{USER_NAME}</div>
           <div
             className='tweet-item-time'
             title={
@@ -50,7 +56,7 @@ function TweetItem({ tweetObj }) {
           <span>retweet</span> <span>like</span> <span>share</span>
         </div>
 
-        {checkMatchingUser(tweetObj.uidUser) && (
+        {checkMatchingUser(USER_ID) && (
           <button
             className='btn-delete-tweet'
             type='button'
@@ -66,14 +72,16 @@ function TweetItem({ tweetObj }) {
 
 TweetItem.propTypes = {
   tweetObj: PropTypes.shape({
-    text: PropTypes.string,
-    name: PropTypes.string,
-    timestamp: PropTypes.shape({
-      toDate: PropTypes.func,
+    data: PropTypes.shape({
+      text: PropTypes.string,
+      timestamp: PropTypes.shape({
+        toDate: PropTypes.func,
+      }),
+      profilePicUrl: PropTypes.string,
+      USER_ID: PropTypes.string,
+      USER_NAME: PropTypes.string,
     }),
-    profilePicUrl: PropTypes.string,
-    uidTweet: PropTypes.string,
-    uidUser: PropTypes.string,
+    id: PropTypes.string,
   }).isRequired,
 };
 

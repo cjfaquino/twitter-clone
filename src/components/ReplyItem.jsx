@@ -1,27 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useParams } from 'react-router-dom';
 import { deleteReply, checkMatchingUser } from '../firebase';
 
-function ReplyItem({ replyObj, uidTweet }) {
-  const { name, text, profilePicUrl, timestamp, uidReply } = replyObj;
+function ReplyItem({ replyObj, TWEET_ID }) {
+  const { text, profilePicUrl, timestamp, USER_NAME, USER_ID } = replyObj.data;
+  const { id: REPLY_ID } = replyObj;
 
   const handleDelete = () => {
-    if (checkMatchingUser(replyObj.uidUser)) {
-      deleteReply(uidTweet, uidReply);
+    if (checkMatchingUser(USER_ID)) {
+      deleteReply(TWEET_ID, REPLY_ID);
     }
   };
 
+  const customClass = 'reply';
+
   return (
-    <div className='reply-item' id={uidReply}>
-      <div className='reply-item-img-container'>
-        <img src={profilePicUrl} alt={name} />
+    <div className={`${customClass}-item`} id={REPLY_ID}>
+      <div className={`${customClass}-item-img-container`}>
+        <img src={profilePicUrl} alt={USER_NAME} />
       </div>
 
-      <div className='reply-item-right-half'>
-        <div className='reply-item-info'>
-          <div className='reply-item-name'>{name}</div>
+      <div className={`${customClass}-item-right-half`}>
+        <div className={`${customClass}-item-info`}>
+          <div className={`${customClass}-item-name`}>{USER_NAME}</div>
           <div
-            className='reply-item-time'
+            className={`${customClass}-item-time`}
             title={
               timestamp
                 ? timestamp.toDate().toLocaleString()
@@ -33,13 +37,13 @@ function ReplyItem({ replyObj, uidTweet }) {
               : new Date().toLocaleDateString()}
           </div>
         </div>
-        <div className='reply-item-message'>{text}</div>
-        <div className='reply-item-buttons'>
+        <div className={`${customClass}-item-message`}>{text}</div>
+        <div className={`${customClass}-item-buttons`}>
           <span>stats</span> <span>retweet</span> <span>like</span>
           <span>share</span>
         </div>
 
-        {checkMatchingUser(replyObj.uidUser) && (
+        {checkMatchingUser(USER_ID) && (
           <button type='button' onClick={handleDelete}>
             Delete
           </button>
@@ -51,16 +55,22 @@ function ReplyItem({ replyObj, uidTweet }) {
 
 ReplyItem.propTypes = {
   replyObj: PropTypes.shape({
-    text: PropTypes.string,
-    name: PropTypes.string,
-    timestamp: PropTypes.shape({
-      toDate: PropTypes.func,
+    data: PropTypes.shape({
+      text: PropTypes.string,
+      timestamp: PropTypes.shape({
+        toDate: PropTypes.func,
+      }),
+      profilePicUrl: PropTypes.string,
+      USER_ID: PropTypes.string,
+      USER_NAME: PropTypes.string,
     }),
-    profilePicUrl: PropTypes.string,
-    uidReply: PropTypes.string,
-    uidUser: PropTypes.string,
-  }).isRequired,
-  uidTweet: PropTypes.string.isRequired,
+    id: PropTypes.string,
+  }),
+  TWEET_ID: PropTypes.string.isRequired,
+};
+
+ReplyItem.defaultProps = {
+  replyObj: null,
 };
 
 export default ReplyItem;

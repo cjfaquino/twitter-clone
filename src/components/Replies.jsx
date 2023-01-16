@@ -7,10 +7,8 @@ import {
   saveReply,
 } from '../firebase';
 import ReplyItem from './ReplyItem';
-import useReplies from '../utils/useReplies';
 
-function Replies({ uidTweet }) {
-  const [replies] = useReplies(uidTweet);
+function Replies({ TWEET_ID, replies }) {
   const [replyMessage, setReplyMessage] = useState('');
   const handleReplyInput = (e) => {
     setReplyMessage(e.target.value);
@@ -25,7 +23,7 @@ function Replies({ uidTweet }) {
   const handleReply = (e) => {
     e.preventDefault();
     if (isUserSignedIn()) {
-      saveReply(uidTweet, replyMessage);
+      saveReply(TWEET_ID, replyMessage);
     }
   };
 
@@ -49,28 +47,30 @@ function Replies({ uidTweet }) {
         </form>
       )}
       {replies.map((reply) => (
-        <ReplyItem key={reply.uidReply} replyObj={reply} uidTweet={uidTweet} />
+        <ReplyItem key={reply.id} replyObj={reply} TWEET_ID={TWEET_ID} />
       ))}
     </div>
   );
 }
 
 Replies.propTypes = {
+  TWEET_ID: PropTypes.string.isRequired,
   replies: PropTypes.arrayOf(
     PropTypes.shape({
-      text: PropTypes.string,
-      name: PropTypes.string,
-      timestamp: PropTypes.shape({
-        toDate: PropTypes.func,
+      tweetObj: PropTypes.shape({
+        data: PropTypes.shape({
+          text: PropTypes.string,
+          timestamp: PropTypes.shape({
+            toDate: PropTypes.func,
+          }),
+          profilePicUrl: PropTypes.string,
+          USER_ID: PropTypes.string,
+          USER_NAME: PropTypes.string,
+        }),
+        id: PropTypes.string,
       }),
-      profilePicUrl: PropTypes.string,
-      uidReply: PropTypes.string,
     })
-  ),
-  uidTweet: PropTypes.string,
+  ).isRequired,
 };
 
-Replies.defaultProps = {
-  replies: [],
-};
 export default Replies;

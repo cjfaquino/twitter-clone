@@ -8,12 +8,11 @@ export default function useOneTweet(tweetID) {
 
   useEffect(() => {
     const docRef = doc(db, 'tweets', tweetID);
-
     setLoading(true);
     getDoc(docRef)
       .then((docSnap) => {
         if (docSnap.exists() && !tweet) {
-          setTweet(docSnap.data());
+          setTweet({ id: docSnap.id, data: docSnap.data() });
         } else {
           // doc.data() will be undefined in this case
           console.log('No such document!');
