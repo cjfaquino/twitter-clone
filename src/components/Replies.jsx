@@ -64,6 +64,7 @@ function Replies({ TWEET_ID, replies, addReplyToDOM }) {
 }
 
 Replies.propTypes = {
+  addReplyToDOM: PropTypes.func.isRequired,
   TWEET_ID: PropTypes.string.isRequired,
   replies: PropTypes.arrayOf(
     PropTypes.shape({
