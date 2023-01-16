@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { isUserSignedIn, saveTweet } from '../firebase';
+import Tweet from '../utils/Tweet';
 
-function TweetPopup({ toggleTweetPopup }) {
+function TweetPopup({ toggleTweetPopup, setNewTweet }) {
   const [input, setInput] = useState('');
 
   const handleSubmit = async (e) => {
@@ -11,6 +12,8 @@ function TweetPopup({ toggleTweetPopup }) {
       // save tweet
       const docID = await saveTweet(input);
       if (docID) {
+        // send to Feed
+        setNewTweet({ id: docID, data: new Tweet(input) });
         toggleTweetPopup();
       }
     } else {
@@ -45,6 +48,7 @@ function TweetPopup({ toggleTweetPopup }) {
 
 TweetPopup.propTypes = {
   toggleTweetPopup: PropTypes.func.isRequired,
+  setNewTweet: PropTypes.func.isRequired,
 };
 
 export default TweetPopup;

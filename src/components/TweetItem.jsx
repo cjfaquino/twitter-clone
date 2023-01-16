@@ -45,12 +45,12 @@ function TweetItem({ tweetObj }) {
           <div
             className='tweet-item-time'
             title={
-              timestamp
+              timestamp.toDate
                 ? timestamp.toDate().toLocaleString()
                 : new Date().toLocaleString()
             }
           >
-            {timestamp
+            {timestamp.toDate
               ? timestamp.toDate().toLocaleDateString()
               : new Date().toLocaleDateString()}
           </div>

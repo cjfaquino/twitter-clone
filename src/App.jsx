@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import useAuthStateObserver from './utils/useAuthStateObserver';
@@ -13,6 +13,11 @@ import useToggle from './utils/useToggle';
 function App() {
   const [isSignedIn, currentUser] = useAuthStateObserver();
   const [showTweetPopup, toggleTweetPopup] = useToggle();
+  const [newTweet, setNewTweet] = useState(null);
+
+  const clrNewTweet = () => {
+    setNewTweet(null);
+  };
 
   return (
     <>
@@ -23,13 +28,21 @@ function App() {
           toggleTweetPopup={toggleTweetPopup}
         />
         <Routes>
-          <Route path='/' element={<Feed />} />
+          <Route
+            path='/'
+            element={<Feed newTweet={newTweet} clrNewTweet={clrNewTweet} />}
+          />
           <Route path='/tweet/:tweet' element={<TweetPage />} />
         </Routes>
         <MySidebar />
       </div>
 
-      {showTweetPopup && <TweetPopup toggleTweetPopup={toggleTweetPopup} />}
+      {showTweetPopup && (
+        <TweetPopup
+          toggleTweetPopup={toggleTweetPopup}
+          setNewTweet={setNewTweet}
+        />
+      )}
       {!isSignedIn && <LogInBanner isSignedIn={isSignedIn} />}
     </>
   );

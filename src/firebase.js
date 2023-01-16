@@ -14,6 +14,7 @@ import {
 } from 'firebase/firestore';
 
 import { db } from './firebase-config';
+import Tweet from './utils/Tweet';
 
 export const signIn = async () => {
   // Sign in Firebase using popup auth and Google as the identity provider.
@@ -48,18 +49,33 @@ export const checkMatchingUser = (userID) => {
   return getUserUid() === userID;
 };
 
+// converts tweet for firestore
+const tweetConverter = {
+  toFirestore: (tweet) => ({
+    USER_ID: tweet.USER_ID,
+    USER_NAME: tweet.USER_NAME,
+    USER_ICON: tweet.USER_ICON,
+    text: tweet.text,
+    timestamp: tweet.timestamp,
+    privacy: tweet.privacy,
+  }),
+  // fromFirestore: (snapshot, options) => {
+  //   const data = snapshot.data(options);
+  //   return data;
+  // },
+};
+
 // Save all tweets to tweets doc
 export const saveTweet = async (messageText, setPrivacy = false) => {
   try {
-    const docID = await addDoc(collection(db, 'tweets'), {
-      USER_ID: getUserUid(),
-      USER_NAME: getDisplayName(),
-      USER_ICON: getProfilePicUrl(),
-      text: messageText,
-      timestamp: serverTimestamp(),
-      privacy: setPrivacy,
-    });
-    return docID;
+    const collectionRef = collection(db, 'tweets').withConverter(
+      tweetConverter
+    );
+    const docRef = await addDoc(
+      collectionRef,
+      new Tweet(messageText, setPrivacy)
+    );
+    return docRef.id;
   } catch (error) {
     console.error('Error writing new message to Firebase Database', error);
     return false;
@@ -81,14 +97,14 @@ export const deleteTweet = async (tweetID) => {
 // Save all tweets to tweets doc
 export const saveReply = async (tweetID, messageText) => {
   try {
-    const docID = await addDoc(collection(db, 'tweets', tweetID, 'replies'), {
+    const docRef = await addDoc(collection(db, 'tweets', tweetID, 'replies'), {
       USER_ID: getUserUid(),
       USER_NAME: getDisplayName(),
       USER_ICON: getProfilePicUrl(),
       text: messageText,
       timestamp: serverTimestamp(),
     });
-    return docID;
+    return docRef.id;
   } catch (error) {
     console.error('Error writing new message to Firebase Database', error);
     return false;

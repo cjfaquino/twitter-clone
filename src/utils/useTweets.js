@@ -30,5 +30,10 @@ export default function useTweets() {
     return () => {};
   }, []);
 
-  return [tweets, loading];
+  // add temp tweet to DOM
+  const addTweetToDOM = (tweetObj) => {
+    setTweets((prev) => [tweetObj, ...prev]);
+  };
+
+  return [tweets, addTweetToDOM, loading];
 }
