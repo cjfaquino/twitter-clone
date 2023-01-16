@@ -1,7 +1,8 @@
-import React, { ReactDOM } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { checkMatchingUser, deleteTweet } from '../firebase';
+import { checkMatchingUser } from '../firebase';
+import deleteTweet from '../utils/deleteTweet';
 import useReplies from '../utils/useReplies';
 import deleteTweetFromDOM from '../utils/deleteTweetFromDOM';
 

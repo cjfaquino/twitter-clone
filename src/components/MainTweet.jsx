@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { checkMatchingUser, deleteTweet, getUserUid } from '../firebase';
+import { checkMatchingUser, getUserUid } from '../firebase';
+import deleteTweet from '../utils/deleteTweet';
 
 function MainTweet({ tweetObj, repLength }) {
   const navigate = useNavigate();

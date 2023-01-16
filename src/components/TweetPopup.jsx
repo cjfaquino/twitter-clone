@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { isUserSignedIn, saveTweet } from '../firebase';
+import { isUserSignedIn } from '../firebase';
+import saveTweet from '../utils/saveTweet';
 import Tweet from '../utils/Tweet';
 
 function TweetPopup({ toggleTweetPopup, setNewTweet }) {

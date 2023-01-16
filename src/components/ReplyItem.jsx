@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { deleteReply, checkMatchingUser } from '../firebase';
+import { checkMatchingUser } from '../firebase';
+import deleteReply from '../utils/deleteReply';
 import deleteTweetFromDOM from '../utils/deleteTweetFromDOM';
 
 function ReplyItem({ replyObj, TWEET_ID }) {

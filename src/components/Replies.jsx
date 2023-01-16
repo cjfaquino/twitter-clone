@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import {
-  getDisplayName,
-  getProfilePicUrl,
-  isUserSignedIn,
-  saveReply,
-} from '../firebase';
+import { getDisplayName, getProfilePicUrl, isUserSignedIn } from '../firebase';
+import saveReply from '../utils/saveReply';
 import ReplyItem from './ReplyItem';
 import Reply from '../utils/Reply';
 
