@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { deleteReply, checkMatchingUser } from '../firebase';
 
 function ReplyItem({ replyObj, TWEET_ID }) {
-  const { text, profilePicUrl, timestamp, USER_NAME, USER_ID } = replyObj.data;
+  const { text, timestamp, USER_ICON, USER_NAME, USER_ID } = replyObj.data;
   const { id: REPLY_ID } = replyObj;
 
   const handleDelete = () => {
@@ -18,7 +18,7 @@ function ReplyItem({ replyObj, TWEET_ID }) {
   return (
     <div className={`${customClass}-item`} id={REPLY_ID}>
       <div className={`${customClass}-item-img-container`}>
-        <img src={profilePicUrl} alt={USER_NAME} />
+        <img src={USER_ICON} alt={USER_NAME} />
       </div>
 
       <div className={`${customClass}-item-right-half`}>
@@ -60,7 +60,7 @@ ReplyItem.propTypes = {
       timestamp: PropTypes.shape({
         toDate: PropTypes.func,
       }),
-      profilePicUrl: PropTypes.string,
+      USER_ICON: PropTypes.string,
       USER_ID: PropTypes.string,
       USER_NAME: PropTypes.string,
     }),

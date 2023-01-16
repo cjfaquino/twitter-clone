@@ -22,7 +22,7 @@ function MainTweet({ tweetObj, repLength }) {
 
   if (!tweetObj) return <div id={`${customClass}-container`} />;
 
-  const { text, profilePicUrl, timestamp, USER_NAME, USER_ID } = tweetObj.data;
+  const { text, timestamp, USER_ICON, USER_NAME, USER_ID } = tweetObj.data;
   const { id: TWEET_ID } = tweetObj.id;
 
   return (
@@ -30,7 +30,7 @@ function MainTweet({ tweetObj, repLength }) {
       <div id={TWEET_ID} className={`${customClass}-item`}>
         <div className={`${customClass}-item-user`}>
           <div className={`${customClass}-item-img-container`}>
-            <img src={profilePicUrl} alt={USER_NAME} />
+            <img src={USER_ICON} alt={USER_NAME} />
           </div>
           <div className={`${customClass}-item-right-half`}>
             <div className={`${customClass}-item-info`}>
@@ -68,7 +68,7 @@ MainTweet.propTypes = {
       timestamp: PropTypes.shape({
         toDate: PropTypes.func,
       }),
-      profilePicUrl: PropTypes.string,
+      USER_ICON: PropTypes.string,
       USER_ID: PropTypes.string,
       USER_NAME: PropTypes.string,
     }),

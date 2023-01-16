@@ -7,7 +7,7 @@ import deleteTweetFromDOM from '../utils/deleteTweetFromDOM';
 
 function TweetItem({ tweetObj }) {
   const navigate = useNavigate();
-  const { text, timestamp, profilePicUrl, USER_ID, USER_NAME } = tweetObj.data;
+  const { text, timestamp, USER_ICON, USER_ID, USER_NAME } = tweetObj.data;
   const { id: TWEET_ID } = tweetObj;
   const [, repLength] = useReplies(tweetObj.id);
 
@@ -29,7 +29,7 @@ function TweetItem({ tweetObj }) {
   return (
     <div type='button' className='tweet-item' id={TWEET_ID} onClick={navToPage}>
       <div className='tweet-item-img-container'>
-        <img src={profilePicUrl} alt={USER_NAME} />
+        <img src={USER_ICON} alt={USER_NAME} />
       </div>
 
       <div className='tweet-item-right-half'>
@@ -75,7 +75,7 @@ TweetItem.propTypes = {
       timestamp: PropTypes.shape({
         toDate: PropTypes.func,
       }),
-      profilePicUrl: PropTypes.string,
+      USER_ICON: PropTypes.string,
       USER_ID: PropTypes.string,
       USER_NAME: PropTypes.string,
     }),
