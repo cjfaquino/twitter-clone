@@ -50,6 +50,7 @@ input:focus {
 /* MyNav */
 
 #menubar {
+  padding: 20px;
   height: 100vh;
   position: fixed;
   width: var(--menubar-width);
@@ -59,7 +60,23 @@ input:focus {
 #menubar ul {
   display: flex;
   flex-direction: column;
+  gap: 30px;
   height: 100%;
+}
+
+#menubar li a {
+  margin-left: 20px;
+}
+
+#menubar .nav-home > *,
+#menubar,
+.btn-nav-tweet {
+  font-weight: 800;
+}
+
+#menubar .btn-nav-tweet {
+  width: 100%;
+  background-color: blue;
 }
 
 .nav-user {

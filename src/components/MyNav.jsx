@@ -15,14 +15,12 @@ function MyNav({ isSignedIn, currentUser, toggleTweetPopup }) {
 
   return (
     <nav id='menubar'>
-      <ul>
-        <li>
-          <Link to='/'>
-            <button type='button'>Home</button>
-          </Link>
+      <ul className='menu-list'>
+        <li className='nav-home'>
+          <Link to='/'>Home</Link>
         </li>
         <li>
-          <button type='button' onClick={handleClick}>
+          <button type='button' onClick={handleClick} className='btn-nav-tweet'>
             Tweet
           </button>
         </li>
