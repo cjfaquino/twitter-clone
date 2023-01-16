@@ -1,25 +1,15 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { signOutUser, saveTweet, isUserSignedIn } from '../firebase';
+import { signOutUser, isUserSignedIn } from '../firebase';
 
-function MyNav({ isSignedIn, currentUser }) {
-  const [tweetInput, setTweetInput] = useState('');
-
-  const handleInput = (e) => {
-    setTweetInput(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
+function MyNav({ isSignedIn, currentUser, toggleTweetPopup }) {
+  const handleClick = () => {
     if (isUserSignedIn()) {
-      saveTweet(tweetInput).then((success) => {
-        if (success) {
-          setTweetInput('');
-        }
-      });
+      // show tweet popup
+      toggleTweetPopup();
     } else {
-      // login popup}
+      // show login popup
     }
   };
 
@@ -32,19 +22,9 @@ function MyNav({ isSignedIn, currentUser }) {
           </Link>
         </li>
         <li>
-          <form onSubmit={handleSubmit}>
-            <label htmlFor='tweet'>
-              <input
-                type='text'
-                name='tweet'
-                id='tweet'
-                onChange={handleInput}
-                value={tweetInput}
-                maxLength='280'
-              />
-            </label>
-            <button type='submit'>Tweet</button>
-          </form>
+          <button type='button' onClick={handleClick}>
+            Tweet
+          </button>
         </li>
         <li className='nav-user'>{currentUser && currentUser.displayName}</li>
         {isSignedIn && (
@@ -64,6 +44,7 @@ MyNav.propTypes = {
   currentUser: PropTypes.shape({
     displayName: PropTypes.string,
   }),
+  toggleTweetPopup: PropTypes.func.isRequired,
 };
 
 MyNav.defaultProps = {

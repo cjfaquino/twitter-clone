@@ -67,6 +67,26 @@ input:focus {
   margin-bottom: 0;
 }
 
+/* Tweet & login popup */
+
+#popup-background {
+  position: fixed;
+  background-color: rgba(128, 128, 128, 0.449);
+  width: 100vw;
+  height: 100vh;
+}
+
+#tweet-popup {
+  position: fixed;
+  height: 300px;
+  width: 500px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: black;
+  border-radius: 10px;
+}
+
 /* Center column */
 
 #feed {
