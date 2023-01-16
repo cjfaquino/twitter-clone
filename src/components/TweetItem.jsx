@@ -27,7 +27,14 @@ function TweetItem({ tweetObj }) {
   };
 
   return (
-    <div type='button' className='tweet-item' id={TWEET_ID} onClick={navToPage}>
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+    <div
+      type='button'
+      className='tweet-item'
+      id={TWEET_ID}
+      onClick={navToPage}
+      aria-hidden='true'
+    >
       <div className='tweet-item-img-container'>
         <img src={USER_ICON} alt={USER_NAME} />
       </div>
