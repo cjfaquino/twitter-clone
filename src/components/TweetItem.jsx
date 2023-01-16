@@ -11,14 +11,12 @@ function TweetItem({ tweetObj }) {
   const { id: TWEET_ID } = tweetObj;
   const [, repLength] = useReplies(tweetObj.id);
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     // delete from DB
     if (checkMatchingUser(USER_ID)) {
-      deleteTweet(TWEET_ID).then((success) => {
-        if (success) {
-          deleteTweetFromDOM(TWEET_ID);
-        }
-      });
+      await deleteTweet(TWEET_ID);
+
+      deleteTweetFromDOM(TWEET_ID);
     }
   };
 

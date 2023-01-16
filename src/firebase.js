@@ -35,7 +35,7 @@ export const getProfilePicUrl = () =>
 export const getDisplayName = () => getAuth().currentUser.displayName;
 
 // Returns the signed-in user's display name.
-const getUserUid = () => getAuth().currentUser.uid;
+export const getUserUid = () => getAuth().currentUser.uid;
 
 // Returns true if a user is signed-in.
 export function isUserSignedIn() {
@@ -97,8 +97,8 @@ export const saveReply = async (tweetID, messageText) => {
 
 // delete reply by tweet id & reply id from firestore
 export const deleteReply = async (tweetID, replyID) => {
-  const reply = doc(db, 'tweets', tweetID, 'replies', replyID);
   try {
+    const reply = doc(db, 'tweets', tweetID, 'replies', replyID);
     await deleteDoc(reply);
     return true;
   } catch (error) {

@@ -1,9 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { checkMatchingUser } from '../firebase';
+import { useNavigate } from 'react-router-dom';
+import { checkMatchingUser, deleteTweet, getUserUid } from '../firebase';
 
 function MainTweet({ tweetObj, repLength }) {
-  const handleDelete = () => {};
+  const navigate = useNavigate();
+
+  const handleDelete = async () => {
+    if (checkMatchingUser(getUserUid)) {
+      await deleteTweet(tweetObj.id);
+      navigate('/');
+    }
+  };
 
   const getTimeString = (timestamp) =>
     timestamp
