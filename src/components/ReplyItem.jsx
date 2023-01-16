@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
 import { deleteReply, checkMatchingUser } from '../firebase';
+import deleteTweetFromDOM from '../utils/deleteTweetFromDOM';
 
 function ReplyItem({ replyObj, TWEET_ID }) {
   const { text, timestamp, USER_ICON, USER_NAME, USER_ID } = replyObj.data;
   const { id: REPLY_ID } = replyObj;
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (checkMatchingUser(USER_ID)) {
-      deleteReply(TWEET_ID, REPLY_ID);
+      await deleteReply(TWEET_ID, REPLY_ID);
+      deleteTweetFromDOM(REPLY_ID);
     }
   };
 
