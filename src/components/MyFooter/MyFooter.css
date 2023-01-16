@@ -3,17 +3,13 @@
 }
 
 footer {
-  flex-shrink: 0;
   height: var(--footer-size);
-  width: 100%;
-  background-color: rgb(45, 45, 45);
+  background-color: transparent;
   color: white;
   display: flex;
-  justify-content: center;
   align-items: center;
   gap: 10px;
-  position: fixed;
-  bottom: 0;
+  font-size: 0.8rem;
 }
 
 footer a {

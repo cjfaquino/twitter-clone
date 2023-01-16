@@ -36,7 +36,7 @@ input:focus {
   background-color: blue;
   position: fixed;
   width: 100%;
-  bottom: var(--footer-size);
+  bottom: 0;
 }
 
 #login-banner ul {
@@ -50,7 +50,7 @@ input:focus {
 /* MyNav */
 
 #menubar {
-  height: calc(100vh - var(--footer-size));
+  height: 100vh;
   position: fixed;
   width: var(--menubar-width);
   border: 1px solid white;
@@ -93,7 +93,6 @@ input:focus {
   margin-left: var(--menubar-width);
   width: var(--feed-width);
   border: 1px solid white;
-  margin-bottom: calc(var(--footer-size));
 }
 
 /* MySidebar */
@@ -102,7 +101,7 @@ input:focus {
   width: var(--sidebar-width);
   margin-left: calc(var(--menubar-width) + var(--feed-width));
   border: 1px solid white;
-  height: calc(100vh - var(--footer-size));
+  height: 100vh;
   position: fixed;
 }
 
