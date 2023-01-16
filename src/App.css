@@ -98,11 +98,20 @@ input:focus {
 /* MySidebar */
 
 #sidebar {
+  padding: 20px;
   width: var(--sidebar-width);
   margin-left: calc(var(--menubar-width) + var(--feed-width));
   border: 1px solid white;
   height: 100vh;
   position: fixed;
+}
+
+#who-to-follow {
+  padding: 20px;
+  background-color: rgb(46, 46, 46);
+  min-height: 300px;
+  border: 1px solid white;
+  border-radius: 10px;
 }
 
 /* Tweet item  & reply item & main tweet item*/
