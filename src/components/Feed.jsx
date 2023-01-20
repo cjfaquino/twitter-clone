@@ -8,7 +8,6 @@ function Feed({ newTweet, clrNewTweet }) {
 
   useEffect(() => {
     if (newTweet) {
-      console.log(newTweet);
       addTweetToDOM(newTweet);
       clrNewTweet();
     }
