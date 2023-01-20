@@ -31,6 +31,27 @@ input:focus {
   display: flex;
 }
 
+.more-options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  gap: 4px;
+  margin-right: 0;
+  padding: 0;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+}
+
+.dots {
+  aspect-ratio: 1 / 1;
+  height: 3px;
+  width: 3px;
+  border-radius: 50%;
+  background-color: white;
+}
+
 /* login banner */
 #login-banner {
   background-color: blue;
@@ -95,32 +116,11 @@ input:focus {
   background: rgb(68, 68, 68);
 }
 
-.nav-user-item .nav-user-options {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: auto;
-  gap: 4px;
-  margin-right: 0;
-  padding: 0;
-  height: 30px;
-  width: 30px;
-  border-radius: 50%;
-}
-
 .btn-nav-logout {
   position: absolute;
   top: -50px;
   left: 0;
   width: 100%;
-}
-
-.dots-option {
-  aspect-ratio: 1 / 1;
-  height: 3px;
-  width: 3px;
-  border-radius: 50%;
-  background-color: white;
 }
 
 /* Tweet & login popup */

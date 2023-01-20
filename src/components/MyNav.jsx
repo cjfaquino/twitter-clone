@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { signOutUser, isUserSignedIn } from '../firebase';
 import useToggle from '../utils/useToggle';
+import ThreeDots from './ThreeDots';
 
-function MyNav({ isSignedIn, currentUser, toggleTweetPopup }) {
+function MyNav({ currentUser, toggleTweetPopup }) {
   const [logoutPopup, toggleLogoutPopup] = useToggle();
 
   const handleClick = () => {
@@ -38,11 +39,7 @@ function MyNav({ isSignedIn, currentUser, toggleTweetPopup }) {
                 <img src={currentUser.photoURL} alt={currentUser.displayName} />
               </div>
               <div>{currentUser.displayName}</div>
-              <div className='nav-user-options'>
-                <div className='dots-option' />
-                <div className='dots-option' />
-                <div className='dots-option' />
-              </div>
+              <ThreeDots />
               {logoutPopup && (
                 <button
                   type='button'
@@ -61,7 +58,6 @@ function MyNav({ isSignedIn, currentUser, toggleTweetPopup }) {
 }
 
 MyNav.propTypes = {
-  isSignedIn: PropTypes.bool,
   currentUser: PropTypes.shape({
     displayName: PropTypes.string,
     photoURL: PropTypes.string,
@@ -70,7 +66,6 @@ MyNav.propTypes = {
 };
 
 MyNav.defaultProps = {
-  isSignedIn: false,
   currentUser: { displayName: '' },
 };
 
