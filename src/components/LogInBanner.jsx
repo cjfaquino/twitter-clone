@@ -11,7 +11,7 @@ function LogInBanner() {
           <div>People on Twtter Clone are the last to know.</div>
         </li>
         <li className='logout'>
-          <button type='button' onClick={signIn}>
+          <button type='button' onClick={signIn} className='btn-banner-login'>
             Sign in with Google
           </button>
         </li>
