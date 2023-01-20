@@ -30,26 +30,38 @@ function MyNav({ currentUser, toggleTweetPopup }) {
         </li>
         <li className='nav-user'>
           {currentUser && (
-            <div
-              className='nav-user-item'
-              onClick={toggleLogoutPopup}
-              aria-hidden='true'
-            >
-              <div className='nav-user-img-container'>
-                <img src={currentUser.photoURL} alt={currentUser.displayName} />
+            <>
+              <div
+                className='nav-user-item'
+                onClick={toggleLogoutPopup}
+                aria-hidden='true'
+              >
+                <div className='nav-user-img-container'>
+                  <img
+                    src={currentUser.photoURL}
+                    alt={currentUser.displayName}
+                  />
+                </div>
+                <div>{currentUser.displayName}</div>
+                <ThreeDots />
               </div>
-              <div>{currentUser.displayName}</div>
-              <ThreeDots />
               {logoutPopup && (
-                <button
-                  type='button'
-                  onClick={signOutUser}
-                  className='btn-nav-logout'
-                >
-                  Log Out
-                </button>
+                <>
+                  <div
+                    className='options-background'
+                    onClick={toggleLogoutPopup}
+                    aria-hidden='true'
+                  />
+                  <button
+                    type='button'
+                    onClick={signOutUser}
+                    className='btn-nav-logout'
+                  >
+                    Log Out {currentUser.displayName}
+                  </button>
+                </>
               )}
-            </div>
+            </>
           )}
         </li>
       </ul>

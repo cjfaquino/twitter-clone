@@ -35,6 +35,8 @@ input:focus {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 0;
+  margin-left: auto;
   gap: 4px;
   padding: 0;
   height: 30px;
@@ -101,6 +103,8 @@ input:focus {
 
 #menubar .btn-nav-tweet {
   width: 100%;
+  padding: 15px;
+  border-radius: 50px;
   background-color: blue;
 }
 
@@ -127,9 +131,13 @@ input:focus {
 
 .btn-nav-logout {
   position: absolute;
-  top: -50px;
+  background-color: black;
+  border-radius: 13px;
+  padding: 15px;
+  top: -60px;
   left: 0;
   width: 100%;
+  z-index: 20;
 }
 
 /* Tweet & login popup */
@@ -271,7 +279,9 @@ input:focus {
   position: fixed;
   width: 100vw;
   height: 100vh;
-  z-index: 4;
+  top: 0;
+  left: 0;
+  z-index: 19;
 }
 
 .options-popup {
@@ -280,7 +290,7 @@ input:focus {
   left: -150px;
   background-color: black;
   border-radius: 10px;
-  z-index: 5;
+  z-index: 20;
 }
 
 .options-popup button {
