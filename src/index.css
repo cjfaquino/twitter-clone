@@ -38,6 +38,12 @@ body {
   min-width: 100vw;
 }
 
+button {
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
