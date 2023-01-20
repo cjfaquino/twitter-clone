@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { clearConfigCache } from 'prettier';
 import { checkMatchingUser, getUserUid } from '../firebase';
 import deleteTweet from '../utils/deleteTweet';
 import ThreeDots from './ThreeDots';
 import useToggle from '../utils/useToggle';
+import getTimeString from '../utils/getTimeString';
 
 function MainTweet({ tweetObj, repLength }) {
   const navigate = useNavigate();
@@ -17,11 +17,6 @@ function MainTweet({ tweetObj, repLength }) {
       navigate('/');
     }
   };
-
-  const getTimeString = (timestamp) =>
-    timestamp
-      ? timestamp.toDate().toLocaleString()
-      : new Date().toLocaleString();
 
   const customClass = 'main-tweet';
 

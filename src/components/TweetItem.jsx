@@ -7,6 +7,7 @@ import useReplies from '../utils/useReplies';
 import deleteTweetFromDOM from '../utils/deleteTweetFromDOM';
 import ThreeDots from './ThreeDots';
 import useToggle from '../utils/useToggle';
+import getTimeString from '../utils/getTimeString';
 
 function TweetItem({ tweetObj }) {
   const navigate = useNavigate();
@@ -42,7 +43,6 @@ function TweetItem({ tweetObj }) {
   };
 
   return (
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div
       type='button'
       className='tweet-item'
@@ -57,17 +57,8 @@ function TweetItem({ tweetObj }) {
       <div className='tweet-item-right-half'>
         <div className='tweet-item-info'>
           <div className='tweet-item-name'>{USER_NAME}</div>
-          <div
-            className='tweet-item-time'
-            title={
-              timestamp.toDate
-                ? timestamp.toDate().toLocaleString()
-                : new Date().toLocaleString()
-            }
-          >
-            {timestamp.toDate
-              ? timestamp.toDate().toLocaleDateString()
-              : new Date().toLocaleDateString()}
+          <div className='tweet-item-time' title={getTimeString(timestamp)}>
+            {getTimeString(timestamp, 'localeDate')}
           </div>
           <div
             className='dots-container'

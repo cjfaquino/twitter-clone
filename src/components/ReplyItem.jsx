@@ -5,6 +5,7 @@ import deleteReply from '../utils/deleteReply';
 import deleteTweetFromDOM from '../utils/deleteTweetFromDOM';
 import useToggle from '../utils/useToggle';
 import ThreeDots from './ThreeDots';
+import getTimeString from '../utils/getTimeString';
 
 function ReplyItem({ replyObj, TWEET_ID }) {
   const { text, timestamp, USER_ICON, USER_NAME, USER_ID } = replyObj.data;
@@ -31,15 +32,9 @@ function ReplyItem({ replyObj, TWEET_ID }) {
           <div className={`${customClass}-item-name`}>{USER_NAME}</div>
           <div
             className={`${customClass}-item-time`}
-            title={
-              timestamp.toDate
-                ? timestamp.toDate().toLocaleString()
-                : new Date().toLocaleString()
-            }
+            title={getTimeString(timestamp)}
           >
-            {timestamp.toDate
-              ? timestamp.toDate().toLocaleDateString()
-              : new Date().toLocaleDateString()}
+            {getTimeString(timestamp, 'localeDate')}
           </div>
           <div
             className='dots-container'
