@@ -50,7 +50,6 @@ input:focus {
 /* MyNav */
 
 #menubar {
-  padding: 20px;
   height: 100vh;
   position: fixed;
   width: var(--menubar-width);
@@ -62,10 +61,6 @@ input:focus {
   flex-direction: column;
   gap: 30px;
   height: 100%;
-}
-
-#menubar li a {
-  margin-left: 20px;
 }
 
 #menubar .nav-home > *,
@@ -80,8 +75,52 @@ input:focus {
 }
 
 .nav-user {
+  position: relative;
+  cursor: pointer;
   margin-top: auto;
-  margin-bottom: 0;
+  margin-bottom: 10px;
+}
+
+.nav-user-item {
+  --pfp-size: 40px;
+  padding: 10px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background 0.2s ease-in-out;
+}
+
+.nav-user-item:hover {
+  background: rgb(68, 68, 68);
+}
+
+.nav-user-item .nav-user-options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  gap: 4px;
+  margin-right: 0;
+  padding: 0;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+}
+
+.btn-nav-logout {
+  position: absolute;
+  top: -50px;
+  left: 0;
+  width: 100%;
+}
+
+.dots-option {
+  aspect-ratio: 1 / 1;
+  height: 3px;
+  width: 3px;
+  border-radius: 50%;
+  background-color: white;
 }
 
 /* Tweet & login popup */
@@ -148,7 +187,8 @@ input:focus {
 .tweet-item-img-container,
 .reply-item-img-container,
 .main-tweet-item-img-container,
-.reply-input-img-container {
+.reply-input-img-container,
+.nav-user-img-container {
   width: var(--pfp-size);
   height: var(--pfp-size);
   aspect-ratio: 1 / 1;
@@ -161,7 +201,8 @@ input:focus {
 .tweet-item-img-container img,
 .reply-item-img-container img,
 .main-tweet-item-img-container img,
-.reply-input-img-container img {
+.reply-input-img-container img,
+.nav-user-img-container img {
   height: 100%;
   width: 100%;
 }
@@ -217,8 +258,6 @@ input:focus {
   cursor: pointer;
 }
 
-.tweet-item:hover {
-}
 /* main tweet */
 
 #main-tweet-container {

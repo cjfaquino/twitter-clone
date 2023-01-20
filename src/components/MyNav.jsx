@@ -2,8 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { signOutUser, isUserSignedIn } from '../firebase';
+import useToggle from '../utils/useToggle';
 
 function MyNav({ isSignedIn, currentUser, toggleTweetPopup }) {
+  const [logoutPopup, toggleLogoutPopup] = useToggle();
+
   const handleClick = () => {
     if (isUserSignedIn()) {
       // show tweet popup
@@ -24,14 +27,34 @@ function MyNav({ isSignedIn, currentUser, toggleTweetPopup }) {
             Tweet
           </button>
         </li>
-        <li className='nav-user'>{currentUser && currentUser.displayName}</li>
-        {isSignedIn && (
-          <li>
-            <button type='button' onClick={signOutUser}>
-              Log Out
-            </button>
-          </li>
-        )}
+        <li className='nav-user'>
+          {currentUser && (
+            <div
+              className='nav-user-item'
+              onClick={toggleLogoutPopup}
+              aria-hidden='true'
+            >
+              <div className='nav-user-img-container'>
+                <img src={currentUser.photoURL} alt={currentUser.displayName} />
+              </div>
+              <div>{currentUser.displayName}</div>
+              <div className='nav-user-options'>
+                <div className='dots-option' />
+                <div className='dots-option' />
+                <div className='dots-option' />
+              </div>
+              {logoutPopup && (
+                <button
+                  type='button'
+                  onClick={signOutUser}
+                  className='btn-nav-logout'
+                >
+                  Log Out
+                </button>
+              )}
+            </div>
+          )}
+        </li>
       </ul>
     </nav>
   );
@@ -41,6 +64,7 @@ MyNav.propTypes = {
   isSignedIn: PropTypes.bool,
   currentUser: PropTypes.shape({
     displayName: PropTypes.string,
+    photoURL: PropTypes.string,
   }),
   toggleTweetPopup: PropTypes.func.isRequired,
 };
