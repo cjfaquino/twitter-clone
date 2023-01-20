@@ -304,7 +304,7 @@ input:focus {
   width: 100%;
 }
 
-/* main tweet */
+/* tweet page */
 
 #main-tweet-container {
   min-height: 180px;
@@ -333,6 +333,14 @@ input:focus {
   display: flex;
   justify-content: space-between;
   padding: 0 60px;
+}
+
+.btn-submit-reply {
+  padding: 15px;
+  border-radius: 50px;
+  width: 120px;
+  background: blue;
+  font-weight: 700;
 }
 
 /* inputs */

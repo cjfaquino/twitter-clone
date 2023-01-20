@@ -1,11 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import { clearConfigCache } from 'prettier';
 import { checkMatchingUser, getUserUid } from '../firebase';
 import deleteTweet from '../utils/deleteTweet';
+import ThreeDots from './ThreeDots';
+import useToggle from '../utils/useToggle';
 
 function MainTweet({ tweetObj, repLength }) {
   const navigate = useNavigate();
+  const [showOptionsPopup, toggleOptionsPopup] = useToggle();
 
   const handleDelete = async () => {
     if (checkMatchingUser(getUserUid)) {
@@ -38,11 +42,29 @@ function MainTweet({ tweetObj, repLength }) {
               <div className={`${customClass}-item-name`}>{USER_NAME}</div>
             </div>
           </div>
-          {checkMatchingUser(USER_ID) && (
-            <button type='button' onClick={handleDelete}>
-              Delete
-            </button>
-          )}
+          <div
+            className='dots-container'
+            onClick={toggleOptionsPopup}
+            aria-hidden='true'
+          >
+            <ThreeDots />
+            {showOptionsPopup && (
+              <>
+                <div className='options-popup'>
+                  {checkMatchingUser(USER_ID) && (
+                    <button
+                      className='btn-delete-tweet'
+                      type='button'
+                      onClick={handleDelete}
+                    >
+                      Delete
+                    </button>
+                  )}
+                </div>
+                <div className='options-background' aria-hidden='true' />
+              </>
+            )}
+          </div>
         </div>
 
         <div className={`${customClass}-item-message`}>{text}</div>

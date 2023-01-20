@@ -35,7 +35,6 @@ function Replies({ TWEET_ID, replies, addReplyToDOM }) {
 
   return (
     <div>
-      Replies
       {isUserSignedIn() && (
         <form onSubmit={handleSubmitReply} className='reply-input-container'>
           <div className='reply-input-img-container'>
@@ -49,7 +48,9 @@ function Replies({ TWEET_ID, replies, addReplyToDOM }) {
             onChange={handleReplyInput}
             className='reply-input'
           />
-          <button type='submit'>Tweet</button>
+          <button type='submit' className='btn-submit-reply'>
+            Tweet
+          </button>
         </form>
       )}
       {replies.map((reply) => (
