@@ -5,12 +5,15 @@ import { checkMatchingUser } from '../firebase';
 import deleteTweet from '../utils/deleteTweet';
 import useReplies from '../utils/useReplies';
 import deleteTweetFromDOM from '../utils/deleteTweetFromDOM';
+import ThreeDots from './ThreeDots';
+import useToggle from '../utils/useToggle';
 
 function TweetItem({ tweetObj }) {
   const navigate = useNavigate();
   const { text, timestamp, USER_ICON, USER_ID, USER_NAME } = tweetObj.data;
   const { id: TWEET_ID } = tweetObj;
   const [, repLength] = useReplies(tweetObj.id);
+  const [showOptionsPopup, toggleOptionsPopup] = useToggle();
 
   const handleDelete = async () => {
     // delete from DB
@@ -21,10 +24,25 @@ function TweetItem({ tweetObj }) {
     }
   };
 
+  const checkElementClicked = (targetString, conditions) =>
+    conditions.some((el) => targetString.includes(el));
+
   const navToPage = (e) => {
     const targetName = e.target.className;
-    if (targetName.includes('delete' || 'name' || 'time') === false)
+    // conditions
+    const toOptions = ['more-options', 'dots'];
+    const toUser = ['name', 'img'];
+    const toTweetPage = ['info', 'right-half', 'message', 'time', 'buttons'];
+
+    if (checkElementClicked(targetName, toTweetPage)) {
+      // go to tweet page
       navigate(`/tweet/${TWEET_ID}`);
+    } else if (checkElementClicked(targetName, toOptions)) {
+      // toggle options popup
+      toggleOptionsPopup();
+    } else if (checkElementClicked(targetName, toUser)) {
+      // go to user page
+    }
   };
 
   return (
@@ -37,7 +55,7 @@ function TweetItem({ tweetObj }) {
       aria-hidden='true'
     >
       <div className='tweet-item-img-container'>
-        <img src={USER_ICON} alt={USER_NAME} />
+        <img src={USER_ICON} alt={USER_NAME} className='tweet-item-img' />
       </div>
 
       <div className='tweet-item-right-half'>
@@ -55,22 +73,35 @@ function TweetItem({ tweetObj }) {
               ? timestamp.toDate().toLocaleDateString()
               : new Date().toLocaleDateString()}
           </div>
+          <div className='dots-container'>
+            <ThreeDots onClick={toggleOptionsPopup} />
+            {showOptionsPopup && (
+              <>
+                <div
+                  className='options-background'
+                  onClick={toggleOptionsPopup}
+                  aria-hidden='true'
+                />
+                <div className='options-popup'>
+                  {checkMatchingUser(USER_ID) && (
+                    <button
+                      className='btn-delete-tweet'
+                      type='button'
+                      onClick={handleDelete}
+                    >
+                      Delete
+                    </button>
+                  )}
+                </div>
+              </>
+            )}
+          </div>
         </div>
         <div className='tweet-item-message'>{text}</div>
         <div className='tweet-item-buttons'>
           <span>stats</span> <span>reply {repLength > 0 && repLength}</span>
           <span>retweet</span> <span>like</span> <span>share</span>
         </div>
-
-        {checkMatchingUser(USER_ID) && (
-          <button
-            className='btn-delete-tweet'
-            type='button'
-            onClick={handleDelete}
-          >
-            Delete
-          </button>
-        )}
       </div>
     </div>
   );
