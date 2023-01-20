@@ -74,7 +74,7 @@ function TweetItem({ tweetObj }) {
               : new Date().toLocaleDateString()}
           </div>
           <div className='dots-container'>
-            <ThreeDots onClick={toggleOptionsPopup} />
+            <ThreeDots />
             {showOptionsPopup && (
               <>
                 <div
