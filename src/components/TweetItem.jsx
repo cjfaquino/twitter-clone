@@ -30,16 +30,12 @@ function TweetItem({ tweetObj }) {
   const navToPage = (e) => {
     const targetName = e.target.className;
     // conditions
-    const toOptions = ['more-options', 'dots'];
     const toUser = ['name', 'img'];
     const toTweetPage = ['info', 'right-half', 'message', 'time', 'buttons'];
 
     if (checkElementClicked(targetName, toTweetPage)) {
       // go to tweet page
       navigate(`/tweet/${TWEET_ID}`);
-    } else if (checkElementClicked(targetName, toOptions)) {
-      // toggle options popup
-      toggleOptionsPopup();
     } else if (checkElementClicked(targetName, toUser)) {
       // go to user page
     }
@@ -73,15 +69,15 @@ function TweetItem({ tweetObj }) {
               ? timestamp.toDate().toLocaleDateString()
               : new Date().toLocaleDateString()}
           </div>
-          <div className='dots-container'>
+          <div
+            className='dots-container'
+            onClick={toggleOptionsPopup}
+            aria-hidden='true'
+          >
             <ThreeDots />
             {showOptionsPopup && (
               <>
-                <div
-                  className='options-background'
-                  onClick={toggleOptionsPopup}
-                  aria-hidden='true'
-                />
+                <div className='options-background' aria-hidden='true' />
                 <div className='options-popup'>
                   {checkMatchingUser(USER_ID) && (
                     <button
