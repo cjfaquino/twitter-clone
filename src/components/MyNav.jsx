@@ -17,6 +17,11 @@ function MyNav({ currentUser, toggleTweetPopup }) {
     }
   };
 
+  const handleSignOut = () => {
+    signOutUser();
+    toggleLogoutPopup();
+  };
+
   return (
     <nav id='menubar'>
       <ul className='menu-list'>
@@ -54,7 +59,7 @@ function MyNav({ currentUser, toggleTweetPopup }) {
                   />
                   <button
                     type='button'
-                    onClick={signOutUser}
+                    onClick={handleSignOut}
                     className='btn-nav-logout'
                   >
                     Log Out {currentUser.displayName}
