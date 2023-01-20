@@ -3,10 +3,13 @@ import PropTypes from 'prop-types';
 import { checkMatchingUser } from '../firebase';
 import deleteReply from '../utils/deleteReply';
 import deleteTweetFromDOM from '../utils/deleteTweetFromDOM';
+import useToggle from '../utils/useToggle';
+import ThreeDots from './ThreeDots';
 
 function ReplyItem({ replyObj, TWEET_ID }) {
   const { text, timestamp, USER_ICON, USER_NAME, USER_ID } = replyObj.data;
   const { id: REPLY_ID } = replyObj;
+  const [showOptionsPopup, toggleOptionsPopup] = useToggle();
 
   const handleDelete = async () => {
     if (checkMatchingUser(USER_ID)) {
@@ -38,18 +41,35 @@ function ReplyItem({ replyObj, TWEET_ID }) {
               ? timestamp.toDate().toLocaleDateString()
               : new Date().toLocaleDateString()}
           </div>
+          <div
+            className='dots-container'
+            onClick={toggleOptionsPopup}
+            aria-hidden='true'
+          >
+            <ThreeDots />
+            {showOptionsPopup && (
+              <>
+                <div className='options-popup'>
+                  {checkMatchingUser(USER_ID) && (
+                    <button
+                      className='btn-delete-tweet'
+                      type='button'
+                      onClick={handleDelete}
+                    >
+                      Delete
+                    </button>
+                  )}
+                </div>
+                <div className='options-background' aria-hidden='true' />
+              </>
+            )}
+          </div>
         </div>
         <div className={`${customClass}-item-message`}>{text}</div>
         <div className={`${customClass}-item-buttons`}>
           <span>stats</span> <span>retweet</span> <span>like</span>
           <span>share</span>
         </div>
-
-        {checkMatchingUser(USER_ID) && (
-          <button type='button' onClick={handleDelete}>
-            Delete
-          </button>
-        )}
       </div>
     </div>
   );
