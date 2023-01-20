@@ -7,7 +7,7 @@ import ThreeDots from './ThreeDots';
 import useToggle from '../utils/useToggle';
 import getTimeString from '../utils/getTimeString';
 
-function MainTweet({ tweetObj, repLength }) {
+function MainTweet({ tweetObj }) {
   const navigate = useNavigate();
   const [showOptionsPopup, toggleOptionsPopup] = useToggle();
 
@@ -22,7 +22,8 @@ function MainTweet({ tweetObj, repLength }) {
 
   if (!tweetObj) return <div id={`${customClass}-container`} />;
 
-  const { text, timestamp, USER_ICON, USER_NAME, USER_ID } = tweetObj.data;
+  const { text, timestamp, replies, USER_ICON, USER_NAME, USER_ID } =
+    tweetObj.data;
   const { id: TWEET_ID } = tweetObj.id;
 
   return (
@@ -71,7 +72,7 @@ function MainTweet({ tweetObj, repLength }) {
           {getTimeString(timestamp)} <span>stats</span>
         </div>
         <div className={`${customClass}-item-buttons`}>
-          <span>reply {repLength > 0 && repLength}</span>
+          <span>reply {replies.length > 0 && replies.length}</span>
           <span>retweet</span> <span>like</span> <span>share</span>
         </div>
       </div>
@@ -92,11 +93,9 @@ MainTweet.propTypes = {
     }),
     id: PropTypes.string,
   }),
-  repLength: PropTypes.number,
 };
 
 MainTweet.defaultProps = {
-  repLength: 0,
   tweetObj: null,
 };
 

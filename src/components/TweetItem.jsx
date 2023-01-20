@@ -3,23 +3,28 @@ import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { checkMatchingUser } from '../firebase';
 import deleteTweet from '../utils/deleteTweet';
-import useReplies from '../utils/useReplies';
+import deleteReply from '../utils/deleteReply';
 import deleteTweetFromDOM from '../utils/deleteTweetFromDOM';
 import ThreeDots from './ThreeDots';
 import useToggle from '../utils/useToggle';
 import getTimeString from '../utils/getTimeString';
 
-function TweetItem({ tweetObj }) {
+function TweetItem({ tweetObj, replyToID }) {
   const navigate = useNavigate();
-  const { text, timestamp, USER_ICON, USER_ID, USER_NAME } = tweetObj.data;
+  const { text, timestamp, replies, USER_ICON, USER_ID, USER_NAME } =
+    tweetObj.data;
   const { id: TWEET_ID } = tweetObj;
-  const [, repLength] = useReplies(tweetObj.id);
+
   const [showOptionsPopup, toggleOptionsPopup] = useToggle();
 
   const handleDelete = async () => {
     // delete from DB
     if (checkMatchingUser(USER_ID)) {
-      await deleteTweet(TWEET_ID);
+      if (replyToID) {
+        await deleteReply(replyToID, TWEET_ID);
+      } else {
+        await deleteTweet(TWEET_ID);
+      }
 
       deleteTweetFromDOM(TWEET_ID);
     }
@@ -36,28 +41,32 @@ function TweetItem({ tweetObj }) {
 
     if (checkElementClicked(targetName, toTweetPage)) {
       // go to tweet page
-      navigate(`/tweet/${TWEET_ID}`);
+      navigate(`/tweet/${TWEET_ID}`, { state: { tweetObj } });
     } else if (checkElementClicked(targetName, toUser)) {
       // go to user page
     }
   };
 
+  const customClass = replyToID ? 'reply' : 'tweet';
+
   return (
     <div
-      type='button'
-      className='tweet-item'
+      className={`${customClass}-item`}
       id={TWEET_ID}
       onClick={navToPage}
-      aria-hidden='true'
+      aria-hidden
     >
-      <div className='tweet-item-img-container'>
-        <img src={USER_ICON} alt={USER_NAME} className='tweet-item-img' />
+      <div className={`${customClass}-item-img-container`}>
+        <img src={USER_ICON} alt={USER_NAME} />
       </div>
 
-      <div className='tweet-item-right-half'>
-        <div className='tweet-item-info'>
-          <div className='tweet-item-name'>{USER_NAME}</div>
-          <div className='tweet-item-time' title={getTimeString(timestamp)}>
+      <div className={`${customClass}-item-right-half`}>
+        <div className={`${customClass}-item-info`}>
+          <div className={`${customClass}-item-name`}>{USER_NAME}</div>
+          <div
+            className={`${customClass}-item-time`}
+            title={getTimeString(timestamp)}
+          >
             {getTimeString(timestamp, 'localeDate')}
           </div>
           <div
@@ -68,7 +77,6 @@ function TweetItem({ tweetObj }) {
             <ThreeDots />
             {showOptionsPopup && (
               <>
-                <div className='options-background' aria-hidden='true' />
                 <div className='options-popup'>
                   {checkMatchingUser(USER_ID) && (
                     <button
@@ -80,14 +88,17 @@ function TweetItem({ tweetObj }) {
                     </button>
                   )}
                 </div>
+                <div className='options-background' aria-hidden='true' />
               </>
             )}
           </div>
         </div>
-        <div className='tweet-item-message'>{text}</div>
-        <div className='tweet-item-buttons'>
-          <span>stats</span> <span>reply {repLength > 0 && repLength}</span>
-          <span>retweet</span> <span>like</span> <span>share</span>
+        <div className={`${customClass}-item-message`}>{text}</div>
+        <div className={`${customClass}-item-buttons`}>
+          <span>stats</span>
+          <span>reply {replies.length > 0 && replies.length}</span>
+          <span>retweet</span> <span>like</span>
+          <span>share</span>
         </div>
       </div>
     </div>

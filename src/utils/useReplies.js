@@ -1,39 +1,34 @@
 import { useEffect, useState } from 'react';
-import { collection, query, getDocs, orderBy } from 'firebase/firestore';
+import { doc, query, getDoc } from 'firebase/firestore';
 import { db } from '../firebase-config';
 
-export default function useReplies(tweetID) {
+export default function useReplies(arrayOfReplyIDs = []) {
   const [replies, setReplies] = useState([]);
   const [loading, setLoading] = useState(true);
 
   let count = 0;
-
   useEffect(() => {
-    const queryRef = query(
-      collection(db, 'tweets', tweetID, 'replies'),
-      orderBy('timestamp', 'asc')
-    );
+    arrayOfReplyIDs.forEach((replyID) => {
+      const queryRef = query(doc(db, 'tweets', replyID));
 
-    getDocs(queryRef)
-      .then((qSnap) => {
-        count += 1;
-
-        qSnap.forEach((item) => {
-          if (count === 1) {
-            setReplies((prev) => [...prev, { id: item.id, data: item.data() }]);
-          }
-        });
-      })
-      .catch((e) => console.error(e))
-      .finally(setLoading(false));
+      if (count === 0) {
+        getDoc(queryRef)
+          .then((qSnap) => {
+            if (qSnap.exists()) {
+              setReplies((prev) => [
+                ...prev,
+                { id: qSnap.id, data: qSnap.data() },
+              ]);
+            }
+          })
+          .catch((e) => console.log(e));
+      }
+    });
+    count += 1;
+    setLoading(false);
 
     return () => {};
   }, []);
 
-  // add reply to DOM as first item until refresh
-  const addReplyToDOM = (replyObj) => {
-    setReplies((prev) => [replyObj, ...prev]);
-  };
-
-  return [replies, replies.length, addReplyToDOM, loading];
+  return [replies, replies.length, loading];
 }

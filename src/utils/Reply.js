@@ -8,5 +8,8 @@ export default class Reply {
     this.USER_ICON = getProfilePicUrl();
     this.text = messageText;
     this.timestamp = serverTimestamp();
+    this.replies = [];
+    this.likes = [];
+    this.retweets = [];
   }
 }

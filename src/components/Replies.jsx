@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { getDisplayName, getProfilePicUrl, isUserSignedIn } from '../firebase';
-import saveReply from '../utils/saveReply';
-import ReplyItem from './ReplyItem';
 import Reply from '../utils/Reply';
+import TweetItem from './TweetItem';
+import saveTweet from '../utils/saveTweet';
+import updateTweet from '../utils/updateTweet';
+import useReplies from '../utils/useReplies';
 
-function Replies({ TWEET_ID, replies, addReplyToDOM }) {
+function Replies({ tweetObj, replies }) {
+  const [fetchedReplies] = useReplies(replies);
   const [replyMessage, setReplyMessage] = useState('');
   const handleReplyInput = (e) => {
     setReplyMessage(e.target.value);
@@ -23,10 +26,12 @@ function Replies({ TWEET_ID, replies, addReplyToDOM }) {
       return; // show login popup
     }
 
-    const docID = await saveReply(TWEET_ID, replyMessage);
+    const docID = await saveTweet(replyMessage, tweetObj);
     if (docID) {
       // send to TweetPage
-      addReplyToDOM({ id: docID, data: new Reply(replyMessage) });
+      const replyObj = { id: docID, data: new Reply(replyMessage) };
+      fetchedReplies.push(replyObj);
+      updateTweet(tweetObj.id, docID);
       setReplyMessage('');
     } else {
       // error sending
@@ -53,16 +58,14 @@ function Replies({ TWEET_ID, replies, addReplyToDOM }) {
           </button>
         </form>
       )}
-      {replies.map((reply) => (
-        <ReplyItem key={reply.id} replyObj={reply} TWEET_ID={TWEET_ID} />
+      {fetchedReplies.map((reply) => (
+        <TweetItem key={reply.id} tweetObj={reply} replyToID={tweetObj.id} />
       ))}
     </div>
   );
 }
 
 Replies.propTypes = {
-  addReplyToDOM: PropTypes.func.isRequired,
-  TWEET_ID: PropTypes.string.isRequired,
   replies: PropTypes.arrayOf(
     PropTypes.shape({
       tweetObj: PropTypes.shape({
