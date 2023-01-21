@@ -38,12 +38,8 @@ function MainTweet({ tweetObj }) {
               <div className={`${customClass}-item-name`}>{USER_NAME}</div>
             </div>
           </div>
-          <div
-            className='dots-container'
-            onClick={toggleOptionsPopup}
-            aria-hidden='true'
-          >
-            <ThreeDots />
+          <div className='dots-container'>
+            <ThreeDots onClick={toggleOptionsPopup} />
             {showOptionsPopup && (
               <>
                 <div className='options-popup'>
@@ -57,7 +53,11 @@ function MainTweet({ tweetObj }) {
                     </button>
                   )}
                 </div>
-                <div className='options-background' aria-hidden='true' />
+                <div
+                  className='options-background'
+                  onClick={toggleOptionsPopup}
+                  aria-hidden='true'
+                />
               </>
             )}
           </div>

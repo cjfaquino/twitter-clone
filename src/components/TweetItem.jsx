@@ -61,12 +61,8 @@ function TweetItem({ tweetObj, replyToID }) {
           >
             {getTimeString(timestamp, 'localeDate')}
           </div>
-          <div
-            className='dots-container'
-            onClick={toggleOptionsPopup}
-            aria-hidden='true'
-          >
-            <ThreeDots />
+          <div className='dots-container'>
+            <ThreeDots onClick={toggleOptionsPopup} />
             {showOptionsPopup && (
               <>
                 <div className='options-popup'>
@@ -80,7 +76,11 @@ function TweetItem({ tweetObj, replyToID }) {
                     </button>
                   )}
                 </div>
-                <div className='options-background' aria-hidden='true' />
+                <div
+                  className='options-background'
+                  onClick={toggleOptionsPopup}
+                  aria-hidden='true'
+                />
               </>
             )}
           </div>
