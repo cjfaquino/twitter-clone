@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { checkMatchingUser } from '../firebase';
 import deleteTweet from '../utils/deleteTweet';
-import deleteTweetFromDOM from '../utils/deleteTweetFromDOM';
 import ThreeDots from './ThreeDots';
 import useToggle from '../utils/useToggle';
 import getTimeString from '../utils/getTimeString';
@@ -34,7 +33,7 @@ function TweetItem({ tweetObj, replyToID }) {
 
     if (checkElementClicked(targetName, toTweetPage)) {
       // go to tweet page
-      navigate(`/tweet/${TWEET_ID}`, { state: { tweetObj } });
+      navigate(`/tweet/${TWEET_ID}`);
     } else if (checkElementClicked(targetName, toUser)) {
       // go to user page
     }
@@ -99,8 +98,12 @@ function TweetItem({ tweetObj, replyToID }) {
 }
 
 TweetItem.propTypes = {
+  replyToID: PropTypes.string,
   tweetObj: PropTypes.shape({
     data: PropTypes.shape({
+      replies: PropTypes.arrayOf(PropTypes.string),
+      likes: PropTypes.number,
+      retweets: PropTypes.number,
       text: PropTypes.string,
       timestamp: PropTypes.shape({
         toDate: PropTypes.func,
@@ -111,6 +114,10 @@ TweetItem.propTypes = {
     }),
     id: PropTypes.string,
   }).isRequired,
+};
+
+TweetItem.defaultProps = {
+  replyToID: null,
 };
 
 export default TweetItem;

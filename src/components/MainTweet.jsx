@@ -83,6 +83,9 @@ function MainTweet({ tweetObj }) {
 MainTweet.propTypes = {
   tweetObj: PropTypes.shape({
     data: PropTypes.shape({
+      replies: PropTypes.arrayOf(PropTypes.string),
+      likes: PropTypes.number,
+      retweets: PropTypes.number,
       text: PropTypes.string,
       timestamp: PropTypes.shape({
         toDate: PropTypes.func,
