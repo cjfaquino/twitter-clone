@@ -7,7 +7,7 @@ import ThreeDots from './ThreeDots';
 import useToggle from '../utils/useToggle';
 import getTimeString from '../utils/getTimeString';
 
-function TweetItem({ tweetObj, replyToID }) {
+function TweetItem({ tweetObj }) {
   const navigate = useNavigate();
   const { text, timestamp, replies, USER_ICON, USER_ID, USER_NAME } =
     tweetObj.data;
@@ -39,7 +39,7 @@ function TweetItem({ tweetObj, replyToID }) {
     }
   };
 
-  const customClass = replyToID ? 'reply' : 'tweet';
+  const customClass = 'tweet';
 
   return (
     <div
@@ -85,6 +85,12 @@ function TweetItem({ tweetObj, replyToID }) {
             )}
           </div>
         </div>
+        {tweetObj.data.aReplyTo && (
+          <div className='replying-to-info'>
+            Replying to {tweetObj.data.aReplyTo.data.USER_NAME}
+          </div>
+        )}
+
         <div className={`${customClass}-item-message`}>{text}</div>
         <div className={`${customClass}-item-buttons`}>
           <span>stats</span>
@@ -98,9 +104,13 @@ function TweetItem({ tweetObj, replyToID }) {
 }
 
 TweetItem.propTypes = {
-  replyToID: PropTypes.string,
   tweetObj: PropTypes.shape({
     data: PropTypes.shape({
+      aReplyTo: PropTypes.shape({
+        data: PropTypes.shape({
+          USER_NAME: PropTypes.string,
+        }),
+      }),
       replies: PropTypes.arrayOf(PropTypes.string),
       likes: PropTypes.number,
       retweets: PropTypes.number,
@@ -114,10 +124,6 @@ TweetItem.propTypes = {
     }),
     id: PropTypes.string,
   }).isRequired,
-};
-
-TweetItem.defaultProps = {
-  replyToID: null,
 };
 
 export default TweetItem;
