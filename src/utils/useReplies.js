@@ -6,8 +6,9 @@ export default function useReplies(arrayOfReplyIDs = []) {
   const [replies, setReplies] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  let count = 0;
   useEffect(() => {
+    let count = 0;
+
     arrayOfReplyIDs.forEach((replyID) => {
       const queryRef = query(doc(db, 'tweets', replyID));
 
@@ -24,11 +25,15 @@ export default function useReplies(arrayOfReplyIDs = []) {
           .catch((e) => console.log(e));
       }
     });
+
     count += 1;
+
     setLoading(false);
 
-    return () => {};
-  }, []);
+    return () => {
+      setReplies([]);
+    };
+  }, [arrayOfReplyIDs]);
 
   return [replies, replies.length, loading];
 }

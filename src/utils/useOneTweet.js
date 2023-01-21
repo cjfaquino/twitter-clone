@@ -11,7 +11,7 @@ export default function useOneTweet(tweetID) {
     setLoading(true);
     getDoc(docRef)
       .then((docSnap) => {
-        if (docSnap.exists() && !tweet) {
+        if (docSnap.exists() && tweet !== docSnap.data()) {
           setTweet({ id: docSnap.id, data: docSnap.data() });
         } else {
           // doc.data() will be undefined in this case
@@ -19,6 +19,11 @@ export default function useOneTweet(tweetID) {
         }
       })
       .finally(setLoading(false));
-  }, []);
+
+    return () => {
+      setTweet(null);
+    };
+  }, [tweetID]);
+
   return [tweet, setTweet, loading];
 }

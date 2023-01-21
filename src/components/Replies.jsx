@@ -10,6 +10,7 @@ import useReplies from '../utils/useReplies';
 function Replies({ tweetObj, replies }) {
   const [fetchedReplies] = useReplies(replies);
   const [replyMessage, setReplyMessage] = useState('');
+
   const handleReplyInput = (e) => {
     setReplyMessage(e.target.value);
 

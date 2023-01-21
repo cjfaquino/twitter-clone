@@ -7,9 +7,8 @@ import useReplies from '../utils/useReplies';
 
 function TweetPage() {
   const params = useParams();
-  const location = useLocation();
   const [tweet] = useOneTweet(params.tweet);
-  console.log(params);
+  console.log(tweet);
 
   // const [replies, repLength, addReplyToDOM] = useReplies(params.tweet);
 
