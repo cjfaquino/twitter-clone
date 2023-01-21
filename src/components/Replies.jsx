@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { getDisplayName, getProfilePicUrl, isUserSignedIn } from '../firebase';
-import Reply from '../utils/Reply';
 import TweetItem from './TweetItem';
 import saveTweet from '../utils/saveTweet';
 import updateTweet from '../utils/updateTweet';
 import useReplies from '../utils/useReplies';
+import Tweet from '../utils/Tweet';
 
 function Replies({ tweetObj, replies }) {
   const [fetchedReplies] = useReplies(replies);
@@ -30,7 +30,7 @@ function Replies({ tweetObj, replies }) {
     const docID = await saveTweet(replyMessage, tweetObj);
     if (docID) {
       // send to TweetPage
-      const replyObj = { id: docID, data: new Reply(replyMessage) };
+      const replyObj = { id: docID, data: new Tweet(replyMessage, tweetObj) };
       fetchedReplies.push(replyObj);
       updateTweet(tweetObj.id, docID);
       setReplyMessage('');

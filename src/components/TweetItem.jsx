@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { checkMatchingUser } from '../firebase';
 import deleteTweet from '../utils/deleteTweet';
-import deleteReply from '../utils/deleteReply';
 import deleteTweetFromDOM from '../utils/deleteTweetFromDOM';
 import ThreeDots from './ThreeDots';
 import useToggle from '../utils/useToggle';
@@ -20,13 +19,7 @@ function TweetItem({ tweetObj, replyToID }) {
   const handleDelete = async () => {
     // delete from DB
     if (checkMatchingUser(USER_ID)) {
-      if (replyToID) {
-        await deleteReply(replyToID, TWEET_ID);
-      } else {
-        await deleteTweet(TWEET_ID);
-      }
-
-      deleteTweetFromDOM(TWEET_ID);
+      await deleteTweet(tweetObj);
     }
   };
 

@@ -12,8 +12,8 @@ function MainTweet({ tweetObj }) {
   const [showOptionsPopup, toggleOptionsPopup] = useToggle();
 
   const handleDelete = async () => {
-    if (checkMatchingUser(getUserUid)) {
-      await deleteTweet(tweetObj.id);
+    if (checkMatchingUser(getUserUid())) {
+      await deleteTweet(tweetObj);
       navigate('/');
     }
   };

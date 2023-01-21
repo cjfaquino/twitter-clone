@@ -1,7 +1,6 @@
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase-config';
 import Tweet from './Tweet';
-import updateTweet from './updateTweet';
 
 // converts Tweet for firestore
 const tweetConverter = {
