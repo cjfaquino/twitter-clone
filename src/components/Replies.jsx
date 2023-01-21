@@ -82,25 +82,7 @@ Replies.propTypes = {
     }),
     id: PropTypes.string,
   }).isRequired,
-  replies: PropTypes.arrayOf(
-    PropTypes.shape({
-      tweetObj: PropTypes.shape({
-        data: PropTypes.shape({
-          replies: PropTypes.arrayOf(PropTypes.string),
-          likes: PropTypes.number,
-          retweets: PropTypes.number,
-          text: PropTypes.string,
-          timestamp: PropTypes.shape({
-            toDate: PropTypes.func,
-          }),
-          USER_ICON: PropTypes.string,
-          USER_ID: PropTypes.string,
-          USER_NAME: PropTypes.string,
-        }),
-        id: PropTypes.string,
-      }),
-    })
-  ).isRequired,
+  replies: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default Replies;
