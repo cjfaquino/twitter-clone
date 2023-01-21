@@ -14,11 +14,8 @@ function Replies({ tweetObj, replies }) {
   const handleReplyInput = (e) => {
     setReplyMessage(e.target.value);
 
-    // change textarea height
-    const height = e.target.offsetHeight;
-    if (height < e.target.scrollHeight) {
-      e.target.style.height = `${e.target.scrollHeight}px`;
-    }
+    e.target.style.height = '5px';
+    e.target.style.height = `${e.target.scrollHeight}px`;
   };
 
   const handleSubmitReply = async (e) => {
