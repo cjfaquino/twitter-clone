@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { collection, query, getDocs, orderBy } from 'firebase/firestore';
 import { db } from '../firebase-config';
 
-export default function useTweets() {
+export default function useTweets(filter) {
   const [tweets, setTweets] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -14,20 +14,26 @@ export default function useTweets() {
       orderBy('timestamp', 'desc')
     );
 
+    count += 1;
+
+    if (count > 1) return undefined;
+
     getDocs(queryRef)
       .then((qSnap) => {
-        count += 1;
-
         qSnap.forEach((item) => {
-          if (count === 1) {
+          if (filter === 'tweets' && item.data().aReplyTo !== null) return;
+
+          if (!tweets.some((twt) => twt.id === item.id))
             setTweets((prev) => [...prev, { id: item.id, data: item.data() }]);
-          }
         });
       })
-      .catch((e) => console.error(e))
-      .finally(setLoading(false));
+      .catch((e) => console.error(e));
 
-    return () => {};
+    setLoading(false);
+
+    return () => {
+      setTweets([]);
+    };
   }, []);
 
   // add temp tweet to DOM

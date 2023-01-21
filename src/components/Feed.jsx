@@ -4,7 +4,7 @@ import useTweets from '../utils/useTweets';
 import TweetItem from './TweetItem';
 
 function Feed({ newTweet, clrNewTweet }) {
-  const [tweets, addTweetToDOM, isTweetsLoading] = useTweets();
+  const [tweets, addTweetToDOM, isTweetsLoading] = useTweets('tweets');
 
   useEffect(() => {
     if (newTweet) {
