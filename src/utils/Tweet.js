@@ -9,8 +9,8 @@ export default class Tweet {
     this.text = messageText;
     this.timestamp = serverTimestamp();
     this.replies = [];
-    this.likes = [];
-    this.retweets = [];
+    this.likes = 0;
+    this.retweets = 0;
     this.aReplyTo = aReplyTo;
   }
 }
