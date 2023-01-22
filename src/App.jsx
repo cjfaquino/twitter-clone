@@ -10,6 +10,7 @@ import TweetPage from './components/TweetPage';
 import TweetPopup from './components/TweetPopup';
 import SignUp from './components/SignUp';
 import useToggle from './utils/useToggle';
+import saveUser from './utils/saveUser';
 
 function App() {
   const [isSignedIn, currentUser] = useAuthStateObserver();

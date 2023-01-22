@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import useInput from '../utils/useInput';
+import createUser from '../utils/createUser';
 
 function SignUp({ toggleSignUpPopup }) {
-  const [nameVal, handleName] = useInput();
-  const [userVal, handleUser] = useInput();
   const [emailVal, handleEmail] = useInput();
   const [pwdVal, handlePwd] = useInput();
   const [confirmPwdVal, handleConfirmPwd] = useInput();
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitting(true);
+    await createUser(emailVal, pwdVal);
+    setSubmitting(false);
+    toggleSignUpPopup();
   };
   return (
     <>
@@ -18,24 +22,6 @@ function SignUp({ toggleSignUpPopup }) {
       <div id='sign-up-popup'>
         <form onSubmit={handleSubmit} className='sign-up-form'>
           <div>Sign Up</div>
-          <label htmlFor='displayName'>
-            Display Name
-            <input
-              type='text'
-              id='displayName'
-              value={nameVal}
-              onChange={handleName}
-            />
-          </label>
-          <label htmlFor='userName'>
-            Username
-            <input
-              type='text'
-              id='useName'
-              value={userVal}
-              onChange={handleUser}
-            />
-          </label>
           <label htmlFor='email'>
             Email
             <input
@@ -63,7 +49,9 @@ function SignUp({ toggleSignUpPopup }) {
               onChange={handleConfirmPwd}
             />
           </label>
-          <button type='submit'>Submit</button>
+          <button type='submit'>
+            {submitting ? 'Submitting...' : 'Submit'}
+          </button>
         </form>
       </div>
     </>
