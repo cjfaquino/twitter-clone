@@ -1,14 +1,19 @@
 import React from 'react';
 import useInput from '../utils/useInput';
+import createProfile from '../utils/createProfile';
 
-function NewProfile() {
-  const [displayName, handleDisplayName] = useInput();
+function NewProfile({ currentUser }) {
+  const [displayName, handleDisplayName] = useInput(
+    currentUser.displayName || ''
+  );
   const [userName, handleUserName] = useInput();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // update profile
+    await createProfile(currentUser, userName, displayName);
   };
+
   return (
     <form onSubmit={handleSubmit} className='sign-up-form'>
       <div>Create your profile</div>
