@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase-config';
 
 function useUserProfile(userObj) {
   const [profile, setProfile] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (userObj) {
@@ -13,8 +15,8 @@ function useUserProfile(userObj) {
           setProfile(docSnap.data());
         } else {
           // no user exists in firestore db users
-          console.log('No such document!');
           // create user profile
+          navigate(`/signup/${userObj.uid}`);
         }
       });
     }

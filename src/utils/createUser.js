@@ -9,11 +9,12 @@ const createUser = async (email, password) => {
       password
     );
     if (userCredential) {
-      // signed in
-      //
+      return userCredential.user.uid;
     }
+    return undefined;
   } catch (error) {
     console.log(error.code, error.message);
+    return false;
   }
 };
 

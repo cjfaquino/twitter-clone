@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useInput from '../utils/useInput';
 import createUser from '../utils/createUser';
 
@@ -7,6 +8,7 @@ function SignUp() {
   const [pwdVal, handlePwd] = useInput();
   const [confirmPwdVal, handleConfirmPwd] = useInput();
   const [submitting, setSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,7 +16,13 @@ function SignUp() {
     const userID = await createUser(emailVal, pwdVal);
     setSubmitting(false);
     // go to next page to continue setup
+    if (userID) {
+      navigate(`/signup/${userID}`);
+    } else {
+      // error
+    }
   };
+
   return (
     <form onSubmit={handleSubmit} className='sign-up-form'>
       <div>Sign Up</div>

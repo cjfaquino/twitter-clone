@@ -37,7 +37,10 @@ function App() {
             />
             <Route path='/tweet/:tweet' element={<TweetPage />} />
             <Route path='/signup' element={<SignUp />} />
-            <Route path='/signup/:user' element={<NewProfile />} />
+            <Route
+              path='/signup/:user'
+              element={<NewProfile currentUser={currentUser} />}
+            />
           </Routes>
         </div>
         <MySidebar isSignedIn={isSignedIn} />

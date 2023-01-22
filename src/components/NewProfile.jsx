@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import useInput from '../utils/useInput';
 import createProfile from '../utils/createProfile';
 
@@ -10,7 +11,7 @@ function NewProfile({ currentUser }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // update profile
+    // create profile
     await createProfile(currentUser, userName, displayName);
   };
 
@@ -39,5 +40,11 @@ function NewProfile({ currentUser }) {
     </form>
   );
 }
+
+NewProfile.propTypes = {
+  currentUser: PropTypes.shape({
+    displayName: PropTypes.string,
+  }).isRequired,
+};
 
 export default NewProfile;
