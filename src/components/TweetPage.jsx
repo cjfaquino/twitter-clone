@@ -9,11 +9,11 @@ function TweetPage() {
   const [tweet] = useOneTweet(params.tweet);
 
   return (
-    <div id='feed'>
+    <>
       <div>TweetPage</div>
       <MainTweet tweetObj={tweet} />
       {tweet && <Replies replies={tweet.data.replies} tweetObj={tweet} />}
-    </div>
+    </>
   );
 }
 

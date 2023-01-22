@@ -10,6 +10,7 @@ import TweetPage from './components/TweetPage';
 import TweetPopup from './components/TweetPopup';
 import SignUp from './components/SignUp';
 import useToggle from './utils/useToggle';
+import NewProfile from './components/NewProfile';
 
 function App() {
   const [isSignedIn, currentUser] = useAuthStateObserver();
@@ -28,14 +29,17 @@ function App() {
           isSignedIn={isSignedIn}
           toggleTweetPopup={toggleTweetPopup}
         />
-        <Routes>
-          <Route
-            path='/'
-            element={<Feed newTweet={newTweet} clrNewTweet={clrNewTweet} />}
-          />
-          <Route path='/tweet/:tweet' element={<TweetPage />} />
-          <Route path='/signup' element={<SignUp />} />
-        </Routes>
+        <div id='centerbar'>
+          <Routes>
+            <Route
+              path='/'
+              element={<Feed newTweet={newTweet} clrNewTweet={clrNewTweet} />}
+            />
+            <Route path='/tweet/:tweet' element={<TweetPage />} />
+            <Route path='/signup' element={<SignUp />} />
+            <Route path='/signup/:user' element={<NewProfile />} />
+          </Routes>
+        </div>
         <MySidebar isSignedIn={isSignedIn} />
       </div>
 
