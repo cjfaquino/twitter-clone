@@ -6,7 +6,7 @@ import {
 } from 'firebase/auth';
 import { setDoc, serverTimestamp } from 'firebase/firestore';
 
-export const signIn = async () => {
+export const signInWithGooglePopup = async () => {
   // Sign in Firebase using popup auth and Google as the identity provider.
   const provider = new GoogleAuthProvider();
   await signInWithPopup(getAuth(), provider);
