@@ -79,10 +79,19 @@ input:focus {
   gap: 30px;
 }
 
+#login-banner button {
+  min-width: 140px;
+}
+
 .btn-banner-login {
+  border: 2px solid white;
+  background-color: blue;
+  font-weight: 700;
+}
+
+.btn-banner-signup {
   background-color: white;
   color: black;
-  font-weight: 700;
 }
 
 /* MyNav */
@@ -146,24 +155,38 @@ input:focus {
   z-index: 20;
 }
 
-/* Tweet & login popup */
-
+/* Popups */
 #popup-background {
   position: fixed;
   background-color: rgba(128, 128, 128, 0.449);
   width: 100vw;
   height: 100vh;
+  z-index: 3;
 }
 
+#sign-up-popup,
 #tweet-popup {
   position: fixed;
-  height: 300px;
-  width: 500px;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   background-color: black;
-  border-radius: 10px;
+  border-radius: 15px;
+  z-index: 10;
+}
+
+.sign-up-form {
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+}
+
+.sign-up-form input {
+  height: 40px;
+  width: 100%;
+  font-size: 1rem;
+  padding: 0 10px;
+  margin-bottom: 30px;
 }
 
 /* Center column */
