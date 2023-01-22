@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { signIn } from '../firebase';
 
 function LogInBanner() {
   return (
@@ -11,9 +10,11 @@ function LogInBanner() {
           <div>People on Twtter Clone are the last to know.</div>
         </li>
         <li className='logout'>
-          <button type='button' onClick={signIn} className='btn-banner-login'>
-            Sign in with Google
-          </button>
+          <Link to='/login'>
+            <button type='button' className='btn-banner-login'>
+              Log In
+            </button>
+          </Link>
         </li>
         <li className='banner-signup'>
           <Link to='/signup'>
