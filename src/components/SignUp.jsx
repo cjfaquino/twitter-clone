@@ -17,44 +17,34 @@ function SignUp({ toggleSignUpPopup }) {
     toggleSignUpPopup();
   };
   return (
-    <>
-      <div id='popup-background' onClick={toggleSignUpPopup} aria-hidden />
-      <div id='sign-up-popup'>
-        <form onSubmit={handleSubmit} className='sign-up-form'>
-          <div>Sign Up</div>
-          <label htmlFor='email'>
-            Email
-            <input
-              type='text'
-              id='email'
-              value={emailVal}
-              onChange={handleEmail}
-            />
-          </label>
-          <label htmlFor='pwd'>
-            Password
-            <input
-              type='password'
-              id='pwd'
-              value={pwdVal}
-              onChange={handlePwd}
-            />
-          </label>
-          <label htmlFor='confirm-pwd'>
-            Confirm Password
-            <input
-              type='password'
-              id='confirm-pwd'
-              value={confirmPwdVal}
-              onChange={handleConfirmPwd}
-            />
-          </label>
-          <button type='submit'>
-            {submitting ? 'Submitting...' : 'Submit'}
-          </button>
-        </form>
-      </div>
-    </>
+    <div id='feed'>
+      <form onSubmit={handleSubmit} className='sign-up-form'>
+        <div>Sign Up</div>
+        <label htmlFor='email'>
+          Email
+          <input
+            type='text'
+            id='email'
+            value={emailVal}
+            onChange={handleEmail}
+          />
+        </label>
+        <label htmlFor='pwd'>
+          Password
+          <input type='password' id='pwd' value={pwdVal} onChange={handlePwd} />
+        </label>
+        <label htmlFor='confirm-pwd'>
+          Confirm Password
+          <input
+            type='password'
+            id='confirm-pwd'
+            value={confirmPwdVal}
+            onChange={handleConfirmPwd}
+          />
+        </label>
+        <button type='submit'>{submitting ? 'Submitting...' : 'Submit'}</button>
+      </form>
+    </div>
   );
 }
 

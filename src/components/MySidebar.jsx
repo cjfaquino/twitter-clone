@@ -1,15 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import MyFooter from './MyFooter/MyFooter';
 
-function MySidebar({ toggleSignUpPopup, isSignedIn }) {
+function MySidebar({ isSignedIn }) {
   return (
     <div id='sidebar'>
       {!isSignedIn && (
-        <div className='sidebar-sign-up'>
-          <button type='button' onClick={toggleSignUpPopup}>
-            Sign Up
-          </button>
+        <div className='sidebar-signup'>
+          <Link to='/signup'>
+            <button type='button' className='btn-sidebar-signup'>
+              Sign Up
+            </button>
+          </Link>
         </div>
       )}
       <div id='who-to-follow'>Who To Follow</div>
@@ -19,7 +22,6 @@ function MySidebar({ toggleSignUpPopup, isSignedIn }) {
 }
 
 MySidebar.propTypes = {
-  toggleSignUpPopup: PropTypes.func.isRequired,
   isSignedIn: PropTypes.bool.isRequired,
 };
 

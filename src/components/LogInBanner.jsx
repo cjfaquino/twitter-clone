@@ -1,8 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { signIn } from '../firebase';
 
-function LogInBanner({ toggleSignUpPopup }) {
+function LogInBanner() {
   return (
     <div id='login-banner'>
       <ul>
@@ -16,21 +16,15 @@ function LogInBanner({ toggleSignUpPopup }) {
           </button>
         </li>
         <li className='banner-signup'>
-          <button
-            type='button'
-            onClick={toggleSignUpPopup}
-            className='btn-banner-signup'
-          >
-            Sign Up
-          </button>
+          <Link to='/signup'>
+            <button type='button' className='btn-banner-signup'>
+              Sign Up
+            </button>
+          </Link>
         </li>
       </ul>
     </div>
   );
 }
-
-LogInBanner.propTypes = {
-  toggleSignUpPopup: PropTypes.func.isRequired,
-};
 
 export default LogInBanner;

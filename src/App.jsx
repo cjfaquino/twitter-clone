@@ -10,12 +10,10 @@ import TweetPage from './components/TweetPage';
 import TweetPopup from './components/TweetPopup';
 import SignUp from './components/SignUp';
 import useToggle from './utils/useToggle';
-import saveUser from './utils/saveUser';
 
 function App() {
   const [isSignedIn, currentUser] = useAuthStateObserver();
   const [showTweetPopup, toggleTweetPopup] = useToggle();
-  const [showSignUpPopup, toggleSignUpPopup] = useToggle();
   const [newTweet, setNewTweet] = useState(null);
 
   const clrNewTweet = () => {
@@ -36,11 +34,9 @@ function App() {
             element={<Feed newTweet={newTweet} clrNewTweet={clrNewTweet} />}
           />
           <Route path='/tweet/:tweet' element={<TweetPage />} />
+          <Route path='/signup' element={<SignUp />} />
         </Routes>
-        <MySidebar
-          isSignedIn={isSignedIn}
-          toggleSignUpPopup={toggleSignUpPopup}
-        />
+        <MySidebar isSignedIn={isSignedIn} />
       </div>
 
       {showTweetPopup && (
@@ -50,16 +46,7 @@ function App() {
         />
       )}
 
-      {showSignUpPopup && !isSignedIn && (
-        <SignUp toggleSignUpPopup={toggleSignUpPopup} />
-      )}
-
-      {!isSignedIn && (
-        <LogInBanner
-          isSignedIn={isSignedIn}
-          toggleSignUpPopup={toggleSignUpPopup}
-        />
-      )}
+      {!isSignedIn && <LogInBanner isSignedIn={isSignedIn} />}
     </>
   );
 }
