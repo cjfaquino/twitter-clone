@@ -11,6 +11,7 @@ import TweetPopup from './components/TweetPopup';
 import SignUp from './components/SignUp';
 import useToggle from './utils/useToggle';
 import NewProfile from './components/NewProfile';
+import Login from './components/Login';
 
 function App() {
   const [isSignedIn, currentUser] = useAuthStateObserver();
@@ -41,6 +42,7 @@ function App() {
               path='/signup/:user'
               element={<NewProfile currentUser={currentUser} />}
             />
+            <Route path='/login' element={<Login />} />
           </Routes>
         </div>
         <MySidebar isSignedIn={isSignedIn} />
