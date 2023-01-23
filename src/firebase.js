@@ -1,5 +1,6 @@
 import {
   GoogleAuthProvider,
+  signInWithEmailAndPassword,
   signInWithPopup,
   getAuth,
   signOut,
@@ -9,7 +10,25 @@ import { setDoc, serverTimestamp } from 'firebase/firestore';
 export const signInWithGooglePopup = async () => {
   // Sign in Firebase using popup auth and Google as the identity provider.
   const provider = new GoogleAuthProvider();
-  await signInWithPopup(getAuth(), provider);
+  return signInWithPopup(getAuth(), provider);
+};
+
+export const signInWithEmailAndPass = async (email, password) => {
+  try {
+    const auth = getAuth();
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    // Signed in
+    const { user } = userCredential;
+    return user;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
 };
 
 export const signOutUser = () => {
