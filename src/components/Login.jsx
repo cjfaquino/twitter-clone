@@ -1,18 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useInput from '../utils/useInput';
-import { signInWithGooglePopup } from '../firebase';
+import { signInWithGooglePopup, signInWithEmailAndPass } from '../firebase';
 
 function Login() {
   const [emailVal, handleEmail] = useInput();
   const [passwordVal, handlePassword] = useInput();
+  const [submitting, setSubmitting] = useState(null);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleProviderLogin = (provider, email, password) => async () => {
+    let user;
+    setSubmitting(true);
+    if (provider === 'google') {
+      user = await signInWithGooglePopup();
+    }
+
+    if (provider === 'emailPass') {
+      user = await signInWithEmailAndPass(email, password);
+    }
+
+    setSubmitting(false);
+
+    if (user) navigate('/');
+    else {
+      // error
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    handleProviderLogin('emailPass', emailVal, passwordVal)();
   };
 
   return (
     <div className='login-form'>
-      <button type='button' onClick={signInWithGooglePopup}>
+      <button type='button' onClick={handleProviderLogin('google')}>
         Log In with Google
       </button>
       <div>or</div>
@@ -34,7 +57,9 @@ function Login() {
             value={passwordVal}
             onChange={handlePassword}
           />
-          <button type='submit'>Log In</button>
+          <button type='submit'>
+            {submitting ? 'Logging In...' : 'Log In'}
+          </button>
         </label>
       </form>
     </div>
