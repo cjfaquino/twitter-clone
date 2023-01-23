@@ -12,8 +12,11 @@ const createProfile = async (user, userName, displayName, photoUrl) => {
     const userRef = doc(db, 'users', user.uid);
     await setDoc(userRef, {
       userName,
+      bio: '',
       likes: {},
       retweets: {},
+      following: {},
+      followers: {},
     });
 
     return user.uid;
