@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import useInput from '../utils/useInput';
 import createProfile from '../utils/createProfile';
+import eventProfileEdit from '../utils/eventProfileEdit';
 
 function NewProfile({ currentUser }) {
   const [displayName, handleDisplayName] = useInput(
@@ -20,8 +21,7 @@ function NewProfile({ currentUser }) {
     setSubmitting(false);
     if (userID) {
       // makes useUserProfile grab the new profile
-      const event = new Event('profile edit');
-      document.dispatchEvent(event);
+      eventProfileEdit();
       // then navgiate to page
       navigate('/');
     } else {
