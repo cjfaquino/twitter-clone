@@ -6,10 +6,12 @@ import deleteTweet from '../utils/deleteTweet';
 import ThreeDots from './ThreeDots';
 import useToggle from '../utils/useToggle';
 import getTimeString from '../utils/getTimeString';
+import updateLike from '../utils/updateLike';
 
 function TweetItem({ tweetObj }) {
   const navigate = useNavigate();
   const {
+    likes,
     text,
     timestamp,
     replies,
@@ -44,6 +46,10 @@ function TweetItem({ tweetObj }) {
     } else if (checkElementClicked(targetName, toUser)) {
       // go to user page
     }
+  };
+
+  const handleLike = async () => {
+    updateLike(tweetObj);
   };
 
   const customClass = 'tweet';
@@ -103,7 +109,10 @@ function TweetItem({ tweetObj }) {
         <div className={`${customClass}-item-buttons`}>
           <span>stats</span>
           <span>reply {replies.length > 0 && replies.length}</span>
-          <span>retweet</span> <span>like</span>
+          <span>retweet</span>{' '}
+          <button className='likes' type='button' onClick={handleLike}>
+            likes <span className='likes-number'>{likes}</span>
+          </button>
           <span>share</span>
         </div>
       </div>

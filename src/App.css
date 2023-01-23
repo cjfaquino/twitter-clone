@@ -4,6 +4,7 @@
   --feed-width: 600px;
   --sidebar-width: 300px;
   --pfp-size: 50px;
+  --theme-color: rgb(99, 177, 255);
 }
 
 input:focus {
@@ -65,7 +66,7 @@ input:focus {
 
 /* login banner */
 #login-banner {
-  background-color: blue;
+  background-color: var(--theme-color);
   position: fixed;
   width: 100%;
   bottom: 0;
@@ -85,7 +86,7 @@ input:focus {
 
 .btn-banner-login {
   border: 2px solid white;
-  background-color: blue;
+  background-color: var(--theme-color);
 }
 
 .btn-banner-signup {
@@ -119,7 +120,7 @@ input:focus {
   width: 100%;
   padding: 15px;
   border-radius: 50px;
-  background-color: blue;
+  background-color: var(--theme-color);
 }
 
 .nav-user {
@@ -386,7 +387,7 @@ input:focus {
   padding: 15px;
   border-radius: 50px;
   width: 120px;
-  background: blue;
+  background: var(--theme-color);
   font-weight: 700;
 }
 

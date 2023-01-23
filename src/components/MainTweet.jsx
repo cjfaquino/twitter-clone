@@ -6,6 +6,7 @@ import deleteTweet from '../utils/deleteTweet';
 import ThreeDots from './ThreeDots';
 import useToggle from '../utils/useToggle';
 import getTimeString from '../utils/getTimeString';
+import updateLike from '../utils/updateLike';
 
 function MainTweet({ tweetObj }) {
   const navigate = useNavigate();
@@ -18,11 +19,16 @@ function MainTweet({ tweetObj }) {
     }
   };
 
+  const handleLike = () => {
+    updateLike(tweetObj);
+  };
+
   const customClass = 'main-tweet';
 
   if (!tweetObj) return <div id={`${customClass}-container`} />;
 
   const {
+    likes,
     text,
     timestamp,
     replies,
@@ -31,8 +37,8 @@ function MainTweet({ tweetObj }) {
     USER_DISPLAY,
     USER_ID,
   } = tweetObj.data;
-  const { id: TWEET_ID } = tweetObj.id;
-  console.log(tweetObj);
+  const TWEET_ID = tweetObj.id;
+
   return (
     <div id={`${customClass}-container`}>
       <div id={TWEET_ID} className={`${customClass}-item`}>
@@ -83,7 +89,11 @@ function MainTweet({ tweetObj }) {
         </div>
         <div className={`${customClass}-item-buttons`}>
           <span>reply {replies.length > 0 && replies.length}</span>
-          <span>retweet</span> <span>like</span> <span>share</span>
+          <span>retweet</span>{' '}
+          <button className='likes' type='button' onClick={handleLike}>
+            likes <span className='likes-number'>{likes}</span>
+          </button>{' '}
+          <span>share</span>
         </div>
       </div>
     </div>
