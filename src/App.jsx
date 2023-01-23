@@ -14,7 +14,7 @@ import NewProfile from './components/NewProfile';
 import Login from './components/Login';
 
 function App() {
-  const [isSignedIn, currentUser] = useAuthStateObserver();
+  const [isSignedIn, currentUser, userProfile] = useAuthStateObserver();
   const [showTweetPopup, toggleTweetPopup] = useToggle();
   const [newTweet, setNewTweet] = useState(null);
 

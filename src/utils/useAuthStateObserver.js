@@ -39,7 +39,7 @@ function useAuthStateObserver() {
     } else setIsSignedIn(false);
   }, [currentUser]);
 
-  return [isSignedIn, currentUser];
+  return [isSignedIn, currentUser, userProfile];
 }
 
 export default useAuthStateObserver;

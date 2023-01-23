@@ -7,7 +7,7 @@ function useUserProfile(userObj) {
   const [profile, setProfile] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
+  const getUserProfile = () => {
     if (userObj) {
       const docRef = doc(db, 'users', userObj.uid);
       getDoc(docRef).then((docSnap) => {
@@ -20,9 +20,15 @@ function useUserProfile(userObj) {
         }
       });
     }
+  };
+
+  useEffect(() => {
+    getUserProfile();
+    document.addEventListener('profile edit', getUserProfile);
 
     return () => {
       setProfile(null);
+      document.removeEventListener('profile edit', getUserProfile);
     };
   }, [userObj]);
 
