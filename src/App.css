@@ -277,15 +277,20 @@ input:focus {
 }
 
 .tweet-item-name:hover,
+.tweet-item-display:hover,
 .tweet-item-time:hover,
 .main-tweet-item-time:hover,
 .main-tweet-item-name:hover {
   text-decoration: underline;
 }
 
+.tweet-item-display {
+  font-weight: 700;
+}
+
 .tweet-item-name,
 .main-tweet-item-name {
-  font-weight: 600;
+  color: grey;
 }
 
 .tweet-item-time,
@@ -355,6 +360,10 @@ input:focus {
   gap: 15px;
   height: 50px;
   margin-bottom: 25px;
+}
+
+.main-tweet-item-display {
+  font-weight: 700;
 }
 
 .main-tweet-item-user button {

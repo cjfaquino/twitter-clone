@@ -17,10 +17,12 @@ function useAuthStateObserver() {
       temp.userProfile = userProfile;
       setCurrentUser(temp);
       localStorage.setItem('firebaseUser', JSON.stringify(temp));
+      localStorage.setItem('userProfile', JSON.stringify(userProfile));
     } else {
       // User is signed out!
       setCurrentUser(null);
       localStorage.removeItem('firebaseUser');
+      localStorage.removeItem('userProfile');
     }
   };
 

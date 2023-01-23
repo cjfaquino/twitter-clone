@@ -22,10 +22,17 @@ function MainTweet({ tweetObj }) {
 
   if (!tweetObj) return <div id={`${customClass}-container`} />;
 
-  const { text, timestamp, replies, USER_ICON, USER_NAME, USER_ID } =
-    tweetObj.data;
+  const {
+    text,
+    timestamp,
+    replies,
+    USER_ICON,
+    USER_NAME,
+    USER_DISPLAY,
+    USER_ID,
+  } = tweetObj.data;
   const { id: TWEET_ID } = tweetObj.id;
-
+  console.log(tweetObj);
   return (
     <div id={`${customClass}-container`}>
       <div id={TWEET_ID} className={`${customClass}-item`}>
@@ -35,7 +42,10 @@ function MainTweet({ tweetObj }) {
           </div>
           <div className={`${customClass}-item-right-half`}>
             <div className={`${customClass}-item-info`}>
-              <div className={`${customClass}-item-name`}>{USER_NAME}</div>
+              <div className={`${customClass}-item-display`}>
+                {USER_DISPLAY}
+              </div>
+              <div className={`${customClass}-item-name`}>@{USER_NAME}</div>
             </div>
           </div>
           <div className='dots-container'>
@@ -93,6 +103,7 @@ MainTweet.propTypes = {
       USER_ICON: PropTypes.string,
       USER_ID: PropTypes.string,
       USER_NAME: PropTypes.string,
+      USER_DISPLAY: PropTypes.string,
     }),
     id: PropTypes.string,
   }),

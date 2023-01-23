@@ -9,8 +9,15 @@ import getTimeString from '../utils/getTimeString';
 
 function TweetItem({ tweetObj }) {
   const navigate = useNavigate();
-  const { text, timestamp, replies, USER_ICON, USER_ID, USER_NAME } =
-    tweetObj.data;
+  const {
+    text,
+    timestamp,
+    replies,
+    USER_ICON,
+    USER_ID,
+    USER_NAME,
+    USER_DISPLAY,
+  } = tweetObj.data;
   const { id: TWEET_ID } = tweetObj;
 
   const [showOptionsPopup, toggleOptionsPopup] = useToggle();
@@ -54,7 +61,8 @@ function TweetItem({ tweetObj }) {
 
       <div className={`${customClass}-item-right-half`}>
         <div className={`${customClass}-item-info`}>
-          <div className={`${customClass}-item-name`}>{USER_NAME}</div>
+          <div className={`${customClass}-item-display`}>{USER_DISPLAY}</div>
+          <div className={`${customClass}-item-name`}>@{USER_NAME}</div>
           <div
             className={`${customClass}-item-time`}
             title={getTimeString(timestamp)}
@@ -121,6 +129,7 @@ TweetItem.propTypes = {
       USER_ICON: PropTypes.string,
       USER_ID: PropTypes.string,
       USER_NAME: PropTypes.string,
+      USER_DISPLAY: PropTypes.string,
     }),
     id: PropTypes.string,
   }).isRequired,

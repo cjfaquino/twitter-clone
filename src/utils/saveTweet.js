@@ -7,6 +7,7 @@ const tweetConverter = {
   toFirestore: (tweet) => ({
     USER_ID: tweet.USER_ID,
     USER_NAME: tweet.USER_NAME,
+    USER_DISPLAY: tweet.USER_DISPLAY,
     USER_ICON: tweet.USER_ICON,
     text: tweet.text,
     timestamp: tweet.timestamp,
