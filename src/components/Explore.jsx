@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import useTweets from '../utils/useTweets';
 import TweetItem from './TweetItem';
 
-function Feed({ newTweet, clrNewTweet }) {
+function Explore({ newTweet, clrNewTweet }) {
   const [tweets, addTweetToDOM, isTweetsLoading] = useTweets('tweets');
 
   useEffect(() => {
@@ -27,7 +27,7 @@ function Feed({ newTweet, clrNewTweet }) {
   );
 }
 
-Feed.propTypes = {
+Explore.propTypes = {
   newTweet: PropTypes.shape({
     text: PropTypes.string,
     timestamp: PropTypes.shape({
@@ -40,8 +40,8 @@ Feed.propTypes = {
   clrNewTweet: PropTypes.func.isRequired,
 };
 
-Feed.defaultProps = {
+Explore.defaultProps = {
   newTweet: null,
 };
 
-export default Feed;
+export default Explore;

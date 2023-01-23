@@ -5,7 +5,7 @@ import useAuthStateObserver from './utils/useAuthStateObserver';
 import LogInBanner from './components/LogInBanner';
 import MyNav from './components/MyNav';
 import MySidebar from './components/MySidebar';
-import Feed from './components/Feed';
+import Explore from './components/Explore';
 import TweetPage from './components/TweetPage';
 import TweetPopup from './components/TweetPopup';
 import SignUp from './components/SignUp';
@@ -34,7 +34,9 @@ function App() {
           <Routes>
             <Route
               path='/'
-              element={<Feed newTweet={newTweet} clrNewTweet={clrNewTweet} />}
+              element={
+                <Explore newTweet={newTweet} clrNewTweet={clrNewTweet} />
+              }
             />
             <Route path='/tweet/:tweet' element={<TweetPage />} />
             <Route path='/signup' element={<SignUp />} />
