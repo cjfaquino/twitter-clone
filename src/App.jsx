@@ -42,7 +42,12 @@ function App() {
             <Route path='/signup' element={<SignUp />} />
             <Route
               path='/signup/:user'
-              element={<NewProfile currentUser={currentUser} />}
+              element={
+                <NewProfile
+                  currentUser={currentUser}
+                  userProfile={userProfile}
+                />
+              }
             />
             <Route path='/login' element={<Login />} />
           </Routes>

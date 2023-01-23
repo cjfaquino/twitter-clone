@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import useInput from '../utils/useInput';
 import createProfile from '../utils/createProfile';
 import eventProfileEdit from '../utils/eventProfileEdit';
 
-function NewProfile({ currentUser }) {
-  const [displayName, handleDisplayName] = useInput(
-    currentUser.displayName || ''
-  );
-  const [userName, handleUserName] = useInput();
+function NewProfile({ currentUser, userProfile }) {
+  const [displayName, handleDisplayName, setDisplayName] = useInput();
+  const [userName, handleUserName, setUserName] = useInput();
+  const [loading, setLoading] = useState(null);
   const [submitting, setSubmitting] = useState(null);
   const navigate = useNavigate();
 
@@ -29,36 +28,61 @@ function NewProfile({ currentUser }) {
     }
   };
 
+  useEffect(() => {
+    if (!currentUser) {
+      navigate('/login');
+    } else if (userProfile) {
+      setLoading('false');
+      // update inputs if data is available
+      setDisplayName(currentUser.displayName);
+      setUserName(userProfile.userName);
+    }
+  }, [userProfile, currentUser]);
+
   return (
-    <form onSubmit={handleSubmit} className='sign-up-form'>
-      <div>Create your profile</div>
-      <label htmlFor='displayName'>
-        Display Name
-        <input
-          type='text'
-          id='displayName'
-          value={displayName}
-          onChange={handleDisplayName}
-        />
-      </label>
-      <label htmlFor='userName'>
-        Username
-        <input
-          type='text'
-          id='userName'
-          value={userName}
-          onChange={handleUserName}
-        />
-      </label>
-      <button type='submit'>{submitting ? 'Submitting...' : 'Submit'}</button>
-    </form>
+    <div>
+      {loading && (
+        <form onSubmit={handleSubmit} className='sign-up-form'>
+          <div>Create your profile</div>
+          <label htmlFor='displayName'>
+            Display Name
+            <input
+              type='text'
+              id='displayName'
+              value={displayName}
+              onChange={handleDisplayName}
+            />
+          </label>
+          <label htmlFor='userName'>
+            Username
+            <input
+              type='text'
+              id='userName'
+              value={userName}
+              onChange={handleUserName}
+            />
+          </label>
+          <button type='submit'>
+            {submitting ? 'Submitting...' : 'Submit'}
+          </button>
+        </form>
+      )}
+    </div>
   );
 }
 
 NewProfile.propTypes = {
   currentUser: PropTypes.shape({
     displayName: PropTypes.string,
-  }).isRequired,
+  }),
+  userProfile: PropTypes.shape({
+    userName: PropTypes.string,
+  }),
+};
+
+NewProfile.defaultProps = {
+  currentUser: null,
+  userProfile: null,
 };
 
 export default NewProfile;
