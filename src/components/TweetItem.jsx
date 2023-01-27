@@ -39,7 +39,14 @@ function TweetItem({ tweetObj }) {
     const targetName = e.target.className;
     // conditions
     const toUser = ['name', 'img'];
-    const toTweetPage = ['info', 'right-half', 'message', 'time', 'buttons'];
+    const toTweetPage = [
+      'info',
+      'right-half',
+      'message',
+      'time',
+      'buttons',
+      'repl',
+    ];
 
     if (checkElementClicked(targetName, toTweetPage)) {
       // go to tweet page
@@ -108,15 +115,24 @@ function TweetItem({ tweetObj }) {
 
         <div className={`${customClass}-item-message`}>{text}</div>
         <div className={`${customClass}-item-buttons`}>
-          <button className='views' type='button'>
+          <button type='button' className='btn-views'>
             stats <span className='views-number'>{views}</span>
           </button>
-          <span>reply {replies.length > 0 && replies.length}</span>
-          <span>retweet</span>{' '}
-          <button className='likes' type='button' onClick={handleLike}>
+          <button type='button' className='btn-replies'>
+            reply{' '}
+            <span className='replies-number'>
+              {replies.length > 0 && replies.length}
+            </span>
+          </button>
+          <button type='button' className='btn-retweets'>
+            retweet
+          </button>{' '}
+          <button type='button' className='btn-likes' onClick={handleLike}>
             likes <span className='likes-number'>{likes}</span>
           </button>
-          <span>share</span>
+          <button type='button' className='btn-share'>
+            share
+          </button>
         </div>
       </div>
     </div>
