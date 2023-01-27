@@ -28,7 +28,7 @@ function TweetPopup({ toggleTweetPopup, setNewTweet }) {
         onClick={toggleTweetPopup}
         aria-hidden='true'
       />
-      <div id='tweet-popup'>
+      <div id='tweet-popup' className='popup'>
         <form onSubmit={handleSubmit}>
           <label htmlFor='tweet'>
             <input

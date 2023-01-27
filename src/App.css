@@ -32,6 +32,11 @@ input:focus {
   display: flex;
 }
 
+.popup {
+  box-shadow: rgba(216, 216, 216, 0.12) 0px 2px 4px 0px,
+    rgba(210, 210, 210, 0.32) 0px 2px 16px 0px;
+}
+
 .more-options {
   display: flex;
   justify-content: center;
@@ -144,15 +149,19 @@ input:focus {
   background: rgb(68, 68, 68);
 }
 
-.btn-nav-logout {
+.nav-options-popup {
   position: absolute;
-  background-color: black;
-  border-radius: 13px;
-  padding: 15px;
   top: -60px;
   left: 0;
   width: 100%;
+  border-radius: 13px;
   z-index: 20;
+}
+
+.btn-nav-logout {
+  background-color: black;
+  padding: 15px;
+  width: 100%;
 }
 
 /* Popups */

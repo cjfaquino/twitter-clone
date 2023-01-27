@@ -57,13 +57,15 @@ function MyNav({ currentUser, toggleTweetPopup }) {
                     onClick={toggleLogoutPopup}
                     aria-hidden='true'
                   />
-                  <button
-                    type='button'
-                    onClick={handleSignOut}
-                    className='btn-nav-logout'
-                  >
-                    Log Out {currentUser.displayName}
-                  </button>
+                  <div className='nav-options-popup popup'>
+                    <button
+                      type='button'
+                      onClick={handleSignOut}
+                      className='btn-nav-logout'
+                    >
+                      Log Out {currentUser.displayName}
+                    </button>
+                  </div>
                 </>
               )}
             </>

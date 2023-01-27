@@ -87,7 +87,7 @@ function TweetItem({ tweetObj }) {
             <ThreeDots onClick={toggleOptionsPopup} />
             {showOptionsPopup && (
               <>
-                <div className='options-popup'>
+                <div className='options-popup popup'>
                   {checkMatchingUser(USER_ID) && (
                     <button
                       className='btn-delete-tweet'
