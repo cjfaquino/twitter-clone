@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { checkMatchingUser, getUserUid } from '../firebase';
 import deleteTweet from '../utils/deleteTweet';
 import ThreeDots from './ThreeDots';
-import useToggle from '../utils/useToggle';
+import useToggle from '../hooks/useToggle';
 import getTimeString from '../utils/getTimeString';
 import updateLike from '../utils/updateLike';
 

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import useTweets from '../utils/useTweets';
+import useTweets from '../hooks/useTweets';
 import TweetItem from './TweetItem';
 
 function Explore({ newTweet, clrNewTweet }) {

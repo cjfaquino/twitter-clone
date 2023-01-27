@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { signOutUser, isUserSignedIn } from '../firebase';
-import useToggle from '../utils/useToggle';
+import useToggle from '../hooks/useToggle';
 import ThreeDots from './ThreeDots';
 
 function MyNav({ currentUser, toggleTweetPopup }) {

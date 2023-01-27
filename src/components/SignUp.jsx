@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useInput from '../utils/useInput';
+import useInput from '../hooks/useInput';
 import createUser from '../utils/createUser';
 
 function SignUp() {

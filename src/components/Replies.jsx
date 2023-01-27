@@ -4,7 +4,7 @@ import { getDisplayName, getProfilePicUrl, isUserSignedIn } from '../firebase';
 import TweetItem from './TweetItem';
 import saveTweet from '../utils/saveTweet';
 import updateTweet from '../utils/updateTweet';
-import useReplies from '../utils/useReplies';
+import useReplies from '../hooks/useReplies';
 import Tweet from '../utils/Tweet';
 
 function Replies({ tweetObj, replies }) {

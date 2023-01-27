@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import useAuthStateObserver from './utils/useAuthStateObserver';
+import useAuthStateObserver from './hooks/useAuthStateObserver';
 import LogInBanner from './components/LogInBanner';
 import MyNav from './components/MyNav';
 import MySidebar from './components/MySidebar';
@@ -9,7 +9,7 @@ import Explore from './components/Explore';
 import TweetPage from './components/TweetPage';
 import TweetPopup from './components/TweetPopup';
 import SignUp from './components/SignUp';
-import useToggle from './utils/useToggle';
+import useToggle from './hooks/useToggle';
 import NewProfile from './components/NewProfile';
 import Login from './components/Login';
 

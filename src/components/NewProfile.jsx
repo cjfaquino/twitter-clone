@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import useInput from '../utils/useInput';
+import useInput from '../hooks/useInput';
 import createProfile from '../utils/createProfile';
 import eventProfileEdit from '../utils/eventProfileEdit';
 
