@@ -286,14 +286,6 @@ input:focus {
   gap: 10px;
 }
 
-.tweet-item-name:hover,
-.tweet-item-display:hover,
-.tweet-item-time:hover,
-.main-tweet-item-time:hover,
-.main-tweet-item-name:hover {
-  text-decoration: underline;
-}
-
 .tweet-item-display {
   font-weight: 700;
 }
@@ -322,6 +314,10 @@ input:focus {
 .main-tweet-item-buttons button {
   padding: 5px;
   background-color: transparent;
+}
+
+.profile-link:not(img):hover {
+  text-decoration: underline;
 }
 
 /* tweet item */

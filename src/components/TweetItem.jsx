@@ -37,6 +37,7 @@ function TweetItem({ tweetObj }) {
 
   const navToPage = async (e) => {
     const targetName = e.target.className;
+    console.log(targetName);
     // conditions
     const toUser = ['name', 'img'];
     const toTweetPage = [
@@ -69,14 +70,18 @@ function TweetItem({ tweetObj }) {
       onClick={navToPage}
       aria-hidden
     >
-      <div className={`${customClass}-item-img-container`}>
-        <img src={USER_ICON} alt={USER_NAME} />
+      <div className={`${customClass}-item-img-container profile-link`}>
+        <img src={USER_ICON} alt={USER_NAME} className='profile-link' />
       </div>
 
       <div className={`${customClass}-item-right-half`}>
         <div className={`${customClass}-item-info`}>
-          <div className={`${customClass}-item-display`}>{USER_DISPLAY}</div>
-          <div className={`${customClass}-item-name`}>@{USER_NAME}</div>
+          <div className={`${customClass}-item-display profile-link`}>
+            {USER_DISPLAY}
+          </div>
+          <div className={`${customClass}-item-name profile-link`}>
+            @{USER_NAME}
+          </div>
           <div
             className={`${customClass}-item-time`}
             title={getTimeString(timestamp)}
@@ -109,7 +114,10 @@ function TweetItem({ tweetObj }) {
         </div>
         {tweetObj.data.aReplyTo && (
           <div className='replying-to-info'>
-            Replying to {tweetObj.data.aReplyTo.data.USER_NAME}
+            Replying to{' '}
+            <span className='profile-link'>
+              @{tweetObj.data.aReplyTo.data.USER_NAME}
+            </span>
           </div>
         )}
 
