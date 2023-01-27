@@ -70,8 +70,11 @@ function TweetItem({ tweetObj }) {
       onClick={navToPage}
       aria-hidden
     >
-      <div className={`${customClass}-item-img-container profile-link`}>
-        <img src={USER_ICON} alt={USER_NAME} className='profile-link' />
+      <div className={`${customClass}-item-left-half`}>
+        <div className={`${customClass}-item-img-container profile-link`}>
+          <img src={USER_ICON} alt={USER_NAME} className='profile-link' />
+        </div>
+        <div className='vert-line' />
       </div>
 
       <div className={`${customClass}-item-right-half`}>

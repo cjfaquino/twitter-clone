@@ -5,6 +5,7 @@
   --sidebar-width: 300px;
   --pfp-size: 50px;
   --theme-color: rgb(99, 177, 255);
+  --goback-header-size: 70px;
 }
 
 input:focus {
@@ -266,6 +267,7 @@ input:focus {
   border-radius: 50%;
   flex-shrink: 0;
   background-color: white;
+  z-index: 1;
 }
 
 .tweet-item-img-container img,
@@ -361,8 +363,23 @@ input:focus {
 
 /* tweet page */
 
+header.goback + .replying-to-tweet-item,
+header.goback + #main-tweet-container {
+  margin-top: var(--goback-header-size);
+}
+
+.replying-to-tweet-item .tweet-item {
+  border: none;
+}
+
+.replying-to-tweet-item .vert-line {
+  width: 0px;
+  margin: 0 auto;
+  border-left: 2px solid grey;
+  height: 90%;
+}
+
 #main-tweet-container {
-  margin-top: 62px;
   min-height: 180px;
   padding: 15px;
 }
@@ -467,7 +484,7 @@ input:focus {
 header.goback {
   cursor: pointer;
   width: calc(var(--feed-width) - 2px);
-  padding: 20px;
+  padding: 0 20px;
   position: fixed;
   top: 0;
   z-index: 3;
@@ -476,6 +493,9 @@ header.goback {
 }
 
 .goback-text {
+  height: var(--goback-header-size);
+  display: flex;
+  align-items: center;
   font-weight: 700;
   font-size: 1.4rem;
 }

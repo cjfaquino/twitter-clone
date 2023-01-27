@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { checkMatchingUser, getUserUid } from '../firebase';
@@ -10,8 +10,9 @@ import updateLike from '../utils/updateLike';
 import updateView from '../utils/updateView';
 
 function MainTweet({ tweetObj }) {
-  const navigate = useNavigate();
   const [showOptionsPopup, toggleOptionsPopup] = useToggle();
+  const navigate = useNavigate();
+  const mainTweetRef = useRef(null);
 
   const handleDelete = async () => {
     if (checkMatchingUser(getUserUid())) {
@@ -28,6 +29,11 @@ function MainTweet({ tweetObj }) {
 
   useEffect(() => {
     if (tweetObj) {
+      // scroll to tweet when aReplyTo obj is present
+      const rect = mainTweetRef.current.getBoundingClientRect();
+      window.scrollTo(0, rect.top - 71);
+
+      // increase view on tweetObj load
       updateView(tweetObj);
     }
   }, [tweetObj]);
@@ -49,17 +55,19 @@ function MainTweet({ tweetObj }) {
 
   return (
     <div id={`${customClass}-container`}>
-      <div id={TWEET_ID} className={`${customClass}-item`}>
+      <div id={TWEET_ID} className={`${customClass}-item`} ref={mainTweetRef}>
         <div className={`${customClass}-item-user`}>
-          <div className={`${customClass}-item-img-container`}>
-            <img src={USER_ICON} alt={USER_NAME} />
+          <div className={`${customClass}-item-img-container profile-link`}>
+            <img src={USER_ICON} alt={USER_NAME} className='profile-link' />
           </div>
           <div className={`${customClass}-item-right-half`}>
             <div className={`${customClass}-item-info`}>
-              <div className={`${customClass}-item-display`}>
+              <div className={`${customClass}-item-display profile-link`}>
                 {USER_DISPLAY}
               </div>
-              <div className={`${customClass}-item-name`}>@{USER_NAME}</div>
+              <div className={`${customClass}-item-name profile-link`}>
+                @{USER_NAME}
+              </div>
             </div>
           </div>
           <div className='dots-container'>
@@ -86,9 +94,15 @@ function MainTweet({ tweetObj }) {
             )}
           </div>
         </div>
-
+        {tweetObj.data.aReplyTo && (
+          <div className='replying-to-info'>
+            Replying to{' '}
+            <span className='profile-link'>
+              @{tweetObj.data.aReplyTo.data.USER_NAME}
+            </span>
+          </div>
+        )}
         <div className={`${customClass}-item-message`}>{text}</div>
-
         <div
           className={`${customClass}-item-time`}
           title={getTimeString(timestamp)}
@@ -122,6 +136,11 @@ function MainTweet({ tweetObj }) {
 MainTweet.propTypes = {
   tweetObj: PropTypes.shape({
     data: PropTypes.shape({
+      aReplyTo: PropTypes.shape({
+        data: PropTypes.shape({
+          USER_NAME: PropTypes.string,
+        }),
+      }),
       replies: PropTypes.arrayOf(PropTypes.string),
       views: PropTypes.number,
       likes: PropTypes.number,
