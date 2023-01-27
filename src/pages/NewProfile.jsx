@@ -4,11 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import useInput from '../hooks/useInput';
 import createProfile from '../utils/createProfile';
 import eventProfileEdit from '../utils/eventProfileEdit';
+import doesProfileExist from '../utils/doesProfileExist';
 
 function NewProfile({ currentUser, userProfile }) {
   const [displayName, handleDisplayName, setDisplayName] = useInput();
   const [userName, handleUserName, setUserName] = useInput();
-  const [loading, setLoading] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(null);
   const navigate = useNavigate();
 
@@ -28,20 +29,30 @@ function NewProfile({ currentUser, userProfile }) {
     }
   };
 
+  const setFields = async () => {
+    // update inputs if data is available
+    setDisplayName(currentUser.displayName);
+
+    if (userProfile) {
+      setUserName(userProfile.userName);
+      setLoading(false);
+    } else if (!(await doesProfileExist(currentUser.uid))) {
+      // no user profile in db
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (!currentUser) {
       navigate('/login');
-    } else if (userProfile) {
-      setLoading('false');
-      // update inputs if data is available
-      setDisplayName(currentUser.displayName);
-      setUserName(userProfile.userName);
     }
-  }, [userProfile, currentUser]);
+
+    setFields();
+  }, [userProfile]);
 
   return (
     <div>
-      {loading && (
+      {!loading && (
         <form onSubmit={handleSubmit} className='sign-up-form'>
           <div>Create your profile</div>
           <label htmlFor='displayName'>
@@ -74,6 +85,7 @@ function NewProfile({ currentUser, userProfile }) {
 NewProfile.propTypes = {
   currentUser: PropTypes.shape({
     displayName: PropTypes.string,
+    uid: PropTypes.string,
   }),
   userProfile: PropTypes.shape({
     userName: PropTypes.string,
