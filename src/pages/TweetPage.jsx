@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import Replies from './Replies';
-import MainTweet from './MainTweet';
+import Replies from '../components/Replies';
+import MainTweet from '../components/MainTweet';
 import useOneTweet from '../hooks/useOneTweet';
 
 function TweetPage() {

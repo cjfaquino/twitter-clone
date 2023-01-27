@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import useTweets from '../hooks/useTweets';
-import TweetItem from './TweetItem';
+import TweetItem from '../components/TweetItem';
 
 function Explore({ newTweet, clrNewTweet }) {
   const [tweets, addTweetToDOM, isTweetsLoading] = useTweets('tweets');

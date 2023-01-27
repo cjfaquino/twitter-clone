@@ -5,13 +5,13 @@ import useAuthStateObserver from './hooks/useAuthStateObserver';
 import LogInBanner from './components/LogInBanner';
 import MyNav from './components/MyNav';
 import MySidebar from './components/MySidebar';
-import Explore from './components/Explore';
-import TweetPage from './components/TweetPage';
+import Explore from './pages/Explore';
+import TweetPage from './pages/TweetPage';
 import TweetPopup from './components/TweetPopup';
-import SignUp from './components/SignUp';
+import SignUp from './pages/SignUp';
 import useToggle from './hooks/useToggle';
-import NewProfile from './components/NewProfile';
-import Login from './components/Login';
+import NewProfile from './pages/NewProfile';
+import Login from './pages/Login';
 
 function App() {
   const [isSignedIn, currentUser, userProfile] = useAuthStateObserver();
