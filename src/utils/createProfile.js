@@ -3,7 +3,6 @@ import { db } from '../firebase-config';
 import updateDisplayNameOrPhoto from './updateDisplayNameOrPhoto';
 
 const createProfile = async (user, userName, displayName, photoUrl) => {
-  console.log();
   try {
     // update firebase user
     await updateDisplayNameOrPhoto(displayName, photoUrl);
@@ -12,6 +11,8 @@ const createProfile = async (user, userName, displayName, photoUrl) => {
     const userRef = doc(db, 'users', user.uid);
     await setDoc(userRef, {
       userName,
+      displayName,
+      photoUrl,
       bio: '',
     });
 
