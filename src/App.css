@@ -203,6 +203,7 @@ input:focus {
 #centerbar {
   margin-left: var(--menubar-width);
   width: var(--feed-width);
+  min-height: 130vh;
   border: 1px solid white;
 }
 
@@ -251,6 +252,7 @@ input:focus {
   position: relative;
   display: flex;
   gap: 15px;
+  border-bottom: 1px solid grey;
 }
 
 .tweet-item-img-container,
@@ -364,6 +366,7 @@ input:focus {
 /* tweet page */
 
 #main-tweet-container {
+  margin-top: 62px;
   min-height: 180px;
   padding: 15px;
 }
@@ -461,4 +464,22 @@ input:focus {
   padding: 8px;
   width: 120px;
   background: var(--theme-color);
+}
+
+/* goback header */
+
+header.goback {
+  cursor: pointer;
+  width: calc(var(--feed-width) - 2px);
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  z-index: 3;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.goback-text {
+  font-weight: 700;
+  font-size: 1.4rem;
 }
