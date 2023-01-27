@@ -13,6 +13,7 @@ export default class Tweet {
     this.replies = [];
     this.likes = 0;
     this.retweets = 0;
+    this.views = 0;
     this.aReplyTo = aReplyTo;
   }
 }

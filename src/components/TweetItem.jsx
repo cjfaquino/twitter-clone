@@ -11,6 +11,7 @@ import updateLike from '../utils/updateLike';
 function TweetItem({ tweetObj }) {
   const navigate = useNavigate();
   const {
+    views,
     likes,
     text,
     timestamp,
@@ -34,7 +35,7 @@ function TweetItem({ tweetObj }) {
   const checkElementClicked = (targetString, conditions) =>
     conditions.some((el) => targetString.includes(el));
 
-  const navToPage = (e) => {
+  const navToPage = async (e) => {
     const targetName = e.target.className;
     // conditions
     const toUser = ['name', 'img'];
@@ -107,7 +108,9 @@ function TweetItem({ tweetObj }) {
 
         <div className={`${customClass}-item-message`}>{text}</div>
         <div className={`${customClass}-item-buttons`}>
-          <span>stats</span>
+          <button className='views' type='button'>
+            stats <span className='views-number'>{views}</span>
+          </button>
           <span>reply {replies.length > 0 && replies.length}</span>
           <span>retweet</span>{' '}
           <button className='likes' type='button' onClick={handleLike}>
@@ -129,6 +132,7 @@ TweetItem.propTypes = {
         }),
       }),
       replies: PropTypes.arrayOf(PropTypes.string),
+      views: PropTypes.number,
       likes: PropTypes.number,
       retweets: PropTypes.number,
       text: PropTypes.string,

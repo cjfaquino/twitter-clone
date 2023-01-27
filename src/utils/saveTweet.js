@@ -14,6 +14,7 @@ const tweetConverter = {
     replies: tweet.replies,
     retweets: tweet.retweets,
     likes: tweet.likes,
+    views: tweet.views,
     aReplyTo: tweet.aReplyTo,
   }),
   // fromFirestore: (snapshot, options) => {

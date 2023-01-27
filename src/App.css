@@ -302,11 +302,15 @@ input:focus {
 }
 
 .tweet-item-buttons {
-  height: 35px;
+  margin-top: 30px;
   display: flex;
   margin-right: 150px;
   justify-content: space-between;
   align-items: flex-end;
+}
+
+.tweet-item-buttons button {
+  padding: 5px;
 }
 
 /* tweet item */

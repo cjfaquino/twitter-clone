@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { checkMatchingUser, getUserUid } from '../firebase';
@@ -7,6 +7,7 @@ import ThreeDots from './ThreeDots';
 import useToggle from '../hooks/useToggle';
 import getTimeString from '../utils/getTimeString';
 import updateLike from '../utils/updateLike';
+import updateView from '../utils/updateView';
 
 function MainTweet({ tweetObj }) {
   const navigate = useNavigate();
@@ -25,9 +26,16 @@ function MainTweet({ tweetObj }) {
 
   const customClass = 'main-tweet';
 
+  useEffect(() => {
+    if (tweetObj) {
+      updateView(tweetObj);
+    }
+  }, [tweetObj]);
+
   if (!tweetObj) return <div id={`${customClass}-container`} />;
 
   const {
+    views,
     likes,
     text,
     timestamp,
@@ -85,7 +93,10 @@ function MainTweet({ tweetObj }) {
           className={`${customClass}-item-time`}
           title={getTimeString(timestamp)}
         >
-          {getTimeString(timestamp)} <span>stats</span>
+          {getTimeString(timestamp)}{' '}
+          <span>
+            stats <span className='views-number'>{views}</span>
+          </span>
         </div>
         <div className={`${customClass}-item-buttons`}>
           <span>reply {replies.length > 0 && replies.length}</span>
@@ -104,6 +115,7 @@ MainTweet.propTypes = {
   tweetObj: PropTypes.shape({
     data: PropTypes.shape({
       replies: PropTypes.arrayOf(PropTypes.string),
+      views: PropTypes.number,
       likes: PropTypes.number,
       retweets: PropTypes.number,
       text: PropTypes.string,

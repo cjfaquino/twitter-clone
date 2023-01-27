@@ -1,4 +1,5 @@
 import { doc, setDoc } from 'firebase/firestore';
+import { getProfilePicUrl } from '../firebase';
 import { db } from '../firebase-config';
 import updateDisplayNameOrPhoto from './updateDisplayNameOrPhoto';
 
@@ -12,7 +13,7 @@ const createProfile = async (user, userName, displayName, photoUrl) => {
     await setDoc(userRef, {
       userName,
       displayName,
-      photoUrl,
+      photoUrl: getProfilePicUrl(),
       bio: '',
     });
 
