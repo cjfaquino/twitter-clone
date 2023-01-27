@@ -36,10 +36,10 @@ function MainTweet({ tweetObj }) {
 
   const {
     views,
+    retweets,
     likes,
     text,
     timestamp,
-    replies,
     USER_ICON,
     USER_NAME,
     USER_DISPLAY,
@@ -94,17 +94,25 @@ function MainTweet({ tweetObj }) {
           title={getTimeString(timestamp)}
         >
           {getTimeString(timestamp)}{' '}
-          <span>
-            stats <span className='views-number'>{views}</span>
+        </div>
+        <div className={`${customClass}-item-stats`}>
+          <span className='views'>
+            <span className='views-number'>{views}</span> Views
+          </span>
+          <span className='retweets'>
+            <span className='retweets-number'>{retweets}</span> Retweets
+          </span>
+          <span className='likes'>
+            <span className='likes-number'>{likes}</span> Likes
           </span>
         </div>
         <div className={`${customClass}-item-buttons`}>
-          <span>reply {replies.length > 0 && replies.length}</span>
-          <span>retweet</span>{' '}
-          <button className='likes' type='button' onClick={handleLike}>
-            likes <span className='likes-number'>{likes}</span>
-          </button>{' '}
-          <span>share</span>
+          <button type='button'>reply</button>
+          <button type='button'>retweet</button>
+          <button type='button' onClick={handleLike}>
+            like
+          </button>
+          <button type='button'>share</button>
         </div>
       </div>
     </div>

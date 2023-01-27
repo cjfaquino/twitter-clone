@@ -244,15 +244,13 @@ input:focus {
 /* Tweet item  & reply item & main tweet item*/
 
 .tweet-item,
-.reply-item,
-.reply-input-container {
+.reply-item {
   box-sizing: border-box;
   width: 100%;
-  border: 1px solid red;
-  padding: 10px;
+  padding: 15px;
   position: relative;
   display: flex;
-  gap: 10px;
+  gap: 15px;
 }
 
 .tweet-item-img-container,
@@ -318,8 +316,10 @@ input:focus {
   align-items: flex-end;
 }
 
-.tweet-item-buttons button {
+.tweet-item-buttons button,
+.main-tweet-item-buttons button {
   padding: 5px;
+  background-color: transparent;
 }
 
 /* tweet item */
@@ -390,25 +390,51 @@ input:focus {
   font-weight: 500;
 }
 
+.main-tweet-item-stats {
+  margin-top: 15px;
+  border-top: 1px solid;
+  display: flex;
+  gap: 15px;
+}
+
+.main-tweet-item-stats .retweets,
+.main-tweet-item-stats .likes,
+.main-tweet-item-stats .views {
+  color: grey;
+}
+
+.main-tweet-item-stats .retweets-number,
+.main-tweet-item-stats .views-number,
+.main-tweet-item-stats .likes-number {
+  font-weight: 700;
+  color: white;
+}
+
 .main-tweet-item-buttons {
   display: flex;
   justify-content: space-between;
-  padding: 0 60px;
+  --side-padding: 60px;
+  padding-left: var(--side-padding);
+  padding-right: var(--side-padding);
+  border-top: 1px solid;
+  border-bottom: 1px solid;
 }
 
-.btn-submit-reply {
-  padding: 15px;
-  border-radius: 50px;
-  width: 120px;
-  background: var(--theme-color);
-  font-weight: 700;
+.main-tweet-item-stats,
+.main-tweet-item-buttons {
+  --top-bottom-padding: 15px;
+  padding-top: var(--top-bottom-padding);
+  padding-bottom: var(--top-bottom-padding);
+  border-color: rgb(85, 85, 85);
 }
 
-/* inputs */
+/* replies */
 
 .reply-input-container {
+  display: flex;
+  padding: 0 15px 15px 15px;
   align-items: center;
-  gap: 0;
+  border-bottom: 1px solid rgb(85, 85, 85);
 }
 
 .reply-input-img-container {
@@ -419,7 +445,6 @@ input:focus {
   box-sizing: border-box;
   padding: 10px;
   width: 100%;
-  min-height: 45px;
   font-size: 1.3rem;
   background-color: transparent;
   border: none;
@@ -429,5 +454,11 @@ input:focus {
 }
 
 .reply-input:focus {
-  outline: 1px solid white;
+  outline: none;
+}
+
+.btn-submit-reply {
+  padding: 8px;
+  width: 120px;
+  background: var(--theme-color);
 }

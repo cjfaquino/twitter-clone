@@ -52,7 +52,7 @@ function Replies({ tweetObj, replies }) {
             className='reply-input'
           />
           <button type='submit' className='btn-submit-reply'>
-            Tweet
+            Reply
           </button>
         </form>
       )}
