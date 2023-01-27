@@ -5,7 +5,6 @@ import {
   getAuth,
   signOut,
 } from 'firebase/auth';
-import { setDoc, serverTimestamp } from 'firebase/firestore';
 
 export const signInWithGooglePopup = async () => {
   // Sign in Firebase using popup auth and Google as the identity provider.
@@ -39,7 +38,8 @@ export const signOutUser = () => {
 
 // Returns the signed-in user's profile Pic URL.
 export const getProfilePicUrl = () =>
-  getAuth().currentUser.photoURL || 'add placeholder img here';
+  getAuth().currentUser.photoURL ||
+  'https://firebasestorage.googleapis.com/v0/b/twitter-clone-a66e7.appspot.com/o/user-icon.png?alt=media&token=a38933c1-8fe4-4561-abd9-4423b25c88a2';
 
 // Returns the signed-in user's display name.
 export const getDisplayName = () => getAuth().currentUser.displayName;
