@@ -15,9 +15,9 @@ function SignUp() {
     setSubmitting(true);
     const userID = await createUser(emailVal, pwdVal);
     setSubmitting(false);
-    // go to next page to continue setup
+    // go to settings page to continue setup
     if (userID) {
-      navigate(`/signup/${userID}`);
+      navigate(`/settings`);
     } else {
       // error
     }

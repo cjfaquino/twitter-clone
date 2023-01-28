@@ -28,6 +28,10 @@ function MyNav({ currentUser, toggleTweetPopup }) {
         <li className='nav-home'>
           <Link to='/'>Home</Link>
         </li>
+        <li className='nav-settings'>
+          <Link to='/settings'>Settings</Link>
+        </li>
+
         <li>
           <button type='button' onClick={handleClick} className='btn-nav-tweet'>
             Tweet

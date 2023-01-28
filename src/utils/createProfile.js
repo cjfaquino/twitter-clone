@@ -3,12 +3,12 @@ import { getProfilePicUrl } from '../firebase';
 import { db } from '../firebase-config';
 import updateDisplayNameOrPhoto from './updateDisplayNameOrPhoto';
 
-const createProfile = async (user, userName, displayName, photoUrl) => {
+const updateProfile = async ({ user, userName, displayName, photoUrl }) => {
   try {
     // update firebase user
     await updateDisplayNameOrPhoto(displayName, photoUrl);
 
-    // create firestore profile
+    // create or update firestore profile
     const userRef = doc(db, 'users', user.uid);
     await setDoc(userRef, {
       userName,
@@ -24,4 +24,4 @@ const createProfile = async (user, userName, displayName, photoUrl) => {
   }
 };
 
-export default createProfile;
+export default updateProfile;

@@ -10,7 +10,7 @@ import TweetPage from './pages/TweetPage';
 import TweetPopup from './components/TweetPopup';
 import SignUp from './pages/SignUp';
 import useToggle from './hooks/useToggle';
-import NewProfile from './pages/NewProfile';
+import ProfileSettings from './pages/ProfileSettings';
 import Login from './pages/Login';
 
 function App() {
@@ -40,16 +40,16 @@ function App() {
             />
             <Route path='/tweet/:tweet' element={<TweetPage />} />
             <Route path='/signup' element={<SignUp />} />
+            <Route path='/login' element={<Login />} />
             <Route
-              path='/signup/:user'
+              path='/settings'
               element={
-                <NewProfile
+                <ProfileSettings
                   currentUser={currentUser}
                   userProfile={userProfile}
                 />
               }
             />
-            <Route path='/login' element={<Login />} />
           </Routes>
         </div>
         <MySidebar isSignedIn={isSignedIn} />
