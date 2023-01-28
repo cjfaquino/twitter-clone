@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useInput from '../hooks/useInput';
-import { signInWithGooglePopup, signInWithEmailAndPass } from '../firebase';
+import loginWithGooglePopup from '../utils/loginWithGooglePopup';
+import loginWithEmailAndPass from '../utils/loginWithEmail&Pass';
 
 function Login() {
   const [emailVal, handleEmail] = useInput();
@@ -13,11 +14,11 @@ function Login() {
     let user;
     setSubmitting(true);
     if (provider === 'google') {
-      user = await signInWithGooglePopup();
+      user = await loginWithGooglePopup();
     }
 
     if (provider === 'emailPass') {
-      user = await signInWithEmailAndPass(email, password);
+      user = await loginWithEmailAndPass(email, password);
     }
 
     setSubmitting(false);
@@ -38,7 +39,9 @@ function Login() {
       <button type='button' onClick={handleProviderLogin('google')}>
         Log In with Google
       </button>
-      <div>or</div>
+      <div className='login-or'>
+        <span className='hor-line' /> or <span className='hor-line' />
+      </div>
       <form onSubmit={handleSubmit}>
         <label htmlFor='email-login'>
           Email

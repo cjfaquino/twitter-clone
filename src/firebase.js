@@ -1,38 +1,7 @@
-import {
-  GoogleAuthProvider,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  getAuth,
-  signOut,
-} from 'firebase/auth';
-
-export const signInWithGooglePopup = async () => {
-  // Sign in Firebase using popup auth and Google as the identity provider.
-  const provider = new GoogleAuthProvider();
-  return signInWithPopup(getAuth(), provider);
-};
-
-export const signInWithEmailAndPass = async (email, password) => {
-  try {
-    const auth = getAuth();
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-
-    // Signed in
-    const { user } = userCredential;
-    return user;
-  } catch (error) {
-    console.log(error);
-    return false;
-  }
-};
+import { getAuth, signOut } from 'firebase/auth';
 
 export const signOutUser = () => {
   // Sign out of Firebase.
-  console.log(getAuth());
   signOut(getAuth());
 };
 
