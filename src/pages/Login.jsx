@@ -40,7 +40,7 @@ function Login() {
         Log In with Google
       </button>
       <div className='login-or'>
-        <span className='hor-line' /> or <span className='hor-line' />
+        <span className='hor-line' /> OR <span className='hor-line' />
       </div>
       <form onSubmit={handleSubmit}>
         <label htmlFor='email-login'>
@@ -60,10 +60,8 @@ function Login() {
             value={passwordVal}
             onChange={handlePassword}
           />
-          <button type='submit'>
-            {submitting ? 'Logging In...' : 'Log In'}
-          </button>
         </label>
+        <button type='submit'>{submitting ? 'Logging In...' : 'Log In'}</button>
       </form>
     </div>
   );

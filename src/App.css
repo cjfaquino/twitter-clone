@@ -191,6 +191,11 @@ input:focus {
 
 /* Center column */
 
+form button {
+  margin-left: auto;
+  margin-right: 0;
+}
+
 #centerbar {
   margin-left: var(--menubar-width);
   width: var(--feed-width);
@@ -215,12 +220,28 @@ input:focus {
 .login-form form {
   display: flex;
   flex-direction: column;
+  gap: 20px;
 }
 
 .login-form input {
   width: 100%;
   height: 40px;
   font-size: 1rem;
+}
+
+.login-or {
+  padding: 10px 30px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.hor-line {
+  width: 100%;
+  height: 0px;
+  border-bottom: 1px solid grey;
 }
 
 .sign-up-form {
@@ -235,10 +256,9 @@ input:focus {
   flex-direction: column;
 }
 
-.sign-up-form button {
+.sign-up-form button,
+.login-form button {
   padding: 10px;
-  margin-left: auto;
-  margin-right: 0;
 }
 
 .sign-up-form input {
