@@ -11,7 +11,7 @@ function TweetPage() {
   const [tweet] = useOneTweet(params.tweet);
 
   return (
-    <>
+    <div id='tweet-page'>
       <GoBackHeader />
       {tweet && tweet.aReplyTo && (
         <div className='replying-to-tweet-item'>
@@ -20,7 +20,7 @@ function TweetPage() {
       )}
       <MainTweet tweetObj={tweet} />
       {tweet && <Replies replies={tweet.replies} tweetObj={tweet} />}
-    </>
+    </div>
   );
 }
 

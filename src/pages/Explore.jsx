@@ -16,14 +16,14 @@ function Explore({ newTweet, clrNewTweet }) {
   }, [newTweet]);
 
   return (
-    <>
+    <div id='explore'>
       <div>search bar</div>
       <div>
         {isTweetsLoading && <div>loading</div>}
         {tweets &&
           tweets.map((twt) => <TweetItem tweetObj={twt} key={twt.id} />)}
       </div>
-    </>
+    </div>
   );
 }
 

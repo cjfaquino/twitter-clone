@@ -12,25 +12,23 @@ function ProfileSettings({ currentUser, userProfile }) {
   const [userName, handleUserName, setUserName] = useInput();
   const [email, handleEmail, setEmail] = useInput();
   const [loading, setLoading] = useState(true);
-  const [submitting1, setSubmitting1] = useState(null);
-  const [submitting2, setSubmitting2] = useState(null);
+  const [submittingProfile, setSubmittingProfile] = useState(null);
+  const [submittingEmail, setSubmittingEmail] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit1 = async (e) => {
     e.preventDefault();
-    setSubmitting1(true);
+    setSubmittingProfile(true);
     // create profile
     const userID = await updateProfile({
       user: currentUser,
       userName,
       displayName,
     });
-    setSubmitting1(false);
+    setSubmittingProfile(false);
     if (userID) {
       // makes useUserProfile grab the new profile
       eventProfileEdit();
-      // then navgiate to page
-      navigate('/');
     } else {
       // error
     }
@@ -38,9 +36,9 @@ function ProfileSettings({ currentUser, userProfile }) {
 
   const handleSubmit2 = async (e) => {
     e.preventDefault();
-    setSubmitting2(true);
+    setSubmittingEmail(true);
     await updateUserEmail(email);
-    setSubmitting2(false);
+    setSubmittingEmail(false);
   };
 
   const setFields = async () => {
@@ -68,11 +66,11 @@ function ProfileSettings({ currentUser, userProfile }) {
   }, [userProfile]);
 
   return (
-    <div className='sign-up-form'>
+    <div id='settings'>
       {!loading && (
-        <div>
+        <div className='sign-up-form'>
           <form onSubmit={handleSubmit1}>
-            <div>Create your profile</div>
+            <h3>Your Profile</h3>
             <label htmlFor='displayName'>
               Display Name
               <input
@@ -92,11 +90,11 @@ function ProfileSettings({ currentUser, userProfile }) {
               />
             </label>
             <button type='submit'>
-              {submitting1 ? 'Submitting...' : 'Submit'}
+              {submittingProfile ? 'Submitting...' : 'Submit'}
             </button>
           </form>
           <form onSubmit={handleSubmit2}>
-            <div>Contact Details</div>
+            <h3>Contact Details</h3>
             <label htmlFor='email'>
               Email
               <input
@@ -107,26 +105,28 @@ function ProfileSettings({ currentUser, userProfile }) {
               />
             </label>
             <button type='submit'>
-              {submitting2 ? 'Submitting...' : 'Submit'}
+              {submittingEmail ? 'Submitting...' : 'Submit'}
             </button>
           </form>
-          <div>
-            <span>Created at: </span>{' '}
-            <span>
-              {currentUser &&
-                new Date(
-                  Number(currentUser.metadata.createdAt)
-                ).toLocaleString()}
-            </span>
-          </div>
-          <div>
-            <span>Last login at: </span>{' '}
-            <span>
-              {currentUser &&
-                new Date(
-                  Number(currentUser.metadata.lastLoginAt)
-                ).toLocaleString()}
-            </span>
+          <div className='account-stats'>
+            <div>
+              <span>Created at: </span>{' '}
+              <span>
+                {currentUser &&
+                  new Date(
+                    Number(currentUser.metadata.createdAt)
+                  ).toLocaleString()}
+              </span>
+            </div>
+            <div>
+              <span>Last login at: </span>{' '}
+              <span>
+                {currentUser &&
+                  new Date(
+                    Number(currentUser.metadata.lastLoginAt)
+                  ).toLocaleString()}
+              </span>
+            </div>
           </div>
         </div>
       )}
