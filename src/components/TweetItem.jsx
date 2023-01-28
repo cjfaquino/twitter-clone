@@ -37,7 +37,6 @@ function TweetItem({ tweetObj }) {
 
   const navToPage = async (e) => {
     const targetName = e.target.className;
-    console.log(targetName);
     // conditions
     const toUser = ['name', 'img'];
     const toTweetPage = [
