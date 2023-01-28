@@ -6,24 +6,59 @@ export default function useOneTweet(tweetID) {
   const [tweet, setTweet] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const docRef = doc(db, 'tweets', tweetID);
+  const loadReplyingTo = async (replyingToID) => {
+    let replyingTo = null;
+    const repRef = doc(db, 'tweets', replyingToID);
+    const repSnap = await getDoc(repRef);
+
+    if (repSnap.exists()) {
+      replyingTo = { id: repSnap.id, data: repSnap.data() };
+    } else console.log('Cannot get replying to tweet');
+
+    // replyingTo will be a tweetObj or null
+    return replyingTo;
+  };
+
+  const loadTweet = async () => {
     setLoading(true);
-    getDoc(docRef)
-      .then((docSnap) => {
-        if (docSnap.exists() && tweet !== docSnap.data()) {
-          setTweet({ id: docSnap.id, data: docSnap.data() });
-        } else {
-          // doc.data() will be undefined in this case
-          console.log('No such document!');
-        }
-      })
-      .finally(setLoading(false));
+    try {
+      const docRef = doc(db, 'tweets', tweetID);
+      const docSnap = await getDoc(docRef);
+
+      // no document
+      if (!docSnap.exists()) throw Error('No such tweet exists');
+
+      // tweet exists
+
+      // for tweet obj with aReplyTo
+      // get up to date stats of aReplyTo if it exists
+      let replyingTo = null;
+      if (tweet && tweet.id !== docSnap.id && docSnap.data().aReplyTo) {
+        const replyingToID = docSnap.data().aReplyTo.id;
+        replyingTo = await loadReplyingTo(replyingToID);
+      }
+
+      const newTwt = {
+        ...docSnap.data(),
+        ...{ aReplyTo: replyingTo },
+      };
+
+      setTweet({ id: docSnap.id, data: newTwt });
+      setLoading(false);
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
+
+  useEffect(() => {
+    loadTweet();
 
     return () => {
       setTweet(null);
     };
   }, [tweetID]);
 
-  return [tweet, setTweet, loading];
+  return [tweet, loading];
 }
