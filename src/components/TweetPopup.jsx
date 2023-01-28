@@ -14,7 +14,7 @@ function TweetPopup({ toggleTweetPopup, setNewTweet }) {
       const docID = await saveTweet(input);
       if (docID) {
         // send to Feed
-        setNewTweet({ id: docID, data: new Tweet(input) });
+        setNewTweet({ id: docID, ...new Tweet(input) });
         toggleTweetPopup();
       }
     } else {

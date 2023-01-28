@@ -12,7 +12,7 @@ export default function useOneTweet(tweetID) {
     const repSnap = await getDoc(repRef);
 
     if (repSnap.exists()) {
-      replyingTo = { id: repSnap.id, data: repSnap.data() };
+      replyingTo = { id: repSnap.id, ...repSnap.data() };
     } else console.log('Cannot get replying to tweet');
 
     // replyingTo will be a tweetObj or null
@@ -43,7 +43,7 @@ export default function useOneTweet(tweetID) {
         ...{ aReplyTo: replyingTo },
       };
 
-      setTweet({ id: docSnap.id, data: newTwt });
+      setTweet({ id: docSnap.id, ...newTwt });
       setLoading(false);
       return true;
     } catch (error) {

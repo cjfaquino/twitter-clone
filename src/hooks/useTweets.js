@@ -24,7 +24,7 @@ export default function useTweets(filter) {
           if (filter === 'tweets' && item.data().aReplyTo !== null) return;
 
           if (!tweets.some((twt) => twt.id === item.id))
-            setTweets((prev) => [...prev, { id: item.id, data: item.data() }]);
+            setTweets((prev) => [...prev, { id: item.id, ...item.data() }]);
         });
       })
       .catch((e) => console.error(e));

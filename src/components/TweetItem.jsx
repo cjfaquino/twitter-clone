@@ -20,8 +20,8 @@ function TweetItem({ tweetObj }) {
     USER_ID,
     USER_NAME,
     USER_DISPLAY,
-  } = tweetObj.data;
-  const { id: TWEET_ID } = tweetObj;
+    id: TWEET_ID,
+  } = tweetObj;
 
   const [showOptionsPopup, toggleOptionsPopup] = useToggle();
 
@@ -114,12 +114,10 @@ function TweetItem({ tweetObj }) {
             )}
           </div>
         </div>
-        {tweetObj.data.aReplyTo && (
+        {tweetObj.aReplyTo && (
           <div className='replying-to-info'>
             Replying to{' '}
-            <span className='profile-link'>
-              @{tweetObj.data.aReplyTo.data.USER_NAME}
-            </span>
+            <span className='profile-link'>@{tweetObj.aReplyTo.USER_NAME}</span>
           </div>
         )}
 
@@ -151,25 +149,21 @@ function TweetItem({ tweetObj }) {
 
 TweetItem.propTypes = {
   tweetObj: PropTypes.shape({
-    data: PropTypes.shape({
-      aReplyTo: PropTypes.shape({
-        data: PropTypes.shape({
-          USER_NAME: PropTypes.string,
-        }),
-      }),
-      replies: PropTypes.arrayOf(PropTypes.string),
-      views: PropTypes.number,
-      likes: PropTypes.number,
-      retweets: PropTypes.number,
-      text: PropTypes.string,
-      timestamp: PropTypes.shape({
-        toDate: PropTypes.func,
-      }),
-      USER_ICON: PropTypes.string,
-      USER_ID: PropTypes.string,
+    aReplyTo: PropTypes.shape({
       USER_NAME: PropTypes.string,
-      USER_DISPLAY: PropTypes.string,
     }),
+    replies: PropTypes.arrayOf(PropTypes.string),
+    views: PropTypes.number,
+    likes: PropTypes.number,
+    retweets: PropTypes.number,
+    text: PropTypes.string,
+    timestamp: PropTypes.shape({
+      toDate: PropTypes.func,
+    }),
+    USER_ICON: PropTypes.string,
+    USER_ID: PropTypes.string,
+    USER_NAME: PropTypes.string,
+    USER_DISPLAY: PropTypes.string,
     id: PropTypes.string,
   }).isRequired,
 };

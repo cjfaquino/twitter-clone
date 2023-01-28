@@ -18,10 +18,7 @@ export default function useReplies(arrayOfReplyIDs = []) {
       getDoc(queryRef)
         .then((qSnap) => {
           if (qSnap.exists()) {
-            setReplies((prev) => [
-              ...prev,
-              { id: qSnap.id, data: qSnap.data() },
-            ]);
+            setReplies((prev) => [...prev, { id: qSnap.id, ...qSnap.data() }]);
           }
         })
         .catch((e) => console.log(e));

@@ -10,10 +10,10 @@ const deleteTweet = async (tweetObj) => {
     const tweetRef = doc(db, 'tweets', tweetObj.id);
     await deleteDoc(tweetRef);
 
-    if (tweetObj.data.aReplyTo) {
+    if (tweetObj.aReplyTo) {
       // if a reply to another tweet
       // remove reference from that tweet
-      const aReplyToRef = doc(db, 'tweets', tweetObj.data.aReplyTo.id);
+      const aReplyToRef = doc(db, 'tweets', tweetObj.aReplyTo.id);
       await updateDoc(aReplyToRef, {
         replies: arrayRemove(tweetObj.id),
       });

@@ -13,13 +13,13 @@ function TweetPage() {
   return (
     <>
       <GoBackHeader />
-      {tweet && tweet.data.aReplyTo && (
+      {tweet && tweet.aReplyTo && (
         <div className='replying-to-tweet-item'>
-          <TweetItem tweetObj={tweet.data.aReplyTo} />
+          <TweetItem tweetObj={tweet.aReplyTo} />
         </div>
       )}
       <MainTweet tweetObj={tweet} />
-      {tweet && <Replies replies={tweet.data.replies} tweetObj={tweet} />}
+      {tweet && <Replies replies={tweet.replies} tweetObj={tweet} />}
     </>
   );
 }
