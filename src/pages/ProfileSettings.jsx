@@ -6,6 +6,7 @@ import updateProfile from '../utils/createProfile';
 import eventProfileEdit from '../utils/eventProfileEdit';
 import doesProfileExist from '../utils/doesProfileExist';
 import updateUserEmail from '../utils/updateEmail';
+import linkWithGooglePopup from '../utils/linkWithGooglePopup';
 
 function ProfileSettings({ currentUser, userProfile }) {
   const [displayName, handleDisplayName, setDisplayName] = useInput();
@@ -53,6 +54,10 @@ function ProfileSettings({ currentUser, userProfile }) {
       // no user profile in db
       setLoading(false);
     }
+  };
+
+  const linkGoogle = async () => {
+    await linkWithGooglePopup('github');
   };
 
   useEffect(() => {
@@ -108,6 +113,14 @@ function ProfileSettings({ currentUser, userProfile }) {
               {submittingEmail ? 'Submitting...' : 'Submit'}
             </button>
           </form>
+
+          <div className='link-google-account'>
+            <button type='button' onClick={linkGoogle}>
+              Link Google
+            </button>
+            <span className='error' />
+          </div>
+
           <div className='account-stats'>
             <div>
               <span>Created at: </span>{' '}
