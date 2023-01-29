@@ -1,19 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { signOutUser, isUserSignedIn } from '../firebase';
+import { signOutUser } from '../firebase';
 import useToggle from '../hooks/useToggle';
 import ThreeDots from './ThreeDots';
 
 function MyNav({ currentUser, toggleTweetPopup }) {
   const [logoutPopup, toggleLogoutPopup] = useToggle();
+  const navigate = useNavigate();
 
   const handleClick = () => {
-    if (isUserSignedIn()) {
+    if (currentUser) {
       // show tweet popup
       toggleTweetPopup();
     } else {
-      // show login popup
+      // go to login
+      navigate('/login');
     }
   };
 
@@ -22,15 +24,25 @@ function MyNav({ currentUser, toggleTweetPopup }) {
     toggleLogoutPopup();
   };
 
+  const styleNavLink = ({ isActive }) => ({
+    color: isActive ? 'var(--theme-color)' : 'white',
+  });
+
   return (
     <nav id='menubar'>
       <ul className='menu-list'>
-        <li className='nav-home'>
-          <Link to='/'>Home</Link>
+        <li className='nav-explore'>
+          <NavLink to='/explore' style={styleNavLink}>
+            Explore
+          </NavLink>
         </li>
-        <li className='nav-settings'>
-          <Link to='/settings'>Settings</Link>
-        </li>
+        {currentUser && (
+          <li className='nav-settings'>
+            <NavLink to='/settings' style={styleNavLink}>
+              Settings
+            </NavLink>
+          </li>
+        )}
 
         <li>
           <button type='button' onClick={handleClick} className='btn-nav-tweet'>

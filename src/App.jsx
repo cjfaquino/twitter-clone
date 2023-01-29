@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
 import useAuthStateObserver from './hooks/useAuthStateObserver';
 import LogInBanner from './components/LogInBanner';
@@ -33,7 +33,7 @@ function App() {
         <div id='centerbar'>
           <Routes>
             <Route
-              path='/'
+              path='/explore'
               element={
                 <Explore newTweet={newTweet} clrNewTweet={clrNewTweet} />
               }
@@ -51,6 +51,7 @@ function App() {
                 />
               }
             />
+            <Route path='*' element={<Navigate to='/explore' replace />} />
           </Routes>
         </div>
         <MySidebar isSignedIn={isSignedIn} />
