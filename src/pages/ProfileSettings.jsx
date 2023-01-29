@@ -38,8 +38,12 @@ function ProfileSettings({ currentUser, userProfile }) {
   const handleSubmit2 = async (e) => {
     e.preventDefault();
     setSubmittingEmail(true);
-    await updateUserEmail(email);
+    const res = await updateUserEmail(email);
     setSubmittingEmail(false);
+
+    if (res === 'auth/requires-recent-login') {
+      navigate('/login', { state: { error: 'reauth' } });
+    }
   };
 
   const setFields = async () => {
@@ -67,6 +71,7 @@ function ProfileSettings({ currentUser, userProfile }) {
       navigate('/login');
     }
 
+    console.log(currentUser);
     setFields();
   }, [userProfile]);
 

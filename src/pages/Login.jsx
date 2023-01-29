@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useInput from '../hooks/useInput';
 import loginWithGooglePopup from '../utils/loginWithGooglePopup';
 import loginWithEmailAndPass from '../utils/loginWithEmail&Pass';
+import setErrorMessage from '../utils/setErrorMessage';
 
 function Login() {
   const [emailVal, handleEmail] = useInput();
   const [passwordVal, handlePassword] = useInput();
   const [submitting, setSubmitting] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleProviderLogin = (provider, email, password) => async () => {
     let user;
@@ -33,6 +35,17 @@ function Login() {
     e.preventDefault();
     handleProviderLogin('emailPass', emailVal, passwordVal)();
   };
+
+  useEffect(() => {
+    if (location.state && location.state.error === 'reauth') {
+      setErrorMessage(
+        '.login-form .error',
+        'Please re-authenticate before continuing.'
+      );
+    }
+
+    return () => {};
+  }, [location.state]);
 
   return (
     <div className='login-form'>
@@ -61,6 +74,7 @@ function Login() {
             onChange={handlePassword}
           />
         </label>
+        <div className='error' />
         <button type='submit'>{submitting ? 'Logging In...' : 'Log In'}</button>
       </form>
     </div>
