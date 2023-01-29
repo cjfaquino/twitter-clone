@@ -38,6 +38,10 @@ input:focus {
     rgba(210, 210, 210, 0.32) 0px 2px 16px 0px;
 }
 
+.grey {
+  color: grey;
+}
+
 .error {
   color: red;
 }
@@ -442,11 +446,6 @@ form button {
 
 /* tweet page */
 
-header.goback + .replying-to-tweet-item,
-header.goback + #main-tweet-container {
-  margin-top: var(--goback-header-size);
-}
-
 .replying-to-tweet-item .tweet-item {
   border: none;
 }
@@ -560,6 +559,12 @@ header.goback + #main-tweet-container {
 
 /* goback header */
 
+header.goback + .replying-to-tweet-item,
+header.goback + #main-tweet-container,
+header.goback + .profile-large {
+  margin-top: var(--goback-header-size);
+}
+
 header.goback {
   cursor: pointer;
   width: calc(var(--feed-width) - 2px);
@@ -577,4 +582,81 @@ header.goback {
   align-items: center;
   font-weight: 700;
   font-size: 1.4rem;
+}
+
+/* profile page */
+
+.profile-large {
+  border-bottom: 1px solid grey;
+  min-height: 410px;
+}
+
+.profile-large .user-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-large .top-half {
+  background-color: rgb(76, 76, 76);
+  height: 205px;
+}
+
+.profile-large .bottom-half {
+  --profile-bottom-half-padding: 15px;
+  padding: var(--profile-bottom-half-padding);
+  min-height: 205px;
+}
+
+.bottom-half .edit {
+  position: relative;
+  height: 69px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.bottom-half .user-profile-img-container {
+  position: absolute;
+  --img-size: 135px;
+  left: 0;
+  top: calc((var(--img-size) * -1 / 2) - var(--profile-bottom-half-padding));
+  height: var(--img-size);
+  width: var(--img-size);
+  border-radius: 50%;
+  border: 5px solid black;
+  background-color: white;
+  overflow: hidden;
+}
+
+.user-profile-img-container img {
+  width: 100%;
+  height: 100%;
+}
+
+.edit button {
+  padding: 7px;
+  background-color: black;
+  border: 1px solid white;
+}
+
+.user-card-display-name {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 25px;
+}
+
+.user-card-username,
+.user-card-bio {
+  margin-bottom: 15px;
+}
+
+.user-card-stats {
+  display: flex;
+  gap: 40px;
+}
+
+.user-card-followers-number,
+.user-card-following-number {
+  font-weight: 700;
+  color: white;
 }

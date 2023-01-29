@@ -5,7 +5,7 @@ import { signOutUser } from '../firebase';
 import useToggle from '../hooks/useToggle';
 import ThreeDots from './ThreeDots';
 
-function MyNav({ currentUser, toggleTweetPopup }) {
+function MyNav({ currentUser, userProfile, toggleTweetPopup }) {
   const [logoutPopup, toggleLogoutPopup] = useToggle();
   const navigate = useNavigate();
 
@@ -36,12 +36,19 @@ function MyNav({ currentUser, toggleTweetPopup }) {
             Explore
           </NavLink>
         </li>
-        {currentUser && (
-          <li className='nav-settings'>
-            <NavLink to='/settings' style={styleNavLink}>
-              Settings
-            </NavLink>
-          </li>
+        {userProfile && (
+          <>
+            <li className='nav-profile'>
+              <NavLink to={`${userProfile.userName}`} style={styleNavLink}>
+                Profile
+              </NavLink>
+            </li>
+            <li className='nav-settings'>
+              <NavLink to='/settings' style={styleNavLink}>
+                Settings
+              </NavLink>
+            </li>
+          </>
         )}
 
         <li>
@@ -97,11 +104,15 @@ MyNav.propTypes = {
     displayName: PropTypes.string,
     photoURL: PropTypes.string,
   }),
+  userProfile: PropTypes.shape({
+    userName: PropTypes.string,
+  }),
   toggleTweetPopup: PropTypes.func.isRequired,
 };
 
 MyNav.defaultProps = {
   currentUser: { displayName: '' },
+  userProfile: { userName: '' },
 };
 
 export default MyNav;

@@ -12,6 +12,7 @@ import SignUp from './pages/SignUp';
 import useToggle from './hooks/useToggle';
 import ProfileSettings from './pages/ProfileSettings';
 import Login from './pages/Login';
+import ProfilePage from './pages/ProfilePage';
 
 function App() {
   const [isSignedIn, currentUser, userProfile] = useAuthStateObserver();
@@ -27,6 +28,7 @@ function App() {
       <div className='app wrapper'>
         <MyNav
           currentUser={currentUser}
+          userProfile={userProfile}
           isSignedIn={isSignedIn}
           toggleTweetPopup={toggleTweetPopup}
         />
@@ -41,6 +43,15 @@ function App() {
             <Route path='/tweet/:tweet' element={<TweetPage />} />
             <Route path='/signup' element={<SignUp />} />
             <Route path='/login' element={<Login />} />
+            <Route
+              path='/:user'
+              element={
+                <ProfilePage
+                  currentUser={currentUser}
+                  userProfile={userProfile}
+                />
+              }
+            />
             <Route
               key={crypto.randomUUID()}
               path='/settings'
