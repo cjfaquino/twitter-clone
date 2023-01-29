@@ -12,7 +12,7 @@ const updateProfile = async ({ user, userName, displayName }) => {
     await setDoc(userRef, {
       userName,
       displayName,
-      photoUrl: user.photoUrl,
+      photoUrl: user.photoURL,
     });
 
     return user.uid;
