@@ -44,7 +44,7 @@ function App() {
             <Route path='/signup' element={<SignUp />} />
             <Route path='/login' element={<Login />} />
             <Route
-              path='/:user'
+              path='/:username'
               element={
                 <ProfilePage
                   currentUser={currentUser}
@@ -53,7 +53,6 @@ function App() {
               }
             />
             <Route
-              key={crypto.randomUUID()}
               path='/settings'
               element={
                 <ProfileSettings
