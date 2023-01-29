@@ -7,6 +7,8 @@ import eventProfileEdit from '../utils/eventProfileEdit';
 import doesProfileExist from '../utils/doesProfileExist';
 import updateUserEmail from '../utils/updateEmail';
 import linkWithGooglePopup from '../utils/linkWithGooglePopup';
+import isEmailVerified from '../utils/isEmailVerified';
+import sendEmailVerification from '../utils/sendEmailVerification';
 
 function ProfileSettings({ currentUser, userProfile }) {
   const [displayName, handleDisplayName, setDisplayName] = useInput();
@@ -68,11 +70,11 @@ function ProfileSettings({ currentUser, userProfile }) {
     // must be signed in
     // User session expired, needs to reauthenticate
     if (!currentUser || currentUser.isAnonymous) {
-      navigate('/login');
+      return navigate('/login');
     }
 
-    console.log(currentUser);
     setFields();
+    return undefined;
   }, [userProfile]);
 
   return (
@@ -103,10 +105,17 @@ function ProfileSettings({ currentUser, userProfile }) {
               {submittingProfile ? 'Submitting...' : 'Submit'}
             </button>
           </form>
-          <form onSubmit={handleSubmit2}>
+          <form onSubmit={handleSubmit2} className='email-form'>
             <h3>Contact Details</h3>
             <label htmlFor='email'>
-              Email
+              Email{' '}
+              <span
+                className={
+                  isEmailVerified() ? 'verify-email verified' : 'verify-email'
+                }
+              >
+                {isEmailVerified() ? 'verified ✓' : 'not verified'}
+              </span>
               <input
                 type='text'
                 id='email'
@@ -114,6 +123,9 @@ function ProfileSettings({ currentUser, userProfile }) {
                 onChange={handleEmail}
               />
             </label>
+            <button type='button' onClick={sendEmailVerification}>
+              Verify email
+            </button>
             <button type='submit'>
               {submittingEmail ? 'Submitting...' : 'Submit'}
             </button>

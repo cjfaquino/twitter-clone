@@ -290,6 +290,20 @@ form button {
   text-align: right;
 }
 
+.email-form {
+  position: relative;
+}
+
+.verify-email {
+  position: absolute;
+  right: 0;
+  color: grey;
+}
+
+.verify-email.verified {
+  color: rgb(68, 255, 47);
+}
+
 /* MySidebar */
 
 #sidebar {
