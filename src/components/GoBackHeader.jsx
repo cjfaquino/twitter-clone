@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
-function GoBackHeader({ currentUser }) {
+function GoBackHeader({ userProfile }) {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -12,20 +12,20 @@ function GoBackHeader({ currentUser }) {
   return (
     <header className='goback' onClick={handleClick} aria-hidden>
       <div className='goback-text'>
-        {currentUser ? `← ${currentUser.displayName}` : `← Tweet`}
+        {userProfile ? `← ${userProfile.displayName}` : `← Tweet`}
       </div>
     </header>
   );
 }
 
 GoBackHeader.propTypes = {
-  currentUser: PropTypes.shape({
+  userProfile: PropTypes.shape({
     displayName: PropTypes.string,
   }),
 };
 
 GoBackHeader.defaultProps = {
-  currentUser: null,
+  userProfile: null,
 };
 
 export default GoBackHeader;
