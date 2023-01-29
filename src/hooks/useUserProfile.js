@@ -16,7 +16,7 @@ function useUserProfile(userObj) {
         } else {
           // no user exists in firestore db users
           // create user profile
-          navigate(`/signup/${userObj.uid}`);
+          navigate(`/settings`);
         }
       });
     }
