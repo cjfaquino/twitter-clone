@@ -30,7 +30,12 @@ function ProfileLarge({ currentUser, userProfile }) {
                     alt={userProfile.displayName}
                   />
                 </div>
-                <button type='button'>Edit Profile</button>
+                {currentUser &&
+                currentUser.displayName === userProfile.displayName ? (
+                  <button type='button'>Edit Profile</button>
+                ) : (
+                  <button type='button'>Follow</button>
+                )}
               </div>
               <div className={`${customClass}-display-name`}>
                 {userProfile.displayName}
@@ -66,6 +71,7 @@ function ProfileLarge({ currentUser, userProfile }) {
 
 ProfileLarge.propTypes = {
   currentUser: PropTypes.shape({
+    displayName: PropTypes.string,
     metadata: PropTypes.shape({
       createdAt: PropTypes.string,
     }),
