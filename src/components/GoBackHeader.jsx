@@ -12,7 +12,7 @@ function GoBackHeader({ targetUser }) {
   return (
     <header className='goback' onClick={handleClick} aria-hidden>
       <div className='goback-text'>
-        {targetUser.userProfile
+        {targetUser && targetUser.userProfile
           ? `← ${targetUser.userProfile.displayName}`
           : `← Tweet`}
       </div>
