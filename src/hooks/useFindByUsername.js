@@ -4,10 +4,16 @@ import { db } from '../firebase-config';
 
 export default function useFindByUsername(username) {
   const tUser = JSON.parse(localStorage.getItem('targetUser'));
+  let flr = [];
+  let flg = [];
+  if (tUser) {
+    flr = tUser.followers;
+    flg = tUser.following;
+  }
 
   const [userProfile, setUserProfile] = useState(tUser && tUser.userProfile);
-  const [followers, setFollowers] = useState([]);
-  const [following, setFollowing] = useState([]);
+  const [followers, setFollowers] = useState(flr);
+  const [following, setFollowing] = useState(flg);
 
   let count = 0;
 
