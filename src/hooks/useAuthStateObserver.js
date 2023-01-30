@@ -13,10 +13,8 @@ function useAuthStateObserver() {
   const authStateObserver = (user) => {
     if (user) {
       // User is signed in!
-      const temp = user;
-      temp.userProfile = userProfile;
-      setCurrentUser(temp);
-      localStorage.setItem('firebaseUser', JSON.stringify(temp));
+      setCurrentUser(user);
+      localStorage.setItem('firebaseUser', JSON.stringify(user));
       localStorage.setItem('userProfile', JSON.stringify(userProfile));
     } else {
       // User is signed out!
