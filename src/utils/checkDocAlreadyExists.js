@@ -7,14 +7,25 @@ const checkDocAlreadyExists = async (
   nestedCollection,
   secondID
 ) => {
-  const userRef = doc(db, firstCollection, firstID, nestedCollection, secondID);
+  try {
+    const userRef = doc(
+      db,
+      firstCollection,
+      firstID,
+      nestedCollection,
+      secondID
+    );
 
-  const userSnap = await getDoc(userRef);
+    const userSnap = await getDoc(userRef);
 
-  if (userSnap.exists()) {
-    return true;
+    if (userSnap.exists()) {
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.log(error);
+    return undefined;
   }
-  return false;
 };
 
 export default checkDocAlreadyExists;
