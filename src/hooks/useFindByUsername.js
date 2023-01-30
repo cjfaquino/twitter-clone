@@ -3,22 +3,64 @@ import { getDocs, collection, query } from 'firebase/firestore';
 import { db } from '../firebase-config';
 
 export default function useFindByUsername(username) {
-  const [userProfile, setUserProfile] = useState(null);
+  const tUser = JSON.parse(localStorage.getItem('targetUser'));
+
+  const [userProfile, setUserProfile] = useState(tUser && tUser.userProfile);
+  const [followers, setFollowers] = useState([]);
+  const [following, setFollowing] = useState([]);
+
+  let count = 0;
 
   useEffect(() => {
-    const queryRef = query(collection(db, 'users'));
+    const getFollwers = async (userObj) => {
+      const followersRef = collection(db, 'users', userObj.id, 'followers');
+      const flrSnap = await getDocs(followersRef);
+      flrSnap.forEach((item) => {
+        setFollowers((prev) => [...prev, { id: item.id, ...item.data() }]);
+      });
+    };
 
-    getDocs(queryRef)
-      .then((qSnap) => {
-        qSnap.forEach((item) => {
-          if (item.data().userName === username)
-            setUserProfile({ id: item.id, ...item.data() });
-        });
-      })
-      .catch((err) => console.log(err));
+    const getFollowing = async (userObj) => {
+      const followingRef = collection(db, 'users', userObj.id, 'following');
+      const flgSnap = await getDocs(followingRef);
 
-    return () => {};
+      flgSnap.forEach((item) => {
+        setFollowing((prev) => [...prev, { id: item.id, ...item.data() }]);
+      });
+    };
+
+    const getUser = async () => {
+      const usersRef = query(collection(db, 'users'));
+      const uSnap = await getDocs(usersRef);
+      uSnap.forEach(async (item) => {
+        if (item.data().userName === username) {
+          const userObj = { id: item.id, ...item.data() };
+          await Promise.all([getFollowing(userObj), getFollwers(userObj)]);
+
+          setUserProfile(userObj);
+        }
+      });
+      return undefined;
+    };
+
+    if (count === 0) {
+      getUser();
+    }
+    count += 1;
   }, [username]);
 
-  return [userProfile];
+  useEffect(() => {
+    if (userProfile !== null) {
+      localStorage.setItem(
+        'targetUser',
+        JSON.stringify({ userProfile, followers, following })
+      );
+    }
+
+    return () => {
+      localStorage.removeItem('targetUser');
+    };
+  }, [username, followers, following]);
+
+  return { userProfile, followers, following };
 }
