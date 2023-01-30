@@ -11,7 +11,8 @@ export default function useFindByUsername(username) {
     getDocs(queryRef)
       .then((qSnap) => {
         qSnap.forEach((item) => {
-          if (item.data().userName === username) setUserProfile(item.data());
+          if (item.data().userName === username)
+            setUserProfile({ id: item.id, ...item.data() });
         });
       })
       .catch((err) => console.log(err));
