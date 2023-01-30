@@ -2,7 +2,7 @@
   --login-banner-size: 70px;
   --menubar-width: 300px;
   --feed-width: 600px;
-  --sidebar-width: 300px;
+  --sidebar-width: 390px;
   --pfp-size: 50px;
   --theme-color: rgb(99, 177, 255);
   --goback-header-size: 70px;
@@ -319,11 +319,16 @@ form button {
 }
 
 #who-to-follow {
-  padding: 20px;
+  position: relative;
   background-color: rgb(46, 46, 46);
   min-height: 300px;
+  width: 100%;
   border: 1px solid white;
   border-radius: 10px;
+}
+
+#who-to-follow h3 {
+  padding: 10px 15px;
 }
 
 /* Tweet item  & reply item & main tweet item*/
@@ -342,23 +347,24 @@ form button {
 .tweet-item-img-container,
 .main-tweet-item-img-container,
 .reply-input-img-container,
-.nav-user-img-container {
+.nav-user-img-container,
+.user-card-small-img-container {
   width: var(--pfp-size);
   height: var(--pfp-size);
   aspect-ratio: 1 / 1;
   overflow: hidden;
-  border-radius: 50%;
+  border-radius: 10px;
   flex-shrink: 0;
-  background-color: white;
-  z-index: 1;
 }
 
 .tweet-item-img-container img,
 .main-tweet-item-img-container img,
 .reply-input-img-container img,
-.nav-user-img-container img {
+.nav-user-img-container img,
+.user-card-small-img-container img {
   height: 100%;
   width: 100%;
+  background-color: grey;
 }
 
 .tweet-item-right-half {
@@ -663,4 +669,42 @@ header.goback {
 .user-card-following-number {
   font-weight: 700;
   color: white;
+}
+
+/* profile small */
+
+.profile-small {
+  min-height: 72px;
+}
+
+.user-card-small {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: background-color 0.2s;
+}
+
+.user-card-small:hover {
+  background-color: rgb(54, 53, 53);
+}
+
+.user-card-small-contact {
+  max-width: 150px;
+  line-height: 20px;
+}
+
+.user-card-small-contact > * {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-card-small button {
+  padding: 7px 15px;
+  margin-right: 0;
+  margin-left: auto;
+  background-color: white;
+  color: black;
+  font-size: 0.9rem;
 }
