@@ -14,7 +14,11 @@ export const getProfilePicUrl = () =>
 export const getDisplayName = () => getAuth().currentUser.displayName;
 
 // Returns the signed-in user's display name.
-export const getUserUid = () => getAuth().currentUser.uid;
+export const getUserUid = async () => {
+  const cUser = JSON.parse(localStorage.getItem('firebaseUser'));
+
+  return cUser ? cUser.uid : getAuth().currentUser.uid;
+};
 
 // Returns true if a user is signed-in.
 export function isUserSignedIn() {
