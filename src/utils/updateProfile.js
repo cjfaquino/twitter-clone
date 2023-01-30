@@ -13,6 +13,7 @@ const updateProfile = async ({ user, userName, displayName }) => {
       userName,
       displayName,
       photoUrl: user.photoURL,
+      createdAt: user.metadata.createdAt,
     });
 
     return user.uid;
