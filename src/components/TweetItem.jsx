@@ -38,7 +38,7 @@ function TweetItem({ tweetObj }) {
   const navToPage = async (e) => {
     const targetName = e.target.className;
     // conditions
-    const toUser = ['name', 'img'];
+    const toUser = ['profile-link'];
     const toTweetPage = [
       'info',
       'right-half',
@@ -48,11 +48,13 @@ function TweetItem({ tweetObj }) {
       'repl',
     ];
 
+    console.log(targetName);
     if (checkElementClicked(targetName, toTweetPage)) {
       // go to tweet page
       navigate(`/tweet/${TWEET_ID}`);
     } else if (checkElementClicked(targetName, toUser)) {
       // go to user page
+      navigate(`/${USER_NAME}`);
     }
   };
 

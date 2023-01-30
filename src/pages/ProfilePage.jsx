@@ -1,12 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useParams } from 'react-router-dom';
 import GoBackHeader from '../components/GoBackHeader';
 import ProfileLarge from '../components/ProfileLarge';
+import useFindByUsername from '../hooks/useFindByUsername';
 
-function ProfilePage({ currentUser, userProfile }) {
+function ProfilePage({ currentUser }) {
+  const params = useParams();
+  const [userProfile] = useFindByUsername(params.username);
+
   return (
     <div id='profile'>
-      <GoBackHeader currentUser={currentUser} />
+      <GoBackHeader userProfile={userProfile} />
       <ProfileLarge currentUser={currentUser} userProfile={userProfile} />
     </div>
   );
@@ -14,12 +19,10 @@ function ProfilePage({ currentUser, userProfile }) {
 
 ProfilePage.propTypes = {
   currentUser: PropTypes.shape({}),
-  userProfile: PropTypes.shape({}),
 };
 
 ProfilePage.defaultProps = {
   currentUser: null,
-  userProfile: null,
 };
 
 export default ProfilePage;

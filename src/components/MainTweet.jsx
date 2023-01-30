@@ -14,17 +14,6 @@ function MainTweet({ tweetObj }) {
   const navigate = useNavigate();
   const mainTweetRef = useRef(null);
 
-  const handleDelete = async () => {
-    if (checkMatchingUser(getUserUid())) {
-      await deleteTweet(tweetObj);
-      navigate('/');
-    }
-  };
-
-  const handleLike = () => {
-    updateLike(tweetObj);
-  };
-
   const customClass = 'main-tweet';
 
   useEffect(() => {
@@ -53,8 +42,28 @@ function MainTweet({ tweetObj }) {
     id: TWEET_ID,
   } = tweetObj;
 
+  const handleDelete = async () => {
+    if (checkMatchingUser(getUserUid())) {
+      await deleteTweet(tweetObj);
+      navigate('/');
+    }
+  };
+
+  const handleLike = () => {
+    updateLike(tweetObj);
+  };
+
+  const navToPage = async (e) => {
+    const targetName = e.target.className;
+    // conditions
+    if (targetName.includes('profile-link')) {
+      // go to user page
+      navigate(`/${USER_NAME}`);
+    }
+  };
+
   return (
-    <div id={`${customClass}-container`}>
+    <div id={`${customClass}-container`} onClick={navToPage} aria-hidden>
       <div id={TWEET_ID} className={`${customClass}-item`} ref={mainTweetRef}>
         <div className={`${customClass}-item-user`}>
           <div className={`${customClass}-item-img-container profile-link`}>

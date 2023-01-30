@@ -446,6 +446,10 @@ form button {
 
 /* tweet page */
 
+.profile-link {
+  cursor: pointer;
+}
+
 .replying-to-tweet-item .tweet-item {
   border: none;
 }
