@@ -5,24 +5,30 @@ import GoBackHeader from '../components/GoBackHeader';
 import ProfileLarge from '../components/ProfileLarge';
 import useFindByUsername from '../hooks/useFindByUsername';
 
-function ProfilePage({ currentUser }) {
+function ProfilePage({ currentUser, userProfile }) {
   const params = useParams();
-  const [userProfile] = useFindByUsername(params.username);
+  const [targetUserProfile] = useFindByUsername(params.username);
 
   return (
     <div id='profile'>
-      <GoBackHeader userProfile={userProfile} />
-      <ProfileLarge currentUser={currentUser} userProfile={userProfile} />
+      <GoBackHeader targetUserProfile={targetUserProfile} />
+      <ProfileLarge
+        currentUser={currentUser}
+        userProfile={userProfile}
+        targetUserProfile={targetUserProfile}
+      />
     </div>
   );
 }
 
 ProfilePage.propTypes = {
   currentUser: PropTypes.shape({}),
+  userProfile: PropTypes.shape({}),
 };
 
 ProfilePage.defaultProps = {
   currentUser: null,
+  userProfile: null,
 };
 
 export default ProfilePage;
