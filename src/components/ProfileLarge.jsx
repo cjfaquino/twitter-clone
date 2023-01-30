@@ -90,11 +90,15 @@ function ProfileLarge({ currentUser, userProfile, targetUser }) {
 
               <div className={`${customClass}-stats grey`}>
                 <span className={`${customClass}-followers`}>
-                  <span className={`${customClass}-followers-number`}>{}</span>{' '}
+                  <span className={`${customClass}-followers-number`}>
+                    {targetUser.followers.length}
+                  </span>{' '}
                   Followers
                 </span>
                 <span className={`${customClass}-following`}>
-                  <span className={`${customClass}-following-number`}>{}</span>{' '}
+                  <span className={`${customClass}-following-number`}>
+                    {targetUser.following.length}
+                  </span>{' '}
                   Following
                 </span>
               </div>
@@ -120,6 +124,8 @@ ProfileLarge.propTypes = {
       userName: PropTypes.string,
       bio: PropTypes.string,
     }),
+    followers: PropTypes.arrayOf(PropTypes.shape({})),
+    following: PropTypes.arrayOf(PropTypes.shape({})),
   }),
   userProfile: PropTypes.shape({}),
 };

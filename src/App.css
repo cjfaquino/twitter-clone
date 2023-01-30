@@ -656,7 +656,7 @@ header.goback {
 
 .user-card-stats {
   display: flex;
-  gap: 40px;
+  gap: 20px;
 }
 
 .user-card-followers-number,
