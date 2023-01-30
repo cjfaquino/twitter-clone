@@ -10,7 +10,7 @@ const likeTweet = async (tweetObj) => {
     const tweetRef = doc(db, 'tweets', tweetObj.id);
 
     // add to likes collection in users
-    setDoc(likesRef, tweetObj.data);
+    setDoc(likesRef, tweetObj);
 
     // update tweet document
     updateDoc(tweetRef, { likes: increment(1) });
