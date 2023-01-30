@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 import updateFollow from '../utils/updateFollow';
 import checkAlreadyFollowing from '../utils/checkAlreadyFollowing';
 
-function ProfileLarge({ currentUser, userProfile, targetUserProfile }) {
+function ProfileLarge({ currentUser, userProfile, targetUser }) {
   const followBtnRef = useRef(null);
   const customClass = 'user-card';
 
   const formatJoinedDate = () => {
-    if (!currentUser) return null;
-    const joinedDate = new Date(Number(currentUser.metadata.createdAt));
+    const joinedDate = new Date(Number(targetUser.userProfile.createdAt));
 
     const options = {
       year: 'numeric',
@@ -21,15 +20,15 @@ function ProfileLarge({ currentUser, userProfile, targetUserProfile }) {
 
   const handleFollow = async () => {
     await updateFollow(
-      `${customClass}-${targetUserProfile.id}`,
-      targetUserProfile,
+      `${customClass}-${targetUser.userProfile.id}`,
+      targetUser,
       userProfile
     );
   };
 
   useEffect(() => {
     const setFollowBtn = async () => {
-      if (await checkAlreadyFollowing(targetUserProfile.id)) {
+      if (await checkAlreadyFollowing(targetUser.userProfile.id)) {
         followBtnRef.current.textContent = 'Unfollow';
       } else {
         followBtnRef.current.textContent = 'Follow';
@@ -37,29 +36,31 @@ function ProfileLarge({ currentUser, userProfile, targetUserProfile }) {
     };
 
     if (
-      targetUserProfile &&
-      currentUser.displayName !== targetUserProfile.displayName
+      currentUser &&
+      targetUser.userProfile &&
+      currentUser.displayName !== targetUser.userProfile.displayName
     ) {
       setFollowBtn();
     }
-  }, [targetUserProfile]);
+  }, [targetUser.userProfile]);
 
   return (
     <div className='profile-large'>
       <div className={`${customClass}`}>
-        {currentUser && targetUserProfile && (
-          <div id={`${customClass}-${targetUserProfile.id}`}>
+        {targetUser && targetUser.userProfile && (
+          <div id={`${customClass}-${targetUser.userProfile.id}`}>
             <div className='top-half' />
             <div className='bottom-half'>
               <div className='user-pic edit'>
                 <div className='user-profile-img-container'>
                   <img
-                    src={targetUserProfile.photoUrl}
-                    alt={targetUserProfile.displayName}
+                    src={targetUser.userProfile.photoUrl}
+                    alt={targetUser.userProfile.displayName}
                   />
                 </div>
                 {currentUser &&
-                currentUser.displayName === targetUserProfile.displayName ? (
+                currentUser.displayName ===
+                  targetUser.userProfile.displayName ? (
                   <button type='button'>Edit Profile</button>
                 ) : (
                   <button
@@ -73,14 +74,14 @@ function ProfileLarge({ currentUser, userProfile, targetUserProfile }) {
                 )}
               </div>
               <div className={`${customClass}-display-name`}>
-                {targetUserProfile.displayName}
+                {targetUser.userProfile.displayName}
               </div>
               <div className={`${customClass}-username grey`}>
-                @{targetUserProfile.userName}
+                @{targetUser.userProfile.userName}
               </div>
 
               <div className={`${customClass}-bio`}>
-                {targetUserProfile.bio}
+                {targetUser.userProfile.bio}
               </div>
 
               <div className={`${customClass}-joined grey`}>
@@ -109,16 +110,16 @@ function ProfileLarge({ currentUser, userProfile, targetUserProfile }) {
 ProfileLarge.propTypes = {
   currentUser: PropTypes.shape({
     displayName: PropTypes.string,
-    metadata: PropTypes.shape({
-      createdAt: PropTypes.string,
-    }),
   }),
-  targetUserProfile: PropTypes.shape({
-    id: PropTypes.string,
-    photoUrl: PropTypes.string,
-    displayName: PropTypes.string,
-    userName: PropTypes.string,
-    bio: PropTypes.string,
+  targetUser: PropTypes.shape({
+    userProfile: PropTypes.shape({
+      createdAt: PropTypes.string,
+      id: PropTypes.string,
+      photoUrl: PropTypes.string,
+      displayName: PropTypes.string,
+      userName: PropTypes.string,
+      bio: PropTypes.string,
+    }),
   }),
   userProfile: PropTypes.shape({}),
 };
@@ -126,7 +127,7 @@ ProfileLarge.propTypes = {
 ProfileLarge.defaultProps = {
   currentUser: null,
   userProfile: null,
-  targetUserProfile: null,
+  targetUser: null,
 };
 
 export default ProfileLarge;

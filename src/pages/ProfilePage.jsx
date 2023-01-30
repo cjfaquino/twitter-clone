@@ -7,15 +7,15 @@ import useFindByUsername from '../hooks/useFindByUsername';
 
 function ProfilePage({ currentUser, userProfile }) {
   const params = useParams();
-  const [targetUserProfile] = useFindByUsername(params.username);
+  const targetUser = useFindByUsername(params.username);
 
   return (
     <div id='profile'>
-      <GoBackHeader targetUserProfile={targetUserProfile} />
+      <GoBackHeader targetUser={targetUser} />
       <ProfileLarge
         currentUser={currentUser}
         userProfile={userProfile}
-        targetUserProfile={targetUserProfile}
+        targetUser={targetUser}
       />
     </div>
   );
