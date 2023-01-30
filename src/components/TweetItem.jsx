@@ -48,7 +48,6 @@ function TweetItem({ tweetObj }) {
       'repl',
     ];
 
-    console.log(targetName);
     if (checkElementClicked(targetName, toTweetPage)) {
       // go to tweet page
       navigate(`/tweet/${TWEET_ID}`);
@@ -58,16 +57,16 @@ function TweetItem({ tweetObj }) {
     }
   };
 
-  const handleLike = async () => {
-    updateLike(tweetObj);
-  };
-
   const customClass = 'tweet';
+
+  const handleLike = async () => {
+    updateLike(`${customClass}-${TWEET_ID}`, tweetObj);
+  };
 
   return (
     <div
       className={`${customClass}-item`}
-      id={TWEET_ID}
+      id={`${customClass}-${TWEET_ID}`}
       onClick={navToPage}
       aria-hidden
     >

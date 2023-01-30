@@ -2,8 +2,8 @@ import likeTweet from './likeTweet';
 import undoLike from './undoLike';
 import checkAlreadyLiked from './checkAlreadyLiked';
 
-const updateLike = async (tweetObj) => {
-  const likesDOM = document.querySelector(`#${tweetObj.id} .likes-number`);
+const updateLike = async (cssSelector, tweetObj) => {
+  const likesDOM = document.querySelector(`#${cssSelector} .likes-number`);
 
   if (!(await checkAlreadyLiked(tweetObj.id))) {
     // not yet liked
