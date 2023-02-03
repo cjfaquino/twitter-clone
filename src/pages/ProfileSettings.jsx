@@ -11,7 +11,6 @@ import isEmailVerified from '../utils/isEmailVerified';
 import sendEmailVerification from '../utils/sendEmailVerification';
 
 const ProfileSettings = ({ currentUser, userProfile }) => {
-  const [displayName, handleDisplayName, setDisplayName] = useInput();
   const [userName, handleUserName, setUserName] = useInput();
   const [email, handleEmail, setEmail] = useInput();
   const [loading, setLoading] = useState(true);
@@ -26,7 +25,6 @@ const ProfileSettings = ({ currentUser, userProfile }) => {
     const userID = await updateProfile({
       user: currentUser,
       userName,
-      displayName,
     });
     setSubmittingProfile(false);
     if (userID) {
@@ -50,7 +48,6 @@ const ProfileSettings = ({ currentUser, userProfile }) => {
 
   const setFields = async () => {
     // update inputs if data is available
-    setDisplayName(currentUser.displayName);
     setEmail(currentUser.email || '');
 
     if (userProfile) {
@@ -83,15 +80,6 @@ const ProfileSettings = ({ currentUser, userProfile }) => {
         <div className='sign-up-form'>
           <form onSubmit={handleSubmit1}>
             <h3>Your Profile</h3>
-            <label htmlFor='displayName'>
-              Display Name
-              <input
-                type='text'
-                id='displayName'
-                value={displayName}
-                onChange={handleDisplayName}
-              />
-            </label>
             <label htmlFor='userName'>
               Username
               <input
