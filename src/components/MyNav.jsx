@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { signOutUser } from '../firebase';
+import signOutUser from '../utils/signOutUser';
 import useToggle from '../hooks/useToggle';
 import ThreeDots from './ThreeDots';
 

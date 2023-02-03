@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { isUserSignedIn } from '../firebase';
+import isUserSignedIn from '../utils/isUserSignedIn';
 import saveTweet from '../utils/saveTweet';
 import Tweet from '../utils/Tweet';
 
