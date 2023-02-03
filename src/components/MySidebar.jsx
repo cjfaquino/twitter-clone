@@ -22,7 +22,7 @@ const MySidebar = ({ isSignedIn }) => {
       <div id='who-to-follow'>
         <h3>Who To Follow</h3>
         {users.map((usr) => (
-          <ProfileSmall key={crypto.randomUUID()} userProfile={usr} />
+          <ProfileSmall key={`profile-small-${usr.id}`} userProfile={usr} />
         ))}
       </div>
       <MyFooter />
