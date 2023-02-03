@@ -33,11 +33,10 @@ export default function useOneTweet(tweetID) {
       // for tweet obj with aReplyTo
       // get up to date stats of aReplyTo if it exists
       let replyingTo = null;
-      if (tweet && tweet.id !== docSnap.id && docSnap.data().aReplyTo) {
+      if (docSnap.data().aReplyTo) {
         const replyingToID = docSnap.data().aReplyTo.id;
         replyingTo = await loadReplyingTo(replyingToID);
       }
-
       const newTwt = {
         ...docSnap.data(),
         ...{ aReplyTo: replyingTo },
