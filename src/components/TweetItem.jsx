@@ -7,6 +7,7 @@ import useToggle from '../hooks/useToggle';
 import getTimeString from '../utils/getTimeString';
 import updateLike from '../utils/updateLike';
 import checkMatchingUser from '../utils/checkMatchingUser';
+import deleteTweetFromDOM from '../utils/deleteTweetFromDOM';
 
 const TweetItem = ({ tweetObj }) => {
   const navigate = useNavigate();
@@ -25,10 +26,13 @@ const TweetItem = ({ tweetObj }) => {
 
   const [showOptionsPopup, toggleOptionsPopup] = useToggle();
 
+  const customClass = 'tweet';
+
   const handleDelete = async () => {
     // delete from DB
     if (checkMatchingUser(USER_ID)) {
       await deleteTweet(tweetObj);
+      deleteTweetFromDOM(`${customClass}-${TWEET_ID}`);
     }
   };
 
@@ -56,8 +60,6 @@ const TweetItem = ({ tweetObj }) => {
       navigate(`/${USER_NAME}`);
     }
   };
-
-  const customClass = 'tweet';
 
   const handleLike = async () => {
     updateLike(`${customClass}-${TWEET_ID}`, tweetObj);

@@ -1,6 +1,5 @@
 import { doc, deleteDoc, updateDoc, arrayRemove } from 'firebase/firestore';
 import { db } from '../firebase-config';
-import deleteTweetFromDOM from './deleteTweetFromDOM';
 
 // delete tweet by tweet uid from firestore
 
@@ -19,7 +18,6 @@ const deleteTweet = async (tweetObj) => {
       });
     }
 
-    deleteTweetFromDOM(tweetObj.id);
     return true;
   } catch (error) {
     console.error('Error deleting message from Firebase Database', error);
