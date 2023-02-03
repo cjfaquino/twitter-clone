@@ -1,5 +1,12 @@
 import { useEffect, useState } from 'react';
-import { query, getDocs, collection } from 'firebase/firestore';
+import {
+  query,
+  getDocs,
+  collection,
+  doc,
+  getDoc,
+  orderBy,
+} from 'firebase/firestore';
 import { db } from '../firebase-config';
 
 export default function useReplies(tweetID) {
@@ -8,12 +15,22 @@ export default function useReplies(tweetID) {
 
   let count = 0;
   useEffect(() => {
+    const getUpatedReply = async (replyId) => {
+      const docRef = doc(db, 'tweets', replyId);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        setReplies((prev) => [...prev, { id: docSnap.id, ...docSnap.data() }]);
+      }
+    };
+
     const getReplies = async () => {
-      const queryRef = query(collection(db, 'tweets', tweetID, 'replies'));
-      const qSnap = await getDocs(queryRef);
-      qSnap.forEach((rep) =>
-        setReplies((prev) => [...prev, { id: rep.id, ...rep.data() }])
+      const queryRef = query(
+        collection(db, 'tweets', tweetID, 'replies'),
+        orderBy('timestamp', 'desc')
       );
+      const qSnap = await getDocs(queryRef);
+      qSnap.forEach((rep) => getUpatedReply(rep.id));
       setLoading(false);
     };
 
