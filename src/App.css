@@ -463,18 +463,22 @@ form button {
   margin: 0 auto;
   border-left: 2px solid grey;
   height: 90%;
+  position: relative;
+  top: 4px;
+  z-index: -1;
 }
 
 #main-tweet-container {
   min-height: 180px;
-  padding: 15px;
+  margin: 15px;
+  background-color: black;
 }
 
 .main-tweet-item-user {
+  padding-top: 4px;
   display: flex;
   align-items: center;
   gap: 15px;
-  height: 50px;
   margin-bottom: 25px;
 }
 
