@@ -214,7 +214,8 @@ form button {
 }
 
 #explore,
-#tweet-page {
+#tweet-page,
+#profile {
   min-height: 130vh;
 }
 
@@ -587,7 +588,6 @@ header.goback {
 /* profile page */
 
 .profile-large {
-  border-bottom: 1px solid grey;
   min-height: 410px;
 }
 
@@ -618,23 +618,25 @@ header.goback {
 .bottom-half .user-profile-img-container {
   position: absolute;
   --img-size: 135px;
+  --profile-img-container-color: black;
   left: 0;
   top: calc((var(--img-size) * -1 / 2) - var(--profile-bottom-half-padding));
   height: var(--img-size);
   width: var(--img-size);
   border-radius: 20%;
-  border: 5px solid black;
+  border: 5px solid var(--profile-img-container-color);
   overflow: hidden;
 }
 
 .user-profile-img-container img {
   width: 100%;
   height: 100%;
+  background: black;
 }
 
 .edit button {
   padding: 7px;
-  background-color: black;
+  background-color: var(--profile-img-container-color);
   border: 1px solid white;
 }
 
@@ -658,6 +660,23 @@ header.goback {
 .user-card-following-number {
   font-weight: 700;
   color: white;
+}
+
+.profile-filter-buttons {
+  display: flex;
+  justify-content: stretch;
+  border-bottom: 1px solid grey;
+}
+
+.profile-filter-buttons button {
+  width: 100%;
+  background-color: transparent;
+  border-radius: 0;
+  color: grey;
+}
+
+.profile-filter-buttons button:hover {
+  background-color: rgb(22, 22, 22);
 }
 
 /* profile small */

@@ -14,7 +14,7 @@ import ProfileSettings from './pages/ProfileSettings';
 import Login from './pages/Login';
 import ProfilePage from './pages/ProfilePage';
 
-function App() {
+const App = () => {
   const [isSignedIn, currentUser, userProfile] = useAuthStateObserver();
   const [showTweetPopup, toggleTweetPopup] = useToggle();
   const [newTweet, setNewTweet] = useState(null);
@@ -44,14 +44,17 @@ function App() {
             <Route path='/signup' element={<SignUp />} />
             <Route path='/login' element={<Login />} />
             <Route
-              path='/:username'
+              path='/:username/'
               element={
                 <ProfilePage
                   currentUser={currentUser}
                   userProfile={userProfile}
                 />
               }
-            />
+            >
+              <Route path='with_replies' element={null} />
+              <Route path='likes' element={null} />
+            </Route>
             <Route
               path='/settings'
               element={
@@ -77,6 +80,6 @@ function App() {
       {!isSignedIn && <LogInBanner isSignedIn={isSignedIn} />}
     </>
   );
-}
+};
 
 export default App;
