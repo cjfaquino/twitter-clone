@@ -9,44 +9,43 @@ export default function useFindByUsername(username) {
   const [followers, setFollowers] = useState((tUser && tUser.followers) || []);
   const [following, setFollowing] = useState((tUser && tUser.following) || []);
 
-  let count = 0;
+  const getFollwers = async (userObj) => {
+    const followersRef = collection(db, 'users', userObj.id, 'followers');
+    const flrSnap = await getDocs(followersRef);
+    flrSnap.forEach((item) => {
+      setFollowers((prev) => [...prev, { id: item.id, ...item.data() }]);
+    });
+  };
 
+  const getFollowing = async (userObj) => {
+    const followingRef = collection(db, 'users', userObj.id, 'following');
+    const flgSnap = await getDocs(followingRef);
+
+    flgSnap.forEach((item) => {
+      setFollowing((prev) => [...prev, { id: item.id, ...item.data() }]);
+    });
+  };
+
+  const getUser = async () => {
+    const usersRef = query(collection(db, 'users'));
+    const uSnap = await getDocs(usersRef);
+    uSnap.forEach(async (item) => {
+      if (item.data().userName === username) {
+        const userObj = { id: item.id, ...item.data() };
+        await Promise.all([getFollowing(userObj), getFollwers(userObj)]);
+
+        setUserProfile(userObj);
+      }
+    });
+    return undefined;
+  };
+
+  let ran = false;
   useEffect(() => {
-    const getFollwers = async (userObj) => {
-      const followersRef = collection(db, 'users', userObj.id, 'followers');
-      const flrSnap = await getDocs(followersRef);
-      flrSnap.forEach((item) => {
-        setFollowers((prev) => [...prev, { id: item.id, ...item.data() }]);
-      });
-    };
-
-    const getFollowing = async (userObj) => {
-      const followingRef = collection(db, 'users', userObj.id, 'following');
-      const flgSnap = await getDocs(followingRef);
-
-      flgSnap.forEach((item) => {
-        setFollowing((prev) => [...prev, { id: item.id, ...item.data() }]);
-      });
-    };
-
-    const getUser = async () => {
-      const usersRef = query(collection(db, 'users'));
-      const uSnap = await getDocs(usersRef);
-      uSnap.forEach(async (item) => {
-        if (item.data().userName === username) {
-          const userObj = { id: item.id, ...item.data() };
-          await Promise.all([getFollowing(userObj), getFollwers(userObj)]);
-
-          setUserProfile(userObj);
-        }
-      });
-      return undefined;
-    };
-
-    if (count === 0) {
+    if (!ran) {
       getUser();
+      ran = true;
     }
-    count += 1;
 
     return () => {
       setFollowers([]);

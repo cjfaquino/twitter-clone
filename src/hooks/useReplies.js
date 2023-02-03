@@ -13,32 +13,32 @@ export default function useReplies(tweetID) {
   const [replies, setReplies] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  let count = 0;
+  const getUpatedReply = async (replyId) => {
+    const docRef = doc(db, 'tweets', replyId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      setReplies((prev) => [...prev, { id: docSnap.id, ...docSnap.data() }]);
+    }
+  };
+
+  const getReplies = async () => {
+    const queryRef = query(
+      collection(db, 'tweets', tweetID, 'replies'),
+      orderBy('timestamp', 'desc')
+    );
+    const qSnap = await getDocs(queryRef);
+    qSnap.forEach((rep) => getUpatedReply(rep.id));
+    setLoading(false);
+  };
+
+  let ran = false;
   useEffect(() => {
-    const getUpatedReply = async (replyId) => {
-      const docRef = doc(db, 'tweets', replyId);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        setReplies((prev) => [...prev, { id: docSnap.id, ...docSnap.data() }]);
-      }
-    };
-
-    const getReplies = async () => {
-      const queryRef = query(
-        collection(db, 'tweets', tweetID, 'replies'),
-        orderBy('timestamp', 'desc')
-      );
-      const qSnap = await getDocs(queryRef);
-      qSnap.forEach((rep) => getUpatedReply(rep.id));
-      setLoading(false);
-    };
-
-    if (count < 1) {
+    if (!ran) {
       getReplies();
+      ran = true;
     }
 
-    count += 1;
     return () => {
       setReplies([]);
     };

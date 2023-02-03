@@ -15,8 +15,12 @@ export default function useRandomUsers() {
     );
   };
 
+  let ran = false;
   useEffect(() => {
-    getUsers();
+    if (!ran) {
+      getUsers();
+      ran = true;
+    }
 
     return () => {
       setUsers([]);
