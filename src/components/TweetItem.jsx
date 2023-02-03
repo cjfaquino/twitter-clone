@@ -8,6 +8,7 @@ import getTimeString from '../utils/getTimeString';
 import updateLike from '../utils/updateLike';
 import checkMatchingUser from '../utils/checkMatchingUser';
 import deleteTweetFromDOM from '../utils/deleteTweetFromDOM';
+import useReplies from '../hooks/useReplies';
 
 const TweetItem = ({ tweetObj }) => {
   const navigate = useNavigate();
@@ -16,7 +17,6 @@ const TweetItem = ({ tweetObj }) => {
     likes,
     text,
     timestamp,
-    replies,
     USER_ICON,
     USER_ID,
     USER_NAME,
@@ -25,6 +25,7 @@ const TweetItem = ({ tweetObj }) => {
   } = tweetObj;
 
   const [showOptionsPopup, toggleOptionsPopup] = useToggle();
+  const [, repLength] = useReplies(TWEET_ID);
 
   const customClass = 'tweet';
 
@@ -135,9 +136,7 @@ const TweetItem = ({ tweetObj }) => {
           </button>
           <button type='button' className='btn-replies'>
             reply{' '}
-            <span className='replies-number'>
-              {replies.length > 0 && replies.length}
-            </span>
+            <span className='replies-number'>{repLength > 0 && repLength}</span>
           </button>
           <button type='button' className='btn-retweets'>
             retweet
@@ -159,7 +158,6 @@ TweetItem.propTypes = {
     aReplyTo: PropTypes.shape({
       USER_NAME: PropTypes.string,
     }),
-    replies: PropTypes.arrayOf(PropTypes.string),
     views: PropTypes.number,
     likes: PropTypes.number,
     retweets: PropTypes.number,

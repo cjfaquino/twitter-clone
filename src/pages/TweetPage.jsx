@@ -19,7 +19,7 @@ const TweetPage = () => {
         </div>
       )}
       <MainTweet tweetObj={tweet} />
-      {tweet && <Replies replies={tweet.replies} tweetObj={tweet} />}
+      {tweet && <Replies replies={[]} tweetObj={tweet} />}
     </div>
   );
 };

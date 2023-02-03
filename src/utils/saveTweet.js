@@ -1,4 +1,4 @@
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, doc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase-config';
 import Tweet from './Tweet';
 
@@ -11,7 +11,6 @@ const tweetConverter = {
     USER_ICON: tweet.USER_ICON,
     text: tweet.text,
     timestamp: tweet.timestamp,
-    replies: tweet.replies,
     retweets: tweet.retweets,
     likes: tweet.likes,
     views: tweet.views,
@@ -27,12 +26,31 @@ const tweetConverter = {
 
 const saveTweet = async (messageText, aReplyTo = null) => {
   try {
-    const collectionRef = collection(db, 'tweets').withConverter(
-      tweetConverter
-    );
-    const tweet = new Tweet(messageText, aReplyTo);
-    const docRef = await addDoc(collectionRef, tweet);
+    const tweetRef = collection(db, 'tweets').withConverter(tweetConverter);
 
+    const tweet = new Tweet(messageText, aReplyTo);
+    let docRef;
+
+    if (aReplyTo) {
+      // if is a reply
+      // create new tweet
+      docRef = await addDoc(tweetRef, tweet);
+
+      // add to aReplyTo's replies collection
+      const replyRef = doc(
+        db,
+        'tweets',
+        aReplyTo.id,
+        'replies',
+        docRef.id
+      ).withConverter(tweetConverter);
+      setDoc(replyRef, tweet);
+    } else {
+      // create normal tweet
+      docRef = await addDoc(tweetRef, { ...tweet, aReplyTo });
+    }
+
+    // return firebase doc id
     return docRef.id;
   } catch (error) {
     console.error('Error writing new message to Firebase Database', error);

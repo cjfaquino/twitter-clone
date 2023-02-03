@@ -12,7 +12,6 @@ export default class Tweet {
     this.USER_ICON = getProfilePicUrl();
     this.text = messageText;
     this.timestamp = serverTimestamp();
-    this.replies = [];
     this.likes = 0;
     this.retweets = 0;
     this.views = 0;

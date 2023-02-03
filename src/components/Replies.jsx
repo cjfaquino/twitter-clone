@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useParams } from 'react-router-dom';
 import TweetItem from './TweetItem';
 import saveTweet from '../utils/saveTweet';
-import updateTweet from '../utils/updateTweet';
 import useReplies from '../hooks/useReplies';
 import Tweet from '../utils/Tweet';
 import getDisplayName from '../utils/getDisplayName';
 import getProfilePicUrl from '../utils/getProfilePicUrl';
 import isUserSignedIn from '../utils/isUserSignedIn';
 
-const Replies = ({ tweetObj, replies }) => {
-  const [fetchedReplies] = useReplies(replies);
+const Replies = ({ tweetObj }) => {
+  const params = useParams();
+
+  const [fetchedReplies] = useReplies(params.tweet);
   const [replyMessage, setReplyMessage] = useState('');
 
   const handleReplyInput = (e) => {
@@ -31,7 +33,6 @@ const Replies = ({ tweetObj, replies }) => {
       // send to TweetPage
       const replyObj = { id: docID, ...new Tweet(replyMessage, tweetObj) };
       fetchedReplies.push(replyObj);
-      updateTweet(tweetObj.id, docID);
       setReplyMessage('');
     } else {
       // error sending
@@ -81,7 +82,6 @@ Replies.propTypes = {
     }),
     id: PropTypes.string,
   }).isRequired,
-  replies: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default Replies;
