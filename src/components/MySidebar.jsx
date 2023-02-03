@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import MyFooter from './MyFooter/MyFooter';
 import useRandomUsers from '../hooks/useRandomUsers';
-import ProfileSmall from './ProfileSmall';
+import ListOfUsers from './ListOfUsers';
 
 const MySidebar = ({ isSignedIn }) => {
   const users = useRandomUsers();
@@ -21,9 +21,7 @@ const MySidebar = ({ isSignedIn }) => {
       )}
       <div id='who-to-follow'>
         <h3>Who To Follow</h3>
-        {users.map((usr) => (
-          <ProfileSmall key={`profile-small-${usr.id}`} userProfile={usr} />
-        ))}
+        <ListOfUsers users={users} />
       </div>
       <MyFooter />
     </div>
