@@ -23,9 +23,6 @@ export default function useRandomUsers() {
     }
 
     count += 1;
-    return () => {
-      setUsers([]);
-    };
   }, []);
 
   return users;
