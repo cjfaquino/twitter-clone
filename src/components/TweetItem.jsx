@@ -84,7 +84,9 @@ const TweetItem = ({ tweetObj }) => {
           <div className={`${customClass}-item-display profile-link`}>
             {USER_DISPLAY}
           </div>
-          <div className={`${customClass}-item-name profile-link grey`}>
+          <div
+            className={`${customClass}-item-name profile-link grey username`}
+          >
             @{USER_NAME}
           </div>
           <div
@@ -120,7 +122,9 @@ const TweetItem = ({ tweetObj }) => {
         {tweetObj.aReplyTo && (
           <div className='replying-to-info'>
             Replying to{' '}
-            <span className='profile-link'>@{tweetObj.aReplyTo.USER_NAME}</span>
+            <span className='username profile-link'>
+              @{tweetObj.aReplyTo.USER_NAME}
+            </span>
           </div>
         )}
 

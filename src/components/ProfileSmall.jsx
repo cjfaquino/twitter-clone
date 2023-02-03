@@ -18,7 +18,9 @@ const ProfileSmall = ({ userProfile }) => {
             <div className={`${customClass}-display-name profile-link`}>
               {userProfile.displayName}
             </div>
-            <div className={`${customClass}-user-name profile-link grey`}>
+            <div
+              className={`${customClass}-user-name profile-link grey username`}
+            >
               @{userProfile.userName}
             </div>
           </div>
