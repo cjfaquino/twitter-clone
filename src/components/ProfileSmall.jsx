@@ -6,6 +6,7 @@ import followUser from '../utils/followUser';
 import unfollowUser from '../utils/unfollowUser';
 import isUserSignedIn from '../utils/isUserSignedIn';
 import eventFollow from '../utils/eventFollow';
+import getUserUid from '../utils/getUserUid';
 
 const ProfileSmall = ({ userProfile }) => {
   const [followed, setFollowed] = useState(null);
@@ -82,9 +83,11 @@ const ProfileSmall = ({ userProfile }) => {
             </div>
           </div>
 
-          <button type='button' onClick={handleFollow}>
-            {followed ? 'Unfollow' : 'Follow'}
-          </button>
+          {getUserUid() !== userProfile.id && (
+            <button type='button' onClick={handleFollow}>
+              {followed ? 'Unfollow' : 'Follow'}
+            </button>
+          )}
         </div>
       )}
     </div>
