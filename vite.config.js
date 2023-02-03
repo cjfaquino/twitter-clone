@@ -5,6 +5,15 @@ import postcssPresetEnv from 'postcss-preset-env';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  optimizeDeps: {
+    exclude: [
+      'firebase',
+      'firebase/app',
+      'firebase/auth',
+      'firebase/firestore',
+      'firebase/analytics',
+    ],
+  },
   plugins: [react()],
   server: {
     open: true,
