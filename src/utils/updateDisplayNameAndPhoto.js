@@ -1,9 +1,10 @@
 import { updateProfile, getAuth } from 'firebase/auth';
 
-const updateDisplayName = async (displayName = '') => {
+const updateDisplayNameAndPhoto = async ({ displayName, photoURL }) => {
   const auth = getAuth();
   await updateProfile(auth.currentUser, {
     displayName,
+    photoURL,
   })
     .then(() => {
       // Profile updated!
@@ -13,4 +14,4 @@ const updateDisplayName = async (displayName = '') => {
     });
 };
 
-export default updateDisplayName;
+export default updateDisplayNameAndPhoto;
