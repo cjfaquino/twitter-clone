@@ -353,7 +353,7 @@ form button {
   height: var(--pfp-size);
   aspect-ratio: 1 / 1;
   overflow: hidden;
-  border-radius: 10px;
+  border-radius: 20%;
   flex-shrink: 0;
 }
 
@@ -364,7 +364,6 @@ form button {
 .user-card-small-img-container img {
   height: 100%;
   width: 100%;
-  background-color: grey;
 }
 
 .tweet-item-right-half {
@@ -379,18 +378,6 @@ form button {
 
 .tweet-item-display {
   font-weight: 700;
-}
-
-.tweet-item-name,
-.main-tweet-item-name {
-  color: grey;
-}
-
-.tweet-item-time,
-.main-tweet-item-time,
-.tweet-item-buttons,
-.main-tweet-item-buttons {
-  color: grey;
 }
 
 .tweet-item-buttons {
@@ -416,10 +403,6 @@ form button {
 .tweet-item {
   border-radius: none;
   cursor: pointer;
-}
-
-.replying-to-info {
-  color: grey;
 }
 
 .options-background {
@@ -499,12 +482,6 @@ form button {
   border-top: 1px solid;
   display: flex;
   gap: 15px;
-}
-
-.main-tweet-item-stats .retweets,
-.main-tweet-item-stats .likes,
-.main-tweet-item-stats .views {
-  color: grey;
 }
 
 .main-tweet-item-stats .retweets-number,
@@ -632,9 +609,8 @@ header.goback {
   top: calc((var(--img-size) * -1 / 2) - var(--profile-bottom-half-padding));
   height: var(--img-size);
   width: var(--img-size);
-  border-radius: 50%;
+  border-radius: 20%;
   border: 5px solid black;
-  background-color: white;
   overflow: hidden;
 }
 

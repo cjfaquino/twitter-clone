@@ -82,11 +82,11 @@ function TweetItem({ tweetObj }) {
           <div className={`${customClass}-item-display profile-link`}>
             {USER_DISPLAY}
           </div>
-          <div className={`${customClass}-item-name profile-link`}>
+          <div className={`${customClass}-item-name profile-link grey`}>
             @{USER_NAME}
           </div>
           <div
-            className={`${customClass}-item-time`}
+            className={`${customClass}-item-time grey`}
             title={getTimeString(timestamp)}
           >
             {getTimeString(timestamp, 'localeDate')}

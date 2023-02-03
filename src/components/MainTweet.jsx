@@ -74,7 +74,7 @@ function MainTweet({ tweetObj }) {
               <div className={`${customClass}-item-display profile-link`}>
                 {USER_DISPLAY}
               </div>
-              <div className={`${customClass}-item-name profile-link`}>
+              <div className={`${customClass}-item-name profile-link grey`}>
                 @{USER_NAME}
               </div>
             </div>
@@ -111,19 +111,19 @@ function MainTweet({ tweetObj }) {
         )}
         <div className={`${customClass}-item-message`}>{text}</div>
         <div
-          className={`${customClass}-item-time`}
+          className={`${customClass}-item-time grey`}
           title={getTimeString(timestamp)}
         >
           {getTimeString(timestamp)}{' '}
         </div>
         <div className={`${customClass}-item-stats`}>
-          <span className='views'>
+          <span className='views grey'>
             <span className='views-number'>{views}</span> Views
           </span>
-          <span className='retweets'>
+          <span className='retweets grey'>
             <span className='retweets-number'>{retweets}</span> Retweets
           </span>
-          <span className='likes'>
+          <span className='likes grey'>
             <span className='likes-number'>{likes}</span> Likes
           </span>
         </div>

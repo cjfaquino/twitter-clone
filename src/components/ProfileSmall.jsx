@@ -18,7 +18,7 @@ function ProfileSmall({ userProfile }) {
             <div className={`${customClass}-display-name profile-link`}>
               {userProfile.displayName}
             </div>
-            <div className={`${customClass}-user-name profile-link`}>
+            <div className={`${customClass}-user-name profile-link grey`}>
               @{userProfile.userName}
             </div>
           </div>
