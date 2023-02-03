@@ -61,10 +61,15 @@ const ProfileSmall = ({ userProfile }) => {
     };
   }, []);
 
+  const navToPage = (e) => {
+    const targetName = e.target.className;
+    if (targetName !== 'btn-follow') navigate(`/${userProfile.userName}`);
+  };
+
   return (
     <div className='profile-small'>
       {userProfile && (
-        <div className={`${customClass}`}>
+        <div className={`${customClass}`} onClick={navToPage} aria-hidden>
           <div className={`${customClass}-img-container profile-link`}>
             <img
               src={userProfile.photoUrl}
@@ -84,7 +89,7 @@ const ProfileSmall = ({ userProfile }) => {
           </div>
 
           {getUserUid() !== userProfile.id && (
-            <button type='button' onClick={handleFollow}>
+            <button type='button' onClick={handleFollow} className='btn-follow'>
               {followed ? 'Unfollow' : 'Follow'}
             </button>
           )}

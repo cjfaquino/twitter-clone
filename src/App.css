@@ -688,6 +688,7 @@ header.goback {
 
 .profile-small {
   min-height: 72px;
+  cursor: pointer;
 }
 
 .user-card-small {
