@@ -35,25 +35,28 @@ const ProfileSmall = ({ userProfile }) => {
     return eventFollow(userProfile.id);
   };
 
-  const checkFollow = () =>
+  const updateFollow = () =>
     checkAlreadyFollowing(userProfile.id).then(setFollowed);
 
   useEffect(() => {
     // set initial follow status
     if (isUserSignedIn()) {
-      checkFollow();
+      updateFollow();
     }
 
     document.addEventListener(
       `change follow for ${userProfile.id}`,
-      checkFollow
+      updateFollow
     );
+
+    document.addEventListener('auth state changed', updateFollow);
 
     return () => {
       document.removeEventListener(
         `change follow for ${userProfile.id}`,
-        checkFollow
+        updateFollow
       );
+      document.removeEventListener('auth state changed', updateFollow);
     };
   }, []);
 

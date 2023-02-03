@@ -22,6 +22,8 @@ function useAuthStateObserver() {
       localStorage.removeItem('firebaseUser');
       localStorage.removeItem('userProfile');
     }
+    const event = new Event('auth state changed');
+    document.dispatchEvent(event);
   };
 
   useEffect(() => {

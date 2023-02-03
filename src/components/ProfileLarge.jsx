@@ -43,29 +43,31 @@ const ProfileLarge = ({ currentUser, userProfile, targetUser }) => {
     return eventFollow(targetUser.userProfile.id);
   };
 
-  const checkFollow = () =>
+  const updateFollow = () =>
     checkAlreadyFollowing(targetUser.userProfile.id).then(setFollowed);
 
   useEffect(() => {
     if (targetUser.userProfile) {
       // set initial follow
       if (isUserSignedIn()) {
-        checkFollow();
+        updateFollow();
       }
 
       document.addEventListener(
         `change follow for ${targetUser.userProfile.id}`,
-        checkFollow
+        updateFollow
       );
     }
+    document.addEventListener('auth state changed', updateFollow);
 
     return () => {
       if (targetUser.userProfile) {
         document.removeEventListener(
           `change follow for ${targetUser.userProfile.id}`,
-          checkFollow
+          updateFollow
         );
       }
+      document.removeEventListener('auth state changed', updateFollow);
     };
   }, [targetUser.userProfile]);
 
