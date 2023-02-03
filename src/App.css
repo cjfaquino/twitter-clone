@@ -34,8 +34,7 @@ input:focus {
 }
 
 .popup {
-  box-shadow: rgba(216, 216, 216, 0.12) 0px 2px 4px 0px,
-    rgba(210, 210, 210, 0.32) 0px 2px 16px 0px;
+  box-shadow: 0 0 7px 1px white;
 }
 
 .grey {
