@@ -30,10 +30,8 @@ const saveTweet = async (messageText, aReplyTo = null) => {
     const collectionRef = collection(db, 'tweets').withConverter(
       tweetConverter
     );
-    const docRef = await addDoc(
-      collectionRef,
-      new Tweet(messageText, aReplyTo)
-    );
+    const tweet = new Tweet(messageText, aReplyTo);
+    const docRef = await addDoc(collectionRef, tweet);
 
     return docRef.id;
   } catch (error) {

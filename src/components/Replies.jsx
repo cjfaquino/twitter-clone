@@ -29,7 +29,7 @@ const Replies = ({ tweetObj, replies }) => {
     const docID = await saveTweet(replyMessage, tweetObj);
     if (docID) {
       // send to TweetPage
-      const replyObj = { id: docID, data: new Tweet(replyMessage, tweetObj) };
+      const replyObj = { id: docID, ...new Tweet(replyMessage, tweetObj) };
       fetchedReplies.push(replyObj);
       updateTweet(tweetObj.id, docID);
       setReplyMessage('');
