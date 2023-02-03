@@ -3,9 +3,9 @@ import isUserSignedIn from './isUserSignedIn';
 
 // Returns true if matching users
 
-const checkMatchingUser = async (userID) => {
+const checkMatchingUser = (userID) => {
   if (!isUserSignedIn()) return false;
-  return (await getUserUid()) === userID;
+  return getUserUid() === userID;
 };
 
 export default checkMatchingUser;
