@@ -1,5 +1,5 @@
-import { getUserUid } from '../firebase';
-import { isUserSignedIn } from '../isUserSignedIn';
+import getUserUid from './getUserUid';
+import isUserSignedIn from './isUserSignedIn';
 
 // Returns true if matching users
 

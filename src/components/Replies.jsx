@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { getDisplayName, getProfilePicUrl, isUserSignedIn } from '../firebase';
 import TweetItem from './TweetItem';
 import saveTweet from '../utils/saveTweet';
 import updateTweet from '../utils/updateTweet';
 import useReplies from '../hooks/useReplies';
 import Tweet from '../utils/Tweet';
+import getDisplayName from '../utils/getDisplayName';
+import getProfilePicUrl from '../utils/getProfilePicUrl';
+import isUserSignedIn from '../utils/isUserSignedIn';
 
 function Replies({ tweetObj, replies }) {
   const [fetchedReplies] = useReplies(replies);

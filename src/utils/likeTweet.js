@@ -1,7 +1,7 @@
 import { doc, increment, setDoc, updateDoc } from 'firebase/firestore';
-import { getUserUid } from '../firebase';
 import { db } from '../firebase-config';
 import eventProfileEdit from './eventProfileEdit';
+import getUserUid from './getUserUid';
 
 const likeTweet = async (tweetObj) => {
   // add tweet to like in user profile

@@ -1,12 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { checkMatchingUser } from '../firebase';
 import deleteTweet from '../utils/deleteTweet';
 import ThreeDots from './ThreeDots';
 import useToggle from '../hooks/useToggle';
 import getTimeString from '../utils/getTimeString';
 import updateLike from '../utils/updateLike';
+import checkMatchingUser from '../utils/checkMatchingUser';
 
 function TweetItem({ tweetObj }) {
   const navigate = useNavigate();

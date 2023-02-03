@@ -1,6 +1,8 @@
 import { serverTimestamp } from 'firebase/firestore';
-import { getUserUid, getDisplayName, getProfilePicUrl } from '../firebase';
+import getProfilePicUrl from './getProfilePicUrl';
+import getDisplayName from './getDisplayName';
 import getUserName from './getUserName';
+import getUserUid from './getUserUid';
 
 export default class Tweet {
   constructor(messageText, aReplyTo = null) {
