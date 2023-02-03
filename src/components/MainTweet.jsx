@@ -18,7 +18,7 @@ const MainTweet = ({ tweetObj }) => {
   const customClass = 'main-tweet';
 
   useEffect(() => {
-    if (!tweetObj) return;
+    if (!tweetObj) return undefined;
 
     // increase view on tweetObj load
     updateView(tweetObj);
@@ -30,6 +30,11 @@ const MainTweet = ({ tweetObj }) => {
       );
       window.scrollTo(0, replyingTo.clientHeight);
     }
+
+    return () => {
+      // reset scroll when navigating
+      window.scrollTo(0, 0);
+    };
   }, [tweetObj]);
 
   if (!tweetObj) return <div id={`${customClass}-container`} />;
