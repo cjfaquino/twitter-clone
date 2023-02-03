@@ -6,24 +6,21 @@ export default function useRandomUsers() {
   const [users, setUsers] = useState([]);
 
   // todo make random
-  let count = 0;
+  const getUsers = async () => {
+    const queryRef = query(collection(db, 'users'), limit(3));
+    const qSnap = await getDocs(queryRef);
+
+    qSnap.forEach((item) =>
+      setUsers((prev) => [...prev, { id: item.id, ...item.data() }])
+    );
+  };
 
   useEffect(() => {
-    const getUsers = async () => {
-      const queryRef = query(collection(db, 'users'), limit(3));
-      const qSnap = await getDocs(queryRef);
+    getUsers();
 
-      qSnap.forEach((item) =>
-        setUsers((prev) => [...prev, { id: item.id, ...item.data() }])
-      );
+    return () => {
+      setUsers([]);
     };
-
-    if (count > 0) {
-      getUsers();
-    }
-
-    count += 1;
   }, []);
-
   return users;
 }
