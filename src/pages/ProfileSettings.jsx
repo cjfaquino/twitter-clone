@@ -102,7 +102,17 @@ const ProfileSettings = ({ currentUser, userProfile }) => {
                   isEmailVerified() ? 'verify-email verified' : 'verify-email'
                 }
               >
-                {isEmailVerified() ? 'verified ✓' : 'not verified'}
+                {isEmailVerified() ? (
+                  'verified ✓'
+                ) : (
+                  <button
+                    type='button'
+                    onClick={sendEmailVerification}
+                    className='btn-verify-email'
+                  >
+                    Verify email
+                  </button>
+                )}
               </span>
               <input
                 type='text'
@@ -111,9 +121,7 @@ const ProfileSettings = ({ currentUser, userProfile }) => {
                 onChange={handleEmail}
               />
             </label>
-            <button type='button' onClick={sendEmailVerification}>
-              Verify email
-            </button>
+
             <button type='submit'>
               {submittingEmail ? 'Submitting...' : 'Submit'}
             </button>
