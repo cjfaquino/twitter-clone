@@ -110,10 +110,10 @@ input:focus {
 /* MyNav */
 
 #menubar {
+  padding: 20px;
   height: 100vh;
   position: fixed;
   width: var(--menubar-width);
-  border: 1px solid white;
 }
 
 #menubar ul {
@@ -128,11 +128,14 @@ input:focus {
   font-weight: 800;
 }
 
-#menubar .btn-nav-tweet {
-  width: 100%;
-  padding: 15px;
-  border-radius: 50px;
-  background-color: var(--theme-color);
+.menu-list a {
+  font-size: 1.3rem;
+  padding: 10px 20px 10px 10px;
+  border-radius: 10px;
+}
+
+.menu-list a:hover {
+  background-color: grey;
 }
 
 .nav-user {
@@ -145,7 +148,7 @@ input:focus {
 .nav-user-item {
   --pfp-size: 40px;
   padding: 10px;
-  border-radius: 50px;
+  border-radius: 15px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -163,6 +166,10 @@ input:focus {
   width: 100%;
   border-radius: 13px;
   z-index: 20;
+}
+
+.btn-nav-tweet {
+  width: 100%;
 }
 
 .btn-nav-logout {
