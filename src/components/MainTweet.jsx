@@ -13,18 +13,22 @@ import getUserUid from '../utils/getUserUid';
 const MainTweet = ({ tweetObj }) => {
   const [showOptionsPopup, toggleOptionsPopup] = useToggle();
   const navigate = useNavigate();
-  const mainTweetRef = useRef(null);
+  const tweetRef = useRef(null);
 
   const customClass = 'main-tweet';
 
   useEffect(() => {
-    if (tweetObj) {
-      // scroll to tweet when aReplyTo obj is present
-      const rect = mainTweetRef.current.getBoundingClientRect();
-      window.scrollTo(0, rect.top - 71);
+    if (!tweetObj) return;
 
-      // increase view on tweetObj load
-      updateView(tweetObj);
+    // increase view on tweetObj load
+    updateView(tweetObj);
+
+    // dynamically scroll past .replying-to-tweet-item on load
+    if (tweetObj.aReplyTo) {
+      const replyingTo = tweetRef.current.parentNode.querySelector(
+        '.replying-to-tweet-item'
+      );
+      window.scrollTo(0, replyingTo.clientHeight);
     }
   }, [tweetObj]);
 
@@ -64,8 +68,13 @@ const MainTweet = ({ tweetObj }) => {
   };
 
   return (
-    <div id={`${customClass}-container`} onClick={navToPage} aria-hidden>
-      <div id={TWEET_ID} className={`${customClass}-item`} ref={mainTweetRef}>
+    <div
+      id={`${customClass}-container`}
+      onClick={navToPage}
+      aria-hidden
+      ref={tweetRef}
+    >
+      <div id={TWEET_ID} className={`${customClass}-item`}>
         <div className={`${customClass}-item-user`}>
           <div className={`${customClass}-item-img-container profile-link`}>
             <img src={USER_ICON} alt={USER_NAME} className='profile-link' />
