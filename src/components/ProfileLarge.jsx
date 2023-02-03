@@ -1,10 +1,15 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import updateFollow from '../utils/updateFollow';
+import { useNavigate } from 'react-router-dom';
 import checkAlreadyFollowing from '../utils/checkAlreadyFollowing';
+import isUserSignedIn from '../utils/isUserSignedIn';
+import followUser from '../utils/followUser';
+import unfollowUser from '../utils/unfollowUser';
+import eventFollow from '../utils/eventFollow';
 
 const ProfileLarge = ({ currentUser, userProfile, targetUser }) => {
-  const followBtnRef = useRef(null);
+  const [followed, setFollowed] = useState(null);
+  const navigate = useNavigate();
   const customClass = 'user-card';
 
   const formatJoinedDate = () => {
@@ -18,30 +23,50 @@ const ProfileLarge = ({ currentUser, userProfile, targetUser }) => {
     return joinedDate.toLocaleDateString('en-us', options);
   };
 
-  const handleFollow = async () => {
-    await updateFollow(
-      `${customClass}-${targetUser.userProfile.id}`,
-      targetUser,
-      userProfile
-    );
+  const handleFollow = async (e) => {
+    const btnText = e.target.textContent;
+
+    if (!isUserSignedIn()) {
+      return navigate('/login');
+    }
+
+    if (btnText === 'Follow') {
+      await followUser(userProfile, targetUser.userProfile);
+      setFollowed(true);
+    }
+
+    if (btnText === 'Unfollow') {
+      await unfollowUser(targetUser.userProfile);
+      setFollowed(false);
+    }
+
+    return eventFollow(targetUser.userProfile.id);
   };
 
+  const checkFollow = () =>
+    checkAlreadyFollowing(targetUser.userProfile.id).then(setFollowed);
+
   useEffect(() => {
-    const setFollowBtn = async () => {
-      if (await checkAlreadyFollowing(targetUser.userProfile.id)) {
-        followBtnRef.current.textContent = 'Unfollow';
-      } else {
-        followBtnRef.current.textContent = 'Follow';
+    if (targetUser.userProfile) {
+      // set initial follow
+      if (isUserSignedIn()) {
+        checkFollow();
+      }
+
+      document.addEventListener(
+        `change follow for ${targetUser.userProfile.id}`,
+        checkFollow
+      );
+    }
+
+    return () => {
+      if (targetUser.userProfile) {
+        document.removeEventListener(
+          `change follow for ${targetUser.userProfile.id}`,
+          checkFollow
+        );
       }
     };
-
-    if (
-      currentUser &&
-      targetUser.userProfile &&
-      currentUser.displayName !== targetUser.userProfile.displayName
-    ) {
-      setFollowBtn();
-    }
   }, [targetUser.userProfile]);
 
   return (
@@ -66,10 +91,9 @@ const ProfileLarge = ({ currentUser, userProfile, targetUser }) => {
                   <button
                     type='button'
                     onClick={handleFollow}
-                    ref={followBtnRef}
                     className='btn-follow'
                   >
-                    Follow
+                    {followed ? 'Unfollow' : 'Follow'}
                   </button>
                 )}
               </div>

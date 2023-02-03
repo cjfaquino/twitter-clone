@@ -3,7 +3,7 @@ import getUserUid from './getUserUid';
 import { db } from '../firebase-config';
 import eventProfileEdit from './eventProfileEdit';
 
-const unfollowUser = async (targetUserProfileObj, currentUserProfileObj) => {
+const unfollowUser = async (targetUserProfileObj) => {
   try {
     // delete from targets followers
     const followersRef = doc(
@@ -23,10 +23,7 @@ const unfollowUser = async (targetUserProfileObj, currentUserProfileObj) => {
     );
 
     // delete from follwers & following collection in users
-    await Promise.all([
-      deleteDoc(followersRef, currentUserProfileObj),
-      deleteDoc(followingRef, targetUserProfileObj),
-    ]);
+    await Promise.all([deleteDoc(followersRef), deleteDoc(followingRef)]);
 
     eventProfileEdit();
   } catch (error) {
