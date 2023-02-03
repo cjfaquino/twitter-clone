@@ -209,7 +209,8 @@ form button {
   margin-left: var(--menubar-width);
   width: var(--feed-width);
   min-height: 100vh;
-  border: 1px solid white;
+  border-left: 1px solid grey;
+  border-right: 1px solid grey;
 }
 
 #explore,
@@ -319,7 +320,6 @@ form button {
   padding: 20px;
   width: var(--sidebar-width);
   margin-left: calc(var(--menubar-width) + var(--feed-width));
-  border: 1px solid white;
   height: 100vh;
   position: fixed;
 }
@@ -329,7 +329,6 @@ form button {
   background-color: rgb(46, 46, 46);
   min-height: 300px;
   width: 100%;
-  border: 1px solid white;
   border-radius: 10px;
 }
 
