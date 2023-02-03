@@ -55,7 +55,7 @@ const TweetItem = ({ tweetObj }) => {
 
     if (checkElementClicked(targetName, toTweetPage)) {
       // go to tweet page
-      navigate(`/tweet/${TWEET_ID}`);
+      navigate(`/${USER_NAME}/tweet/${TWEET_ID}`);
     } else if (checkElementClicked(targetName, toUser)) {
       // go to user page
       navigate(`/${USER_NAME}`);

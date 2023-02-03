@@ -40,21 +40,18 @@ const App = () => {
                 <Explore newTweet={newTweet} clrNewTweet={clrNewTweet} />
               }
             />
-            <Route path='/tweet/:tweet' element={<TweetPage />} />
             <Route path='/signup' element={<SignUp />} />
             <Route path='/login' element={<Login />} />
             <Route
-              path='/:username/'
+              path='/:username/*'
               element={
                 <ProfilePage
                   currentUser={currentUser}
                   userProfile={userProfile}
                 />
               }
-            >
-              <Route path='with_replies' element={null} />
-              <Route path='likes' element={null} />
-            </Route>
+            />
+            <Route path='/:username/tweet/:tweet' element={<TweetPage />} />
             <Route
               path='/settings'
               element={
