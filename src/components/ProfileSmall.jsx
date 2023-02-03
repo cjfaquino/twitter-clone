@@ -31,14 +31,15 @@ function ProfileSmall({ userProfile }) {
 }
 
 ProfileSmall.propTypes = {
-  userProfile: PropTypes.oneOfType([
-    PropTypes.shape({
-      photoUrl: PropTypes.string,
-      displayName: PropTypes.string,
-      userName: PropTypes.string,
-    }),
-    null,
-  ]).isRequired,
+  userProfile: PropTypes.shape({
+    photoUrl: PropTypes.string,
+    displayName: PropTypes.string,
+    userName: PropTypes.string,
+  }),
+};
+
+ProfileSmall.defaultProps = {
+  userProfile: null,
 };
 
 export default ProfileSmall;
