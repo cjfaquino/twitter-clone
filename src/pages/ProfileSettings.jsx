@@ -10,7 +10,7 @@ import linkWithGooglePopup from '../utils/linkWithGooglePopup';
 import isEmailVerified from '../utils/isEmailVerified';
 import sendEmailVerification from '../utils/sendEmailVerification';
 
-function ProfileSettings({ currentUser, userProfile }) {
+const ProfileSettings = ({ currentUser, userProfile }) => {
   const [displayName, handleDisplayName, setDisplayName] = useInput();
   const [userName, handleUserName, setUserName] = useInput();
   const [email, handleEmail, setEmail] = useInput();
@@ -162,7 +162,7 @@ function ProfileSettings({ currentUser, userProfile }) {
       )}
     </div>
   );
-}
+};
 
 ProfileSettings.propTypes = {
   currentUser: PropTypes.shape({

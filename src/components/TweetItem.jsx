@@ -8,7 +8,7 @@ import getTimeString from '../utils/getTimeString';
 import updateLike from '../utils/updateLike';
 import checkMatchingUser from '../utils/checkMatchingUser';
 
-function TweetItem({ tweetObj }) {
+const TweetItem = ({ tweetObj }) => {
   const navigate = useNavigate();
   const {
     views,
@@ -146,7 +146,7 @@ function TweetItem({ tweetObj }) {
       </div>
     </div>
   );
-}
+};
 
 TweetItem.propTypes = {
   tweetObj: PropTypes.shape({

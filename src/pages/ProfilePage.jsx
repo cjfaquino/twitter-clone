@@ -5,7 +5,7 @@ import GoBackHeader from '../components/GoBackHeader';
 import ProfileLarge from '../components/ProfileLarge';
 import useFindByUsername from '../hooks/useFindByUsername';
 
-function ProfilePage({ currentUser, userProfile }) {
+const ProfilePage = ({ currentUser, userProfile }) => {
   const params = useParams();
   const targetUser = useFindByUsername(params.username);
 
@@ -19,7 +19,7 @@ function ProfilePage({ currentUser, userProfile }) {
       />
     </div>
   );
-}
+};
 
 ProfilePage.propTypes = {
   currentUser: PropTypes.shape({}),

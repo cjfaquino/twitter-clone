@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import useTweets from '../hooks/useTweets';
 import TweetItem from '../components/TweetItem';
 
-function Explore({ newTweet, clrNewTweet }) {
+const Explore = ({ newTweet, clrNewTweet }) => {
   const [tweets, addTweetToDOM, isTweetsLoading] = useTweets('tweets');
 
   useEffect(() => {
@@ -25,7 +25,7 @@ function Explore({ newTweet, clrNewTweet }) {
       </div>
     </div>
   );
-}
+};
 
 Explore.propTypes = {
   newTweet: PropTypes.shape({

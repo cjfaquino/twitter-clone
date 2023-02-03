@@ -5,7 +5,7 @@ import signOutUser from '../utils/signOutUser';
 import useToggle from '../hooks/useToggle';
 import ThreeDots from './ThreeDots';
 
-function MyNav({ currentUser, userProfile, toggleTweetPopup }) {
+const MyNav = ({ currentUser, userProfile, toggleTweetPopup }) => {
   const [logoutPopup, toggleLogoutPopup] = useToggle();
   const navigate = useNavigate();
 
@@ -97,7 +97,7 @@ function MyNav({ currentUser, userProfile, toggleTweetPopup }) {
       </ul>
     </nav>
   );
-}
+};
 
 MyNav.propTypes = {
   currentUser: PropTypes.shape({

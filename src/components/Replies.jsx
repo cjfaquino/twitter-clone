@@ -9,7 +9,7 @@ import getDisplayName from '../utils/getDisplayName';
 import getProfilePicUrl from '../utils/getProfilePicUrl';
 import isUserSignedIn from '../utils/isUserSignedIn';
 
-function Replies({ tweetObj, replies }) {
+const Replies = ({ tweetObj, replies }) => {
   const [fetchedReplies] = useReplies(replies);
   const [replyMessage, setReplyMessage] = useState('');
 
@@ -63,7 +63,7 @@ function Replies({ tweetObj, replies }) {
       ))}
     </div>
   );
-}
+};
 
 Replies.propTypes = {
   tweetObj: PropTypes.shape({

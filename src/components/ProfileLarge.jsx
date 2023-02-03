@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import updateFollow from '../utils/updateFollow';
 import checkAlreadyFollowing from '../utils/checkAlreadyFollowing';
 
-function ProfileLarge({ currentUser, userProfile, targetUser }) {
+const ProfileLarge = ({ currentUser, userProfile, targetUser }) => {
   const followBtnRef = useRef(null);
   const customClass = 'user-card';
 
@@ -109,7 +109,7 @@ function ProfileLarge({ currentUser, userProfile, targetUser }) {
       <div />
     </div>
   );
-}
+};
 
 ProfileLarge.propTypes = {
   currentUser: PropTypes.shape({

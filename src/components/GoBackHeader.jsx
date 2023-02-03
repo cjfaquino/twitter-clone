@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
-function GoBackHeader({ targetUser }) {
+const GoBackHeader = ({ targetUser }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -18,7 +18,7 @@ function GoBackHeader({ targetUser }) {
       </div>
     </header>
   );
-}
+};
 
 GoBackHeader.propTypes = {
   targetUser: PropTypes.shape({

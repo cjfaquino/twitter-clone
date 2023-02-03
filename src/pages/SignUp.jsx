@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import useInput from '../hooks/useInput';
 import createUser from '../utils/createUser';
 
-function SignUp() {
+const SignUp = () => {
   const [emailVal, handleEmail] = useInput();
   const [pwdVal, handlePwd] = useInput();
   const [confirmPwdVal, handleConfirmPwd] = useInput();
@@ -46,6 +46,6 @@ function SignUp() {
       <button type='submit'>{submitting ? 'Submitting...' : 'Submit'}</button>
     </form>
   );
-}
+};
 
 export default SignUp;

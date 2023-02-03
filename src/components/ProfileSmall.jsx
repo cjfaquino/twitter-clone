@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function ProfileSmall({ userProfile }) {
+const ProfileSmall = ({ userProfile }) => {
   const customClass = 'user-card-small';
   return (
     <div className='profile-small'>
@@ -28,7 +28,7 @@ function ProfileSmall({ userProfile }) {
       )}
     </div>
   );
-}
+};
 
 ProfileSmall.propTypes = {
   userProfile: PropTypes.shape({

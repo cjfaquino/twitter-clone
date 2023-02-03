@@ -10,7 +10,7 @@ import updateView from '../utils/updateView';
 import checkMatchingUser from '../utils/checkMatchingUser';
 import getUserUid from '../utils/getUserUid';
 
-function MainTweet({ tweetObj }) {
+const MainTweet = ({ tweetObj }) => {
   const [showOptionsPopup, toggleOptionsPopup] = useToggle();
   const navigate = useNavigate();
   const mainTweetRef = useRef(null);
@@ -139,7 +139,7 @@ function MainTweet({ tweetObj }) {
       </div>
     </div>
   );
-}
+};
 
 MainTweet.propTypes = {
   tweetObj: PropTypes.shape({

@@ -5,7 +5,7 @@ import loginWithGooglePopup from '../utils/loginWithGooglePopup';
 import loginWithEmailAndPass from '../utils/loginWithEmail&Pass';
 import setErrorMessage from '../utils/setErrorMessage';
 
-function Login() {
+const Login = () => {
   const [emailVal, handleEmail] = useInput();
   const [passwordVal, handlePassword] = useInput();
   const [submitting, setSubmitting] = useState(null);
@@ -79,6 +79,6 @@ function Login() {
       </form>
     </div>
   );
-}
+};
 
 export default Login;

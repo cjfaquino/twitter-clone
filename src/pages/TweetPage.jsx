@@ -6,7 +6,7 @@ import useOneTweet from '../hooks/useOneTweet';
 import GoBackHeader from '../components/GoBackHeader';
 import TweetItem from '../components/TweetItem';
 
-function TweetPage() {
+const TweetPage = () => {
   const params = useParams();
   const [tweet] = useOneTweet(params.tweet);
 
@@ -22,6 +22,6 @@ function TweetPage() {
       {tweet && <Replies replies={tweet.replies} tweetObj={tweet} />}
     </div>
   );
-}
+};
 
 export default TweetPage;

@@ -5,7 +5,7 @@ import MyFooter from './MyFooter/MyFooter';
 import useRandomUsers from '../hooks/useRandomUsers';
 import ProfileSmall from './ProfileSmall';
 
-function MySidebar({ isSignedIn }) {
+const MySidebar = ({ isSignedIn }) => {
   const users = useRandomUsers();
 
   return (
@@ -28,7 +28,7 @@ function MySidebar({ isSignedIn }) {
       <MyFooter />
     </div>
   );
-}
+};
 
 MySidebar.propTypes = {
   isSignedIn: PropTypes.bool.isRequired,

@@ -4,7 +4,7 @@ import isUserSignedIn from '../utils/isUserSignedIn';
 import saveTweet from '../utils/saveTweet';
 import Tweet from '../utils/Tweet';
 
-function TweetPopup({ toggleTweetPopup, setNewTweet }) {
+const TweetPopup = ({ toggleTweetPopup, setNewTweet }) => {
   const [input, setInput] = useState('');
 
   const handleSubmit = async (e) => {
@@ -45,7 +45,7 @@ function TweetPopup({ toggleTweetPopup, setNewTweet }) {
       </div>
     </>
   );
-}
+};
 
 TweetPopup.propTypes = {
   toggleTweetPopup: PropTypes.func.isRequired,
