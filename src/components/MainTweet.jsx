@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import deleteTweet from '../utils/deleteTweet';
-import ThreeDots from './ThreeDots';
 import useToggle from '../hooks/useToggle';
 import getTimeString from '../utils/getTimeString';
 import updateView from '../utils/updateView';
@@ -12,9 +11,10 @@ import likeTweet from '../utils/likeTweet';
 import undoLike from '../utils/undoLike';
 import checkAlreadyLiked from '../utils/checkAlreadyLiked';
 import isUserSignedIn from '../utils/isUserSignedIn';
+import OptionsPopup from './OptionsPopup';
 
 const MainTweet = ({ tweetObj, userProfile }) => {
-  const [showOptionsPopup, toggleOptionsPopup] = useToggle();
+  const [showOptionsPopup, toggleOptionsPopup] = useToggle(false);
   const [likes, setLikes] = useState(null);
   const navigate = useNavigate();
   const tweetRef = useRef(null);
@@ -135,29 +135,12 @@ const MainTweet = ({ tweetObj, userProfile }) => {
               </div>
             </div>
           </div>
-          <div className='dots-container'>
-            <ThreeDots onClick={toggleOptionsPopup} />
-            {showOptionsPopup && (
-              <>
-                <div className='options-popup popup'>
-                  {checkMatchingUser(USER_ID) && (
-                    <button
-                      className='btn-delete-tweet'
-                      type='button'
-                      onClick={handleDelete}
-                    >
-                      Delete
-                    </button>
-                  )}
-                </div>
-                <div
-                  className='options-background'
-                  onClick={toggleOptionsPopup}
-                  aria-hidden='true'
-                />
-              </>
-            )}
-          </div>
+          <OptionsPopup
+            handleDelete={handleDelete}
+            toggleOptionsPopup={toggleOptionsPopup}
+            showOptionsPopup={showOptionsPopup}
+            userID={USER_ID}
+          />
         </div>
         {tweetObj.aReplyTo && (
           <div className='replying-to-info'>
