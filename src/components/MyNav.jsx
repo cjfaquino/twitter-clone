@@ -48,14 +48,18 @@ const MyNav = ({ currentUser, userProfile, toggleTweetPopup }) => {
                 Settings
               </NavLink>
             </li>
+            <li>
+              <button
+                type='button'
+                onClick={handleClick}
+                className='btn-nav-tweet'
+              >
+                Tweet
+              </button>
+            </li>
           </>
         )}
 
-        <li>
-          <button type='button' onClick={handleClick} className='btn-nav-tweet'>
-            Tweet
-          </button>
-        </li>
         <li className='nav-user'>
           {currentUser && (
             <>

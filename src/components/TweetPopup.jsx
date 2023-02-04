@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import isUserSignedIn from '../utils/isUserSignedIn';
 import saveTweet from '../utils/saveTweet';
 import Tweet from '../utils/Tweet';
+import getProfilePicUrl from '../utils/getProfilePicUrl';
 
 const TweetPopup = ({ toggleTweetPopup, setNewTweet }) => {
   const [input, setInput] = useState('');
@@ -28,20 +29,33 @@ const TweetPopup = ({ toggleTweetPopup, setNewTweet }) => {
         onClick={toggleTweetPopup}
         aria-hidden='true'
       />
-      <div id='tweet-popup' className='popup'>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor='tweet'>
-            <input
+      <div className='tweet-popup popup'>
+        <button
+          type='button'
+          className='btn-cancel-tweet'
+          title='Close'
+          onClick={toggleTweetPopup}
+        >
+          &#215;
+        </button>
+        <div className='input-container'>
+          <div className='tweet-popup-img-container img-container'>
+            <img src={getProfilePicUrl()} alt='' />
+          </div>
+          <form onSubmit={handleSubmit}>
+            <textarea
               type='text'
               name='tweet'
-              id='tweet'
+              id='tweet-input'
+              placeholder="Nothing's happening!"
               onChange={(e) => setInput(e.target.value)}
               value={input}
               maxLength='280'
             />
-          </label>
-          <button type='submit'>Tweet</button>
-        </form>
+            <div className='hor-line' />
+            <button type='submit'>Tweet</button>
+          </form>
+        </div>
       </div>
     </>
   );

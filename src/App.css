@@ -86,6 +86,20 @@ input:focus {
   background-color: rgb(82, 82, 82);
 }
 
+.img-container {
+  width: var(--pfp-size);
+  height: var(--pfp-size);
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 20%;
+  flex-shrink: 0;
+}
+
+.img-container img {
+  height: 100%;
+  width: 100%;
+}
+
 /* login banner */
 #login-banner {
   background-color: var(--theme-color);
@@ -196,15 +210,76 @@ input:focus {
   z-index: 3;
 }
 
-#sign-up-popup,
-#tweet-popup {
+.tweet-popup {
   position: fixed;
   left: 50%;
-  top: 50%;
+  top: 40%;
   transform: translate(-50%, -50%);
   background-color: black;
   border-radius: 15px;
   z-index: 10;
+  width: 600px;
+  display: flex;
+  gap: 15px;
+  flex-direction: column;
+  padding: 15px;
+}
+
+.btn-cancel-tweet {
+  position: relative;
+  top: -5px;
+  left: -5px;
+  background-color: transparent;
+  align-self: flex-start;
+  font-size: 1.6rem;
+  font-weight: 300;
+  padding: 0;
+  height: 35px;
+  width: 35px;
+  display: flex;
+  place-content: center center;
+  border-radius: 50%;
+}
+
+.btn-cancel-tweet:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.input-container {
+  display: flex;
+  width: 100%;
+  gap: 15px;
+}
+
+.input-container form,
+#tweet-input {
+  width: 100%;
+}
+
+#tweet-input {
+  resize: none;
+  height: 100px;
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+}
+
+.tweet-popup .hor-line {
+  margin: 15px 0;
+}
+
+.tweet-popup form {
+  display: flex;
+  flex-direction: column;
+}
+
+.tweet-popup form button {
+  padding: 5px 20px;
+  align-self: flex-end;
+}
+
+#tweet-input:focus {
+  outline: none;
 }
 
 /* Center column */
@@ -388,28 +463,6 @@ form button {
   display: flex;
   gap: 15px;
   border-bottom: 1px solid grey;
-}
-
-.tweet-item-img-container,
-.main-tweet-item-img-container,
-.reply-input-img-container,
-.nav-user-img-container,
-.user-card-small-img-container {
-  width: var(--pfp-size);
-  height: var(--pfp-size);
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-  border-radius: 20%;
-  flex-shrink: 0;
-}
-
-.tweet-item-img-container img,
-.main-tweet-item-img-container img,
-.reply-input-img-container img,
-.nav-user-img-container img,
-.user-card-small-img-container img {
-  height: 100%;
-  width: 100%;
 }
 
 .tweet-item-right-half {
