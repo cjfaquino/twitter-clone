@@ -1,23 +1,11 @@
 import { useEffect, useState } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase-config';
+import getUpdatedTweetByID from '../utils/getUpdatedTweetByID';
 
 export default function useOneTweet(tweetID) {
   const [tweet, setTweet] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  const loadReplyingTo = async (replyingToID) => {
-    let replyingTo = null;
-    const repRef = doc(db, 'tweets', replyingToID);
-    const repSnap = await getDoc(repRef);
-
-    if (repSnap.exists()) {
-      replyingTo = { id: repSnap.id, ...repSnap.data() };
-    } else console.log('Cannot get replying to tweet');
-
-    // replyingTo will be a tweetObj or null
-    return replyingTo;
-  };
 
   const loadTweet = async () => {
     setLoading(true);
@@ -35,7 +23,7 @@ export default function useOneTweet(tweetID) {
       let replyingTo = null;
       if (docSnap.data().aReplyTo) {
         const replyingToID = docSnap.data().aReplyTo.id;
-        replyingTo = await loadReplyingTo(replyingToID);
+        replyingTo = await getUpdatedTweetByID(replyingToID);
       }
       const newTwt = {
         ...docSnap.data(),
