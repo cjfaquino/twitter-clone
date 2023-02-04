@@ -6,10 +6,12 @@ import getUserUid from './getUserUid';
 const undoLike = async (tweetObj) => {
   try {
     const likesRef = doc(db, 'users', getUserUid(), 'likes', tweetObj.id);
+    const tweetLikesRef = doc(db, 'tweets', tweetObj.id, 'likes', getUserUid());
     const tweetRef = doc(db, 'tweets', tweetObj.id);
 
     // remove liked tweetObj from users>likes collection
     deleteDoc(likesRef);
+    deleteDoc(tweetLikesRef);
 
     // update tweet document
     updateDoc(tweetRef, { likes: increment(-1) });

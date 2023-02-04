@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import useTweets from '../hooks/useTweets';
 import TweetItem from '../components/TweetItem';
 
-const Explore = ({ newTweet, clrNewTweet }) => {
+const Explore = ({ newTweet, clrNewTweet, userProfile }) => {
   const [tweets, addTweetToDOM, isTweetsLoading] = useTweets('tweets');
 
   useEffect(() => {
@@ -21,13 +21,16 @@ const Explore = ({ newTweet, clrNewTweet }) => {
       <div>
         {isTweetsLoading && <div>loading</div>}
         {tweets &&
-          tweets.map((twt) => <TweetItem tweetObj={twt} key={twt.id} />)}
+          tweets.map((twt) => (
+            <TweetItem tweetObj={twt} key={twt.id} userProfile={userProfile} />
+          ))}
       </div>
     </div>
   );
 };
 
 Explore.propTypes = {
+  userProfile: PropTypes.shape({}),
   newTweet: PropTypes.shape({
     text: PropTypes.string,
     timestamp: PropTypes.shape({
@@ -42,6 +45,7 @@ Explore.propTypes = {
 
 Explore.defaultProps = {
   newTweet: null,
+  userProfile: null,
 };
 
 export default Explore;

@@ -12,7 +12,7 @@ function useUserProfile(userObj) {
       const docRef = doc(db, 'users', userObj.uid);
       getDoc(docRef).then((docSnap) => {
         if (docSnap.exists() && profile !== docSnap.data()) {
-          setProfile(docSnap.data());
+          setProfile({ id: docSnap.id, ...docSnap.data() });
         } else {
           // no user exists in firestore db users
           // create user profile

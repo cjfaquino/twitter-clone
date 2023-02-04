@@ -37,7 +37,11 @@ const App = () => {
             <Route
               path='/explore'
               element={
-                <Explore newTweet={newTweet} clrNewTweet={clrNewTweet} />
+                <Explore
+                  newTweet={newTweet}
+                  clrNewTweet={clrNewTweet}
+                  userProfile={userProfile}
+                />
               }
             />
             <Route path='/signup' element={<SignUp />} />
@@ -51,7 +55,10 @@ const App = () => {
                 />
               }
             />
-            <Route path='/:username/tweet/:tweet' element={<TweetPage />} />
+            <Route
+              path='/:username/tweet/:tweet'
+              element={<TweetPage userProfile={userProfile} />}
+            />
             <Route
               path='/settings'
               element={

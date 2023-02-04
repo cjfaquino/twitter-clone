@@ -1,20 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import deleteTweet from '../utils/deleteTweet';
 import ThreeDots from './ThreeDots';
 import useToggle from '../hooks/useToggle';
 import getTimeString from '../utils/getTimeString';
-import updateLike from '../utils/updateLike';
 import checkMatchingUser from '../utils/checkMatchingUser';
 import deleteTweetFromDOM from '../utils/deleteTweetFromDOM';
 import useReplies from '../hooks/useReplies';
+import checkAlreadyLiked from '../utils/checkAlreadyLiked';
+import undoLike from '../utils/undoLike';
+import likeTweet from '../utils/likeTweet';
 
-const TweetItem = ({ tweetObj }) => {
+const TweetItem = ({ tweetObj, userProfile }) => {
+  const [likes, setLikes] = useState(tweetObj.likes);
+
   const navigate = useNavigate();
   const {
     views,
-    likes,
+
     text,
     timestamp,
     USER_ICON,
@@ -63,7 +67,16 @@ const TweetItem = ({ tweetObj }) => {
   };
 
   const handleLike = async () => {
-    updateLike(`${customClass}-${TWEET_ID}`, tweetObj);
+    // updateLike(`${customClass}-${TWEET_ID}`, tweetObj, userProfile);
+    if (await checkAlreadyLiked(TWEET_ID)) {
+      // already liked
+      await undoLike(tweetObj, userProfile);
+      setLikes((prev) => prev - 1);
+    } else {
+      // not yet liked
+      await likeTweet(tweetObj, userProfile);
+      setLikes((prev) => prev + 1);
+    }
   };
 
   return (
@@ -154,6 +167,7 @@ const TweetItem = ({ tweetObj }) => {
 };
 
 TweetItem.propTypes = {
+  userProfile: PropTypes.shape({}),
   tweetObj: PropTypes.shape({
     aReplyTo: PropTypes.shape({
       USER_NAME: PropTypes.string,
@@ -171,6 +185,10 @@ TweetItem.propTypes = {
     USER_DISPLAY: PropTypes.string,
     id: PropTypes.string,
   }).isRequired,
+};
+
+TweetItem.defaultProps = {
+  userProfile: null,
 };
 
 export default TweetItem;

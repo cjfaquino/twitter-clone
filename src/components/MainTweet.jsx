@@ -1,21 +1,32 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import deleteTweet from '../utils/deleteTweet';
 import ThreeDots from './ThreeDots';
 import useToggle from '../hooks/useToggle';
 import getTimeString from '../utils/getTimeString';
-import updateLike from '../utils/updateLike';
 import updateView from '../utils/updateView';
 import checkMatchingUser from '../utils/checkMatchingUser';
 import getUserUid from '../utils/getUserUid';
+import likeTweet from '../utils/likeTweet';
+import undoLike from '../utils/undoLike';
+import checkAlreadyLiked from '../utils/checkAlreadyLiked';
 
-const MainTweet = ({ tweetObj }) => {
+const MainTweet = ({ tweetObj, userProfile }) => {
   const [showOptionsPopup, toggleOptionsPopup] = useToggle();
+  const [likes, setLikes] = useState(null);
   const navigate = useNavigate();
   const tweetRef = useRef(null);
 
   const customClass = 'main-tweet';
+
+  useEffect(() => {
+    if (tweetObj) {
+      setLikes(tweetObj.likes);
+    }
+
+    return () => {};
+  }, [tweetObj]);
 
   useEffect(() => {
     if (!tweetObj) return undefined;
@@ -42,7 +53,6 @@ const MainTweet = ({ tweetObj }) => {
   const {
     views,
     retweets,
-    likes,
     text,
     timestamp,
     USER_ICON,
@@ -59,8 +69,16 @@ const MainTweet = ({ tweetObj }) => {
     }
   };
 
-  const handleLike = () => {
-    updateLike(tweetObj);
+  const handleLike = async () => {
+    if (await checkAlreadyLiked(TWEET_ID)) {
+      // already liked
+      await undoLike(tweetObj, userProfile);
+      setLikes((prev) => prev - 1);
+    } else {
+      // not yet liked
+      await likeTweet(tweetObj, userProfile);
+      setLikes((prev) => prev + 1);
+    }
   };
 
   const navToPage = async (e) => {
@@ -160,6 +178,7 @@ const MainTweet = ({ tweetObj }) => {
 };
 
 MainTweet.propTypes = {
+  userProfile: PropTypes.shape({}),
   tweetObj: PropTypes.shape({
     aReplyTo: PropTypes.shape({
       USER_NAME: PropTypes.string,
@@ -183,6 +202,7 @@ MainTweet.propTypes = {
 
 MainTweet.defaultProps = {
   tweetObj: null,
+  userProfile: null,
 };
 
 export default MainTweet;
