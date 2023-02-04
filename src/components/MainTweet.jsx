@@ -11,6 +11,7 @@ import getUserUid from '../utils/getUserUid';
 import likeTweet from '../utils/likeTweet';
 import undoLike from '../utils/undoLike';
 import checkAlreadyLiked from '../utils/checkAlreadyLiked';
+import isUserSignedIn from '../utils/isUserSignedIn';
 
 const MainTweet = ({ tweetObj, userProfile }) => {
   const [showOptionsPopup, toggleOptionsPopup] = useToggle();
@@ -22,21 +23,24 @@ const MainTweet = ({ tweetObj, userProfile }) => {
   const customClass = 'main-tweet';
 
   useEffect(() => {
+    const updateLikes = async () => {
+      if (await checkAlreadyLiked(tweetObj.id)) {
+        likesRef.current.classList.add('liked');
+      } else {
+        likesRef.current.classList.remove('liked');
+      }
+    };
+
     if (tweetObj) {
       setLikes(tweetObj.likes);
 
-      const initLikes = async () => {
-        if (await checkAlreadyLiked(tweetObj.id)) {
-          likesRef.current.classList.add('liked');
-        } else {
-          likesRef.current.classList.remove('liked');
-        }
-      };
-
-      initLikes();
+      updateLikes();
+      document.addEventListener('auth state changed', updateLikes);
     }
 
-    return () => {};
+    return () => {
+      document.removeEventListener('auth state changed', updateLikes);
+    };
   }, [tweetObj]);
 
   useEffect(() => {
@@ -81,6 +85,8 @@ const MainTweet = ({ tweetObj, userProfile }) => {
   };
 
   const handleLike = async () => {
+    if (!isUserSignedIn()) return navigate('/login');
+
     if (await checkAlreadyLiked(TWEET_ID)) {
       // already liked
       await undoLike(tweetObj, userProfile);
@@ -92,6 +98,8 @@ const MainTweet = ({ tweetObj, userProfile }) => {
       setLikes((prev) => prev + 1);
       likesRef.current.classList.add('liked');
     }
+
+    return undefined;
   };
 
   const navToPage = async (e) => {

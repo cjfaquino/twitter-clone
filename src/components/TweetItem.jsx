@@ -11,6 +11,7 @@ import useReplies from '../hooks/useReplies';
 import checkAlreadyLiked from '../utils/checkAlreadyLiked';
 import undoLike from '../utils/undoLike';
 import likeTweet from '../utils/likeTweet';
+import isUserSignedIn from '../utils/isUserSignedIn';
 
 const TweetItem = ({ tweetObj, userProfile }) => {
   const [likes, setLikes] = useState(tweetObj.likes);
@@ -68,6 +69,8 @@ const TweetItem = ({ tweetObj, userProfile }) => {
   };
 
   const handleLike = async () => {
+    if (!isUserSignedIn()) return navigate('/login');
+
     if (await checkAlreadyLiked(TWEET_ID)) {
       // already liked
       await undoLike(tweetObj, userProfile);
@@ -79,10 +82,12 @@ const TweetItem = ({ tweetObj, userProfile }) => {
       likesRef.current.classList.add('liked');
       setLikes((prev) => prev + 1);
     }
+
+    return undefined;
   };
 
   useEffect(() => {
-    const initLikes = async () => {
+    const updateLikes = async () => {
       if (await checkAlreadyLiked(TWEET_ID)) {
         likesRef.current.classList.add('liked');
       } else {
@@ -90,7 +95,12 @@ const TweetItem = ({ tweetObj, userProfile }) => {
       }
     };
 
-    initLikes();
+    updateLikes();
+    document.addEventListener('auth state changed', updateLikes);
+
+    return () => {
+      document.removeEventListener('auth state changed', updateLikes);
+    };
   }, []);
 
   return (

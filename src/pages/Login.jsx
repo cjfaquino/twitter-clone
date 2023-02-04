@@ -25,7 +25,7 @@ const Login = () => {
 
     setSubmitting(false);
 
-    if (user) navigate('/');
+    if (user) navigate(-1);
     else {
       // error
     }
