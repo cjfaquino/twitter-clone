@@ -57,8 +57,8 @@ const ProfileLarge = ({ currentUser, userProfile, targetUser }) => {
         `change follow for ${targetUser.userProfile.id}`,
         updateFollow
       );
+      document.addEventListener('auth state changed', updateFollow);
     }
-    document.addEventListener('auth state changed', updateFollow);
 
     return () => {
       if (targetUser.userProfile) {
