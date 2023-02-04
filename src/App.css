@@ -46,6 +46,14 @@ input:focus {
   color: red;
 }
 
+.liked {
+  background-color: rgba(255, 0, 0, 0.7) !important;
+}
+
+.liked:hover {
+  background-color: red !important;
+}
+
 .more-options {
   display: flex;
   justify-content: center;

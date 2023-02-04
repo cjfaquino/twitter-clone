@@ -17,12 +17,23 @@ const MainTweet = ({ tweetObj, userProfile }) => {
   const [likes, setLikes] = useState(null);
   const navigate = useNavigate();
   const tweetRef = useRef(null);
+  const likesRef = useRef(null);
 
   const customClass = 'main-tweet';
 
   useEffect(() => {
     if (tweetObj) {
       setLikes(tweetObj.likes);
+
+      const initLikes = async () => {
+        if (await checkAlreadyLiked(tweetObj.id)) {
+          likesRef.current.classList.add('liked');
+        } else {
+          likesRef.current.classList.remove('liked');
+        }
+      };
+
+      initLikes();
     }
 
     return () => {};
@@ -74,10 +85,12 @@ const MainTweet = ({ tweetObj, userProfile }) => {
       // already liked
       await undoLike(tweetObj, userProfile);
       setLikes((prev) => prev - 1);
+      likesRef.current.classList.remove('liked');
     } else {
       // not yet liked
       await likeTweet(tweetObj, userProfile);
       setLikes((prev) => prev + 1);
+      likesRef.current.classList.add('liked');
     }
   };
 
@@ -167,7 +180,7 @@ const MainTweet = ({ tweetObj, userProfile }) => {
         <div className={`${customClass}-item-buttons`}>
           <button type='button'>reply</button>
           <button type='button'>retweet</button>
-          <button type='button' onClick={handleLike}>
+          <button type='button' onClick={handleLike} ref={likesRef}>
             like
           </button>
           <button type='button'>share</button>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import deleteTweet from '../utils/deleteTweet';
@@ -14,6 +14,7 @@ import likeTweet from '../utils/likeTweet';
 
 const TweetItem = ({ tweetObj, userProfile }) => {
   const [likes, setLikes] = useState(tweetObj.likes);
+  const likesRef = useRef(null);
 
   const navigate = useNavigate();
   const {
@@ -67,17 +68,30 @@ const TweetItem = ({ tweetObj, userProfile }) => {
   };
 
   const handleLike = async () => {
-    // updateLike(`${customClass}-${TWEET_ID}`, tweetObj, userProfile);
     if (await checkAlreadyLiked(TWEET_ID)) {
       // already liked
       await undoLike(tweetObj, userProfile);
+      likesRef.current.classList.remove('liked');
       setLikes((prev) => prev - 1);
     } else {
       // not yet liked
       await likeTweet(tweetObj, userProfile);
+      likesRef.current.classList.add('liked');
       setLikes((prev) => prev + 1);
     }
   };
+
+  useEffect(() => {
+    const initLikes = async () => {
+      if (await checkAlreadyLiked(TWEET_ID)) {
+        likesRef.current.classList.add('liked');
+      } else {
+        likesRef.current.classList.remove('liked');
+      }
+    };
+
+    initLikes();
+  }, []);
 
   return (
     <div
@@ -154,7 +168,12 @@ const TweetItem = ({ tweetObj, userProfile }) => {
           <button type='button' className='btn-retweets'>
             retweet
           </button>{' '}
-          <button type='button' className='btn-likes' onClick={handleLike}>
+          <button
+            type='button'
+            className='btn-likes'
+            onClick={handleLike}
+            ref={likesRef}
+          >
             likes <span className='likes-number'>{likes}</span>
           </button>
           <button type='button' className='btn-share'>
