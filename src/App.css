@@ -310,27 +310,37 @@ form button {
   position: relative;
 }
 
+.email-form label {
+  position: relative;
+}
+
 .email-form input {
   padding-right: 80px;
 }
 
 .verify-email {
   position: absolute;
-  top: 57px;
-  right: 6px;
-  height: 26px;
-  display: flex;
-  align-items: center;
+  right: 0;
   color: grey;
 }
 
+.verify-email,
 .btn-verify-email {
-  background-color: rgb(208, 208, 208);
-  font-weight: 400;
-  color: black;
   font-size: 0.8rem;
-  padding: 5px 10px !important;
+  font-weight: 400;
+}
+
+#settings .btn-verify-email {
+  background-color: transparent;
+  color: black;
+  padding: 0;
   border-radius: 5px;
+  color: var(--theme-color);
+}
+
+.btn-verify-email:hover {
+  background-color: transparent;
+  color: grey;
 }
 
 .verify-email.verified {
