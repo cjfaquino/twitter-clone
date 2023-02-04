@@ -765,11 +765,17 @@ header.goback {
   border-bottom: 1px solid grey;
 }
 
-.profile-filter-buttons button {
+.profile-filter-buttons a {
   width: 100%;
   background-color: transparent;
   border-radius: 0;
   color: grey;
+  padding: 15px;
+  text-align: center;
+}
+
+.profile-filter-buttons a {
+  border-bottom: 2px solid transparent;
 }
 
 .profile-filter-buttons button:hover {

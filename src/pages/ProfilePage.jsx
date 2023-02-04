@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useParams, Routes, Route, useNavigate } from 'react-router-dom';
+import { useParams, Routes, Route, NavLink } from 'react-router-dom';
 import GoBackHeader from '../components/GoBackHeader';
 import ProfileLarge from '../components/ProfileLarge';
 import useFindByUsername from '../hooks/useFindByUsername';
@@ -9,7 +9,11 @@ import ProfileFeed from '../components/ProfileFeed';
 const ProfilePage = ({ currentUser, userProfile }) => {
   const params = useParams();
   const targetUser = useFindByUsername(params.username);
-  const navigate = useNavigate();
+
+  const styleNavLink = ({ isActive }) => ({
+    borderColor: isActive ? 'var(--theme-color)' : 'black',
+    color: isActive ? 'white' : 'grey',
+  });
 
   return (
     <div id='profile'>
@@ -19,23 +23,29 @@ const ProfilePage = ({ currentUser, userProfile }) => {
         userProfile={userProfile}
         targetUser={targetUser}
       />
-      <div className='profile-filter-buttons'>
-        <button
-          type='button'
-          onClick={() => navigate(`/${targetUser.userProfile.userName}`)}
-        >
-          Tweets
-        </button>
-        <button
-          type='button'
-          onClick={() =>
-            navigate(`/${targetUser.userProfile.userName}/with_replies`)
-          }
-        >
-          Tweets & replies
-        </button>
-        <button type='button'>Likes</button>
-      </div>
+      {targetUser.userProfile && (
+        <div className='profile-filter-buttons'>
+          <NavLink
+            end
+            to={`/${targetUser.userProfile.userName}`}
+            style={styleNavLink}
+          >
+            Tweets
+          </NavLink>
+          <NavLink
+            to={`/${targetUser.userProfile.userName}/with_replies`}
+            style={styleNavLink}
+          >
+            Tweets & replies
+          </NavLink>
+          <NavLink
+            to={`/${targetUser.userProfile.userName}/likes`}
+            style={styleNavLink}
+          >
+            Likes
+          </NavLink>
+        </div>
+      )}
       <Routes>
         <Route
           path=''
@@ -46,6 +56,10 @@ const ProfilePage = ({ currentUser, userProfile }) => {
           element={
             <ProfileFeed filter='user tweets&replies' targetUser={targetUser} />
           }
+        />
+        <Route
+          path='likes'
+          element={<ProfileFeed filter='user likes' targetUser={targetUser} />}
         />
       </Routes>
     </div>
