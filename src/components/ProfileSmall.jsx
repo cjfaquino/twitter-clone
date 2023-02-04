@@ -70,7 +70,9 @@ const ProfileSmall = ({ userProfile }) => {
     <div className='profile-small'>
       {userProfile && (
         <div className={`${customClass}`} onClick={navToPage} aria-hidden>
-          <div className={`${customClass}-img-container profile-link`}>
+          <div
+            className={`${customClass}-img-container img-container profile-link`}
+          >
             <img
               src={userProfile.photoUrl}
               alt={userProfile.displayName}

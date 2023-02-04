@@ -111,7 +111,9 @@ const TweetItem = ({ tweetObj, userProfile }) => {
       aria-hidden
     >
       <div className={`${customClass}-item-left-half`}>
-        <div className={`${customClass}-item-img-container profile-link`}>
+        <div
+          className={`${customClass}-item-img-container img-container profile-link`}
+        >
           <img src={USER_ICON} alt={USER_NAME} className='profile-link' />
         </div>
         <div className='vert-line' />

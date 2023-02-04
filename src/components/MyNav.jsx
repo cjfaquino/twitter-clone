@@ -64,7 +64,7 @@ const MyNav = ({ currentUser, userProfile, toggleTweetPopup }) => {
                 onClick={toggleLogoutPopup}
                 aria-hidden='true'
               >
-                <div className='nav-user-img-container'>
+                <div className='nav-user-img-container img-container'>
                   <img
                     src={currentUser.photoURL}
                     alt={currentUser.displayName}

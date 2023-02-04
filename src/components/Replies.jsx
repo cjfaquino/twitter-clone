@@ -43,7 +43,7 @@ const Replies = ({ tweetObj }) => {
     <div>
       {isUserSignedIn() && (
         <form onSubmit={handleSubmitReply} className='reply-input-container'>
-          <div className='reply-input-img-container'>
+          <div className='reply-input-img-container img-container'>
             <img src={getProfilePicUrl()} alt={getDisplayName()} />
           </div>
           <textarea

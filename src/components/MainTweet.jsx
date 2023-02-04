@@ -120,7 +120,9 @@ const MainTweet = ({ tweetObj, userProfile }) => {
     >
       <div id={TWEET_ID} className={`${customClass}-item`}>
         <div className={`${customClass}-item-user`}>
-          <div className={`${customClass}-item-img-container profile-link`}>
+          <div
+            className={`${customClass}-item-img-container img-container profile-link`}
+          >
             <img src={USER_ICON} alt={USER_NAME} className='profile-link' />
           </div>
           <div className={`${customClass}-item-right-half`}>
