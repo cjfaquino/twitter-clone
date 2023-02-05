@@ -1,6 +1,6 @@
 :root {
   --login-banner-size: 70px;
-  --menubar-width: 300px;
+  --menubar-width: 275px;
   --feed-width: 600px;
   --sidebar-width: 390px;
   --pfp-size: 50px;
@@ -134,8 +134,8 @@ input:focus {
 #menubar ul {
   display: flex;
   flex-direction: column;
-  gap: 30px;
   height: 100%;
+  padding-top: 50px;
 }
 
 #menubar,
@@ -145,12 +145,21 @@ input:focus {
 
 .menu-list a {
   font-size: 1.3rem;
-  padding: 10px 20px 10px 10px;
-  border-radius: 10px;
 }
 
-.menu-list a:hover {
-  background-color: grey;
+.menu-list a:hover > .link-item,
+.nav-user-item:hover {
+  background-color: rgb(25, 25, 25);
+}
+
+.link-item {
+  border-radius: 10px;
+  padding: 15px;
+  display: flex;
+  width: fit-content;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
 }
 
 .nav-user {
@@ -170,10 +179,6 @@ input:focus {
   transition: background 0.2s ease-in-out;
 }
 
-.nav-user-item:hover {
-  background: rgb(68, 68, 68);
-}
-
 .nav-options-popup {
   position: absolute;
   top: -60px;
@@ -185,6 +190,8 @@ input:focus {
 
 .btn-nav-tweet {
   width: 100%;
+  font-size: 1.1rem;
+  margin-top: 15px;
 }
 
 .btn-nav-logout {

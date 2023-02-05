@@ -1,6 +1,9 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { faGear, faHashtag } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-regular-svg-icons';
 import signOutUser from '../utils/signOutUser';
 import useToggle from '../hooks/useToggle';
 import ThreeDots from './ThreeDots';
@@ -33,19 +36,28 @@ const MyNav = ({ currentUser, userProfile, toggleTweetPopup }) => {
       <ul className='menu-list'>
         <li className='nav-explore'>
           <NavLink to='/explore' style={styleNavLink}>
-            Explore
+            <div className='link-item'>
+              <FontAwesomeIcon icon={faHashtag} />
+              <span>Explore</span>
+            </div>
           </NavLink>
         </li>
         {userProfile && (
           <>
             <li className='nav-profile'>
               <NavLink to={`${userProfile.userName}`} style={styleNavLink}>
-                Profile
+                <div className='link-item'>
+                  <FontAwesomeIcon icon={faUser} />
+                  <span>Profile</span>
+                </div>
               </NavLink>
             </li>
             <li className='nav-settings'>
               <NavLink to='/settings' style={styleNavLink}>
-                Settings
+                <div className='link-item'>
+                  <FontAwesomeIcon icon={faGear} />
+                  <span>Settings</span>
+                </div>
               </NavLink>
             </li>
             <li>
