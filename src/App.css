@@ -97,6 +97,7 @@ input:focus {
   background-color: var(--theme-color);
   position: fixed;
   width: 100%;
+  left: 0;
   bottom: 0;
 }
 
