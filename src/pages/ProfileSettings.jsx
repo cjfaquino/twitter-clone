@@ -9,9 +9,11 @@ import updateUserEmail from '../utils/updateEmail';
 import linkWithGooglePopup from '../utils/linkWithGooglePopup';
 import isEmailVerified from '../utils/isEmailVerified';
 import sendEmailVerification from '../utils/sendEmailVerification';
+import checkUserNameAlreadyExists from '../utils/checkUsernameAlreadyExists';
 
 const ProfileSettings = ({ currentUser, userProfile }) => {
   const [userName, handleUserName, setUserName] = useInput();
+  const [userNameExists, setUserNameExists] = useState(null);
   const [email, handleEmail, setEmail] = useInput();
   const [loading, setLoading] = useState(true);
   const [submittingProfile, setSubmittingProfile] = useState(null);
@@ -20,6 +22,14 @@ const ProfileSettings = ({ currentUser, userProfile }) => {
 
   const handleSubmit1 = async (e) => {
     e.preventDefault();
+    checkUserNameAlreadyExists(userName).then(setUserNameExists);
+
+    if (await checkUserNameAlreadyExists(userName)) {
+      // dont submit
+      console.log('stopped');
+      return;
+    }
+    console.log('sent');
     setSubmittingProfile(true);
     // create profile
     const userID = await updateProfile({
@@ -74,6 +84,19 @@ const ProfileSettings = ({ currentUser, userProfile }) => {
     return undefined;
   }, [userProfile]);
 
+  useEffect(() => {
+    let timeoutId;
+    if (userNameExists) {
+      timeoutId = setTimeout(() => {
+        // after failing to submit username
+        // check username again after delay while typing to remove message
+        checkUserNameAlreadyExists(userName).then(setUserNameExists);
+      }, 500);
+    }
+
+    return () => clearTimeout(timeoutId);
+  }, [userName]);
+
   return (
     <div id='settings'>
       {!loading && (
@@ -81,7 +104,10 @@ const ProfileSettings = ({ currentUser, userProfile }) => {
           <form onSubmit={handleSubmit1}>
             <h3>Your Profile</h3>
             <label htmlFor='userName'>
-              Username
+              Username{' '}
+              {userNameExists && (
+                <span className='verify-username'>already exists</span>
+              )}
               <input
                 type='text'
                 id='userName'

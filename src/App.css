@@ -359,6 +359,10 @@ form button {
   padding: 10px;
 }
 
+.sign-up-form label {
+  position: relative;
+}
+
 .sign-up-form input {
   height: 40px;
   width: 100%;
@@ -389,15 +393,18 @@ form button {
 }
 
 .email-form {
-  position: relative;
-}
-
-.email-form label {
+  margin-top: 50px;
   position: relative;
 }
 
 .email-form input {
   padding-right: 80px;
+}
+
+.verify-username {
+  color: red;
+  position: absolute;
+  right: 0;
 }
 
 .verify-email {
