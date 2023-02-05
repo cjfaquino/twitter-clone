@@ -93,7 +93,7 @@ const MainTweet = ({ tweetObj, userProfile }) => {
   const handleLike = async () => {
     if (!isUserSignedIn()) return navigate('/login');
 
-    if (await checkAlreadyLiked(TWEET_ID)) {
+    if (likesRef.current && (await checkAlreadyLiked(TWEET_ID))) {
       // already liked
       await undoLike(tweetObj, userProfile);
       setLikes((prev) => prev - 1);
@@ -158,7 +158,20 @@ const MainTweet = ({ tweetObj, userProfile }) => {
             </span>
           </div>
         )}
-        <div className={`${customClass}-item-message`}>{text}</div>
+        <div className={`${customClass}-item-message`}>
+          {' '}
+          {text.map((t, index) => {
+            if (t.startsWith('#')) {
+              return (
+                <span
+                  key={`hash-${t}-${index}-${TWEET_ID}`}
+                  className='link-hash'
+                >{`${t} `}</span>
+              );
+            }
+            return `${t} `;
+          })}
+        </div>
         <div
           className={`${customClass}-item-time grey`}
           title={getTimeString(timestamp)}
@@ -218,7 +231,7 @@ MainTweet.propTypes = {
     views: PropTypes.number,
     likes: PropTypes.number,
     retweets: PropTypes.number,
-    text: PropTypes.string,
+    text: PropTypes.arrayOf(PropTypes.string),
     timestamp: PropTypes.shape({
       toDate: PropTypes.func,
     }),

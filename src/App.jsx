@@ -13,6 +13,7 @@ import useToggle from './hooks/useToggle';
 import ProfileSettings from './pages/ProfileSettings';
 import Login from './pages/Login';
 import ProfilePage from './pages/ProfilePage';
+import Search from './pages/Search';
 
 const App = () => {
   const [isSignedIn, currentUser, userProfile] = useAuthStateObserver();
@@ -45,6 +46,8 @@ const App = () => {
                 />
               }
             />
+            <Route path='/search/:search' element={<Search />} />
+
             <Route path='/signup' element={<SignUp />} />
             <Route path='/login' element={<Login />} />
             <Route

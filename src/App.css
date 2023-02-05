@@ -46,6 +46,14 @@ input:focus {
   color: red;
 }
 
+.link-hash {
+  color: var(--theme-color);
+}
+
+.link-hash:hover {
+  text-decoration: underline;
+}
+
 .more-options {
   display: flex;
   justify-content: center;
@@ -299,7 +307,8 @@ form button {
 
 #explore,
 #tweet-page,
-#profile {
+#profile,
+#search {
   min-height: 130vh;
 }
 
