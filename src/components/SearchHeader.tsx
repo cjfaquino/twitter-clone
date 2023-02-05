@@ -1,5 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import useInput from '../hooks/useInput';
 
 const SearchHeader = () => {
@@ -19,9 +21,14 @@ const SearchHeader = () => {
   return (
     <header className='search'>
       <form className='search-form' onSubmit={handleSubmit}>
-        <input type='text' value={search} onChange={handleSearch} />
+        <input
+          type='text'
+          value={search}
+          placeholder='search'
+          onChange={handleSearch}
+        />
         <button type='submit' className='btn-search'>
-          Search
+          <FontAwesomeIcon icon={faSearch} />
         </button>
         {search && (
           <button
