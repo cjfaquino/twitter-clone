@@ -1,5 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faComment, faHeart } from '@fortawesome/free-regular-svg-icons';
+import {
+  faArrowUpFromBracket,
+  faRetweet,
+} from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import deleteTweet from '../utils/deleteTweet';
 import useToggle from '../hooks/useToggle';
@@ -171,12 +177,31 @@ const MainTweet = ({ tweetObj, userProfile }) => {
           </span>
         </div>
         <div className={`${customClass}-item-buttons`}>
-          <button type='button'>reply</button>
-          <button type='button'>retweet</button>
-          <button type='button' onClick={handleLike} ref={likesRef}>
-            like
+          <button type='button' className='btn-replies grey'>
+            <span className='btn-blue'>
+              <FontAwesomeIcon icon={faComment} />
+            </span>
           </button>
-          <button type='button'>share</button>
+          <button type='button' className='btn-retweets grey'>
+            <span className='btn-green'>
+              <FontAwesomeIcon icon={faRetweet} />
+            </span>
+          </button>
+          <button
+            type='button'
+            className='btn-likes grey'
+            onClick={handleLike}
+            ref={likesRef}
+          >
+            <span className='btn-red'>
+              <FontAwesomeIcon icon={faHeart} />
+            </span>
+          </button>
+          <button type='button' className='btn-shares grey'>
+            <span className='btn-blue'>
+              <FontAwesomeIcon icon={faArrowUpFromBracket} />
+            </span>
+          </button>
         </div>
       </div>
     </div>

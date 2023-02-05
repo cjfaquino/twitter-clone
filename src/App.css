@@ -46,14 +46,6 @@ input:focus {
   color: red;
 }
 
-.liked {
-  background-color: rgba(255, 0, 0, 0.7) !important;
-}
-
-.liked:hover {
-  background-color: red !important;
-}
-
 .more-options {
   display: flex;
   justify-content: center;
@@ -454,11 +446,15 @@ form button {
 
 /* Tweet item  & reply item & main tweet item*/
 
-.tweet-item,
-.reply-item {
+.tweet-item {
+  border-radius: none;
+  cursor: pointer;
+}
+
+.tweet-item {
   box-sizing: border-box;
   width: 100%;
-  padding: 15px;
+  padding: 15px 15px 5px 15px;
   position: relative;
   display: flex;
   gap: 15px;
@@ -487,25 +483,86 @@ form button {
   align-items: flex-end;
 }
 
-.tweet-item-buttons button,
+.tweet-item-buttons button {
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 15px 0 0;
+}
+
 .main-tweet-item-buttons button {
-  padding: 5px;
+  padding: 0;
+}
+
+.tweet-item-buttons button,
+.main-tweet-item-buttons button,
+.tweet-item-buttons button:hover,
+.main-tweet-item-buttons button:hover {
   background-color: transparent;
+}
+
+.main-tweet-item-buttons button > span > svg {
+  height: 20px;
+}
+
+.btn-blue,
+.btn-green,
+.btn-red {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+  border-radius: 50px;
+}
+
+.main-tweet-item-buttons .btn-blue,
+.main-tweet-item-buttons .btn-green,
+.main-tweet-item-buttons .btn-red {
+  height: 40px;
+  width: 40px;
+}
+
+.retweeted,
+button:hover > .btn-green,
+.btn-retweets:hover > span {
+  color: rgb(26, 190, 56) !important;
+}
+
+button:hover > .btn-green {
+  background-color: rgba(0, 128, 0, 0.2) !important;
+}
+
+.replied,
+button:hover > .btn-blue,
+.btn-views:hover > span,
+.btn-shares:hover > span,
+.btn-replies:hover > span {
+  color: var(--theme-color) !important;
+}
+
+button:hover > .btn-blue {
+  background-color: rgba(0, 0, 255, 0.2) !important;
+}
+
+.liked,
+button:hover > .btn-red,
+.btn-likes:hover > span {
+  color: rgb(255, 0, 89) !important;
+}
+
+button:hover > .btn-red {
+  background-color: rgba(255, 0, 0, 0.15) !important;
 }
 
 .profile-link:not(img):hover {
   text-decoration: underline;
 }
 
-/* tweet item */
-
 .replying-to-info .profile-link {
   color: var(--theme-color);
-}
-
-.tweet-item {
-  border-radius: none;
-  cursor: pointer;
 }
 
 .options-background {
@@ -605,18 +662,13 @@ form button {
 .main-tweet-item-buttons {
   display: flex;
   justify-content: space-between;
-  --side-padding: 60px;
-  padding-left: var(--side-padding);
-  padding-right: var(--side-padding);
-  border-top: 1px solid;
-  border-bottom: 1px solid;
+  padding: 5px 60px;
+  border-top: 1px solid rgb(85, 85, 85);
+  border-bottom: 1px solid rgb(85, 85, 85);
 }
 
-.main-tweet-item-stats,
-.main-tweet-item-buttons {
-  --top-bottom-padding: 15px;
-  padding-top: var(--top-bottom-padding);
-  padding-bottom: var(--top-bottom-padding);
+.main-tweet-item-stats {
+  padding: 15px 0;
   border-color: rgb(85, 85, 85);
 }
 

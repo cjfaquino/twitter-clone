@@ -1,6 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faComment, faHeart } from '@fortawesome/free-regular-svg-icons';
+import {
+  faArrowUpFromBracket,
+  faChartSimple,
+  faRetweet,
+} from '@fortawesome/free-solid-svg-icons';
 import deleteTweet from '../utils/deleteTweet';
 import OptionsPopup from './OptionsPopup';
 import useToggle from '../hooks/useToggle';
@@ -153,26 +160,38 @@ const TweetItem = ({ tweetObj, userProfile }) => {
 
         <div className={`${customClass}-item-message`}>{text}</div>
         <div className={`${customClass}-item-buttons`}>
-          <button type='button' className='btn-views'>
-            stats <span className='views-number'>{views}</span>
-          </button>
-          <button type='button' className='btn-replies'>
-            reply{' '}
+          <button type='button' className='btn-replies grey'>
+            <span className='btn-blue'>
+              <FontAwesomeIcon icon={faComment} />
+            </span>{' '}
             <span className='replies-number'>{repLength > 0 && repLength}</span>
           </button>
-          <button type='button' className='btn-retweets'>
-            retweet
+          <button type='button' className='btn-retweets grey'>
+            <span className='btn-green'>
+              <FontAwesomeIcon icon={faRetweet} />
+            </span>
           </button>{' '}
           <button
             type='button'
-            className='btn-likes'
+            className='btn-likes grey'
             onClick={handleLike}
             ref={likesRef}
           >
-            likes <span className='likes-number'>{likes}</span>
+            <span className='btn-red'>
+              <FontAwesomeIcon icon={faHeart} />
+            </span>{' '}
+            <span className='likes-number'>{likes}</span>
           </button>
-          <button type='button' className='btn-share'>
-            share
+          <button type='button' className='btn-views grey'>
+            <span className='btn-blue'>
+              <FontAwesomeIcon icon={faChartSimple} />
+            </span>{' '}
+            <span className='views-number'>{views}</span>
+          </button>
+          <button type='button' className='btn-shares grey'>
+            <span className='btn-blue'>
+              <FontAwesomeIcon icon={faArrowUpFromBracket} />
+            </span>
           </button>
         </div>
       </div>

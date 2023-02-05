@@ -10,6 +10,10 @@
     "host": "vite build && firebase deploy --only hosting"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.2.1",
+    "@fortawesome/free-regular-svg-icons": "^6.2.1",
+    "@fortawesome/free-solid-svg-icons": "^6.2.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "autoprefixer": "^10.4.13",
     "firebase": "^9.15.0",
     "postcss-preset-env": "^7.8.3",
