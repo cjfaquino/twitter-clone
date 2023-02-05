@@ -26,6 +26,7 @@ const App = () => {
   return (
     <>
       <div className='app wrapper'>
+        <LogInBanner isSignedIn={isSignedIn} />
         <MyNav
           currentUser={currentUser}
           userProfile={userProfile}
@@ -34,43 +35,41 @@ const App = () => {
         />
         <div id='centerbar'>
           <Routes>
-            <Route path='/' element={<LogInBanner isSignedIn={isSignedIn} />}>
-              <Route
-                path='/explore'
-                element={
-                  <Explore
-                    newTweet={newTweet}
-                    clrNewTweet={clrNewTweet}
-                    userProfile={userProfile}
-                  />
-                }
-              />
-              <Route path='/signup' element={<SignUp />} />
-              <Route path='/login' element={<Login />} />
-              <Route
-                path='/:username/*'
-                element={
-                  <ProfilePage
-                    currentUser={currentUser}
-                    userProfile={userProfile}
-                  />
-                }
-              />
-              <Route
-                path='/:username/tweet/:tweet'
-                element={<TweetPage userProfile={userProfile} />}
-              />
-              <Route
-                path='/settings'
-                element={
-                  <ProfileSettings
-                    currentUser={currentUser}
-                    userProfile={userProfile}
-                  />
-                }
-              />
-              <Route path='*' element={<Navigate to='/explore' replace />} />
-            </Route>
+            <Route
+              path='/explore'
+              element={
+                <Explore
+                  newTweet={newTweet}
+                  clrNewTweet={clrNewTweet}
+                  userProfile={userProfile}
+                />
+              }
+            />
+            <Route path='/signup' element={<SignUp />} />
+            <Route path='/login' element={<Login />} />
+            <Route
+              path='/:username/*'
+              element={
+                <ProfilePage
+                  currentUser={currentUser}
+                  userProfile={userProfile}
+                />
+              }
+            />
+            <Route
+              path='/:username/tweet/:tweet'
+              element={<TweetPage userProfile={userProfile} />}
+            />
+            <Route
+              path='/settings'
+              element={
+                <ProfileSettings
+                  currentUser={currentUser}
+                  userProfile={userProfile}
+                />
+              }
+            />
+            <Route path='*' element={<Navigate to='/explore' replace />} />
           </Routes>
         </div>
         <MySidebar isSignedIn={isSignedIn} />
