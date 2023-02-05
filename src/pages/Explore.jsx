@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import useTweets from '../hooks/useTweets';
 import TweetItem from '../components/TweetItem';
+import SearchHeader from '../components/SearchHeader';
 
 const Explore = ({ newTweet, clrNewTweet, userProfile }) => {
   const [tweets, addTweetToDOM, isTweetsLoading] = useTweets('tweets');
@@ -17,7 +18,7 @@ const Explore = ({ newTweet, clrNewTweet, userProfile }) => {
 
   return (
     <div id='explore'>
-      <div>search bar</div>
+      <SearchHeader />
       <div>
         {isTweetsLoading && <div>loading</div>}
         {tweets &&

@@ -722,6 +722,16 @@ button:hover > .btn-red {
   background: var(--theme-color);
 }
 
+/* headers */
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+}
+
 /* goback header */
 
 header.goback + .replying-to-tweet-item,
@@ -734,11 +744,6 @@ header.goback {
   cursor: pointer;
   width: calc(var(--feed-width) - 2px);
   padding: 0 20px;
-  position: fixed;
-  top: 0;
-  z-index: 3;
-  background-color: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
 }
 
 .goback-text {
@@ -747,6 +752,45 @@ header.goback {
   align-items: center;
   font-weight: 700;
   font-size: 1.4rem;
+}
+
+/* search header */
+
+header.search {
+  padding: 15px;
+}
+
+.search-form {
+  display: flex;
+}
+
+.search-form input {
+  width: 100%;
+  font-size: 1.3rem;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: none;
+}
+
+.search-form .btn-search {
+  flex-shrink: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.search-form .btn-reset-search {
+  align-self: center;
+  position: absolute;
+  right: 100px;
+  color: grey;
+  background-color: transparent;
+  flex-shrink: 0;
+  height: 40px;
+  width: 40px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* profile page */
