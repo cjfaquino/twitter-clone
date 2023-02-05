@@ -9,9 +9,11 @@ const SearchHeader = () => {
     setSearch('');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: Event) => {
     e.preventDefault();
-    navigate(`/search/${search}`);
+
+    const searchWithOutHash = search.replace(/#/g, '');
+    navigate(`/search/${searchWithOutHash}`);
   };
 
   return (
