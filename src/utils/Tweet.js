@@ -10,7 +10,7 @@ export default class Tweet {
     this.USER_DISPLAY = getDisplayName();
     this.USER_ID = getUserUid();
     this.USER_ICON = getProfilePicUrl();
-    this.text = messageText.toString().split(' ');
+    this.text = messageText.toString().split(/(\s+|\n)/);
     this.timestamp = serverTimestamp();
     this.likes = 0;
     this.retweets = 0;

@@ -265,6 +265,12 @@ input:focus {
   width: 100%;
 }
 
+#tweet-input,
+.main-tweet-item-message,
+.tweet-item-message {
+  white-space: pre-line;
+}
+
 #tweet-input {
   resize: none;
   height: 100px;
