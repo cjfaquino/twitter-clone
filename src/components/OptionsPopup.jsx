@@ -4,13 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import ThreeDots from './ThreeDots';
 import checkMatchingUser from '../utils/checkMatchingUser';
 import isUserSignedIn from '../utils/isUserSignedIn';
+import useFollowStatus from '../hooks/useFollowStatus';
 
 const OptionsPopup = ({
   toggleOptionsPopup,
   showOptionsPopup,
   handleDelete,
-  userID,
+  targetUser,
 }) => {
+  const [followed, handleFollow] = useFollowStatus(targetUser.userProfile);
   const navigate = useNavigate();
 
   return (
@@ -20,27 +22,39 @@ const OptionsPopup = ({
         <>
           <div className='options-popup popup'>
             {isUserSignedIn() ? (
-              <button type='button' className='btn-options-follow'>
-                Follow
-              </button>
-            ) : (
-              <button
-                type='button'
-                onClick={() => navigate('/login')}
-                className='btn-options-login'
-              >
-                Login
-              </button>
-            )}
+              <>
+                {!checkMatchingUser(targetUser.userProfile.id) && (
+                  <button
+                    type='button'
+                    className='btn-options-follow'
+                    onClick={handleFollow}
+                  >
+                    {followed ? 'Unfollow' : 'Follow'}
+                  </button>
+                )}
 
-            {checkMatchingUser(userID) && (
-              <button
-                className='btn-delete-tweet'
-                type='button'
-                onClick={handleDelete}
-              >
-                Delete
-              </button>
+                {checkMatchingUser(targetUser.userProfile.id) && (
+                  <button
+                    className='btn-delete-tweet'
+                    type='button'
+                    onClick={handleDelete}
+                  >
+                    Delete
+                  </button>
+                )}
+              </>
+            ) : (
+              {
+                /* not signed in */
+              }(
+                <button
+                  type='button'
+                  onClick={() => navigate('/login')}
+                  className='btn-options-login'
+                >
+                  Login
+                </button>
+              )
             )}
           </div>
           <div
@@ -58,11 +72,15 @@ OptionsPopup.propTypes = {
   toggleOptionsPopup: PropTypes.func.isRequired,
   showOptionsPopup: PropTypes.bool.isRequired,
   handleDelete: PropTypes.func.isRequired,
-  userID: PropTypes.string,
+  targetUser: PropTypes.shape({
+    userProfile: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }),
 };
 
 OptionsPopup.defaultProps = {
-  userID: '',
+  targetUser: null,
 };
 
 export default OptionsPopup;

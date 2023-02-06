@@ -609,6 +609,7 @@ button:hover > .btn-red {
   position: absolute;
   width: 150px;
   left: -150px;
+  overflow: hidden;
   background-color: black;
   border-radius: 10px;
   z-index: 20;
@@ -618,10 +619,21 @@ button:hover > .btn-red {
   font-size: 1rem;
   background-color: transparent;
   border: none;
+  width: 100%;
+  border-radius: 0;
+}
+
+.options-popup button:hover {
+  background-color: rgb(20, 20, 20);
+  font-weight: 800;
 }
 
 .btn-delete-tweet {
-  width: 100%;
+  color: rgb(173, 0, 0);
+}
+
+.btn-delete-tweet:hover {
+  color: red;
 }
 
 /* tweet page */
@@ -743,7 +755,7 @@ button:hover > .btn-red {
 header {
   position: sticky;
   top: 0;
-  z-index: 3;
+  z-index: 100;
   background-color: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
 }
