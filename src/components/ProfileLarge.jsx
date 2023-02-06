@@ -1,15 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
-import checkAlreadyFollowing from '../utils/checkAlreadyFollowing';
-import isUserSignedIn from '../utils/isUserSignedIn';
-import followUser from '../utils/followUser';
-import unfollowUser from '../utils/unfollowUser';
-import eventFollow from '../utils/eventFollow';
+import useFollowStatus from '../hooks/useFollowStatus';
 
-const ProfileLarge = ({ currentUser, userProfile, targetUser }) => {
-  const [followed, setFollowed] = useState(null);
-  const navigate = useNavigate();
+const ProfileLarge = ({ currentUser, targetUser }) => {
+  const [followed, handleFollow] = useFollowStatus(targetUser.userProfile);
+
   const customClass = 'user-card';
 
   const formatJoinedDate = () => {
@@ -22,54 +17,6 @@ const ProfileLarge = ({ currentUser, userProfile, targetUser }) => {
 
     return joinedDate.toLocaleDateString('en-us', options);
   };
-
-  const handleFollow = async (e) => {
-    const btnText = e.target.textContent;
-
-    if (!isUserSignedIn()) {
-      return navigate('/login');
-    }
-
-    if (btnText === 'Follow') {
-      await followUser(userProfile, targetUser.userProfile);
-      setFollowed(true);
-    }
-
-    if (btnText === 'Unfollow') {
-      await unfollowUser(targetUser.userProfile);
-      setFollowed(false);
-    }
-
-    return eventFollow(targetUser.userProfile.id);
-  };
-
-  const updateFollow = () =>
-    checkAlreadyFollowing(targetUser.userProfile.id).then(setFollowed);
-
-  useEffect(() => {
-    if (targetUser.userProfile) {
-      // set initial follow
-      if (isUserSignedIn()) {
-        updateFollow();
-      }
-
-      document.addEventListener(
-        `change follow for ${targetUser.userProfile.id}`,
-        updateFollow
-      );
-      document.addEventListener('auth state changed', updateFollow);
-    }
-
-    return () => {
-      if (targetUser.userProfile) {
-        document.removeEventListener(
-          `change follow for ${targetUser.userProfile.id}`,
-          updateFollow
-        );
-      }
-      document.removeEventListener('auth state changed', updateFollow);
-    };
-  }, [targetUser.userProfile]);
 
   return (
     <div className='profile-large'>
@@ -153,12 +100,10 @@ ProfileLarge.propTypes = {
     followers: PropTypes.arrayOf(PropTypes.shape({})),
     following: PropTypes.arrayOf(PropTypes.shape({})),
   }),
-  userProfile: PropTypes.shape({}),
 };
 
 ProfileLarge.defaultProps = {
   currentUser: null,
-  userProfile: null,
   targetUser: null,
 };
 

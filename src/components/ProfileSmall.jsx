@@ -1,65 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import checkAlreadyFollowing from '../utils/checkAlreadyFollowing';
-import followUser from '../utils/followUser';
-import unfollowUser from '../utils/unfollowUser';
-import isUserSignedIn from '../utils/isUserSignedIn';
-import eventFollow from '../utils/eventFollow';
-import getUserUid from '../utils/getUserUid';
+import useFollowStatus from '../hooks/useFollowStatus';
+import checkMatchingUser from '../utils/checkMatchingUser';
 
 const ProfileSmall = ({ userProfile }) => {
-  const [followed, setFollowed] = useState(null);
+  const [followed, handleFollow] = useFollowStatus(userProfile);
   const navigate = useNavigate();
   const customClass = 'user-card-small';
-
-  const handleFollow = async (e) => {
-    const currentUserProfileObj = JSON.parse(
-      localStorage.getItem('userProfile')
-    );
-    const btnText = e.target.textContent;
-
-    if (!isUserSignedIn()) {
-      return navigate('/login');
-    }
-
-    if (btnText === 'Follow') {
-      await followUser(currentUserProfileObj, userProfile);
-      setFollowed(true);
-    }
-
-    if (btnText === 'Unfollow') {
-      await unfollowUser(userProfile);
-      setFollowed(false);
-    }
-
-    return eventFollow(userProfile.id);
-  };
-
-  const updateFollow = () =>
-    checkAlreadyFollowing(userProfile.id).then(setFollowed);
-
-  useEffect(() => {
-    // set initial follow status
-    if (isUserSignedIn()) {
-      updateFollow();
-    }
-
-    document.addEventListener(
-      `change follow for ${userProfile.id}`,
-      updateFollow
-    );
-
-    document.addEventListener('auth state changed', updateFollow);
-
-    return () => {
-      document.removeEventListener(
-        `change follow for ${userProfile.id}`,
-        updateFollow
-      );
-      document.removeEventListener('auth state changed', updateFollow);
-    };
-  }, []);
 
   const navToPage = (e) => {
     const targetName = e.target.className;
@@ -89,8 +37,7 @@ const ProfileSmall = ({ userProfile }) => {
               @{userProfile.userName}
             </div>
           </div>
-
-          {getUserUid() !== userProfile.id && (
+          {!checkMatchingUser(userProfile.id) && (
             <button type='button' onClick={handleFollow} className='btn-follow'>
               {followed ? 'Unfollow' : 'Follow'}
             </button>
