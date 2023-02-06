@@ -893,15 +893,24 @@ header.search {
   border-radius: 0;
   color: grey;
   padding: 15px;
+  height: fit-content;
   text-align: center;
 }
 
-.profile-filter-buttons a {
+.profile-filter-buttons a > span {
   border-bottom: 2px solid transparent;
+  position: relative;
+  padding: 13px;
 }
 
-.profile-filter-buttons button:hover {
+.profile-filter-buttons a.active > span {
+  border-color: var(--theme-color);
+  color: white;
+}
+
+.profile-filter-buttons a:hover {
   background-color: rgb(22, 22, 22);
+  color: grey;
 }
 
 /* profile small */
