@@ -33,7 +33,7 @@ const Explore = ({ newTweet, clrNewTweet, userProfile }) => {
 Explore.propTypes = {
   userProfile: PropTypes.shape({}),
   newTweet: PropTypes.shape({
-    text: PropTypes.string,
+    text: PropTypes.arrayOf(PropTypes.string),
     timestamp: PropTypes.shape({
       toDate: PropTypes.func,
     }),
