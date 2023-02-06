@@ -905,41 +905,36 @@ header.search {
   text-decoration: none;
 }
 
-.profile-filter-buttons,
-.follow-filter-buttons {
+.filter-buttons-container {
   display: flex;
-  justify-content: stretch;
   border-bottom: 1px solid grey;
 }
 
-.profile-filter-buttons a,
-.follow-filter-buttons a {
+.styled-filter-link {
   width: 100%;
+  white-space: nowrap;
+  flex: 1 1 content;
   background-color: transparent;
   border-radius: 0;
+  padding: 0;
   color: grey;
-  padding: 15px;
   height: fit-content;
   text-align: center;
 }
 
-.profile-filter-buttons a > span,
-.follow-filter-buttons a > span {
-  display: block;
-  border-bottom: 2px solid transparent;
+.styled-filter-link > span {
+  display: inline-block;
+  border-bottom: 3px solid transparent;
   position: relative;
-
-  padding: 13px;
+  padding: 15px 10px;
 }
 
-.profile-filter-buttons a.active > span,
-.follow-filter-buttons a.active > span {
+.styled-filter-link.active > span {
   border-color: var(--theme-color);
   color: white;
 }
 
-.profile-filter-buttons a:hover,
-.follow-filter-buttons a:hover {
+.styled-filter-link:hover {
   background-color: rgb(22, 22, 22);
   color: grey;
 }

@@ -10,11 +10,6 @@ const ProfilePage = ({ currentUser, userProfile }) => {
   const params = useParams();
   const targetUser = useFindByUsername(params.username);
 
-  // const styleNavLink = ({ isActive }) => ({
-  //   borderColor: isActive ? 'var(--theme-color)' : 'black',
-  //   color: isActive ? 'white' : 'grey',
-  // });
-
   return (
     <div id='profile'>
       <GoBackHeader targetUser={targetUser} />
@@ -24,23 +19,23 @@ const ProfilePage = ({ currentUser, userProfile }) => {
         targetUser={targetUser}
       />
       {targetUser.userProfile && (
-        <div className='profile-filter-buttons'>
+        <div className='filter-buttons-container'>
           <NavLink
             end
             to={`/${targetUser.userProfile.userName}`}
-            // style={styleNavLink}
+            className='styled-filter-link'
           >
             <span>Tweets</span>
           </NavLink>
           <NavLink
             to={`/${targetUser.userProfile.userName}/with_replies`}
-            // style={styleNavLink}
+            className='styled-filter-link'
           >
             <span>Tweets & replies</span>
           </NavLink>
           <NavLink
             to={`/${targetUser.userProfile.userName}/likes`}
-            // style={styleNavLink}
+            className='styled-filter-link'
           >
             <span>Likes</span>
           </NavLink>

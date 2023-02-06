@@ -8,14 +8,24 @@ const FollowsPage = () => {
   return (
     <>
       <GoBackHeader />
-      <div className='follow-filter-buttons'>
-        <NavLink to={`/${params.username}/followers_you_follow`}>
+      <div className='filter-buttons-container'>
+        <NavLink
+          to={`/${params.username}/followers_you_follow`}
+          className='styled-filter-link'
+        >
           <span>Followers you know</span>
         </NavLink>
-        <NavLink end to={`/${params.username}/followers`}>
+        <NavLink
+          end
+          to={`/${params.username}/followers`}
+          className='styled-filter-link'
+        >
           <span>Followers</span>
         </NavLink>
-        <NavLink to={`/${params.username}/following`}>
+        <NavLink
+          to={`/${params.username}/following`}
+          className='styled-filter-link'
+        >
           <span>Following</span>
         </NavLink>
       </div>
