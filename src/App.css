@@ -868,7 +868,11 @@ header.search {
 .edit button {
   padding: 7px;
   background-color: var(--profile-img-container-color);
-  border: 1px solid white;
+  border: 2px solid white;
+}
+
+.edit button:hover {
+  background-color: rgb(44, 44, 44);
 }
 
 .user-card-display-name {
