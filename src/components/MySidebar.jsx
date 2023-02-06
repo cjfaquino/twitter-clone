@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+
 import MyFooter from './MyFooter/MyFooter';
 import useRandomUsers from '../hooks/useRandomUsers';
 import ListOfUsers from './ListOfUsers';
 import OrSeparator from './OrSeparator';
+import GoogleIcon from './GoogleIcon';
 
 const MySidebar = ({ isSignedIn }) => {
   const users = useRandomUsers();
@@ -16,7 +18,7 @@ const MySidebar = ({ isSignedIn }) => {
           <h3>New to Twitter Clone?</h3>
           <p>Sign up now to get your own personalized timeline!</p>
           <button type='button' className='btn-sidebar-signup'>
-            Sign up with Google
+            <GoogleIcon /> Sign up with Google
           </button>
           <OrSeparator />
           <Link to='/signup'>
