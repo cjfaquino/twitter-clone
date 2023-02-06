@@ -750,12 +750,6 @@ header {
 
 /* goback header */
 
-header.goback + .replying-to-tweet-item,
-header.goback + #main-tweet-container,
-header.goback + .profile-large {
-  margin-top: var(--goback-header-size);
-}
-
 header.goback {
   cursor: pointer;
   width: calc(var(--feed-width) - 2px);
