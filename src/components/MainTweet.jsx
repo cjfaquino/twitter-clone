@@ -18,6 +18,7 @@ import undoLike from '../utils/undoLike';
 import checkAlreadyLiked from '../utils/checkAlreadyLiked';
 import isUserSignedIn from '../utils/isUserSignedIn';
 import OptionsPopup from './OptionsPopup';
+import FormattedTweetMessage from './FormattedTweetMessage';
 
 const MainTweet = ({ tweetObj, userProfile }) => {
   const [showOptionsPopup, toggleOptionsPopup] = useToggle(false);
@@ -74,7 +75,7 @@ const MainTweet = ({ tweetObj, userProfile }) => {
   const {
     views,
     retweets,
-    text,
+    text: textArr,
     timestamp,
     USER_ICON,
     USER_NAME,
@@ -158,20 +159,12 @@ const MainTweet = ({ tweetObj, userProfile }) => {
             </span>
           </div>
         )}
-        <div className={`${customClass}-item-message`}>
-          {' '}
-          {text.map((t, index) => {
-            if (t.startsWith('#')) {
-              return (
-                <span
-                  key={`hash-${t}-${index}-${TWEET_ID}`}
-                  className='link-hash'
-                >{`${t} `}</span>
-              );
-            }
-            return `${t} `;
-          })}
-        </div>
+        <FormattedTweetMessage
+          textArr={textArr}
+          tweetID={TWEET_ID}
+          customClass={customClass}
+        />
+
         <div
           className={`${customClass}-item-time grey`}
           title={getTimeString(timestamp)}

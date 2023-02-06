@@ -19,6 +19,7 @@ import checkAlreadyLiked from '../utils/checkAlreadyLiked';
 import undoLike from '../utils/undoLike';
 import likeTweet from '../utils/likeTweet';
 import isUserSignedIn from '../utils/isUserSignedIn';
+import FormattedTweetMessage from './FormattedTweetMessage';
 
 const TweetItem = ({ tweetObj, userProfile }) => {
   const [likes, setLikes] = useState(tweetObj.likes);
@@ -27,8 +28,7 @@ const TweetItem = ({ tweetObj, userProfile }) => {
   const navigate = useNavigate();
   const {
     views,
-
-    text,
+    text: textArr,
     timestamp,
     USER_ICON,
     USER_ID,
@@ -95,7 +95,7 @@ const TweetItem = ({ tweetObj, userProfile }) => {
 
   useEffect(() => {
     const updateLikes = async () => {
-      if (await checkAlreadyLiked(TWEET_ID)) {
+      if (likesRef.current && (await checkAlreadyLiked(TWEET_ID))) {
         likesRef.current.classList.add('liked');
       } else {
         likesRef.current.classList.remove('liked');
@@ -157,20 +157,12 @@ const TweetItem = ({ tweetObj, userProfile }) => {
             </span>
           </div>
         )}
+        <FormattedTweetMessage
+          textArr={textArr}
+          tweetID={TWEET_ID}
+          customClass={customClass}
+        />
 
-        <div className={`${customClass}-item-message`}>
-          {text.map((t, index) => {
-            if (t.startsWith('#')) {
-              return (
-                <span
-                  key={`hash-${t}-${index}-${TWEET_ID}`}
-                  className='link-hash'
-                >{`${t} `}</span>
-              );
-            }
-            return `${t} `;
-          })}
-        </div>
         <div className={`${customClass}-item-buttons`}>
           <button type='button' className='btn-replies grey'>
             <span className='btn-blue'>
