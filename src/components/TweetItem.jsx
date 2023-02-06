@@ -20,12 +20,14 @@ import undoLike from '../utils/undoLike';
 import likeTweet from '../utils/likeTweet';
 import isUserSignedIn from '../utils/isUserSignedIn';
 import FormattedTweetMessage from './FormattedTweetMessage';
+import useFindByUsername from '../hooks/useFindByUsername';
 
 const TweetItem = ({ tweetObj, userProfile }) => {
   const [likes, setLikes] = useState(tweetObj.likes);
+  const targetUser = useFindByUsername(tweetObj.USER_NAME);
   const likesRef = useRef(null);
-
   const navigate = useNavigate();
+
   const {
     views,
     text: textArr,
@@ -95,7 +97,9 @@ const TweetItem = ({ tweetObj, userProfile }) => {
 
   useEffect(() => {
     const updateLikes = async () => {
-      if (likesRef.current && (await checkAlreadyLiked(TWEET_ID))) {
+      if (!likesRef.current) return;
+
+      if (await checkAlreadyLiked(TWEET_ID)) {
         likesRef.current.classList.add('liked');
       } else {
         likesRef.current.classList.remove('liked');
@@ -146,7 +150,7 @@ const TweetItem = ({ tweetObj, userProfile }) => {
             toggleOptionsPopup={toggleOptionsPopup}
             showOptionsPopup={showOptionsPopup}
             handleDelete={handleDelete}
-            userID={USER_ID}
+            targetUser={targetUser}
           />
         </div>
         {tweetObj.aReplyTo && (

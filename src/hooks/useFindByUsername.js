@@ -3,11 +3,10 @@ import { getDocs, collection, query } from 'firebase/firestore';
 import { db } from '../firebase-config';
 
 export default function useFindByUsername(username) {
-  const tUser = JSON.parse(localStorage.getItem('targetUser'));
-
-  const [userProfile, setUserProfile] = useState(tUser && tUser.userProfile);
-  const [followers, setFollowers] = useState((tUser && tUser.followers) || []);
-  const [following, setFollowing] = useState((tUser && tUser.following) || []);
+  const [userProfile, setUserProfile] = useState({ id: 'no-id' });
+  const [followers, setFollowers] = useState([]);
+  const [following, setFollowing] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const getFollwers = async (userObj) => {
     const followersRef = collection(db, 'users', userObj.id, 'followers');
@@ -32,7 +31,9 @@ export default function useFindByUsername(username) {
     uSnap.forEach(async (item) => {
       if (item.data().userName === username) {
         const userObj = { id: item.id, ...item.data() };
-        await Promise.all([getFollowing(userObj), getFollwers(userObj)]);
+        await Promise.all([getFollowing(userObj), getFollwers(userObj)]).then(
+          setLoading(false)
+        );
 
         setUserProfile(userObj);
       }
@@ -60,11 +61,7 @@ export default function useFindByUsername(username) {
         JSON.stringify({ userProfile, followers, following })
       );
     }
-
-    return () => {
-      localStorage.removeItem('targetUser');
-    };
   }, [username, followers, following]);
 
-  return { userProfile, followers, following };
+  return { userProfile, followers, following, loading };
 }

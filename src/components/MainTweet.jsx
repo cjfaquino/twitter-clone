@@ -6,7 +6,7 @@ import {
   faArrowUpFromBracket,
   faRetweet,
 } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import deleteTweet from '../utils/deleteTweet';
 import useToggle from '../hooks/useToggle';
 import getTimeString from '../utils/getTimeString';
@@ -19,11 +19,14 @@ import checkAlreadyLiked from '../utils/checkAlreadyLiked';
 import isUserSignedIn from '../utils/isUserSignedIn';
 import OptionsPopup from './OptionsPopup';
 import FormattedTweetMessage from './FormattedTweetMessage';
+import useFindByUsername from '../hooks/useFindByUsername';
 
 const MainTweet = ({ tweetObj, userProfile }) => {
+  const navigate = useNavigate();
+  const params = useParams();
+  const targetUser = useFindByUsername(params.username);
   const [showOptionsPopup, toggleOptionsPopup] = useToggle(false);
   const [likes, setLikes] = useState(null);
-  const navigate = useNavigate();
   const tweetRef = useRef(null);
   const likesRef = useRef(null);
 
@@ -80,7 +83,6 @@ const MainTweet = ({ tweetObj, userProfile }) => {
     USER_ICON,
     USER_NAME,
     USER_DISPLAY,
-    USER_ID,
     id: TWEET_ID,
   } = tweetObj;
 
@@ -148,7 +150,7 @@ const MainTweet = ({ tweetObj, userProfile }) => {
             handleDelete={handleDelete}
             toggleOptionsPopup={toggleOptionsPopup}
             showOptionsPopup={showOptionsPopup}
-            userID={USER_ID}
+            targetUser={targetUser}
           />
         </div>
         {tweetObj.aReplyTo && (
