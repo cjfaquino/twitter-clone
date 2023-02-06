@@ -14,6 +14,7 @@ import ProfileSettings from './pages/ProfileSettings';
 import Login from './pages/Login';
 import ProfilePage from './pages/ProfilePage';
 import Search from './pages/Search';
+import FollowsPage from './pages/FollowsPage';
 
 const App = () => {
   const [isSignedIn, currentUser, userProfile] = useAuthStateObserver();
@@ -63,6 +64,15 @@ const App = () => {
               path='/:username/tweet/:tweet'
               element={<TweetPage userProfile={userProfile} />}
             />
+
+            {['followers', 'following', 'followers_you_follow'].map((path) => (
+              <Route
+                key={`profile-${path}`}
+                path={`/:username/${path}`}
+                element={<FollowsPage />}
+              />
+            ))}
+
             <Route
               path='/settings'
               element={

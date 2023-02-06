@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import useFollowStatus from '../hooks/useFollowStatus';
 
 const ProfileLarge = ({ currentUser, targetUser }) => {
@@ -27,10 +28,7 @@ const ProfileLarge = ({ currentUser, targetUser }) => {
             <div className='bottom-half'>
               <div className='user-pic edit'>
                 <div className='user-profile-img-container'>
-                  <img
-                    src={targetUser.userProfile.photoUrl}
-                    alt={targetUser.userProfile.displayName}
-                  />
+                  <img src={targetUser.userProfile.photoUrl} alt='' />
                 </div>
                 {currentUser &&
                 currentUser.displayName ===
@@ -62,17 +60,21 @@ const ProfileLarge = ({ currentUser, targetUser }) => {
               </div>
 
               <div className={`${customClass}-stats grey`}>
-                <span className={`${customClass}-followers`}>
-                  <span className={`${customClass}-followers-number`}>
-                    {targetUser.followers.length}
-                  </span>{' '}
-                  Followers
+                <span className={`${customClass}-followers follow-link`}>
+                  <Link to='followers'>
+                    <span className={`${customClass}-followers-number`}>
+                      {targetUser.followers.length}
+                    </span>{' '}
+                    <span className='grey'>Followers</span>
+                  </Link>
                 </span>
-                <span className={`${customClass}-following`}>
-                  <span className={`${customClass}-following-number`}>
-                    {targetUser.following.length}
-                  </span>{' '}
-                  Following
+                <span className={`${customClass}-following follow-link`}>
+                  <Link to='following'>
+                    <span className={`${customClass}-following-number`}>
+                      {targetUser.following.length}
+                    </span>{' '}
+                    <span className='grey'>Following</span>
+                  </Link>
                 </span>
               </div>
             </div>
