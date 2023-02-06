@@ -4,6 +4,7 @@ import useInput from '../hooks/useInput';
 import loginWithGooglePopup from '../utils/loginWithGooglePopup';
 import loginWithEmailAndPass from '../utils/loginWithEmail&Pass';
 import setErrorMessage from '../utils/setErrorMessage';
+import OrSeparator from '../components/OrSeparator';
 
 const Login = () => {
   const [emailVal, handleEmail] = useInput();
@@ -52,14 +53,12 @@ const Login = () => {
       <button type='button' onClick={handleProviderLogin('google')}>
         Log In with Google
       </button>
-      <div className='login-or'>
-        <span className='hor-line' /> OR <span className='hor-line' />
-      </div>
+      <OrSeparator />
       <form onSubmit={handleSubmit}>
         <label htmlFor='email-login'>
           Email
           <input
-            type='text'
+            type='email'
             id='email-login'
             value={emailVal}
             onChange={handleEmail}

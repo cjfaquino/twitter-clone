@@ -463,6 +463,29 @@ form button {
   position: fixed;
 }
 
+.sidebar-signup {
+  border: 1px solid grey;
+  border-radius: 10px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.sidebar-signup button {
+  width: 100%;
+  background-color: white;
+  color: black;
+}
+
+.sidebar-signup button:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.sidebar-signup p {
+  font-size: 0.8rem;
+}
+
 #who-to-follow {
   position: relative;
   background-color: rgb(46, 46, 46);
@@ -472,7 +495,7 @@ form button {
 }
 
 #who-to-follow h3 {
-  padding: 10px 15px;
+  padding: 15px;
 }
 
 /* Tweet item  & reply item & main tweet item*/
