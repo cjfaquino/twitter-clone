@@ -14,6 +14,8 @@ const ProfileSmall = ({ userProfile }) => {
     if (targetName !== 'btn-follow') navigate(`/${userProfile.userName}`);
   };
 
+  const { photoURL, userName, displayName, id } = userProfile;
+
   return (
     <div className='profile-small'>
       {userProfile && (
@@ -21,25 +23,29 @@ const ProfileSmall = ({ userProfile }) => {
           <div
             className={`${customClass}-img-container img-container profile-link`}
           >
-            <img
-              src={userProfile.photoUrl}
-              alt={userProfile.displayName}
-              className='profile-link'
-            />
+            <img src={photoURL} alt='' className='profile-link' />
           </div>
           <div className={`${customClass}-contact`}>
             <div className={`${customClass}-display-name profile-link`}>
-              {userProfile.displayName}
+              {displayName}
             </div>
             <div
               className={`${customClass}-user-name profile-link grey username`}
             >
-              @{userProfile.userName}
+              @{userName}
             </div>
           </div>
-          {!checkMatchingUser(userProfile.id) && (
-            <button type='button' onClick={handleFollow} className='btn-follow'>
-              {followed ? 'Unfollow' : 'Follow'}
+          {!checkMatchingUser(id) && (
+            <button
+              type='button'
+              onClick={handleFollow}
+              className={followed ? 'btn-follow following' : 'btn-follow'}
+            >
+              {followed ? (
+                <span className='following'>Following</span>
+              ) : (
+                <span>Follow</span>
+              )}
             </button>
           )}
         </div>
@@ -50,7 +56,7 @@ const ProfileSmall = ({ userProfile }) => {
 
 ProfileSmall.propTypes = {
   userProfile: PropTypes.shape({
-    photoUrl: PropTypes.string,
+    photoURL: PropTypes.string,
     displayName: PropTypes.string,
     userName: PropTypes.string,
     id: PropTypes.string,

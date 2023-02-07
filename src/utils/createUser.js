@@ -1,4 +1,8 @@
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from 'firebase/auth';
 
 const createUser = async (email, password) => {
   try {
@@ -9,7 +13,9 @@ const createUser = async (email, password) => {
       password
     );
     if (userCredential) {
-      return userCredential.user;
+      const { user } = userCredential;
+      sendEmailVerification(user);
+      return user;
     }
     return undefined;
   } catch (error) {

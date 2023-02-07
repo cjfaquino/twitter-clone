@@ -28,16 +28,7 @@ const TweetItem = ({ tweetObj, userProfile }) => {
   const likesRef = useRef(null);
   const navigate = useNavigate();
 
-  const {
-    views,
-    text: textArr,
-    timestamp,
-    USER_ICON,
-    USER_ID,
-    USER_NAME,
-    USER_DISPLAY,
-    id: TWEET_ID,
-  } = tweetObj;
+  const { views, text: textArr, timestamp, USER_ID, id: TWEET_ID } = tweetObj;
 
   const [showOptionsPopup, toggleOptionsPopup] = useToggle(false);
   const [, repLength] = useReplies(TWEET_ID);
@@ -70,10 +61,10 @@ const TweetItem = ({ tweetObj, userProfile }) => {
 
     if (checkElementClicked(targetName, toTweetPage)) {
       // go to tweet page
-      navigate(`/${USER_NAME}/tweet/${TWEET_ID}`);
+      navigate(`/${targetUser.userProfile.userName}/tweet/${TWEET_ID}`);
     } else if (checkElementClicked(targetName, toUser)) {
       // go to user page
-      navigate(`/${USER_NAME}`);
+      navigate(`/${targetUser.userProfile.userName}`);
     }
   };
 
@@ -112,9 +103,9 @@ const TweetItem = ({ tweetObj, userProfile }) => {
     return () => {
       document.removeEventListener('auth state changed', updateLikes);
     };
-  }, []);
+  }, [likesRef.current, targetUser.doneLoading]);
 
-  return (
+  return targetUser.doneLoading ? (
     <div
       className={`${customClass}-item`}
       id={`${customClass}-${TWEET_ID}`}
@@ -125,7 +116,11 @@ const TweetItem = ({ tweetObj, userProfile }) => {
         <div
           className={`${customClass}-item-img-container img-container profile-link`}
         >
-          <img src={USER_ICON} alt={USER_NAME} className='profile-link' />
+          <img
+            src={targetUser.userProfile.photoURL}
+            alt=''
+            className='profile-link'
+          />
         </div>
         <div className='vert-line' />
       </div>
@@ -133,12 +128,12 @@ const TweetItem = ({ tweetObj, userProfile }) => {
       <div className={`${customClass}-item-right-half`}>
         <div className={`${customClass}-item-info`}>
           <div className={`${customClass}-item-display profile-link`}>
-            {USER_DISPLAY}
+            {targetUser.userProfile.displayName}
           </div>
           <div
             className={`${customClass}-item-name profile-link grey username`}
           >
-            @{USER_NAME}
+            @{targetUser.userProfile.userName}
           </div>
           <div
             className={`${customClass}-item-time grey`}
@@ -204,7 +199,7 @@ const TweetItem = ({ tweetObj, userProfile }) => {
         </div>
       </div>
     </div>
-  );
+  ) : null;
 };
 
 TweetItem.propTypes = {
@@ -220,10 +215,8 @@ TweetItem.propTypes = {
     timestamp: PropTypes.shape({
       toDate: PropTypes.func,
     }),
-    USER_ICON: PropTypes.string,
     USER_ID: PropTypes.string,
     USER_NAME: PropTypes.string,
-    USER_DISPLAY: PropTypes.string,
     id: PropTypes.string,
   }).isRequired,
 };
