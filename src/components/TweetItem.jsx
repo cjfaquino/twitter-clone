@@ -71,7 +71,9 @@ const TweetItem = ({ tweetObj, userProfile }) => {
   const handleLike = async () => {
     if (!isUserSignedIn()) return navigate('/login');
 
-    if (likesRef.current && (await checkAlreadyLiked(TWEET_ID))) {
+    if (!likesRef.current) return undefined;
+
+    if (await checkAlreadyLiked(TWEET_ID)) {
       // already liked
       await undoLike(tweetObj, userProfile);
       likesRef.current.classList.remove('liked');
@@ -86,24 +88,28 @@ const TweetItem = ({ tweetObj, userProfile }) => {
     return undefined;
   };
 
+  const updateLikes = async () => {
+    if (!likesRef.current) return;
+
+    if (!targetUser.doneLoading) return;
+
+    if (await checkAlreadyLiked(TWEET_ID)) {
+      likesRef.current.classList.add('liked');
+    } else {
+      likesRef.current.classList.remove('liked');
+    }
+  };
+
   useEffect(() => {
-    const updateLikes = async () => {
-      if (!likesRef.current) return;
-
-      if (await checkAlreadyLiked(TWEET_ID)) {
-        likesRef.current.classList.add('liked');
-      } else {
-        likesRef.current.classList.remove('liked');
-      }
-    };
-
-    updateLikes();
+    if (targetUser.doneLoading) {
+      updateLikes();
+    }
     document.addEventListener('auth state changed', updateLikes);
 
     return () => {
       document.removeEventListener('auth state changed', updateLikes);
     };
-  }, [likesRef.current, targetUser.doneLoading]);
+  }, [targetUser.doneLoading]);
 
   return targetUser.doneLoading ? (
     <div
