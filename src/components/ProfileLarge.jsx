@@ -40,9 +40,13 @@ const ProfileLarge = ({ currentUser, targetUser }) => {
                   <button
                     type='button'
                     onClick={handleFollow}
-                    className='btn-follow'
+                    className={followed ? 'btn-follow following' : 'btn-follow'}
                   >
-                    {followed ? 'Unfollow' : 'Follow'}
+                    {followed ? (
+                      <span className='following'>Following</span>
+                    ) : (
+                      <span>Follow</span>
+                    )}
                   </button>
                 )}
               </div>
