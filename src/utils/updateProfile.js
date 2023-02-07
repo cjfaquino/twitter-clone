@@ -1,5 +1,6 @@
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase-config';
+import eventProfileEdit from './eventProfileEdit';
 
 const updateProfile = async ({ user, userName }) => {
   try {
@@ -9,8 +10,10 @@ const updateProfile = async ({ user, userName }) => {
       userName,
       displayName: user.displayName,
       photoUrl: user.photoURL,
-      createdAt: user.metadata.createdAt,
+      metadata: user.metadata,
     });
+
+    eventProfileEdit();
 
     return user.uid;
   } catch (error) {

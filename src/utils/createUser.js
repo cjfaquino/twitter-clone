@@ -9,9 +9,7 @@ const createUser = async (email, password) => {
       password
     );
     if (userCredential) {
-      // send email verification
-      userCredential.user.sendEmailVerification();
-      return userCredential.user.uid;
+      return userCredential.user;
     }
     return undefined;
   } catch (error) {
