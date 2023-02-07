@@ -9,7 +9,9 @@ const ProfileLarge = ({ currentUser, targetUser }) => {
   const customClass = 'user-card';
 
   const formatJoinedDate = () => {
-    const joinedDate = new Date(Number(targetUser.userProfile.createdAt));
+    const joinedDate = new Date(
+      Number(targetUser.userProfile.metadata.createdAt)
+    );
 
     const options = {
       year: 'numeric',
@@ -92,7 +94,9 @@ ProfileLarge.propTypes = {
   }),
   targetUser: PropTypes.shape({
     userProfile: PropTypes.shape({
-      createdAt: PropTypes.string,
+      metadata: PropTypes.shape({
+        createdAt: PropTypes.string.isRequired,
+      }),
       id: PropTypes.string,
       photoUrl: PropTypes.string,
       displayName: PropTypes.string,
