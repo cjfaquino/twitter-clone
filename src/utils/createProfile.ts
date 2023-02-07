@@ -28,7 +28,7 @@ const createProfile = async ({
       userName,
       displayName,
       photoURL,
-      metadata: user.metadata,
+      metadata: { ...user.metadata },
     });
 
     eventProfileEdit();

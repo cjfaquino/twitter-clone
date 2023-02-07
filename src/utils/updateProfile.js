@@ -10,12 +10,12 @@ const updateProfile = async ({ user, userName }) => {
       userName,
       displayName: user.displayName,
       photoUrl: user.photoURL,
-      metadata: user.metadata,
+      metadata: { ...user.metadata },
     });
 
     eventProfileEdit();
 
-    return user.uid;
+    return true;
   } catch (error) {
     console.error('Error writing new message to Firebase Database', error);
     return false;
