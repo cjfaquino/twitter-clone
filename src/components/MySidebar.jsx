@@ -7,6 +7,7 @@ import useRandomUsers from '../hooks/useRandomUsers';
 import ListOfUsers from './ListOfUsers';
 import OrSeparator from './OrSeparator';
 import GoogleIcon from './GoogleIcon';
+import HaveAnAccount from './HaveAnAccount';
 
 const MySidebar = ({ isSignedIn }) => {
   const users = useRandomUsers();
@@ -26,6 +27,7 @@ const MySidebar = ({ isSignedIn }) => {
               Create account
             </button>
           </Link>
+          <HaveAnAccount exists />
           <p>
             This is only a project for learning. Any feedback will help to
             improve your overall experience.

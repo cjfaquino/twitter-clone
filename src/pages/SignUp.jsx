@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useInput from '../hooks/useInput';
 import createUserWithProfile from '../utils/createUserWithProfile';
+import HaveAnAccount from '../components/HaveAnAccount';
 
 const SignUp = () => {
   const [email, handleEmail] = useInput();
@@ -91,6 +92,7 @@ const SignUp = () => {
         />
       </label>
       <button type='submit'>{submitting ? 'Submitting...' : 'Submit'}</button>
+      <HaveAnAccount exists />
       <p className='disclaimer'>
         <strong>Disclaimer</strong>: This project is for educational purposes
         only and is not intended for commercial use or to be relied upon for any

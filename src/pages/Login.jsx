@@ -5,6 +5,7 @@ import loginWithGooglePopup from '../utils/loginWithGooglePopup';
 import loginWithEmailAndPass from '../utils/loginWithEmail&Pass';
 import setErrorMessage from '../utils/setErrorMessage';
 import OrSeparator from '../components/OrSeparator';
+import HaveAnAccount from '../components/HaveAnAccount';
 
 const Login = () => {
   const [emailVal, handleEmail] = useInput();
@@ -75,6 +76,7 @@ const Login = () => {
         </label>
         <div className='error' />
         <button type='submit'>{submitting ? 'Logging In...' : 'Log In'}</button>
+        <HaveAnAccount />
       </form>
     </div>
   );
