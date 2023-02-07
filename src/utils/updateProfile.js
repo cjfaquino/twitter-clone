@@ -9,7 +9,7 @@ const updateProfile = async ({ user, userName }) => {
     await setDoc(userRef, {
       userName,
       displayName: user.displayName,
-      photoUrl: user.photoURL,
+      photoURL: user.photoURL,
       metadata: { ...user.metadata },
     });
 
