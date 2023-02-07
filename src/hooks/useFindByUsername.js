@@ -8,7 +8,7 @@ export default function useFindByUsername(username) {
   const [following, setFollowing] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const getFollwers = async (userObj) => {
+  const getFollowers = async (userObj) => {
     const followersRef = collection(db, 'users', userObj.id, 'followers');
     const flrSnap = await getDocs(followersRef);
     flrSnap.forEach((item) => {
@@ -31,7 +31,7 @@ export default function useFindByUsername(username) {
     uSnap.forEach(async (item) => {
       if (item.data().userName === username) {
         const userObj = { id: item.id, ...item.data() };
-        await Promise.all([getFollowing(userObj), getFollwers(userObj)]).then(
+        await Promise.all([getFollowing(userObj), getFollowers(userObj)]).then(
           setLoading(false)
         );
 
@@ -63,5 +63,10 @@ export default function useFindByUsername(username) {
     }
   }, [username, followers, following]);
 
-  return { userProfile, followers, following, loading };
+  return {
+    userProfile,
+    followers,
+    following,
+    doneLoading: !loading && userProfile.id !== 'no-id',
+  };
 }
