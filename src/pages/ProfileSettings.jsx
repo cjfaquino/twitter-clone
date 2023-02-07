@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import useInput from '../hooks/useInput';
 import updateProfile from '../utils/updateProfile';
-import eventProfileEdit from '../utils/eventProfileEdit';
 import doesProfileExist from '../utils/doesProfileExist';
 import updateUserEmail from '../utils/updateEmail';
 import linkWithGooglePopup from '../utils/linkWithGooglePopup';
@@ -19,7 +18,7 @@ const ProfileSettings = ({ currentUser, userProfile }) => {
   const [submittingEmail, setSubmittingEmail] = useState(null);
   const navigate = useNavigate();
 
-  const handleSubmit1 = async (e) => {
+  const handleSubmitProfile = async (e) => {
     e.preventDefault();
 
     if (!(await validateUsername(userName, 2, 20))) {
@@ -28,20 +27,14 @@ const ProfileSettings = ({ currentUser, userProfile }) => {
 
     setSubmittingProfile(true);
     // create profile
-    const userID = await updateProfile({
+    await updateProfile({
       user: currentUser,
       userName,
     });
     setSubmittingProfile(false);
-    if (userID) {
-      // makes useUserProfile grab the new profile
-      eventProfileEdit();
-    } else {
-      // error
-    }
   };
 
-  const handleSubmit2 = async (e) => {
+  const handleSubmitEmail = async (e) => {
     e.preventDefault();
     setSubmittingEmail(true);
     const res = await updateUserEmail(email);
@@ -84,7 +77,7 @@ const ProfileSettings = ({ currentUser, userProfile }) => {
     <div id='settings'>
       {!loading && (
         <div className='sign-up-form'>
-          <form onSubmit={handleSubmit1}>
+          <form onSubmit={handleSubmitProfile}>
             <h3>Your Profile</h3>
             <label htmlFor='userName'>
               Username <span className='verify-username error' />
@@ -101,7 +94,7 @@ const ProfileSettings = ({ currentUser, userProfile }) => {
               {submittingProfile ? 'Submitting...' : 'Submit'}
             </button>
           </form>
-          <form onSubmit={handleSubmit2} className='email-form'>
+          <form onSubmit={handleSubmitEmail} className='email-form'>
             <h3>Contact Details</h3>
             <label htmlFor='email'>
               Email{' '}
