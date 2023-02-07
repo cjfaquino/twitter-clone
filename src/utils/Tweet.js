@@ -3,6 +3,7 @@ import getProfilePicUrl from './getProfilePicUrl';
 import getDisplayName from './getDisplayName';
 import getUserName from './getUserName';
 import getUserUid from './getUserUid';
+import textToCleanedTextArray from './textToCleanedTextArray';
 
 export default class Tweet {
   constructor(messageText, aReplyTo = null) {
@@ -10,7 +11,7 @@ export default class Tweet {
     this.USER_DISPLAY = getDisplayName();
     this.USER_ID = getUserUid();
     this.USER_ICON = getProfilePicUrl();
-    this.text = messageText.toString().split(/(\s+|\n)/);
+    this.text = textToCleanedTextArray(messageText);
     this.timestamp = serverTimestamp();
     this.likes = 0;
     this.retweets = 0;
