@@ -13,6 +13,11 @@
   -webkit-text-size-adjust: 100%;
 }
 
+::selection {
+  background-color: rgba(99, 177, 255, 0.4);
+  color: white;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -26,11 +31,8 @@ li {
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: var(--theme-color);
   text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
 }
 
 html,
