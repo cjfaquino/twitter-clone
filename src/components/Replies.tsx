@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import TweetItem from './TweetItem';
 import saveTweet from '../utils/saveTweet';
 import useReplies from '../hooks/useReplies';
-import { TweetObj } from '../utils/Tweet';
+import Tweet, { TweetObj } from '../utils/Tweet';
 import getDisplayName from '../utils/getDisplayName';
 import getProfilePicUrl from '../utils/getProfilePicUrl';
 import isUserSignedIn from '../utils/isUserSignedIn';
+import ListOfTweets from './ListOfTweets';
 
-const Replies = ({ tweetObj }: TweetObj) => {
+interface IProps {
+  tweetObj: TweetObj;
+}
+
+const Replies = ({ tweetObj }: IProps) => {
   const params = useParams();
 
   const [fetchedReplies] = useReplies(params.tweet);
@@ -58,33 +62,9 @@ const Replies = ({ tweetObj }: TweetObj) => {
           </button>
         </form>
       )}
-      {fetchedReplies.map((reply: TweetObj) => (
-        <TweetItem
-          key={`reply-${reply.id}`}
-          tweetObj={reply}
-          replyToID={tweetObj.id}
-        />
-      ))}
+      <ListOfTweets tweets={fetchedReplies} customClass='reply' />
     </div>
   );
-};
-
-Replies.propTypes = {
-  tweetObj: PropTypes.shape({
-    data: PropTypes.shape({
-      replies: PropTypes.arrayOf(PropTypes.string),
-      likes: PropTypes.number,
-      retweets: PropTypes.number,
-      text: PropTypes.string,
-      timestamp: PropTypes.shape({
-        toDate: PropTypes.func,
-      }),
-      USER_ICON: PropTypes.string,
-      USER_ID: PropTypes.string,
-      USER_NAME: PropTypes.string,
-    }),
-    id: PropTypes.string,
-  }).isRequired,
 };
 
 export default Replies;
