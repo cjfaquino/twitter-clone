@@ -1,14 +1,21 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { faGear, faHashtag } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
+import { User } from 'firebase/auth';
 import signOutUser from '../utils/signOutUser';
 import useToggle from '../hooks/useToggle';
 import ThreeDots from './ThreeDots';
+import { UserProfile } from '../hooks/useUserProfile';
 
-const MyNav = ({ currentUser, userProfile, toggleTweetPopup }) => {
+interface IProps {
+  currentUser: User;
+  userProfile: UserProfile;
+  toggleTweetPopup: Function;
+}
+
+const MyNav = ({ currentUser, userProfile, toggleTweetPopup }: IProps) => {
   const [logoutPopup, toggleLogoutPopup] = useToggle();
   const navigate = useNavigate();
 
@@ -27,33 +34,29 @@ const MyNav = ({ currentUser, userProfile, toggleTweetPopup }) => {
     toggleLogoutPopup();
   };
 
-  const styleNavLink = ({ isActive }) => ({
-    color: isActive ? 'var(--theme-color)' : 'white',
-  });
-
   return (
     <nav id='menubar'>
       <ul className='menu-list'>
-        <li className='nav-explore'>
-          <NavLink to='/explore' style={styleNavLink}>
+        <li className='nav-list-item'>
+          <NavLink to='/explore'>
             <div className='link-item'>
               <FontAwesomeIcon icon={faHashtag} />
               <span>Explore</span>
             </div>
           </NavLink>
         </li>
-        {userProfile && (
+        {currentUser && userProfile && (
           <>
-            <li className='nav-profile'>
-              <NavLink to={`${userProfile.userName}`} style={styleNavLink}>
+            <li className='nav-list-item'>
+              <NavLink to={`${userProfile.userName}`}>
                 <div className='link-item'>
                   <FontAwesomeIcon icon={faUser} />
                   <span>Profile</span>
                 </div>
               </NavLink>
             </li>
-            <li className='nav-settings'>
-              <NavLink to='/settings' style={styleNavLink}>
+            <li className='nav-list-item'>
+              <NavLink to='/settings'>
                 <div className='link-item'>
                   <FontAwesomeIcon icon={faGear} />
                   <span>Settings</span>
@@ -82,8 +85,8 @@ const MyNav = ({ currentUser, userProfile, toggleTweetPopup }) => {
               >
                 <div className='nav-user-img-container img-container'>
                   <img
-                    src={currentUser.photoURL}
-                    alt={currentUser.displayName}
+                    src={currentUser.photoURL!}
+                    alt={currentUser.displayName!}
                   />
                 </div>
                 <div>{currentUser.displayName}</div>
@@ -113,22 +116,6 @@ const MyNav = ({ currentUser, userProfile, toggleTweetPopup }) => {
       </ul>
     </nav>
   );
-};
-
-MyNav.propTypes = {
-  currentUser: PropTypes.shape({
-    displayName: PropTypes.string,
-    photoURL: PropTypes.string,
-  }),
-  userProfile: PropTypes.shape({
-    userName: PropTypes.string,
-  }),
-  toggleTweetPopup: PropTypes.func.isRequired,
-};
-
-MyNav.defaultProps = {
-  currentUser: { displayName: '' },
-  userProfile: { userName: '' },
 };
 
 export default MyNav;

@@ -1,10 +1,19 @@
 import { useEffect, useState } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
+import { User } from 'firebase/auth';
 import { db } from '../firebase-config';
 
-function useUserProfile(userObj) {
-  const [profile, setProfile] = useState(null);
+export interface UserProfile {
+  id: string;
+  displayName?: string;
+  userName?: string;
+  photoURL?: string;
+}
+
+function useUserProfile(userObj: User) {
+  const noProfile = { id: 'no-id' };
+  const [profile, setProfile] = useState<UserProfile>(noProfile);
   const navigate = useNavigate();
 
   const getUserProfile = () => {
@@ -27,12 +36,12 @@ function useUserProfile(userObj) {
     document.addEventListener('profile edit', getUserProfile);
 
     return () => {
-      setProfile(null);
+      setProfile(noProfile);
       document.removeEventListener('profile edit', getUserProfile);
     };
   }, [userObj]);
 
-  return [profile];
+  return [profile, profile.id !== 'no-id'];
 }
 
 export default useUserProfile;

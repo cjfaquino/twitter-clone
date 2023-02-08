@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 import { getDocs, collection, query } from 'firebase/firestore';
 import { db } from '../firebase-config';
+import { UserProfile } from './useUserProfile';
 
-export default function useFindByUsername(username) {
+export default function useFindByUsername(username: string) {
   const [userProfile, setUserProfile] = useState({ id: 'no-id' });
-  const [followers, setFollowers] = useState([]);
-  const [following, setFollowing] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [followers, setFollowers] = useState<UserProfile[]>([]);
+  const [following, setFollowing] = useState<UserProfile[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const getFollowers = async (userObj) => {
+  const getFollowers = async (userObj: UserProfile) => {
     const followersRef = collection(db, 'users', userObj.id, 'followers');
     const flrSnap = await getDocs(followersRef);
     flrSnap.forEach((item) => {
@@ -16,7 +17,7 @@ export default function useFindByUsername(username) {
     });
   };
 
-  const getFollowing = async (userObj) => {
+  const getFollowing = async (userObj: UserProfile) => {
     const followingRef = collection(db, 'users', userObj.id, 'following');
     const flgSnap = await getDocs(followingRef);
 
@@ -31,10 +32,9 @@ export default function useFindByUsername(username) {
     uSnap.forEach(async (item) => {
       if (item.data().userName === username) {
         const userObj = { id: item.id, ...item.data() };
-        await Promise.all([getFollowing(userObj), getFollowers(userObj)]).then(
-          setLoading(false)
-        );
+        await Promise.all([getFollowing(userObj), getFollowers(userObj)]);
 
+        setLoading(false);
         setUserProfile(userObj);
       }
     });
