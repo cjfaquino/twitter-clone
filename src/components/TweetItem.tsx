@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment, faHeart } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -21,11 +20,16 @@ import likeTweet from '../utils/likeTweet';
 import isUserSignedIn from '../utils/isUserSignedIn';
 import FormattedTweetMessage from './FormattedTweetMessage';
 import useFindByUsername from '../hooks/useFindByUsername';
+import { TweetObj } from '../utils/Tweet';
 
-const TweetItem = ({ tweetObj, userProfile }) => {
+interface IProps {
+  tweetObj: TweetObj;
+}
+
+const TweetItem = ({ tweetObj }: IProps) => {
   const [likes, setLikes] = useState(tweetObj.likes);
   const targetUser = useFindByUsername(tweetObj.USER_NAME);
-  const likesRef = useRef(null);
+  const likesRef = useRef<HTMLButtonElement>(null);
   const navigate = useNavigate();
 
   const { views, text: textArr, timestamp, USER_ID, id: TWEET_ID } = tweetObj;
@@ -43,11 +47,12 @@ const TweetItem = ({ tweetObj, userProfile }) => {
     }
   };
 
-  const checkElementClicked = (targetString, conditions) =>
+  const checkElementClicked = (targetString: string, conditions: string[]) =>
     conditions.some((el) => targetString.includes(el));
 
-  const navToPage = async (e) => {
-    const targetName = e.target.className;
+  const navToPage = async (e: React.MouseEvent<HTMLDivElement>) => {
+    const element = e.target as HTMLDivElement;
+    const targetName = element.className;
     // conditions
     const toUser = ['profile-link'];
     const toTweetPage = [
@@ -75,12 +80,12 @@ const TweetItem = ({ tweetObj, userProfile }) => {
 
     if (await checkAlreadyLiked(TWEET_ID)) {
       // already liked
-      await undoLike(tweetObj, userProfile);
+      await undoLike(tweetObj);
       likesRef.current.classList.remove('liked');
       setLikes((prev) => prev - 1);
     } else {
       // not yet liked
-      await likeTweet(tweetObj, userProfile);
+      await likeTweet(tweetObj);
       likesRef.current.classList.add('liked');
       setLikes((prev) => prev + 1);
     }
@@ -206,29 +211,6 @@ const TweetItem = ({ tweetObj, userProfile }) => {
       </div>
     </div>
   ) : null;
-};
-
-TweetItem.propTypes = {
-  userProfile: PropTypes.shape({}),
-  tweetObj: PropTypes.shape({
-    aReplyTo: PropTypes.shape({
-      USER_NAME: PropTypes.string,
-    }),
-    views: PropTypes.number,
-    likes: PropTypes.number,
-    retweets: PropTypes.number,
-    text: PropTypes.arrayOf(PropTypes.string),
-    timestamp: PropTypes.shape({
-      toDate: PropTypes.func,
-    }),
-    USER_ID: PropTypes.string,
-    USER_NAME: PropTypes.string,
-    id: PropTypes.string,
-  }).isRequired,
-};
-
-TweetItem.defaultProps = {
-  userProfile: null,
 };
 
 export default TweetItem;

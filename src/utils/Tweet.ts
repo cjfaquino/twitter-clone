@@ -5,8 +5,25 @@ import getUserName from './getUserName';
 import getUserUid from './getUserUid';
 import textToCleanedTextArray from './textToCleanedTextArray';
 
-export default class Tweet {
-  constructor(messageText, aReplyTo = null) {
+interface Tweet {
+  USER_NAME: string;
+  USER_DISPLAY: string;
+  USER_ID: string;
+  USER_ICON: string;
+  text: string[];
+  timestamp: {};
+  likes: number;
+  retweets: number;
+  views: number;
+  aReplyTo: Tweet | null;
+}
+
+export interface TweetObj extends Tweet {
+  id: string;
+}
+
+class Tweet {
+  constructor(messageText: string, aReplyTo: Tweet | null = null) {
     this.USER_NAME = getUserName();
     this.USER_DISPLAY = getDisplayName();
     this.USER_ID = getUserUid();
@@ -19,3 +36,5 @@ export default class Tweet {
     this.aReplyTo = aReplyTo;
   }
 }
+
+export default Tweet;

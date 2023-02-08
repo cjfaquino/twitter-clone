@@ -4,25 +4,25 @@ import { useParams } from 'react-router-dom';
 import TweetItem from './TweetItem';
 import saveTweet from '../utils/saveTweet';
 import useReplies from '../hooks/useReplies';
-import Tweet from '../utils/Tweet';
+import { TweetObj } from '../utils/Tweet';
 import getDisplayName from '../utils/getDisplayName';
 import getProfilePicUrl from '../utils/getProfilePicUrl';
 import isUserSignedIn from '../utils/isUserSignedIn';
 
-const Replies = ({ tweetObj }) => {
+const Replies = ({ tweetObj }: TweetObj) => {
   const params = useParams();
 
   const [fetchedReplies] = useReplies(params.tweet);
   const [replyMessage, setReplyMessage] = useState('');
 
-  const handleReplyInput = (e) => {
+  const handleReplyInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setReplyMessage(e.target.value);
 
     e.target.style.height = '5px';
     e.target.style.height = `${e.target.scrollHeight}px`;
   };
 
-  const handleSubmitReply = async (e) => {
+  const handleSubmitReply = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!isUserSignedIn()) {
       return; // show login popup
@@ -47,7 +47,6 @@ const Replies = ({ tweetObj }) => {
             <img src={getProfilePicUrl()} alt={getDisplayName()} />
           </div>
           <textarea
-            type='text'
             rows={1}
             placeholder='Tweet your reply'
             value={replyMessage}
@@ -59,8 +58,12 @@ const Replies = ({ tweetObj }) => {
           </button>
         </form>
       )}
-      {fetchedReplies.map((reply) => (
-        <TweetItem key={reply.id} tweetObj={reply} replyToID={tweetObj.id} />
+      {fetchedReplies.map((reply: TweetObj) => (
+        <TweetItem
+          key={`reply-${reply.id}`}
+          tweetObj={reply}
+          replyToID={tweetObj.id}
+        />
       ))}
     </div>
   );
