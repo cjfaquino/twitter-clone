@@ -6,15 +6,16 @@ import loginWithEmailAndPass from '../utils/loginWithEmail&Pass';
 import setErrorMessage from '../utils/setErrorMessage';
 import OrSeparator from '../components/OrSeparator';
 import HaveAnAccount from '../components/HaveAnAccount';
+import GoogleIcon from '../components/GoogleIcon';
 
 const Login = () => {
   const [emailVal, handleEmail] = useInput();
   const [passwordVal, handlePassword] = useInput();
-  const [submitting, setSubmitting] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleProviderLogin = (provider, email, password) => async () => {
+  const handleProviderLogin = (provider, email?, password?) => async () => {
     let user;
     setSubmitting(true);
     if (provider === 'google') {
@@ -33,7 +34,7 @@ const Login = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     handleProviderLogin('emailPass', emailVal, passwordVal)();
   };
@@ -51,11 +52,15 @@ const Login = () => {
 
   return (
     <div className='login-form'>
-      <button type='button' onClick={handleProviderLogin('google')}>
-        Log In with Google
-      </button>
-      <OrSeparator />
       <form onSubmit={handleSubmit}>
+        <button
+          type='button'
+          onClick={handleProviderLogin('google')}
+          className='btn-with-provider'
+        >
+          <GoogleIcon /> Log In with Google
+        </button>
+        <OrSeparator />
         <label htmlFor='email-login'>
           Email
           <input
