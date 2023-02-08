@@ -1,8 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import { TargetUser } from '../interfaces/TargetUser';
 
-const GoBackHeader = ({ targetUser }) => {
+interface IProps {
+  targetUser: TargetUser;
+}
+
+const GoBackHeader = ({ targetUser }: IProps) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -12,24 +16,12 @@ const GoBackHeader = ({ targetUser }) => {
   return (
     <header className='goback' onClick={handleClick} aria-hidden>
       <div className='goback-text'>
-        {targetUser && targetUser.userProfile
+        {targetUser.doneLoading
           ? `← ${targetUser.userProfile.displayName}`
           : `← Tweet`}
       </div>
     </header>
   );
-};
-
-GoBackHeader.propTypes = {
-  targetUser: PropTypes.shape({
-    userProfile: PropTypes.shape({
-      displayName: PropTypes.string,
-    }),
-  }),
-};
-
-GoBackHeader.defaultProps = {
-  targetUser: null,
 };
 
 export default GoBackHeader;
