@@ -1,5 +1,6 @@
 :root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  --fonts: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-family: var(--fonts);
   font-weight: 400;
 
   color-scheme: light dark;
@@ -11,6 +12,10 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+}
+
+* {
+  font-family: var(--fonts);
 }
 
 ::selection {
