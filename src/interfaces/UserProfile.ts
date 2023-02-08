@@ -3,7 +3,7 @@ export interface UserProfile {
   displayName?: string;
   userName?: string;
   photoURL?: string;
-  metadata: {
+  metadata?: {
     createdAt: string;
     creationTime: string;
     lastLoginAt: string;
