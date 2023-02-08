@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import useTweets from '../hooks/useTweets';
 import SearchHeader from '../components/SearchHeader';
-import { TweetObj } from '../utils/Tweet';
+import { TweetObj } from '../interfaces/TweetObj';
 import ListOfTweets from '../components/ListOfTweets';
 
 interface IProps {

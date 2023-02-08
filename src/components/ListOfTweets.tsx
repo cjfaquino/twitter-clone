@@ -1,5 +1,5 @@
 import React from 'react';
-import { TweetObj } from '../utils/Tweet';
+import { TweetObj } from '../interfaces/TweetObj';
 import TweetItem from './TweetItem';
 
 interface IProps {

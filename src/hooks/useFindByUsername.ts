@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getDocs, collection, query } from 'firebase/firestore';
 import { db } from '../firebase-config';
-import { UserProfile } from './useUserProfile';
+import { UserProfile } from '../interfaces/UserProfile';
 
 export default function useFindByUsername(username: string) {
   const [userProfile, setUserProfile] = useState({ id: 'no-id' });

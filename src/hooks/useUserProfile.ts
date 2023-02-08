@@ -3,13 +3,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { User } from 'firebase/auth';
 import { db } from '../firebase-config';
-
-export interface UserProfile {
-  id: string;
-  displayName?: string;
-  userName?: string;
-  photoURL?: string;
-}
+import { UserProfile } from '../interfaces/UserProfile';
 
 function useUserProfile(userObj: User) {
   const noProfile = { id: 'no-id' };

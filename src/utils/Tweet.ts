@@ -18,10 +18,6 @@ interface Tweet {
   aReplyTo: Tweet | null;
 }
 
-export interface TweetObj extends Tweet {
-  id: string;
-}
-
 class Tweet {
   constructor(messageText: string, aReplyTo: Tweet | null = null) {
     this.USER_NAME = getUserName();

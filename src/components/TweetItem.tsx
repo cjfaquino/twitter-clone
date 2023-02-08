@@ -20,7 +20,7 @@ import likeTweet from '../utils/likeTweet';
 import isUserSignedIn from '../utils/isUserSignedIn';
 import FormattedTweetMessage from './FormattedTweetMessage';
 import useFindByUsername from '../hooks/useFindByUsername';
-import { TweetObj } from '../utils/Tweet';
+import { TweetObj } from '../interfaces/TweetObj';
 
 interface IProps {
   tweetObj: TweetObj;

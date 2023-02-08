@@ -7,7 +7,7 @@ import { User } from 'firebase/auth';
 import signOutUser from '../utils/signOutUser';
 import useToggle from '../hooks/useToggle';
 import ThreeDots from './ThreeDots';
-import { UserProfile } from '../hooks/useUserProfile';
+import { UserProfile } from '../interfaces/UserProfile';
 
 interface IProps {
   currentUser: User;

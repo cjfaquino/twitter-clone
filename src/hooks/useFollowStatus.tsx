@@ -5,10 +5,7 @@ import followUser from '../utils/followUser';
 import unfollowUser from '../utils/unfollowUser';
 import checkAlreadyFollowing from '../utils/checkAlreadyFollowing';
 import eventFollow from '../utils/eventFollow';
-
-interface UserProfile {
-  id?: string;
-}
+import { UserProfile } from '../interfaces/UserProfile';
 
 export default function useFollowStatus(userProfile: UserProfile) {
   const [followed, setFollowed] = useState<boolean | null>(null);
