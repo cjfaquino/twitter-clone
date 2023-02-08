@@ -1,9 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { User } from 'firebase/auth';
 import useFollowStatus from '../hooks/useFollowStatus';
+import { TargetUser } from '../interfaces/TargetUser';
 
-const ProfileLarge = ({ currentUser, targetUser }) => {
+interface IProps {
+  currentUser: User;
+  targetUser: TargetUser;
+}
+
+const ProfileLarge = ({ currentUser, targetUser }: IProps) => {
   const [followed, handleFollow] = useFollowStatus(targetUser.userProfile);
 
   const customClass = 'user-card';
@@ -69,7 +76,7 @@ const ProfileLarge = ({ currentUser, targetUser }) => {
 
               <div className={`${customClass}-stats grey`}>
                 <span className={`${customClass}-followers follow-link`}>
-                  <Link to='followers'>
+                  <Link to='followers' state={{ targetUser }}>
                     <span className={`${customClass}-followers-number`}>
                       {targetUser.followers.length}
                     </span>{' '}
@@ -77,7 +84,7 @@ const ProfileLarge = ({ currentUser, targetUser }) => {
                   </Link>
                 </span>
                 <span className={`${customClass}-following follow-link`}>
-                  <Link to='following'>
+                  <Link to='following' state={{ targetUser }}>
                     <span className={`${customClass}-following-number`}>
                       {targetUser.following.length}
                     </span>{' '}

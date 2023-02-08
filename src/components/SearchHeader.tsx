@@ -11,7 +11,7 @@ const SearchHeader = () => {
     setSearch('');
   };
 
-  const handleSubmit = (e: Event) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const searchWithOutHash = search.replace(/#/g, '');

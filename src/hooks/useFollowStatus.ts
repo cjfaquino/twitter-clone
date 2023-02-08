@@ -18,11 +18,12 @@ export default function useFollowStatus(userProfile: UserProfile) {
   const updateFollow = () =>
     checkAlreadyFollowing(userProfile.id).then(setFollowed);
 
-  const handleFollow = async (e: { target: HTMLButtonElement }) => {
+  const handleFollow = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const currentUserProfileObj = JSON.parse(
       localStorage.getItem('userProfile') || 'id: ""'
     );
-    const btnText = e.target.textContent;
+    const element = e.target as HTMLElement;
+    const btnText = element.textContent;
 
     if (!isUserSignedIn()) {
       return navigate('/login');

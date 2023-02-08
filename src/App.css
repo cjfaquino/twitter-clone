@@ -106,6 +106,7 @@ button svg {
 
 .btn-follow {
   border: 2px solid transparent;
+  min-width: 105px;
 }
 
 .btn-follow:hover {
@@ -127,6 +128,7 @@ button svg {
   --unfollow-color: red;
   color: var(--unfollow-color);
   border-color: var(--unfollow-color);
+  background-color: rgba(255, 0, 0, 0.1);
 }
 
 .btn-follow.following:hover > * {
@@ -362,7 +364,8 @@ button svg {
   height: 100%;
 }
 
-#centerbar form,
+.login-form,
+.sign-up-form,
 .settings-forms {
   display: flex;
   flex-direction: column;
@@ -372,7 +375,9 @@ button svg {
   position: relative;
 }
 
-form input {
+.login-form input,
+.sign-up-form input,
+.settings-forms input {
   height: 40px;
   width: 100%;
   font-size: 1rem;
@@ -1004,6 +1009,52 @@ header.search {
 .styled-filter-link:hover {
   background-color: rgb(22, 22, 22);
   color: grey;
+}
+
+/* profile cards */
+
+.profile-medium,
+.profile-small {
+  min-height: 72px;
+  cursor: pointer;
+}
+
+.user-card-medium,
+.user-card-small {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: background-color 0.2s;
+}
+
+.user-card-medium button,
+.user-card-small button {
+  padding: 7px 15px;
+  margin-right: 0;
+  margin-left: auto;
+  background-color: white;
+  color: black;
+  font-size: 0.9rem;
+}
+
+/* profile medium */
+
+.user-card-medium {
+  align-items: flex-start;
+}
+
+.user-card-medium:hover {
+  background-color: rgb(20, 20, 20);
+}
+
+.user-card-medium-info {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.user-card-medium-item-message {
+  font-size: 0.8rem;
 }
 
 /* profile small */

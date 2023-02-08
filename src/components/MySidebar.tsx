@@ -1,7 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-
 import MyFooter from './MyFooter/MyFooter';
 import useRandomUsers from '../hooks/useRandomUsers';
 import ListOfUsers from './ListOfUsers';
@@ -9,7 +7,11 @@ import OrSeparator from './OrSeparator';
 import GoogleIcon from './GoogleIcon';
 import HaveAnAccount from './HaveAnAccount';
 
-const MySidebar = ({ isSignedIn }) => {
+interface IProps {
+  isSignedIn: boolean;
+}
+
+const MySidebar = ({ isSignedIn }: IProps) => {
   const users = useRandomUsers();
 
   return (
@@ -36,16 +38,12 @@ const MySidebar = ({ isSignedIn }) => {
       ) : (
         <div id='who-to-follow'>
           <h3>Who To Follow</h3>
-          <ListOfUsers users={users} />
+          <ListOfUsers users={users} compact />
         </div>
       )}
       <MyFooter />
     </div>
   );
-};
-
-MySidebar.propTypes = {
-  isSignedIn: PropTypes.bool.isRequired,
 };
 
 export default MySidebar;

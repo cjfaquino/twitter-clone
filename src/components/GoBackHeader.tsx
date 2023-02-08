@@ -10,13 +10,13 @@ const GoBackHeader = ({ targetUser }: IProps) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate('/');
+    navigate(-1);
   };
 
   return (
     <header className='goback' onClick={handleClick} aria-hidden>
       <div className='goback-text'>
-        {targetUser.doneLoading
+        {targetUser && targetUser.doneLoading
           ? `← ${targetUser.userProfile.displayName}`
           : `← Tweet`}
       </div>

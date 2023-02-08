@@ -1,16 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import useFollowStatus from '../hooks/useFollowStatus';
 import checkMatchingUser from '../utils/checkMatchingUser';
+import { UserProfile } from '../interfaces/UserProfile';
 
-const ProfileSmall = ({ userProfile }) => {
+interface IProps {
+  userProfile: UserProfile;
+}
+
+const ProfileSmall = ({ userProfile }: IProps) => {
   const [followed, handleFollow] = useFollowStatus(userProfile);
   const navigate = useNavigate();
   const customClass = 'user-card-small';
 
-  const navToPage = (e) => {
-    const targetName = e.target.className;
+  const navToPage = (e: React.MouseEvent<HTMLDivElement>) => {
+    const element = e.target as HTMLElement;
+    const targetName = element.className;
     if (targetName !== 'btn-follow') navigate(`/${userProfile.userName}`);
   };
 
@@ -52,19 +57,6 @@ const ProfileSmall = ({ userProfile }) => {
       )}
     </div>
   );
-};
-
-ProfileSmall.propTypes = {
-  userProfile: PropTypes.shape({
-    photoURL: PropTypes.string,
-    displayName: PropTypes.string,
-    userName: PropTypes.string,
-    id: PropTypes.string,
-  }),
-};
-
-ProfileSmall.defaultProps = {
-  userProfile: null,
 };
 
 export default ProfileSmall;
