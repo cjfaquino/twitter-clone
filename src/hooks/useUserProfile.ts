@@ -6,7 +6,7 @@ import { db } from '../firebase-config';
 import { UserProfile } from '../interfaces/UserProfile';
 
 function useUserProfile(userObj: User) {
-  const noProfile = { id: 'no-id' };
+  const noProfile = { id: 'no-id', doneLoading: false };
   const [profile, setProfile] = useState<UserProfile>(noProfile);
   const navigate = useNavigate();
 
@@ -15,9 +15,10 @@ function useUserProfile(userObj: User) {
       const docRef = doc(db, 'users', userObj.uid);
       getDoc(docRef).then((docSnap) => {
         if (docSnap.exists() && profile !== docSnap.data()) {
-          setProfile({ id: docSnap.id, ...docSnap.data() });
+          setProfile({ id: docSnap.id, ...docSnap.data(), doneLoading: true });
         } else {
           // no user exists in firestore db users
+          setProfile({ ...noProfile, doneLoading: true });
           // create user profile
           navigate(`/settings`);
         }
