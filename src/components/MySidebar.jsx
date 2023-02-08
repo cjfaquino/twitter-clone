@@ -18,7 +18,7 @@ const MySidebar = ({ isSignedIn }) => {
         <div className='sidebar-signup'>
           <h3>New to Twitter Clone?</h3>
           <p>Sign up now to get your own personalized timeline!</p>
-          <button type='button' className='btn-sidebar-signup'>
+          <button type='button' className='btn-with-provider'>
             <GoogleIcon /> Sign up with Google
           </button>
           <OrSeparator />
