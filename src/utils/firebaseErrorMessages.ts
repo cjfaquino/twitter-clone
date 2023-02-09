@@ -2,6 +2,10 @@ export default function firebaseErrorMessage(errorCode: string) {
   let message;
 
   switch (errorCode) {
+    case 'auth/popup-closed-by-user':
+      message = 'Popup closed by user';
+      break;
+
     case 'auth/credential-already-in-use':
       message = 'An account with these credentials already exists';
       break;
@@ -24,6 +28,7 @@ export default function firebaseErrorMessage(errorCode: string) {
 
     default:
       message = 'Something went wrong. Please try again.';
+      console.log(errorCode);
       break;
   }
 
