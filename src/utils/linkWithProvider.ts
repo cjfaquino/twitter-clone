@@ -4,6 +4,7 @@ import {
   GithubAuthProvider,
   linkWithPopup,
 } from 'firebase/auth';
+import eventProvider from '../events/eventProvider';
 import firebaseErrorMessage from './firebaseErrorMessages';
 import setErrorMessage from './setErrorMessage';
 
@@ -11,11 +12,11 @@ export default async function linkWithProvider(providerName: string) {
   try {
     let provider;
     switch (providerName) {
-      case 'google':
+      case 'google.com':
         provider = new GoogleAuthProvider();
         break;
 
-      case 'github':
+      case 'github.com':
         provider = new GithubAuthProvider();
         break;
 
@@ -25,6 +26,10 @@ export default async function linkWithProvider(providerName: string) {
 
     const auth = getAuth();
     const result = await linkWithPopup(auth.currentUser!, provider);
+
+    // fire event on success
+    eventProvider(providerName);
+
     return result.user;
   } catch (error: any) {
     const message = firebaseErrorMessage(error.code);

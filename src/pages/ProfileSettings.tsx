@@ -11,8 +11,11 @@ import sendEmailVerification from '../utils/sendEmailVerification';
 import validateUsername from '../utils/validateUsername';
 import { UserProfile } from '../interfaces/UserProfile';
 import GoogleIcon from '../components/GoogleIcon';
-import checkLinkedProviders from '../utils/checkLinkedProviders';
 import linkWithProvider from '../utils/linkWithProvider';
+import unlinkProvider from '../utils/unlinkProvider';
+import checkOnlyLinkedProviders from '../utils/checkOnlyLinkedProvider';
+import setErrorMessage from '../utils/setErrorMessage';
+import useProviderLinkStatus from '../hooks/useProviderLinkStatus';
 
 interface IProps {
   currentUser: User;
@@ -24,6 +27,15 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
   const [email, handleEmail, setEmail] = useInput();
   const [submittingProfile, setSubmittingProfile] = useState(false);
   const [submittingEmail, setSubmittingEmail] = useState(false);
+  const [googleStatus, handleGoogle] = useProviderLinkStatus(
+    currentUser,
+    'google.com'
+  );
+  const [githubStatus, handleGithub] = useProviderLinkStatus(
+    currentUser,
+    'github.com'
+  );
+
   const navigate = useNavigate();
 
   const handleSubmitProfile = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -60,10 +72,6 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
     if (userProfile.doneLoading) {
       setUserName(userProfile.userName);
     }
-  };
-
-  const linkProvider = (provider: string) => async () => {
-    await linkWithProvider(provider);
   };
 
   useEffect(() => {
@@ -142,28 +150,20 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
 
           <button
             type='button'
-            onClick={linkProvider('github')}
+            onClick={handleGithub}
             className='btn-with-provider'
-            disabled={checkLinkedProviders(currentUser, 'google.com')}
           >
             <FontAwesomeIcon icon={faGithub} />
-            {checkLinkedProviders(currentUser, 'google.com')
-              ? 'Unlink'
-              : 'Link'}{' '}
-            Github account
+            {githubStatus ? 'Unlink' : 'Link'} Github account
           </button>
 
           <button
             type='button'
-            onClick={linkProvider('google')}
+            onClick={handleGoogle}
             className='btn-with-provider'
-            disabled={checkLinkedProviders(currentUser, 'google.com')}
           >
             <GoogleIcon />
-            {checkLinkedProviders(currentUser, 'google.com')
-              ? 'Unlink'
-              : 'Link'}{' '}
-            Google account
+            {googleStatus ? 'Unlink' : 'Link'} Google account
           </button>
         </div>
 

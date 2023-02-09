@@ -58,14 +58,14 @@ const Login = () => {
         <div className='login-provider error' />
         <button
           type='button'
-          onClick={handleProviderLogin('google')}
+          onClick={handleProviderLogin('google.com')}
           className='btn-with-provider'
         >
           <GoogleIcon /> Log In with Google
         </button>
         <button
           type='button'
-          onClick={handleProviderLogin('github')}
+          onClick={handleProviderLogin('github.com')}
           className='btn-with-provider'
         >
           <FontAwesomeIcon icon={faGithub} /> Log In with Github

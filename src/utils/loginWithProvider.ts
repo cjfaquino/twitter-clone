@@ -11,11 +11,11 @@ export default async function loginWithProvider(providerName: string) {
   try {
     let provider;
     switch (providerName) {
-      case 'google':
+      case 'google.com':
         provider = new GoogleAuthProvider();
         break;
 
-      case 'github':
+      case 'github.com':
         provider = new GithubAuthProvider();
         break;
 

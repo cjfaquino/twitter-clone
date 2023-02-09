@@ -29,14 +29,14 @@ const MySidebar = ({ isSignedIn }: IProps) => {
           <p>Sign up now to get your own personalized timeline!</p>
           <button
             type='button'
-            onClick={handleSignUp('google')}
+            onClick={handleSignUp('google.com')}
             className='btn-with-provider'
           >
             <GoogleIcon /> Sign up with Google
           </button>
           <button
             type='button'
-            onClick={handleSignUp('github')}
+            onClick={handleSignUp('github.com')}
             className='btn-with-provider'
           >
             <FontAwesomeIcon icon={faGithub} /> Sign up with Github
