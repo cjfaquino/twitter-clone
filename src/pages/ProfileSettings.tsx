@@ -11,10 +11,6 @@ import sendEmailVerification from '../utils/sendEmailVerification';
 import validateUsername from '../utils/validateUsername';
 import { UserProfile } from '../interfaces/UserProfile';
 import GoogleIcon from '../components/GoogleIcon';
-import linkWithProvider from '../utils/linkWithProvider';
-import unlinkProvider from '../utils/unlinkProvider';
-import checkOnlyLinkedProviders from '../utils/checkOnlyLinkedProvider';
-import setErrorMessage from '../utils/setErrorMessage';
 import useProviderLinkStatus from '../hooks/useProviderLinkStatus';
 
 interface IProps {
