@@ -371,10 +371,6 @@ button svg {
   flex-direction: column;
 }
 
-.form label {
-  position: relative;
-}
-
 .login-form input,
 .sign-up-form input,
 .settings-forms input {
@@ -495,7 +491,7 @@ form button {
   font-weight: 400;
 }
 
-#settings .btn-verify-email {
+.btn-verify-email {
   background-color: transparent;
   color: black;
   padding: 0;

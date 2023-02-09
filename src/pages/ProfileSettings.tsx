@@ -135,7 +135,11 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
         </form>
 
         <div className='link-google-account'>
-          <button type='button' onClick={linkGoogle}>
+          <button
+            type='button'
+            onClick={linkGoogle}
+            className='btn-with-provider'
+          >
             <GoogleIcon />
             Link Google account
           </button>
