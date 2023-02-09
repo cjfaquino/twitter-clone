@@ -3,7 +3,7 @@ import { User } from 'firebase/auth';
 import { db } from '../firebase-config';
 import getProfilePicUrl from './getProfilePicUrl';
 import updateDisplayNameAndPhoto from './updateDisplayNameAndPhoto';
-import eventProfileEdit from './eventProfileEdit';
+import eventProfileEdit from '../events/eventProfileEdit';
 
 interface CreateProfile {
   user: User;

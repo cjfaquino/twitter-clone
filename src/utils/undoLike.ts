@@ -1,9 +1,10 @@
 import { deleteDoc, doc, increment, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase-config';
-import eventProfileEdit from './eventProfileEdit';
+import eventProfileEdit from '../events/eventProfileEdit';
 import getUserUid from './getUserUid';
+import { TweetObj } from '../interfaces/TweetObj';
 
-const undoLike = async (tweetObj) => {
+const undoLike = async (tweetObj: TweetObj) => {
   try {
     const likesRef = doc(db, 'users', getUserUid(), 'likes', tweetObj.id);
     const tweetLikesRef = doc(db, 'tweets', tweetObj.id, 'likes', getUserUid());

@@ -6,10 +6,10 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import { db } from '../firebase-config';
-import eventProfileEdit from './eventProfileEdit';
+import { TweetObj } from '../interfaces/TweetObj';
 import getUserUid from './getUserUid';
 
-const likeTweet = async (tweetObj) => {
+const likeTweet = async (tweetObj: TweetObj) => {
   // add tweet to like in user profile
   try {
     const likesRef = doc(db, 'users', getUserUid(), 'likes', tweetObj.id);
@@ -23,8 +23,6 @@ const likeTweet = async (tweetObj) => {
     setDoc(tweetLikesRef, { id: getUserUid(), likedAt: serverTimestamp() });
 
     updateDoc(tweetRef, { likes: increment(1) });
-
-    eventProfileEdit();
   } catch (error) {
     console.log(error);
   }

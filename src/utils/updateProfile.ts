@@ -1,8 +1,14 @@
 import { doc, setDoc } from 'firebase/firestore';
+import { User } from 'firebase/auth';
 import { db } from '../firebase-config';
-import eventProfileEdit from './eventProfileEdit';
+import eventProfileEdit from '../events/eventProfileEdit';
 
-const updateProfile = async ({ user, userName }) => {
+interface IArgs {
+  user: User;
+  userName: string;
+}
+
+const updateProfile = async ({ user, userName }: IArgs) => {
   try {
     // create or update firestore profile
     const userRef = doc(db, 'users', user.uid);
@@ -13,6 +19,7 @@ const updateProfile = async ({ user, userName }) => {
       metadata: { ...user.metadata },
     });
 
+    // fire profile event
     eventProfileEdit();
 
     return true;

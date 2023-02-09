@@ -4,7 +4,7 @@ import isUserSignedIn from '../utils/isUserSignedIn';
 import followUser from '../utils/followUser';
 import unfollowUser from '../utils/unfollowUser';
 import checkAlreadyFollowing from '../utils/checkAlreadyFollowing';
-import eventFollow from '../utils/eventFollow';
+import eventFollow from '../events/eventFollow';
 import { UserProfile } from '../interfaces/UserProfile';
 
 export default function useFollowStatus(userProfile: UserProfile) {

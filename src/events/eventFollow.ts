@@ -1,4 +1,4 @@
-const eventFollow = (userID) => {
+const eventFollow = (userID: string) => {
   const event = new Event(`change follow for ${userID}`);
   document.dispatchEvent(event);
 };

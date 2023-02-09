@@ -1,11 +1,12 @@
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase-config';
-import eventProfileEdit from './eventProfileEdit';
+import eventProfileEdit from '../events/eventProfileEdit';
 import getUserUid from './getUserUid';
+import { UserProfile } from '../interfaces/UserProfile';
 
 export default async function followUser(
-  currentUserProfileObj,
-  targetUserProfileObj
+  currentUserProfileObj: UserProfile,
+  targetUserProfileObj: UserProfile
 ) {
   // add tweet to like in user profile
   try {
