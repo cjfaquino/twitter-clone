@@ -1,14 +1,36 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useParams, Routes, Route, NavLink } from 'react-router-dom';
+import {
+  useParams,
+  Routes,
+  Route,
+  NavLink,
+  useNavigate,
+} from 'react-router-dom';
 import GoBackHeader from '../components/GoBackHeader';
 import ProfileLarge from '../components/ProfileLarge';
 import useFindByUsername from '../hooks/useFindByUsername';
 import ProfileFeed from '../components/ProfileFeed';
+import { User } from 'firebase/auth';
+import { UserProfile } from '../interfaces/UserProfile';
 
-const ProfilePage = ({ currentUser, userProfile }) => {
+interface IProps {
+  currentUser: User;
+  userProfile: UserProfile;
+}
+
+const ProfilePage = ({ currentUser, userProfile }: IProps) => {
   const params = useParams();
-  const targetUser = useFindByUsername(params.username);
+  const navigate = useNavigate();
+  const targetUser = useFindByUsername(params.username!);
+
+  useEffect(() => {
+    // has not finished signup
+    // navigate to finish
+    if (userProfile.id === 'no-id' && userProfile.doneLoading) {
+      navigate('/signup/continue');
+    }
+  }, [userProfile]);
 
   return (
     <div id='profile'>
@@ -59,16 +81,6 @@ const ProfilePage = ({ currentUser, userProfile }) => {
       </Routes>
     </div>
   );
-};
-
-ProfilePage.propTypes = {
-  currentUser: PropTypes.shape({}),
-  userProfile: PropTypes.shape({}),
-};
-
-ProfilePage.defaultProps = {
-  currentUser: null,
-  userProfile: null,
 };
 
 export default ProfilePage;

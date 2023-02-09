@@ -4,7 +4,7 @@ import {
   sendEmailVerification,
 } from 'firebase/auth';
 
-const createUser = async (email, password) => {
+const createUser = async (email: string, password: string) => {
   try {
     const auth = getAuth();
     const userCredential = await createUserWithEmailAndPassword(
@@ -19,7 +19,7 @@ const createUser = async (email, password) => {
     }
     return undefined;
   } catch (error) {
-    console.log(error.code, error.message);
+    console.log(error);
     return false;
   }
 };

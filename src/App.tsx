@@ -15,6 +15,7 @@ import Login from './pages/Login';
 import ProfilePage from './pages/ProfilePage';
 import Search from './pages/Search';
 import FollowsPage from './pages/FollowsPage';
+import SignUpContinue from './pages/SignUpContinue';
 
 const App = () => {
   const [isSignedIn, currentUser, userProfile] = useAuthStateObserver();
@@ -35,6 +36,7 @@ const App = () => {
           isSignedIn={isSignedIn}
           toggleTweetPopup={toggleTweetPopup}
         />
+
         <div id='centerbar'>
           <Routes>
             <Route
@@ -48,8 +50,11 @@ const App = () => {
               }
             />
             <Route path='/search/:search' element={<Search />} />
-
             <Route path='/signup' element={<SignUp />} />
+            <Route
+              path='/signup/continue'
+              element={<SignUpContinue currentUser={currentUser} />}
+            />
             <Route path='/login' element={<Login />} />
             <Route
               path='/:username/*'
@@ -64,7 +69,6 @@ const App = () => {
               path='/:username/tweet/:tweet'
               element={<TweetPage userProfile={userProfile} />}
             />
-
             {['followers', 'following', 'followers_you_follow'].map((path) => (
               <Route
                 key={`profile-${path}`}
@@ -72,7 +76,6 @@ const App = () => {
                 element={<FollowsPage />}
               />
             ))}
-
             <Route
               path='/settings'
               element={

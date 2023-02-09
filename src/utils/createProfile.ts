@@ -9,7 +9,7 @@ interface CreateProfile {
   user: User;
   userName: string;
   displayName: string;
-  photoURL: string;
+  photoURL?: string;
 }
 
 const createProfile = async ({
@@ -31,9 +31,13 @@ const createProfile = async ({
       metadata: { ...user.metadata },
     });
 
+    // dispatch event 'profile edit'
     eventProfileEdit();
+
+    return true;
   } catch (error) {
     console.error('Error saving new profile to Firebase Database', error);
+    return false;
   }
 };
 

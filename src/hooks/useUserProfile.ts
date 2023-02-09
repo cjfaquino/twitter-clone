@@ -5,7 +5,7 @@ import { User } from 'firebase/auth';
 import { db } from '../firebase-config';
 import { UserProfile } from '../interfaces/UserProfile';
 
-function useUserProfile(userObj: User) {
+function useUserProfile(userObj: User | null) {
   const noProfile = { id: 'no-id', doneLoading: false };
   const [profile, setProfile] = useState<UserProfile>(noProfile);
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ function useUserProfile(userObj: User) {
           // no user exists in firestore db users
           setProfile({ ...noProfile, doneLoading: true });
           // create user profile
-          navigate(`/settings`);
+          navigate(`/signup/continue`);
         }
       });
     }

@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useInput from '../hooks/useInput';
-import createUserWithProfile from '../utils/createUserWithProfile';
 import HaveAnAccount from '../components/HaveAnAccount';
+import createUser from '../utils/createUser';
 
 const SignUp = () => {
   const [email, handleEmail] = useInput();
-  const [displayName, handleDisplayName] = useInput();
-  const [userName, handleUsername] = useInput();
   const [password, handlePwd] = useInput();
   const [confirmPassword, handleConfirmPwd] = useInput();
   const [submitting, setSubmitting] = useState(false);
@@ -21,16 +19,11 @@ const SignUp = () => {
     if (!checkSamePass) return;
 
     setSubmitting(true);
-    const created = await createUserWithProfile({
-      displayName,
-      userName,
-      email,
-      password,
-    });
+    const created = await createUser(email, password);
     setSubmitting(false);
 
     if (created) {
-      navigate(`/explore`);
+      navigate(`/signup/continue`);
     } else {
       // error
     }
@@ -39,28 +32,6 @@ const SignUp = () => {
   return (
     <form onSubmit={handleSubmit} className='sign-up-form'>
       <h2>Create your account</h2>
-      <label htmlFor='displayName'>
-        Your name
-        <input
-          type='text'
-          id='displayName'
-          value={displayName}
-          onChange={handleDisplayName}
-          required
-        />
-      </label>
-      <label htmlFor='theUserN'>
-        Username
-        <input
-          type='text'
-          id='theUserN'
-          value={userName}
-          onChange={handleUsername}
-          autoComplete='off'
-          required
-        />
-      </label>
-
       <label htmlFor='email'>
         Email
         <input

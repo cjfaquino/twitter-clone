@@ -45,7 +45,7 @@ const MyNav = ({ currentUser, userProfile, toggleTweetPopup }: IProps) => {
             </div>
           </NavLink>
         </li>
-        {currentUser && userProfile && (
+        {currentUser && userProfile.id !== 'no-id' ? (
           <>
             <li className='nav-list-item'>
               <NavLink to={`${userProfile.userName}`}>
@@ -72,12 +72,7 @@ const MyNav = ({ currentUser, userProfile, toggleTweetPopup }: IProps) => {
                 Tweet
               </button>
             </li>
-          </>
-        )}
-
-        <li className='nav-user'>
-          {currentUser && (
-            <>
+            <li className='nav-user'>
               <div
                 className='nav-user-item'
                 onClick={toggleLogoutPopup}
@@ -110,9 +105,22 @@ const MyNav = ({ currentUser, userProfile, toggleTweetPopup }: IProps) => {
                   </div>
                 </>
               )}
-            </>
-          )}
-        </li>
+            </li>
+          </>
+        ) : (
+          currentUser &&
+          userProfile.doneLoading &&
+          userProfile.id === 'no-id' && (
+            <li className='nav-list-item'>
+              <NavLink to='/signup/continue'>
+                <div className='link-item'>
+                  <FontAwesomeIcon icon={faUser} />
+                  Continue sign-up
+                </div>
+              </NavLink>
+            </li>
+          )
+        )}
       </ul>
     </nav>
   );

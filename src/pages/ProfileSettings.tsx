@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { User } from 'firebase/auth';
 import useInput from '../hooks/useInput';
 import updateProfile from '../utils/updateProfile';
-import doesProfileExist from '../utils/doesProfileExist';
 import updateUserEmail from '../utils/updateEmail';
 import linkWithGooglePopup from '../utils/linkWithGooglePopup';
 import isEmailVerified from '../utils/isEmailVerified';
@@ -25,7 +23,7 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
   const [submittingEmail, setSubmittingEmail] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmitProfile = async (e) => {
+  const handleSubmitProfile = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!(await validateUsername(userName, 2, 20))) {
@@ -41,7 +39,7 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
     setSubmittingProfile(false);
   };
 
-  const handleSubmitEmail = async (e) => {
+  const handleSubmitEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmittingEmail(true);
     const res = await updateUserEmail(email);
@@ -72,11 +70,17 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
       return navigate('/login');
     }
 
+    // has not finished signup
+    if (userProfile.id === 'no-id' && userProfile.doneLoading) {
+      return navigate('/signup/continue');
+    }
+
     setFields();
     return undefined;
   }, [userProfile]);
-  console.log(userProfile);
+
   return (
+    userProfile.id !== 'no-id' &&
     userProfile.doneLoading && (
       <div className='settings-forms'>
         <form onSubmit={handleSubmitProfile}>
