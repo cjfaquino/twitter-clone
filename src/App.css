@@ -34,7 +34,7 @@ input:focus {
 }
 
 button svg {
-  height: 20px;
+  height: 20px !important;
 }
 
 .popup {
