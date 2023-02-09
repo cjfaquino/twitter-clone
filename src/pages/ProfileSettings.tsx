@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User } from 'firebase/auth';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import useInput from '../hooks/useInput';
 import updateProfile from '../utils/updateProfile';
 import updateUserEmail from '../utils/updateEmail';
-import linkWithGooglePopup from '../utils/linkWithGooglePopup';
 import isEmailVerified from '../utils/isEmailVerified';
 import sendEmailVerification from '../utils/sendEmailVerification';
 import validateUsername from '../utils/validateUsername';
 import { UserProfile } from '../interfaces/UserProfile';
 import GoogleIcon from '../components/GoogleIcon';
+import checkLinkedProviders from '../utils/checkLinkedProviders';
+import linkWithProvider from '../utils/linkWithProvider';
 
 interface IProps {
   currentUser: User;
@@ -59,8 +62,8 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
     }
   };
 
-  const linkGoogle = async () => {
-    await linkWithGooglePopup('github');
+  const linkProvider = (provider: string) => async () => {
+    await linkWithProvider(provider);
   };
 
   useEffect(() => {
@@ -134,16 +137,34 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
           </button>
         </form>
 
-        <div className='link-google-account'>
+        <div className='link-accounts'>
+          <span className='error' />
+
           <button
             type='button'
-            onClick={linkGoogle}
+            onClick={linkProvider('github')}
             className='btn-with-provider'
+            disabled={checkLinkedProviders(currentUser, 'google.com')}
+          >
+            <FontAwesomeIcon icon={faGithub} />
+            {checkLinkedProviders(currentUser, 'google.com')
+              ? 'Unlink'
+              : 'Link'}{' '}
+            Github account
+          </button>
+
+          <button
+            type='button'
+            onClick={linkProvider('google')}
+            className='btn-with-provider'
+            disabled={checkLinkedProviders(currentUser, 'google.com')}
           >
             <GoogleIcon />
-            Link Google account
+            {checkLinkedProviders(currentUser, 'google.com')
+              ? 'Unlink'
+              : 'Link'}{' '}
+            Google account
           </button>
-          <span className='error' />
         </div>
 
         <div className='account-stats'>
@@ -151,7 +172,7 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
             <span>Created at: </span>{' '}
             <span>
               {new Date(
-                Number(userProfile.metadata.createdAt)
+                Number(userProfile.metadata!.createdAt)
               ).toLocaleString()}
             </span>
           </div>
@@ -159,7 +180,7 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
             <span>Last login at: </span>{' '}
             <span>
               {new Date(
-                Number(userProfile.metadata.lastLoginAt)
+                Number(userProfile.metadata!.lastLoginAt)
               ).toLocaleString()}
             </span>
           </div>

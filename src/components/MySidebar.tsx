@@ -1,11 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import MyFooter from './MyFooter/MyFooter';
 import useRandomUsers from '../hooks/useRandomUsers';
 import ListOfUsers from './ListOfUsers';
 import OrSeparator from './OrSeparator';
 import GoogleIcon from './GoogleIcon';
 import HaveAnAccount from './HaveAnAccount';
+import loginWithProvider from '../utils/loginWithProvider';
 
 interface IProps {
   isSignedIn: boolean;
@@ -14,14 +17,29 @@ interface IProps {
 const MySidebar = ({ isSignedIn }: IProps) => {
   const users = useRandomUsers();
 
+  const handleSignUp = (name: string) => () => {
+    loginWithProvider(name);
+  };
+
   return (
     <div id='sidebar'>
       {!isSignedIn ? (
         <div className='sidebar-signup'>
           <h3>New to Twitter Clone?</h3>
           <p>Sign up now to get your own personalized timeline!</p>
-          <button type='button' className='btn-with-provider'>
+          <button
+            type='button'
+            onClick={handleSignUp('google')}
+            className='btn-with-provider'
+          >
             <GoogleIcon /> Sign up with Google
+          </button>
+          <button
+            type='button'
+            onClick={handleSignUp('github')}
+            className='btn-with-provider'
+          >
+            <FontAwesomeIcon icon={faGithub} /> Sign up with Github
           </button>
           <OrSeparator />
           <Link to='/signup'>
