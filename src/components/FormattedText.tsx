@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import React, { FunctionComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { createSearchParams, Link } from 'react-router-dom';
 
 const propTypes = {
   textArr: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
@@ -17,28 +17,32 @@ const FormattedText: FunctionComponent<MyComponentProps> = ({
   itemID,
 }) => (
   <div className={`${customClass}-item-message`}>
-    {textArr.map((t, index) => {
-      if (t.startsWith('#')) {
+    {textArr.map((word, index) => {
+      if (word.startsWith('#')) {
         return (
-          <span
-            key={`hash-${t}-${index}-${itemID}`}
+          <Link
+            to={{
+              pathname: '/search',
+              search: createSearchParams({ q: word }).toString(),
+            }}
+            key={`hash-${word}-${index}-${itemID}`}
             className='link-hash'
-          >{`${t} `}</span>
+          >{`${word} `}</Link>
         );
       }
 
-      if (t.startsWith('@')) {
-        const username = t.replace(/@/g, '');
+      if (word.startsWith('@')) {
+        const username = word.replace(/@/g, '');
         return (
           <Link
             to={`/${username}`}
-            key={`user-${t}-${index}-${itemID}`}
+            key={`user-${word}-${index}-${itemID}`}
             className='link-user'
           >{`@${username} `}</Link>
         );
       }
 
-      return `${t} `;
+      return `${word} `;
     })}
   </div>
 );
