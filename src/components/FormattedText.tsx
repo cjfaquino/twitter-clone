@@ -1,5 +1,7 @@
+/* eslint-disable react/no-array-index-key */
 import React, { FunctionComponent } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const propTypes = {
   textArr: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
@@ -19,12 +21,23 @@ const FormattedText: FunctionComponent<MyComponentProps> = ({
       if (t.startsWith('#')) {
         return (
           <span
-            // eslint-disable-next-line react/no-array-index-key
             key={`hash-${t}-${index}-${itemID}`}
             className='link-hash'
           >{`${t} `}</span>
         );
       }
+
+      if (t.startsWith('@')) {
+        const username = t.replace(/@/g, '');
+        return (
+          <Link
+            to={`/${username}`}
+            key={`user-${t}-${index}-${itemID}`}
+            className='link-user'
+          >{`@${username} `}</Link>
+        );
+      }
+
       return `${t} `;
     })}
   </div>

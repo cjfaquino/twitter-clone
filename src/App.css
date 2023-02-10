@@ -50,7 +50,8 @@ button svg {
   color: red;
 }
 
-.link-hash {
+.link-hash,
+.link-user {
   color: var(--theme-color);
 }
 
