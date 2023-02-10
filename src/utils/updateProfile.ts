@@ -1,4 +1,4 @@
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase-config';
 import eventProfileEdit from '../events/eventProfileEdit';
 import getProfilePicUrl from './getProfilePicUrl';
@@ -34,7 +34,7 @@ const updateProfile = async ({
       photoURL: photoURL || userProfile.photoURL || getProfilePicUrl(),
     });
 
-    await setDoc(userRef, {
+    await updateDoc(userRef, {
       userName: userName || userProfile.userName,
       displayName: displayName || userProfile.displayName,
       photoURL: photoURL || getProfilePicUrl(),

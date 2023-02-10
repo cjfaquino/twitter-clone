@@ -10,8 +10,6 @@ const FollowsPage = () => {
   const location = useLocation();
   const targetUser = useFindByUsername(params.username!);
   const typeOfList = location.pathname.split('/').pop();
-  const usersFromState =
-    location.state && location.state.targetUser[typeOfList!];
   const [userLists] = useFollowsList(typeOfList!, targetUser.userProfile.id);
 
   return (
@@ -41,7 +39,7 @@ const FollowsPage = () => {
           <span>Following</span>
         </NavLink>
       </div>
-      <ListOfUsers users={usersFromState || userLists} />
+      <ListOfUsers users={userLists} />
     </>
   );
 };

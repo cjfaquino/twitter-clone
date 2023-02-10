@@ -7,6 +7,8 @@ export interface UserProfile {
   userName?: string;
   photoURL?: string;
   backdropURL?: string;
+  followers?: number;
+  following?: number;
   metadata?: {
     createdAt: string;
     creationTime: string;

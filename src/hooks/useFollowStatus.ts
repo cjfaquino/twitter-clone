@@ -7,7 +7,13 @@ import checkAlreadyFollowing from '../utils/checkAlreadyFollowing';
 import eventFollow from '../events/eventFollow';
 import { UserProfile } from '../interfaces/UserProfile';
 
-export default function useFollowStatus(userProfile: UserProfile) {
+export default function useFollowStatus(
+  userProfile: UserProfile
+): [
+  boolean | null,
+  (e: React.MouseEvent<HTMLButtonElement>) => Promise<void>,
+  React.Dispatch<React.SetStateAction<boolean | null>>
+] {
   const [followed, setFollowed] = useState<boolean | null>(null);
   const navigate = useNavigate();
 
@@ -32,9 +38,8 @@ export default function useFollowStatus(userProfile: UserProfile) {
     if (btnText === 'Follow') {
       await followUser(currentUserProfileObj, userProfile);
       setFollowed(true);
-    }
-
-    if (btnText === 'Unfollow') {
+    } else {
+      // unfollow
       await unfollowUser(userProfile);
       setFollowed(false);
     }

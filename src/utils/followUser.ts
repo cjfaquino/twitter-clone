@@ -1,4 +1,4 @@
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, increment, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase-config';
 import eventProfileEdit from '../events/eventProfileEdit';
 import getUserUid from './getUserUid';
@@ -27,10 +27,18 @@ export default async function followUser(
       targetUserProfileObj.id
     );
 
+    // increase currentUser's following count
+    const countRef = doc(db, 'users', getUserUid());
+
+    // increase targetUser's follower count
+    const targetCountRef = doc(db, 'users', targetUserProfileObj.id);
+
     // add to follwers & following collection in users
     await Promise.all([
       setDoc(followersRef, currentUserProfileObj),
       setDoc(followingRef, targetUserProfileObj),
+      updateDoc(countRef, { following: increment(1) }),
+      updateDoc(targetCountRef, { followers: increment(1) }),
     ]);
 
     eventProfileEdit();

@@ -121,7 +121,7 @@ const ProfileLarge = ({ currentUser, targetUser, userProfile }: IProps) => {
                   <span className={`${customClass}-followers follow-link`}>
                     <Link to='followers' state={{ targetUser }}>
                       <span className={`${customClass}-followers-number`}>
-                        {targetUser.followers.length}
+                        {targetUser.userProfile.followers}
                       </span>{' '}
                       <span className='grey'>Followers</span>
                     </Link>
@@ -129,7 +129,7 @@ const ProfileLarge = ({ currentUser, targetUser, userProfile }: IProps) => {
                   <span className={`${customClass}-following follow-link`}>
                     <Link to='following' state={{ targetUser }}>
                       <span className={`${customClass}-following-number`}>
-                        {targetUser.following.length}
+                        {targetUser.userProfile.following}
                       </span>{' '}
                       <span className='grey'>Following</span>
                     </Link>
