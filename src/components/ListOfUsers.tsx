@@ -9,7 +9,11 @@ interface IProps {
   compact?: boolean;
 }
 
-const ListOfUsers = ({ users, compact }: IProps) => (
+const defaultProps = {
+  compact: false,
+};
+
+const ListOfUsers = ({ users, compact }: IProps & typeof defaultProps) => (
   // eslint-disable-next-line react/jsx-no-useless-fragment
   <>
     {compact
@@ -25,5 +29,7 @@ const ListOfUsers = ({ users, compact }: IProps) => (
 ListOfUsers.propTypes = {
   users: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
+
+ListOfUsers.defaultProps = defaultProps;
 
 export default ListOfUsers;

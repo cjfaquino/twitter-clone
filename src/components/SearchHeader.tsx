@@ -5,8 +5,12 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import useInput from '../hooks/useInput';
 
 interface IProps {
-  searched: string;
+  searched?: string;
 }
+
+const defaultProps = {
+  searched: false,
+};
 
 const SearchHeader = ({ searched }: IProps) => {
   const [search, handleSearch, setSearch] = useInput(searched);
@@ -18,10 +22,12 @@ const SearchHeader = ({ searched }: IProps) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    navigate({
-      pathname: '/search',
-      search: createSearchParams({ q: search }).toString(),
-    });
+    if (searched) {
+      navigate({
+        pathname: '/search',
+        search: createSearchParams({ q: search }).toString(),
+      });
+    }
   };
 
   return (
@@ -49,5 +55,7 @@ const SearchHeader = ({ searched }: IProps) => {
     </header>
   );
 };
+
+SearchHeader.defaultProps = defaultProps;
 
 export default SearchHeader;

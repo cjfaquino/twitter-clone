@@ -7,7 +7,7 @@ import loginWithEmailAndPass from '../utils/loginWithEmail&Pass';
 import setErrorMessage from '../utils/setErrorMessage.js';
 import OrSeparator from '../components/OrSeparator';
 import HaveAnAccount from '../components/HaveAnAccount';
-import GoogleIcon from '../components/GoogleIcon';
+import GoogleIcon from '../assets/GoogleIcon';
 import loginWithProvider from '../utils/loginWithProvider';
 
 const Login = () => {
@@ -23,7 +23,7 @@ const Login = () => {
       setSubmitting(true);
 
       if (provider === 'emailPass') {
-        result = await loginWithEmailAndPass(email, password);
+        result = await loginWithEmailAndPass(email!, password!);
       } else {
         result = await loginWithProvider(provider);
       }

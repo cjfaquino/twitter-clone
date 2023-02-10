@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import TweetItem from './TweetItem';
 import saveTweet from '../utils/saveTweet';
 import useReplies from '../hooks/useReplies';
 import Tweet from '../utils/Tweet';
 import { TweetObj } from '../interfaces/TweetObj';
-import getDisplayName from '../utils/getDisplayName';
 import getProfilePicUrl from '../utils/getProfilePicUrl';
 import isUserSignedIn from '../utils/isUserSignedIn';
 import ListOfTweets from './ListOfTweets';
@@ -49,7 +47,7 @@ const Replies = ({ tweetObj }: IProps) => {
       {isUserSignedIn() && (
         <form onSubmit={handleSubmitReply} className='reply-input-container'>
           <div className='reply-input-img-container img-container'>
-            <img src={getProfilePicUrl()} alt={getDisplayName()} />
+            <img src={getProfilePicUrl()} alt='current user' />
           </div>
           <textarea
             rows={1}

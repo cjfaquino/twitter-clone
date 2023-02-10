@@ -6,7 +6,7 @@ import MyFooter from './MyFooter/MyFooter';
 import useRandomUsers from '../hooks/useRandomUsers';
 import ListOfUsers from './ListOfUsers';
 import OrSeparator from './OrSeparator';
-import GoogleIcon from './GoogleIcon';
+import GoogleIcon from '../assets/GoogleIcon';
 import HaveAnAccount from './HaveAnAccount';
 import loginWithProvider from '../utils/loginWithProvider';
 

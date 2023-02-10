@@ -1,7 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-const ThreeDots = ({ onClick }) => (
+const defaultProps = {
+  onClick: null,
+};
+
+const ThreeDots = ({
+  onClick,
+}: {
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
+} & typeof defaultProps) => (
   <div className='more-options' onClick={onClick} aria-hidden>
     <div className='dots' />
     <div className='dots' />
@@ -9,12 +16,6 @@ const ThreeDots = ({ onClick }) => (
   </div>
 );
 
-ThreeDots.propTypes = {
-  onClick: PropTypes.func,
-};
-
-ThreeDots.defaultProps = {
-  onClick: null,
-};
+ThreeDots.defaultProps = defaultProps;
 
 export default ThreeDots;

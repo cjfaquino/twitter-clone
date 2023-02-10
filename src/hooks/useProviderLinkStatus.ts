@@ -8,7 +8,7 @@ import unlinkProvider from '../utils/unlinkProvider';
 export default function useProviderLinkStatus(
   currentUser: User,
   providerName: string
-) {
+): [boolean | null, React.MouseEventHandler<HTMLButtonElement>] {
   const [link, setLink] = useState<boolean | null>(null);
 
   const checkLinkedProviders = () =>
