@@ -58,8 +58,9 @@ export default function useFindByUsername(username: string) {
       ran = true;
     }
 
-    if (!loading && userProfile.id !== 'no-id' && username === getUserName()) {
-      // only add if currentUser
+    if (username === getUserName()) {
+      // only add listener if currentUser
+      console.log('added listener');
       document.addEventListener('profile edit', getUser);
     }
 
@@ -72,7 +73,7 @@ export default function useFindByUsername(username: string) {
       setFollowers([]);
       setFollowing([]);
     };
-  }, [username, loading]);
+  }, [username]);
 
   return {
     userProfile,
