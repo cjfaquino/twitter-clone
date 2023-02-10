@@ -1,16 +1,17 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import SearchHeader from '../components/SearchHeader';
 import useSearched from '../hooks/useSearched';
 import TweetItem from '../components/TweetItem';
 
 const Search = () => {
-  const params = useParams();
-  const [results] = useSearched(params.search || '');
+  const [searchParams] = useSearchParams();
+  const searched = searchParams.get('q') || '';
+  const results = useSearched(searched);
 
   return (
     <div id='search'>
-      <SearchHeader />
+      <SearchHeader searched={searched} />
       {results.map((twt: Object) => (
         <TweetItem key={`results-${twt.id}`} tweetObj={twt} />
       ))}

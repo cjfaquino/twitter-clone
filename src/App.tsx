@@ -49,7 +49,7 @@ const App = () => {
                 />
               }
             />
-            <Route path='/search/:search' element={<Search />} />
+            <Route path='/search' element={<Search />} />
             <Route path='/signup' element={<SignUp />} />
             <Route
               path='/signup/continue'

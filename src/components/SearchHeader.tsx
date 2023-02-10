@@ -1,11 +1,15 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, createSearchParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import useInput from '../hooks/useInput';
 
-const SearchHeader = () => {
-  const [search, handleSearch, setSearch] = useInput();
+interface IProps {
+  searched: string;
+}
+
+const SearchHeader = ({ searched }: IProps) => {
+  const [search, handleSearch, setSearch] = useInput(searched);
   const navigate = useNavigate();
   const clrSearch = () => {
     setSearch('');
@@ -14,8 +18,10 @@ const SearchHeader = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const searchWithOutHash = search.replace(/#/g, '');
-    navigate(`/search/${searchWithOutHash}`);
+    navigate({
+      pathname: '/search',
+      search: createSearchParams({ q: search }).toString(),
+    });
   };
 
   return (

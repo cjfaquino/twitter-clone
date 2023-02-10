@@ -10,6 +10,7 @@ const tweetConverter = {
     USER_DISPLAY: tweet.USER_DISPLAY,
     USER_ICON: tweet.USER_ICON,
     text: tweet.text,
+    tags: tweet.tags,
     timestamp: tweet.timestamp,
     retweets: tweet.retweets,
     likes: tweet.likes,

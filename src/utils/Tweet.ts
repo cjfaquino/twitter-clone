@@ -4,6 +4,7 @@ import getDisplayName from './getDisplayName';
 import getUserName from './getUserName';
 import getUserUid from './getUserUid';
 import textToCleanedTextArray from './textToCleanedTextArray';
+import getTagsFromTextArray from './getTagsFromTextArray';
 
 interface Tweet {
   USER_NAME: string;
@@ -11,6 +12,7 @@ interface Tweet {
   USER_ID: string;
   USER_ICON: string;
   text: string[];
+  tags: string[];
   timestamp: {};
   likes: number;
   retweets: number;
@@ -20,12 +22,15 @@ interface Tweet {
 
 class Tweet {
   constructor(messageText: string, aReplyTo: Tweet | null = null) {
+    const textArray = textToCleanedTextArray(messageText);
+
     this.USER_NAME = getUserName();
-    this.USER_DISPLAY = getDisplayName();
+    this.USER_DISPLAY = getDisplayName()!;
     this.USER_ID = getUserUid();
     this.USER_ICON = getProfilePicUrl();
-    this.text = textToCleanedTextArray(messageText);
     this.timestamp = serverTimestamp();
+    this.text = textArray;
+    this.tags = getTagsFromTextArray(textArray);
     this.likes = 0;
     this.retweets = 0;
     this.views = 0;
