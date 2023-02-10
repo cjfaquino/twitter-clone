@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { getDocs, collection, query } from 'firebase/firestore';
 import { db } from '../firebase-config';
 import { UserProfile } from '../interfaces/UserProfile';
+import getUserName from '../utils/getUserName';
 
 export default function useFindByUsername(username: string) {
   const [userProfile, setUserProfile] = useState<UserProfile>({
@@ -57,20 +58,21 @@ export default function useFindByUsername(username: string) {
       ran = true;
     }
 
+    if (!loading && userProfile.id !== 'no-id' && username === getUserName()) {
+      // only add if currentUser
+      document.addEventListener('profile edit', getUser);
+    }
+
     return () => {
+      document.removeEventListener('profile edit', getUser);
+      setUserProfile({
+        id: 'no-id',
+        doneLoading: false,
+      });
       setFollowers([]);
       setFollowing([]);
     };
-  }, [username]);
-
-  useEffect(() => {
-    if (userProfile !== null) {
-      localStorage.setItem(
-        'targetUser',
-        JSON.stringify({ userProfile, followers, following })
-      );
-    }
-  }, [username, followers, following]);
+  }, [username, loading]);
 
   return {
     userProfile,

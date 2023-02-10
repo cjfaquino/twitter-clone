@@ -97,6 +97,12 @@ button svg {
   overflow: hidden;
   border-radius: 20%;
   flex-shrink: 0;
+  position: relative;
+}
+
+.img-container.large-icon {
+  --pfp-size: 130px;
+  border-radius: 15%;
 }
 
 .img-container img {
@@ -265,6 +271,8 @@ button svg {
 #popup-background {
   position: fixed;
   background-color: rgba(128, 128, 128, 0.449);
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
   z-index: 3;
@@ -381,7 +389,8 @@ button svg {
 
 .login-form input,
 .sign-up-form input,
-.settings-forms input {
+.settings-forms input,
+.edit-profile input {
   height: 40px;
   width: 100%;
   font-size: 1rem;
@@ -946,10 +955,106 @@ header.search {
   background: black;
 }
 
-.edit .btn-follow {
+.edit .btn-follow,
+.btn-edit-profile {
   padding: 7px;
   background-color: var(--profile-img-container-color);
   border: 2px solid white;
+}
+
+.btn-edit-profile:hover {
+  background-color: rgb(44, 44, 44);
+}
+
+.edit-profile {
+  position: fixed;
+  height: 550px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  background-color: black;
+  border-radius: 20px;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-profile button[type='button'] {
+  margin: 0;
+}
+
+.edit-profile button[type='submit'] {
+  padding: 7px 15px;
+}
+
+.btn-cancel-edit {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+}
+
+.btn-cancel-edit:hover {
+  background-color: rgba(255, 0, 0, 0.5);
+}
+
+.edit-profile .edit-top {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 15px 15px 15px;
+  position: sticky;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.edit-images {
+  position: relative;
+  border: 3px solid black;
+}
+
+.edit-images input {
+  width: min-content;
+}
+
+.edit-backdrop {
+  width: var(--feed-width);
+  height: 205px;
+  background-color: grey;
+}
+
+.edit-profile .img-container {
+  position: absolute;
+  top: 45%;
+  left: 20px;
+  background-color: black;
+  border: 5px solid black;
+}
+
+.edit-bottom {
+  padding: 15px;
+  width: var(--feed-width);
+}
+
+.edit-bottom input:last-child {
+  margin: 0;
+}
+
+.edit-profile textarea {
+  width: 100%;
+  min-height: 90px;
+  resize: none;
+  border-radius: 5px;
+  background-color: transparent;
+  border: 1px solid grey;
+  font-size: 1rem;
+  padding: 10px;
+  margin-bottom: 30px;
+}
+
+.edit-profile textarea:focus {
+  outline: none;
 }
 
 .user-card-display-name {
@@ -961,6 +1066,17 @@ header.search {
 .user-card-username,
 .user-card-bio {
   margin-bottom: 15px;
+}
+
+.user-card-extra-info {
+  display: flex;
+  flex: 1 1 auto;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.user-card-extra-info svg {
+  margin-right: 5px;
 }
 
 .user-card-stats {

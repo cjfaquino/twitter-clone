@@ -7,11 +7,11 @@ import {
   NavLink,
   useNavigate,
 } from 'react-router-dom';
+import { User } from 'firebase/auth';
 import GoBackHeader from '../components/GoBackHeader';
 import ProfileLarge from '../components/ProfileLarge';
 import useFindByUsername from '../hooks/useFindByUsername';
 import ProfileFeed from '../components/ProfileFeed';
-import { User } from 'firebase/auth';
 import { UserProfile } from '../interfaces/UserProfile';
 
 interface IProps {

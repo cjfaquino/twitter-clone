@@ -1,23 +1,33 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faCalendarDays,
+  faLink,
+  faLocationDot,
+} from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { User } from 'firebase/auth';
 import useFollowStatus from '../hooks/useFollowStatus';
 import { TargetUser } from '../interfaces/TargetUser';
+import useToggle from '../hooks/useToggle';
+import EditProfilePopup from './EditProfilePopup';
+import { UserProfile } from '../interfaces/UserProfile';
 
 interface IProps {
   currentUser: User;
   targetUser: TargetUser;
+  userProfile: UserProfile;
 }
 
-const ProfileLarge = ({ currentUser, targetUser }: IProps) => {
+const ProfileLarge = ({ currentUser, targetUser, userProfile }: IProps) => {
   const [followed, handleFollow] = useFollowStatus(targetUser.userProfile);
+  const [showEditProfilePopup, toggleEditProfilePopup] = useToggle();
 
   const customClass = 'user-card';
 
   const formatJoinedDate = () => {
     const joinedDate = new Date(
-      Number(targetUser.userProfile.metadata.createdAt)
+      Number(targetUser.userProfile.metadata!.createdAt)
     );
 
     const options = {
@@ -29,102 +39,109 @@ const ProfileLarge = ({ currentUser, targetUser }: IProps) => {
   };
 
   return (
-    <div className='profile-large'>
-      <div className={`${customClass}`}>
-        {targetUser.doneLoading && (
-          <div id={`${customClass}-${targetUser.userProfile.id}`}>
-            <div className='top-half' />
-            <div className='bottom-half'>
-              <div className='user-pic edit'>
-                <div className='user-profile-img-container'>
-                  <img src={targetUser.userProfile.photoURL} alt='' />
+    <>
+      {showEditProfilePopup && (
+        <EditProfilePopup
+          userProfile={userProfile}
+          toggleEditProfilePopup={toggleEditProfilePopup}
+        />
+      )}
+      <div className='profile-large'>
+        <div className={`${customClass}`}>
+          {targetUser.doneLoading && (
+            <div id={`${customClass}-${targetUser.userProfile.id}`}>
+              <div className='top-half' />
+              <div className='bottom-half'>
+                <div className='user-pic edit'>
+                  <div className='user-profile-img-container'>
+                    <img src={targetUser.userProfile.photoURL} alt='' />
+                  </div>
+                  {currentUser &&
+                  currentUser.displayName ===
+                    targetUser.userProfile.displayName ? (
+                    <button
+                      type='button'
+                      className='btn-edit-profile'
+                      onClick={toggleEditProfilePopup}
+                    >
+                      Edit Profile
+                    </button>
+                  ) : (
+                    <button
+                      type='button'
+                      onClick={handleFollow}
+                      className={
+                        followed ? 'btn-follow following' : 'btn-follow'
+                      }
+                    >
+                      {followed ? (
+                        <span className='following'>Following</span>
+                      ) : (
+                        <span>Follow</span>
+                      )}
+                    </button>
+                  )}
                 </div>
-                {currentUser &&
-                currentUser.displayName ===
-                  targetUser.userProfile.displayName ? (
-                  <button type='button'>Edit Profile</button>
-                ) : (
-                  <button
-                    type='button'
-                    onClick={handleFollow}
-                    className={followed ? 'btn-follow following' : 'btn-follow'}
-                  >
-                    {followed ? (
-                      <span className='following'>Following</span>
-                    ) : (
-                      <span>Follow</span>
-                    )}
-                  </button>
-                )}
-              </div>
-              <div className={`${customClass}-display-name`}>
-                {targetUser.userProfile.displayName}
-              </div>
-              <div className={`${customClass}-username grey`}>
-                @{targetUser.userProfile.userName}
-              </div>
-
-              <div className={`${customClass}-bio`}>
-                {targetUser.userProfile.bio}
-              </div>
-
-              {targetUser.userProfile.metadata && (
-                <div className={`${customClass}-joined grey`}>
-                  Joined {formatJoinedDate()}
+                <div className={`${customClass}-display-name`}>
+                  {targetUser.userProfile.displayName}
                 </div>
-              )}
-
-              <div className={`${customClass}-stats grey`}>
-                <span className={`${customClass}-followers follow-link`}>
-                  <Link to='followers' state={{ targetUser }}>
-                    <span className={`${customClass}-followers-number`}>
-                      {targetUser.followers.length}
-                    </span>{' '}
-                    <span className='grey'>Followers</span>
-                  </Link>
-                </span>
-                <span className={`${customClass}-following follow-link`}>
-                  <Link to='following' state={{ targetUser }}>
-                    <span className={`${customClass}-following-number`}>
-                      {targetUser.following.length}
-                    </span>{' '}
-                    <span className='grey'>Following</span>
-                  </Link>
-                </span>
+                <div className={`${customClass}-username grey`}>
+                  @{targetUser.userProfile.userName}
+                </div>
+                <div className={`${customClass}-bio`}>
+                  {targetUser.userProfile.bio}
+                </div>
+                <div className={`${customClass}-extra-info`}>
+                  {targetUser.userProfile.location && (
+                    <span>
+                      <FontAwesomeIcon icon={faLocationDot} />
+                      <span className={`${customClass}-location grey`}>
+                        {targetUser.userProfile.location}
+                      </span>
+                    </span>
+                  )}
+                  {targetUser.userProfile.website && (
+                    <span>
+                      <FontAwesomeIcon icon={faLink} />
+                      <span className={`${customClass}-website`}>
+                        {targetUser.userProfile.website}
+                      </span>
+                    </span>
+                  )}
+                  {targetUser.userProfile.metadata && (
+                    <span>
+                      <FontAwesomeIcon icon={faCalendarDays} />
+                      <span className={`${customClass}-joined grey`}>
+                        Joined {formatJoinedDate()}
+                      </span>
+                    </span>
+                  )}
+                </div>
+                <div className={`${customClass}-stats grey`}>
+                  <span className={`${customClass}-followers follow-link`}>
+                    <Link to='followers' state={{ targetUser }}>
+                      <span className={`${customClass}-followers-number`}>
+                        {targetUser.followers.length}
+                      </span>{' '}
+                      <span className='grey'>Followers</span>
+                    </Link>
+                  </span>
+                  <span className={`${customClass}-following follow-link`}>
+                    <Link to='following' state={{ targetUser }}>
+                      <span className={`${customClass}-following-number`}>
+                        {targetUser.following.length}
+                      </span>{' '}
+                      <span className='grey'>Following</span>
+                    </Link>
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-      <div />
-    </div>
+    </>
   );
-};
-
-ProfileLarge.propTypes = {
-  currentUser: PropTypes.shape({
-    displayName: PropTypes.string,
-  }),
-  targetUser: PropTypes.shape({
-    userProfile: PropTypes.shape({
-      metadata: PropTypes.shape({
-        createdAt: PropTypes.string.isRequired,
-      }),
-      id: PropTypes.string,
-      photoURL: PropTypes.string,
-      displayName: PropTypes.string,
-      userName: PropTypes.string,
-      bio: PropTypes.string,
-    }),
-    followers: PropTypes.arrayOf(PropTypes.shape({})),
-    following: PropTypes.arrayOf(PropTypes.shape({})),
-    doneLoading: PropTypes.bool,
-  }),
-};
-
-ProfileLarge.defaultProps = {
-  currentUser: null,
-  targetUser: null,
 };
 
 export default ProfileLarge;
