@@ -1,4 +1,4 @@
-import { useState, useEffect, SyntheticEvent } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import isUserSignedIn from '../utils/isUserSignedIn';
 import followUser from '../utils/followUser';
@@ -21,8 +21,11 @@ export default function useFollowStatus(
     eventFollow(userProfile.id);
   }, [followed]);
 
-  const updateFollow = () =>
+  const updateFollow = () => {
+    if (!userProfile.doneLoading) return;
+
     checkAlreadyFollowing(userProfile.id).then(setFollowed);
+  };
 
   const handleFollow = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const currentUserProfileObj = JSON.parse(

@@ -1173,7 +1173,7 @@ header.search {
 
 .user-card-medium-info {
   display: flex;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 }
 
 .user-card-medium-body {
@@ -1181,7 +1181,7 @@ header.search {
 }
 
 .user-card-medium-item-message {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
 }
 
 /* profile small */

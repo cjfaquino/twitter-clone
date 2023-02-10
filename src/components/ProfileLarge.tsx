@@ -57,8 +57,7 @@ const ProfileLarge = ({ currentUser, targetUser, userProfile }: IProps) => {
                     <img src={targetUser.userProfile.photoURL} alt='' />
                   </div>
                   {currentUser &&
-                  currentUser.displayName ===
-                    targetUser.userProfile.displayName ? (
+                  currentUser.uid === targetUser.userProfile.id ? (
                     <button
                       type='button'
                       className='btn-edit-profile'
@@ -67,19 +66,22 @@ const ProfileLarge = ({ currentUser, targetUser, userProfile }: IProps) => {
                       Edit Profile
                     </button>
                   ) : (
-                    <button
-                      type='button'
-                      onClick={handleFollow}
-                      className={
-                        followed ? 'btn-follow following' : 'btn-follow'
-                      }
-                    >
-                      {followed ? (
-                        <span className='following'>Following</span>
-                      ) : (
-                        <span>Follow</span>
-                      )}
-                    </button>
+                    currentUser &&
+                    followed !== null && (
+                      <button
+                        type='button'
+                        onClick={handleFollow}
+                        className={
+                          followed ? 'btn-follow following' : 'btn-follow'
+                        }
+                      >
+                        {followed ? (
+                          <span className='following'>Following</span>
+                        ) : (
+                          <span>Follow</span>
+                        )}
+                      </button>
+                    )
                   )}
                 </div>
                 <div className={`${customClass}-display-name`}>

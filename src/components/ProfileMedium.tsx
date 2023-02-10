@@ -43,7 +43,7 @@ const ProfileMedium = ({ userProfile }: IProps) => {
                   @{userName}
                 </div>
               </div>
-              {!checkMatchingUser(id) && (
+              {followed !== null && !checkMatchingUser(id) && (
                 <button
                   type='button'
                   onClick={handleFollow}
