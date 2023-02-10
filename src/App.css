@@ -399,6 +399,10 @@ button svg {
   margin-bottom: 30px;
 }
 
+.settings-forms form {
+  position: relative;
+}
+
 form button {
   margin-left: auto;
   margin-right: 0;

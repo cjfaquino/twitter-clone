@@ -1,4 +1,5 @@
-import { doc, setDoc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 import { db } from '../firebase-config';
 import eventProfileEdit from '../events/eventProfileEdit';
 import getProfilePicUrl from './getProfilePicUrl';
@@ -8,12 +9,12 @@ import updateDisplayNameAndPhoto from './updateDisplayNameAndPhoto';
 interface IArgs {
   userProfile: UserProfile;
   userName?: string;
-  displayName: string;
+  displayName?: string;
   photoURL?: string;
   backdropURL?: string;
-  website: string;
-  location: string;
-  bio: string;
+  website?: string;
+  location?: string;
+  bio?: string;
 }
 
 const updateProfile = async ({
@@ -27,23 +28,26 @@ const updateProfile = async ({
   bio,
 }: IArgs) => {
   try {
-    // create or update firestore profile
-    const userRef = doc(db, 'users', userProfile.id);
-    await updateDisplayNameAndPhoto({
-      displayName: displayName || userProfile.displayName,
-      photoURL: photoURL || userProfile.photoURL || getProfilePicUrl(),
-    });
+    const currentUser = getAuth().currentUser!;
+    // update stored profile
+    const userRef = doc(db, 'users', currentUser.uid);
 
-    await updateDoc(userRef, {
-      userName: userName || userProfile.userName,
-      displayName: displayName || userProfile.displayName,
-      photoURL: photoURL || getProfilePicUrl(),
-      backdropURL,
-      website,
-      location,
-      bio,
-      metadata: { ...userProfile.metadata },
-    });
+    await Promise.all([
+      updateDisplayNameAndPhoto({
+        displayName: displayName || currentUser.displayName!,
+        photoURL: photoURL || currentUser.photoURL || getProfilePicUrl(),
+      }),
+      updateDoc(userRef, {
+        userName: userName || userProfile.userName,
+        displayName: displayName || currentUser.displayName,
+        photoURL: photoURL || getProfilePicUrl(),
+        backdropURL: backdropURL || userProfile.backdropURL,
+        website: website || userProfile.website,
+        location: location || userProfile.location,
+        bio: bio || userProfile.bio,
+        metadata: { ...currentUser.metadata },
+      }),
+    ]);
 
     // fire profile event
     eventProfileEdit();

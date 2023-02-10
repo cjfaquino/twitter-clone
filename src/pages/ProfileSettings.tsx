@@ -10,7 +10,7 @@ import isEmailVerified from '../utils/isEmailVerified';
 import sendEmailVerification from '../utils/sendEmailVerification';
 import validateUsername from '../utils/validateUsername';
 import { UserProfile } from '../interfaces/UserProfile';
-import GoogleIcon from '../components/GoogleIcon';
+import GoogleIcon from '../assets/GoogleIcon';
 import useProviderLinkStatus from '../hooks/useProviderLinkStatus';
 
 interface IProps {
@@ -21,7 +21,7 @@ interface IProps {
 const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
   const [userName, handleUserName, setUserName] = useInput();
   const [email, handleEmail, setEmail] = useInput();
-  const [submittingProfile, setSubmittingProfile] = useState(false);
+  const [submittingUsername, setSubmittingUsername] = useState(false);
   const [submittingEmail, setSubmittingEmail] = useState(false);
   const [googleStatus, handleGoogle] = useProviderLinkStatus(
     currentUser,
@@ -34,20 +34,15 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
 
   const navigate = useNavigate();
 
-  const handleSubmitProfile = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitUsername = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (!(await validateUsername(userName, 2, 20))) {
       return;
     }
 
-    setSubmittingProfile(true);
-    // create profile
-    await updateProfile({
-      user: currentUser,
-      userName,
-    });
-    setSubmittingProfile(false);
+    setSubmittingUsername(true);
+    await updateProfile({ userProfile, userName });
+    setSubmittingUsername(false);
   };
 
   const handleSubmitEmail = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -66,7 +61,7 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
     setEmail(currentUser.email || '');
 
     if (userProfile.doneLoading) {
-      setUserName(userProfile.userName);
+      setUserName(userProfile.userName!);
     }
   };
 
@@ -90,7 +85,7 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
     userProfile.id !== 'no-id' &&
     userProfile.doneLoading && (
       <div className='settings-forms'>
-        <form onSubmit={handleSubmitProfile}>
+        <form onSubmit={handleSubmitUsername}>
           <h2>Your Profile</h2>
           <label htmlFor='userName'>
             Username <span className='verify-username error' />
@@ -100,11 +95,11 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
               value={userName}
               onChange={handleUserName}
               minLength={2}
-              maxLength={20}
+              maxLength={15}
             />
           </label>
           <button type='submit'>
-            {submittingProfile ? 'Submitting...' : 'Change'}
+            {submittingUsername ? 'Submitting...' : 'Change'}
           </button>
         </form>
         <form onSubmit={handleSubmitEmail} className='email-form'>
@@ -168,7 +163,7 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
             <span>Created at: </span>{' '}
             <span>
               {new Date(
-                Number(userProfile.metadata!.createdAt)
+                Number(currentUser.metadata.createdAt)
               ).toLocaleString()}
             </span>
           </div>
@@ -176,7 +171,7 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
             <span>Last login at: </span>{' '}
             <span>
               {new Date(
-                Number(userProfile.metadata!.lastLoginAt)
+                Number(currentUser.metadata.lastLoginAt)
               ).toLocaleString()}
             </span>
           </div>
