@@ -1174,6 +1174,10 @@ header.search {
   margin-bottom: 15px;
 }
 
+.user-card-medium-body {
+  width: 100%;
+}
+
 .user-card-medium-item-message {
   font-size: 0.8rem;
 }

@@ -4,22 +4,23 @@ import PropTypes from 'prop-types';
 const propTypes = {
   textArr: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   customClass: PropTypes.string.isRequired,
-  tweetID: PropTypes.string.isRequired,
+  itemID: PropTypes.string.isRequired,
 };
 
 type MyComponentProps = PropTypes.InferProps<typeof propTypes>;
 
-const FormattedTweetMessage: FunctionComponent<MyComponentProps> = ({
+const FormattedText: FunctionComponent<MyComponentProps> = ({
   textArr,
   customClass,
-  tweetID,
+  itemID,
 }) => (
   <div className={`${customClass}-item-message`}>
     {textArr.map((t, index) => {
       if (t.startsWith('#')) {
         return (
           <span
-            key={`hash-${t}-${index}-${tweetID}`}
+            // eslint-disable-next-line react/no-array-index-key
+            key={`hash-${t}-${index}-${itemID}`}
             className='link-hash'
           >{`${t} `}</span>
         );
@@ -29,6 +30,6 @@ const FormattedTweetMessage: FunctionComponent<MyComponentProps> = ({
   </div>
 );
 
-FormattedTweetMessage.propTypes = propTypes;
+FormattedText.propTypes = propTypes;
 
-export default FormattedTweetMessage;
+export default FormattedText;

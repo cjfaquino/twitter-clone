@@ -18,7 +18,7 @@ import checkAlreadyLiked from '../utils/checkAlreadyLiked';
 import undoLike from '../utils/undoLike';
 import likeTweet from '../utils/likeTweet';
 import isUserSignedIn from '../utils/isUserSignedIn';
-import FormattedTweetMessage from './FormattedTweetMessage';
+import FormattedText from './FormattedText';
 import useFindByUsername from '../hooks/useFindByUsername';
 import { TweetObj } from '../interfaces/TweetObj';
 
@@ -167,9 +167,9 @@ const TweetItem = ({ tweetObj }: IProps) => {
             </span>
           </div>
         )}
-        <FormattedTweetMessage
+        <FormattedText
           textArr={textArr}
-          tweetID={TWEET_ID}
+          itemID={TWEET_ID}
           customClass={customClass}
         />
 

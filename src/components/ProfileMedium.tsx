@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import useFollowStatus from '../hooks/useFollowStatus';
 import { UserProfile } from '../interfaces/UserProfile';
 import checkMatchingUser from '../utils/checkMatchingUser';
-import FormattedTweetMessage from './FormattedTweetMessage';
+import FormattedText from './FormattedText';
 
 interface IProps {
   userProfile: UserProfile;
@@ -21,8 +21,6 @@ const ProfileMedium = ({ userProfile }: IProps) => {
   };
 
   const { photoURL, displayName, userName, id, bio } = userProfile;
-
-  const fakeBio = `Lorem ipsum dolor sit amet consectetur adipisicing elit. quidem repellendus eligendi a. Sequi quia ducimus at fugit non. Reprehenderit dolore amet ipsa aspernatur unde molestiae laborum, suscipit culpa, repudiandae esse praesentium voluptatibus!eligendi. In est magni enim aut, rerum rem, error sapiente #veritatis`;
 
   return (
     <div className='profile-medium'>
@@ -60,11 +58,11 @@ const ProfileMedium = ({ userProfile }: IProps) => {
               )}
             </div>
             <div>
-              {bio || (
-                <FormattedTweetMessage
-                  textArr={fakeBio.split(/\s/)}
+              {bio && (
+                <FormattedText
+                  textArr={bio!.split(/\s/)}
                   customClass={customClass}
-                  tweetID={id}
+                  itemID={id}
                 />
               )}
             </div>

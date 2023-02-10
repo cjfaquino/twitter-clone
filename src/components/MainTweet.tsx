@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment, faHeart } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -18,15 +17,22 @@ import undoLike from '../utils/undoLike';
 import checkAlreadyLiked from '../utils/checkAlreadyLiked';
 import isUserSignedIn from '../utils/isUserSignedIn';
 import OptionsPopup from './OptionsPopup';
-import FormattedTweetMessage from './FormattedTweetMessage';
+import FormattedText from './FormattedText';
 import useFindByUsername from '../hooks/useFindByUsername';
+import { TweetObj } from '../interfaces/TweetObj';
+import { UserProfile } from '../interfaces/UserProfile';
 
-const MainTweet = ({ tweetObj, userProfile }) => {
+interface IProps {
+  tweetObj: TweetObj;
+  userProfile: UserProfile;
+}
+
+const MainTweet = ({ tweetObj }: IProps) => {
   const navigate = useNavigate();
   const params = useParams();
-  const targetUser = useFindByUsername(params.username);
+  const targetUser = useFindByUsername(params.username!);
   const [showOptionsPopup, toggleOptionsPopup] = useToggle(false);
-  const [likes, setLikes] = useState(null);
+  const [likes, setLikes] = useState<number>(0);
   const tweetRef = useRef(null);
   const likesRef = useRef(null);
 
@@ -98,12 +104,12 @@ const MainTweet = ({ tweetObj, userProfile }) => {
 
     if (likesRef.current && (await checkAlreadyLiked(TWEET_ID))) {
       // already liked
-      await undoLike(tweetObj, userProfile);
+      await undoLike(tweetObj);
       setLikes((prev) => prev - 1);
       likesRef.current.classList.remove('liked');
     } else {
       // not yet liked
-      await likeTweet(tweetObj, userProfile);
+      await likeTweet(tweetObj);
       setLikes((prev) => prev + 1);
       likesRef.current.classList.add('liked');
     }
@@ -111,8 +117,8 @@ const MainTweet = ({ tweetObj, userProfile }) => {
     return undefined;
   };
 
-  const navToPage = async (e) => {
-    const targetName = e.target.className;
+  const navToPage = async (e: React.MouseEvent<HTMLDivElement>) => {
+    const targetName = (e.target as HTMLElement).className;
     // conditions
     if (targetName.includes('profile-link')) {
       // go to user page
@@ -161,9 +167,9 @@ const MainTweet = ({ tweetObj, userProfile }) => {
             </span>
           </div>
         )}
-        <FormattedTweetMessage
+        <FormattedText
           textArr={textArr}
-          tweetID={TWEET_ID}
+          itemID={TWEET_ID}
           customClass={customClass}
         />
 
@@ -214,34 +220,6 @@ const MainTweet = ({ tweetObj, userProfile }) => {
       </div>
     </div>
   );
-};
-
-MainTweet.propTypes = {
-  userProfile: PropTypes.shape({}),
-  tweetObj: PropTypes.shape({
-    aReplyTo: PropTypes.shape({
-      USER_NAME: PropTypes.string,
-    }),
-    replies: PropTypes.arrayOf(PropTypes.string),
-    views: PropTypes.number,
-    likes: PropTypes.number,
-    retweets: PropTypes.number,
-    text: PropTypes.arrayOf(PropTypes.string),
-    timestamp: PropTypes.shape({
-      toDate: PropTypes.func,
-    }),
-    USER_ICON: PropTypes.string,
-    USER_ID: PropTypes.string,
-    USER_NAME: PropTypes.string,
-    USER_DISPLAY: PropTypes.string,
-
-    id: PropTypes.string,
-  }),
-};
-
-MainTweet.defaultProps = {
-  tweetObj: null,
-  userProfile: null,
 };
 
 export default MainTweet;
