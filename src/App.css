@@ -697,8 +697,9 @@ button:hover > .btn-red {
 
 .options-popup {
   position: absolute;
-  width: 150px;
-  left: -150px;
+  --popup-width: 300px;
+  width: var(--popup-width);
+  left: calc(var(--popup-width) * -1);
   overflow: hidden;
   background-color: black;
   border-radius: 10px;
@@ -706,6 +707,8 @@ button:hover > .btn-red {
 }
 
 .options-popup button {
+  justify-content: start;
+  gap: 10px;
   font-size: 1rem;
   background-color: transparent;
   border: none;
@@ -715,7 +718,6 @@ button:hover > .btn-red {
 
 .options-popup button:hover {
   background-color: rgb(20, 20, 20);
-  font-weight: 800;
 }
 
 .btn-delete-tweet {

@@ -1,17 +1,26 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserMinus, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import ThreeDots from './ThreeDots';
 import checkMatchingUser from '../utils/checkMatchingUser';
 import isUserSignedIn from '../utils/isUserSignedIn';
 import useFollowStatus from '../hooks/useFollowStatus';
+import { TargetUser } from '../interfaces/TargetUser';
+
+interface IProps {
+  targetUser: TargetUser;
+  toggleOptionsPopup: React.MouseEventHandler<HTMLDivElement>;
+  handleDelete: React.MouseEventHandler<HTMLButtonElement>;
+  showOptionsPopup: boolean;
+}
 
 const OptionsPopup = ({
   toggleOptionsPopup,
   showOptionsPopup,
   handleDelete,
   targetUser,
-}) => {
+}: IProps) => {
   const [followed, handleFollow] = useFollowStatus(targetUser.userProfile);
   const navigate = useNavigate();
 
@@ -29,7 +38,16 @@ const OptionsPopup = ({
                     className='btn-options-follow'
                     onClick={handleFollow}
                   >
-                    {followed ? 'Unfollow' : 'Follow'}
+                    {followed ? (
+                      <>
+                        <FontAwesomeIcon icon={faUserMinus} /> Unfollow
+                      </>
+                    ) : (
+                      <>
+                        <FontAwesomeIcon icon={faUserPlus} /> Follow
+                      </>
+                    )}
+                    {` @${targetUser.userProfile.userName}`}
                   </button>
                 )}
 
@@ -44,17 +62,13 @@ const OptionsPopup = ({
                 )}
               </>
             ) : (
-              {
-                /* not signed in */
-              }(
-                <button
-                  type='button'
-                  onClick={() => navigate('/login')}
-                  className='btn-options-login'
-                >
-                  Login
-                </button>
-              )
+              <button
+                type='button'
+                onClick={() => navigate('/login')}
+                className='btn-options-login'
+              >
+                Login
+              </button>
             )}
           </div>
           <div
@@ -66,21 +80,6 @@ const OptionsPopup = ({
       )}
     </div>
   );
-};
-
-OptionsPopup.propTypes = {
-  toggleOptionsPopup: PropTypes.func.isRequired,
-  showOptionsPopup: PropTypes.bool.isRequired,
-  handleDelete: PropTypes.func.isRequired,
-  targetUser: PropTypes.shape({
-    userProfile: PropTypes.shape({
-      id: PropTypes.string,
-    }),
-  }),
-};
-
-OptionsPopup.defaultProps = {
-  targetUser: null,
 };
 
 export default OptionsPopup;
