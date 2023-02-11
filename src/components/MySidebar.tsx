@@ -3,27 +3,20 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import MyFooter from './MyFooter/MyFooter';
-import useRandomUsers from '../hooks/useRandomUsers';
-import ListOfUsers from './ListOfUsers';
 import OrSeparator from './OrSeparator';
 import GoogleIcon from '../assets/GoogleIcon';
 import HaveAnAccount from './HaveAnAccount';
 import loginWithProvider from '../utils/loginWithProvider';
-import { UserProfile } from '../interfaces/UserProfile';
-import Spinner from './Spinner';
+import WhoToFollow from './WhoToFollow';
 
 interface IProps {
   isSignedIn: boolean;
 }
 
 const MySidebar = ({ isSignedIn }: IProps) => {
-  const [users, usersLoading] = useRandomUsers() as [UserProfile[], boolean];
-
   const handleSignUp = (name: string) => () => {
     loginWithProvider(name);
   };
-
-  console.log(usersLoading);
 
   return (
     <div id='sidebar'>
@@ -58,16 +51,7 @@ const MySidebar = ({ isSignedIn }: IProps) => {
           </p>
         </div>
       ) : (
-        <div id='who-to-follow'>
-          {!usersLoading ? (
-            <>
-              <h3>Who To Follow</h3>
-              <ListOfUsers users={users} compact />
-            </>
-          ) : (
-            <Spinner />
-          )}
-        </div>
+        <WhoToFollow />
       )}
       <MyFooter />
     </div>

@@ -1,12 +1,17 @@
 import { useEffect, useState } from 'react';
-import { onAuthStateChanged, getAuth, User } from 'firebase/auth';
+import {
+  onAuthStateChanged,
+  getAuth,
+  User,
+  NextOrObserver,
+} from 'firebase/auth';
 import useUserProfile from './useUserProfile';
+import { UserProfile } from '../interfaces/UserProfile';
 
-function useAuthStateObserver() {
+function useAuthStateObserver(): [User | null, UserProfile] {
   // will be null when signed out
-  const cUser: User | null = JSON.parse(localStorage.getItem('firebaseUser'));
+  const cUser: User | null = JSON.parse(localStorage.getItem('firebaseUser')!);
 
-  const [isSignedIn, setIsSignedIn] = useState(!!cUser);
   const [currentUser, setCurrentUser] = useState<User | null>(cUser);
   const [userProfile] = useUserProfile(currentUser);
 
@@ -28,20 +33,17 @@ function useAuthStateObserver() {
 
   useEffect(() => {
     // Listen to auth state changes.
-    const unsub = onAuthStateChanged(getAuth(), authStateObserver);
+    const unsub = onAuthStateChanged(
+      getAuth(),
+      authStateObserver as NextOrObserver<User>
+    );
 
     return () => {
       unsub();
     };
   }, [userProfile]);
 
-  useEffect(() => {
-    if (currentUser) {
-      setIsSignedIn(true);
-    } else setIsSignedIn(false);
-  }, [currentUser]);
-
-  return [isSignedIn, currentUser, userProfile];
+  return [currentUser, userProfile];
 }
 
 export default useAuthStateObserver;

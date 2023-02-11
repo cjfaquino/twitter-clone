@@ -18,7 +18,7 @@ import FollowsPage from './pages/FollowsPage';
 import SignUpContinue from './pages/SignUpContinue';
 
 const App = () => {
-  const [isSignedIn, currentUser, userProfile] = useAuthStateObserver();
+  const [currentUser, userProfile] = useAuthStateObserver();
   const [showTweetPopup, toggleTweetPopup] = useToggle();
   const [newTweet, setNewTweet] = useState(null);
 
@@ -29,11 +29,10 @@ const App = () => {
   return (
     <>
       <div className='app wrapper'>
-        <LogInBanner isSignedIn={isSignedIn} />
+        <LogInBanner isSignedIn={!!currentUser} />
         <MyNav
           currentUser={currentUser}
           userProfile={userProfile}
-          isSignedIn={isSignedIn}
           toggleTweetPopup={toggleTweetPopup}
         />
 
@@ -85,7 +84,7 @@ const App = () => {
             <Route path='*' element={<Navigate to='/explore' replace />} />
           </Routes>
         </div>
-        <MySidebar isSignedIn={isSignedIn} />
+        <MySidebar isSignedIn={!!currentUser} />
       </div>
 
       {showTweetPopup && (

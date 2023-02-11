@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
 
-const LogInBanner = ({ isSignedIn }) => (
+const LogInBanner = ({ isSignedIn }: { isSignedIn: boolean }) => (
   <>
     {!isSignedIn && (
       <div id='login-banner'>
         <ul>
           <li>
             <h2>Miss what&apos;s happening!</h2>
-            <div>People on Twtter Clone are the last to know.</div>
+            <div>People on Twitter Clone are the last to know.</div>
           </li>
           <li className='logout'>
             <Link to='/login'>
