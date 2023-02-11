@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
 import saveTweet from '../utils/saveTweet';
-import useReplies from '../hooks/useReplies';
 import Tweet from '../utils/Tweet';
 import { TweetObj } from '../interfaces/TweetObj';
 import getProfilePicUrl from '../utils/getProfilePicUrl';
@@ -10,12 +8,10 @@ import ListOfTweets from './ListOfTweets';
 
 interface IProps {
   tweetObj: TweetObj;
+  fetchedReplies: TweetObj[];
 }
 
-const Replies = ({ tweetObj }: IProps) => {
-  const params = useParams();
-
-  const [fetchedReplies] = useReplies(params.tweet);
+const Replies = ({ tweetObj, fetchedReplies }: IProps) => {
   const [replyMessage, setReplyMessage] = useState('');
 
   const handleReplyInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -61,7 +57,9 @@ const Replies = ({ tweetObj }: IProps) => {
           </button>
         </form>
       )}
-      <ListOfTweets tweets={fetchedReplies} customClass='reply' />
+      {fetchedReplies && (
+        <ListOfTweets tweets={fetchedReplies} customClass='reply' />
+      )}
     </div>
   );
 };

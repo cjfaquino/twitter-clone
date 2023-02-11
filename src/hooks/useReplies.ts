@@ -9,26 +9,29 @@ import {
 } from 'firebase/firestore';
 import { db } from '../firebase-config';
 
-export default function useReplies(tweetID) {
-  const [replies, setReplies] = useState([]);
+export default function useReplies(tweetID: string): any {
+  const [replies, setReplies] = useState<any>([]);
   const [loading, setLoading] = useState(true);
 
-  const getUpatedReply = async (replyId) => {
+  const getUpdatedReply = async (replyId: string) => {
     const docRef = doc(db, 'tweets', replyId);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      setReplies((prev) => [...prev, { id: docSnap.id, ...docSnap.data() }]);
+      setReplies((prev: any) => [
+        ...prev,
+        { id: docSnap.id, ...docSnap.data() },
+      ]);
     }
   };
 
   const getReplies = async () => {
     const queryRef = query(
       collection(db, 'tweets', tweetID, 'replies'),
-      orderBy('timestamp', 'desc')
+      orderBy('timestamp', 'asc')
     );
     const qSnap = await getDocs(queryRef);
-    qSnap.forEach((rep) => getUpatedReply(rep.id));
+    qSnap.forEach((rep) => getUpdatedReply(rep.id));
     setLoading(false);
   };
 
@@ -44,5 +47,5 @@ export default function useReplies(tweetID) {
     };
   }, [tweetID]);
 
-  return [replies, replies.length, loading];
+  return [replies, loading];
 }

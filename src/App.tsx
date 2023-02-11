@@ -65,10 +65,7 @@ const App = () => {
                 />
               }
             />
-            <Route
-              path='/:username/tweet/:tweet'
-              element={<TweetPage userProfile={userProfile} />}
-            />
+            <Route path='/:username/tweet/:tweet' element={<TweetPage />} />
             {['followers', 'following', 'followers_you_follow'].map((path) => (
               <Route
                 key={`profile-${path}`}

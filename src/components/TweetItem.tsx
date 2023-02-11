@@ -116,101 +116,106 @@ const TweetItem = ({ tweetObj }: IProps) => {
     };
   }, [targetUser.doneLoading]);
 
-  return targetUser.doneLoading ? (
+  return (
     <div
       className={`${customClass}-item`}
       id={`${customClass}-${TWEET_ID}`}
       onClick={navToPage}
       aria-hidden
     >
-      <div className={`${customClass}-item-left-half`}>
-        <div
-          className={`${customClass}-item-img-container img-container profile-link`}
-        >
-          <img
-            src={targetUser.userProfile.photoURL}
-            alt=''
-            className='profile-link'
-          />
-        </div>
-        <div className='vert-line' />
-      </div>
+      {targetUser.doneLoading && (
+        <>
+          <div className={`${customClass}-item-left-half`}>
+            <div
+              className={`${customClass}-item-img-container img-container profile-link`}
+            >
+              <img
+                src={targetUser.userProfile.photoURL}
+                alt=''
+                className='profile-link'
+              />
+            </div>
+            <div className='vert-line' />
+          </div>
 
-      <div className={`${customClass}-item-right-half`}>
-        <div className={`${customClass}-item-info`}>
-          <div className={`${customClass}-item-display profile-link`}>
-            {targetUser.userProfile.displayName}
+          <div className={`${customClass}-item-right-half`}>
+            <div className={`${customClass}-item-info`}>
+              <div className={`${customClass}-item-display profile-link`}>
+                {targetUser.userProfile.displayName}
+              </div>
+              <div
+                className={`${customClass}-item-name profile-link grey username`}
+              >
+                @{targetUser.userProfile.userName}
+              </div>
+              <div
+                className={`${customClass}-item-time grey`}
+                title={getTimeString(timestamp)}
+              >
+                {getTimeString(timestamp, 'localeDate')}
+              </div>
+              <OptionsPopup
+                toggleOptionsPopup={toggleOptionsPopup}
+                showOptionsPopup={showOptionsPopup}
+                handleDelete={handleDelete}
+                targetUser={targetUser}
+              />
+            </div>
+            {tweetObj.aReplyTo && (
+              <div className='replying-to-info'>
+                Replying to{' '}
+                <span className='username profile-link'>
+                  @{tweetObj.aReplyTo.USER_NAME}
+                </span>
+              </div>
+            )}
+            <FormattedText
+              textArr={textArr}
+              itemID={TWEET_ID}
+              customClass={customClass}
+            />
+            <div className={`${customClass}-item-buttons`}>
+              <button type='button' className='btn-replies grey'>
+                <span className='btn-blue'>
+                  <FontAwesomeIcon icon={faComment} />
+                </span>{' '}
+                <span className='replies-number'>
+                  {repLength > 0 && repLength}
+                </span>
+              </button>
+              <button type='button' className='btn-retweets grey'>
+                <span className='btn-green'>
+                  <FontAwesomeIcon icon={faRetweet} />
+                </span>
+              </button>{' '}
+              <button
+                type='button'
+                className='btn-likes grey'
+                onClick={handleLike}
+                ref={likesRef}
+              >
+                <span className='btn-red'>
+                  <FontAwesomeIcon icon={faHeart} />
+                </span>{' '}
+                <span className='likes-number'>{likes}</span>
+              </button>
+              <button type='button' className='btn-views grey'>
+                <span className='btn-blue'>
+                  <FontAwesomeIcon icon={faChartSimple} />
+                </span>{' '}
+                <span className='views-number'>{views}</span>
+              </button>
+              <button type='button' className='btn-shares grey'>
+                <span className='btn-blue'>
+                  <FontAwesomeIcon icon={faArrowUpFromBracket} />
+                </span>
+              </button>
+            </div>
           </div>
-          <div
-            className={`${customClass}-item-name profile-link grey username`}
-          >
-            @{targetUser.userProfile.userName}
-          </div>
-          <div
-            className={`${customClass}-item-time grey`}
-            title={getTimeString(timestamp)}
-          >
-            {getTimeString(timestamp, 'localeDate')}
-          </div>
-          <OptionsPopup
-            toggleOptionsPopup={toggleOptionsPopup}
-            showOptionsPopup={showOptionsPopup}
-            handleDelete={handleDelete}
-            targetUser={targetUser}
-          />
-        </div>
-        {tweetObj.aReplyTo && (
-          <div className='replying-to-info'>
-            Replying to{' '}
-            <span className='username profile-link'>
-              @{tweetObj.aReplyTo.USER_NAME}
-            </span>
-          </div>
-        )}
-        <FormattedText
-          textArr={textArr}
-          itemID={TWEET_ID}
-          customClass={customClass}
-        />
-
-        <div className={`${customClass}-item-buttons`}>
-          <button type='button' className='btn-replies grey'>
-            <span className='btn-blue'>
-              <FontAwesomeIcon icon={faComment} />
-            </span>{' '}
-            <span className='replies-number'>{repLength > 0 && repLength}</span>
-          </button>
-          <button type='button' className='btn-retweets grey'>
-            <span className='btn-green'>
-              <FontAwesomeIcon icon={faRetweet} />
-            </span>
-          </button>{' '}
-          <button
-            type='button'
-            className='btn-likes grey'
-            onClick={handleLike}
-            ref={likesRef}
-          >
-            <span className='btn-red'>
-              <FontAwesomeIcon icon={faHeart} />
-            </span>{' '}
-            <span className='likes-number'>{likes}</span>
-          </button>
-          <button type='button' className='btn-views grey'>
-            <span className='btn-blue'>
-              <FontAwesomeIcon icon={faChartSimple} />
-            </span>{' '}
-            <span className='views-number'>{views}</span>
-          </button>
-          <button type='button' className='btn-shares grey'>
-            <span className='btn-blue'>
-              <FontAwesomeIcon icon={faArrowUpFromBracket} />
-            </span>
-          </button>
-        </div>
-      </div>
+        </>
+      )}
     </div>
-  ) : null;
+  );
 };
 
 export default TweetItem;

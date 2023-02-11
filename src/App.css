@@ -599,11 +599,9 @@ form button {
 .tweet-item {
   border-radius: none;
   cursor: pointer;
-}
-
-.tweet-item {
   box-sizing: border-box;
   width: 100%;
+  min-height: 130px;
   padding: 15px 15px 5px 15px;
   position: relative;
   display: flex;

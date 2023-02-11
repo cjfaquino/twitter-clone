@@ -3,10 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { TargetUser } from '../interfaces/TargetUser';
 
 interface IProps {
-  targetUser: TargetUser;
+  targetUser?: TargetUser;
 }
 
-const GoBackHeader = ({ targetUser }: IProps) => {
+const defaultProps = {
+  targetUser: {},
+};
+
+const GoBackHeader = ({ targetUser }: IProps & typeof defaultProps) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -23,5 +27,7 @@ const GoBackHeader = ({ targetUser }: IProps) => {
     </header>
   );
 };
+
+GoBackHeader.defaultProps = defaultProps;
 
 export default GoBackHeader;

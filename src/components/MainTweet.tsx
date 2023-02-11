@@ -20,11 +20,10 @@ import OptionsPopup from './OptionsPopup';
 import FormattedText from './FormattedText';
 import useFindByUsername from '../hooks/useFindByUsername';
 import { TweetObj } from '../interfaces/TweetObj';
-import { UserProfile } from '../interfaces/UserProfile';
 
 interface IProps {
   tweetObj: TweetObj;
-  userProfile: UserProfile;
+  // userProfile: UserProfile;
 }
 
 const MainTweet = ({ tweetObj }: IProps) => {

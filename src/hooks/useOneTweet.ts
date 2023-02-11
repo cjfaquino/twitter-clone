@@ -3,8 +3,8 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase-config';
 import getUpdatedTweetByID from '../utils/getUpdatedTweetByID';
 
-export default function useOneTweet(tweetID) {
-  const [tweet, setTweet] = useState(null);
+export default function useOneTweet(tweetID: string): [any, boolean] {
+  const [tweet, setTweet] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
 
   const loadTweet = async () => {
