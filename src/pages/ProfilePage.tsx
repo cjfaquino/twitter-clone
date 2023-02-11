@@ -12,6 +12,7 @@ import ProfileLarge from '../components/ProfileLarge';
 import useFindByUsername from '../hooks/useFindByUsername';
 import ProfileFeed from '../components/ProfileFeed';
 import { UserProfile } from '../interfaces/UserProfile';
+import Spinner from '../components/Spinner';
 
 interface IProps {
   currentUser: User;
@@ -31,7 +32,7 @@ const ProfilePage = ({ currentUser, userProfile }: IProps) => {
     }
   }, [userProfile]);
 
-  return (
+  return targetUser.doneLoading ? (
     <div id='profile'>
       <GoBackHeader targetUser={targetUser} />
       <ProfileLarge
@@ -39,6 +40,7 @@ const ProfilePage = ({ currentUser, userProfile }: IProps) => {
         userProfile={userProfile}
         targetUser={targetUser}
       />
+
       {targetUser.userProfile && (
         <div className='filter-buttons-container'>
           <NavLink
@@ -79,6 +81,8 @@ const ProfilePage = ({ currentUser, userProfile }: IProps) => {
         />
       </Routes>
     </div>
+  ) : (
+    <Spinner />
   );
 };
 

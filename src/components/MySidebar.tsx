@@ -9,13 +9,14 @@ import OrSeparator from './OrSeparator';
 import GoogleIcon from '../assets/GoogleIcon';
 import HaveAnAccount from './HaveAnAccount';
 import loginWithProvider from '../utils/loginWithProvider';
+import { UserProfile } from '../interfaces/UserProfile';
 
 interface IProps {
   isSignedIn: boolean;
 }
 
 const MySidebar = ({ isSignedIn }: IProps) => {
-  const users = useRandomUsers();
+  const users = useRandomUsers() as UserProfile[];
 
   const handleSignUp = (name: string) => () => {
     loginWithProvider(name);

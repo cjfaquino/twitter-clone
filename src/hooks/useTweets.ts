@@ -3,9 +3,9 @@ import { collection, query, getDocs, orderBy } from 'firebase/firestore';
 import { db } from '../firebase-config';
 import getUpdatedTweetByID from '../utils/getUpdatedTweetByID';
 
-export default function useTweets(filter, userID) {
-  const [tweets, setTweets] = useState([]);
-  const [loading, setLoading] = useState(true);
+export default function useTweets(filter: string, userID: string) {
+  const [tweets, setTweets] = useState<any>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const getTweets = async () => {
     try {
@@ -22,7 +22,7 @@ export default function useTweets(filter, userID) {
           item.data().USER_ID === userID &&
           item.data().aReplyTo === null
         ) {
-          setTweets((prev) => [...prev, { id: item.id, ...item.data() }]);
+          setTweets((prev: any) => [...prev, { id: item.id, ...item.data() }]);
         }
 
         if (
@@ -30,11 +30,11 @@ export default function useTweets(filter, userID) {
           userID &&
           item.data().USER_ID === userID
         ) {
-          setTweets((prev) => [...prev, { id: item.id, ...item.data() }]);
+          setTweets((prev: any) => [...prev, { id: item.id, ...item.data() }]);
         }
 
         if (filter === 'tweets' && item.data().aReplyTo === null)
-          setTweets((prev) => [...prev, { id: item.id, ...item.data() }]);
+          setTweets((prev: any) => [...prev, { id: item.id, ...item.data() }]);
       });
     } catch (error) {
       console.log(error);
@@ -44,17 +44,22 @@ export default function useTweets(filter, userID) {
   };
 
   const getLikes = async () => {
-    const likesQuery = query(
-      collection(db, 'users', userID, 'likes'),
-      orderBy('likedAt', 'desc')
-    );
-    const qSnap = await getDocs(likesQuery);
-    const queue = [];
-    qSnap.forEach(async (item) => {
-      queue.push(getUpdatedTweetByID(item.id));
-    });
-    const likedTweets = await Promise.all(queue);
-    setTweets(likedTweets);
+    try {
+      const likesQuery = query(
+        collection(db, 'users', userID, 'likes'),
+        orderBy('likedAt', 'desc')
+      );
+      const qSnap = await getDocs(likesQuery);
+      const queue: any[] = [];
+      qSnap.forEach(async (item) => {
+        queue.push(getUpdatedTweetByID(item.id));
+      });
+      const likedTweets = await Promise.all(queue);
+      setTweets(likedTweets);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
   };
 
   let ran = false;
@@ -73,12 +78,13 @@ export default function useTweets(filter, userID) {
 
     return () => {
       setTweets([]);
+      setLoading(true);
     };
   }, [filter, userID]);
 
   // add temp tweet to DOM
-  const addTweetToDOM = (tweetObj) => {
-    setTweets((prev) => [tweetObj, ...prev]);
+  const addTweetToDOM = (tweetObj: any) => {
+    setTweets((prev: any) => [tweetObj, ...prev]);
   };
 
   return [tweets, addTweetToDOM, loading];

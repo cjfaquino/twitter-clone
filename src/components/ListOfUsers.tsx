@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import ProfileSmall from './ProfileSmall';
 import ProfileMedium from './ProfileMedium';
 import { UserProfile } from '../interfaces/UserProfile';
@@ -15,7 +14,7 @@ const defaultProps = {
 
 const ListOfUsers = ({ users, compact }: IProps & typeof defaultProps) => (
   // eslint-disable-next-line react/jsx-no-useless-fragment
-  <>
+  <div className='list'>
     {compact
       ? users.map((usr) => (
           <ProfileSmall key={`profile-small-${usr.id}`} userProfile={usr} />
@@ -23,12 +22,8 @@ const ListOfUsers = ({ users, compact }: IProps & typeof defaultProps) => (
       : users.map((usr) => (
           <ProfileMedium key={`profile-medium-${usr.id}`} userProfile={usr} />
         ))}
-  </>
+  </div>
 );
-
-ListOfUsers.propTypes = {
-  users: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-};
 
 ListOfUsers.defaultProps = defaultProps;
 
