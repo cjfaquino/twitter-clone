@@ -3,6 +3,7 @@ import useTweets from '../hooks/useTweets';
 import SearchHeader from '../components/SearchHeader';
 import { TweetObj } from '../interfaces/TweetObj';
 import ListOfTweets from '../components/ListOfTweets';
+import Spinner from '../components/Spinner';
 
 interface IProps {
   newTweet: TweetObj;
@@ -26,7 +27,7 @@ const Explore = ({ newTweet, clrNewTweet }: IProps) => {
       <SearchHeader />
       <div>
         {isTweetsLoading ? (
-          <div>loading</div>
+          <Spinner />
         ) : (
           <ListOfTweets tweets={tweets} customClass='tweets' />
         )}

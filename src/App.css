@@ -37,6 +37,32 @@ button svg {
   height: 20px !important;
 }
 
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40vh;
+  width: 100%;
+}
+
+.spinner {
+  border: 6px solid rgb(74, 74, 74);
+  border-top: 6px solid var(--theme-color);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .popup {
   box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 15px,
     rgba(255, 255, 255, 0.15) 0px 0px 3px 1px;
@@ -367,13 +393,11 @@ button svg {
   border-right: 1px solid grey;
 }
 
-#explore,
-#tweet-page,
-#profile,
-#search {
-  min-height: 130vh;
+#centerbar .list {
+  padding-bottom: 70vh;
 }
 
+#explore > div,
 #settings,
 .settings-forms,
 .sign-up-form,
