@@ -12,6 +12,7 @@ import { TargetUser } from '../interfaces/TargetUser';
 import useToggle from '../hooks/useToggle';
 import EditProfilePopup from './EditProfilePopup';
 import { UserProfile } from '../interfaces/UserProfile';
+import FormattedText from './FormattedText';
 
 interface IProps {
   currentUser: User;
@@ -91,7 +92,13 @@ const ProfileLarge = ({ currentUser, targetUser, userProfile }: IProps) => {
                   @{targetUser.userProfile.userName}
                 </div>
                 <div className={`${customClass}-bio`}>
-                  {targetUser.userProfile.bio}
+                  {targetUser.userProfile.bio && (
+                    <FormattedText
+                      textArr={targetUser.userProfile.bio!.split(/\s/)}
+                      customClass={customClass}
+                      itemID={targetUser.userProfile.id}
+                    />
+                  )}
                 </div>
                 <div className={`${customClass}-extra-info`}>
                   {targetUser.userProfile.location && (
