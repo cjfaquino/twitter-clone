@@ -1,7 +1,7 @@
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase-config';
 
-const getUpdatedTweetByID = async (tweetID) => {
+const getUpdatedTweetByID = async (tweetID: string) => {
   let tweet = null;
   const repRef = doc(db, 'tweets', tweetID);
   const repSnap = await getDoc(repRef);
@@ -10,7 +10,6 @@ const getUpdatedTweetByID = async (tweetID) => {
     tweet = { id: repSnap.id, ...repSnap.data() };
   } else console.log('Tweet does not exist');
 
-  // replyingTo will be a tweetObj or null
   return tweet;
 };
 

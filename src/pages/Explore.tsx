@@ -11,7 +11,7 @@ interface IProps {
 }
 
 const Explore = ({ newTweet, clrNewTweet }: IProps) => {
-  const [tweets, addTweetToDOM, isTweetsLoading] = useTweets('tweets');
+  const [tweets, addTweetToDOM, isTweetsLoading] = useTweets('explore');
 
   useEffect(() => {
     if (newTweet) {
