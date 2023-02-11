@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
 import isUserSignedIn from '../utils/isUserSignedIn';
 import saveTweet from '../utils/saveTweet';
 import Tweet from '../utils/Tweet';
 import getProfilePicUrl from '../utils/getProfilePicUrl';
 
-const TweetPopup = ({ toggleTweetPopup, setNewTweet }) => {
+interface IProps {
+  toggleTweetPopup: any;
+  setNewTweet: any;
+}
+
+const TweetPopup = ({ toggleTweetPopup, setNewTweet }: IProps) => {
+  const navigate = useNavigate();
   const [input, setInput] = useState('');
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isUserSignedIn()) {
       // save tweet
@@ -20,8 +28,10 @@ const TweetPopup = ({ toggleTweetPopup, setNewTweet }) => {
       }
     } else {
       // show login popup
+      navigate('/login', { state: { error: 'must be logged in' } });
     }
   };
+
   return (
     <>
       <div
@@ -36,21 +46,21 @@ const TweetPopup = ({ toggleTweetPopup, setNewTweet }) => {
           title='Close'
           onClick={toggleTweetPopup}
         >
-          &#215;
+          <FontAwesomeIcon icon={faClose} />
         </button>
         <div className='input-container'>
           <div className='tweet-popup-img-container img-container'>
-            <img src={getProfilePicUrl()} alt='' />
+            <img src={getProfilePicUrl()} alt='no user icon' />
           </div>
           <form onSubmit={handleSubmit}>
             <textarea
-              type='text'
               name='tweet'
               id='tweet-input'
               placeholder="Nothing's happening!"
               onChange={(e) => setInput(e.target.value)}
               value={input}
-              maxLength='280'
+              minLength={1}
+              maxLength={280}
             />
             <div className='hor-line' />
             <button type='submit'>Tweet</button>
@@ -59,11 +69,6 @@ const TweetPopup = ({ toggleTweetPopup, setNewTweet }) => {
       </div>
     </>
   );
-};
-
-TweetPopup.propTypes = {
-  toggleTweetPopup: PropTypes.func.isRequired,
-  setNewTweet: PropTypes.func.isRequired,
 };
 
 export default TweetPopup;

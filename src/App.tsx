@@ -20,7 +20,7 @@ import SignUpContinue from './pages/SignUpContinue';
 const App = () => {
   const [currentUser, userProfile] = useAuthStateObserver();
   const [showTweetPopup, toggleTweetPopup] = useToggle();
-  const [newTweet, setNewTweet] = useState(null);
+  const [newTweet, setNewTweet] = useState([null]);
 
   const clrNewTweet = () => {
     setNewTweet(null);
@@ -87,7 +87,7 @@ const App = () => {
         <MySidebar isSignedIn={!!currentUser} />
       </div>
 
-      {showTweetPopup && (
+      {currentUser && showTweetPopup && (
         <TweetPopup
           toggleTweetPopup={toggleTweetPopup}
           setNewTweet={setNewTweet}
