@@ -4,18 +4,27 @@ import { db } from '../firebase-config';
 
 export default function useRandomUsers() {
   const [users, setUsers] = useState<Object[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // todo make random
+  const shuffle = (array: Object[]) => array.sort(() => Math.random() - 0.5);
+
   const getUsers = async () => {
-    const queryRef = query(collection(db, 'users'), limit(3));
-    const qSnap = await getDocs(queryRef);
+    try {
+      const queryRef = query(collection(db, 'users'), limit(3));
+      const qSnap = await getDocs(queryRef);
 
-    qSnap.forEach((item) =>
-      setUsers((prev) => [
-        ...prev,
-        { id: item.id, ...item.data(), doneLoading: true },
-      ])
-    );
+      const userArr = qSnap.docs.map((item) => ({
+        id: item.id,
+        ...item.data(),
+        doneLoading: true,
+      }));
+
+      const shuffled = shuffle(userArr);
+      setUsers(shuffled);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
   };
 
   let ran = false;
@@ -27,7 +36,9 @@ export default function useRandomUsers() {
 
     return () => {
       setUsers([]);
+      setLoading(true);
     };
   }, []);
-  return users;
+
+  return [users, loading];
 }

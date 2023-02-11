@@ -10,17 +10,20 @@ import GoogleIcon from '../assets/GoogleIcon';
 import HaveAnAccount from './HaveAnAccount';
 import loginWithProvider from '../utils/loginWithProvider';
 import { UserProfile } from '../interfaces/UserProfile';
+import Spinner from './Spinner';
 
 interface IProps {
   isSignedIn: boolean;
 }
 
 const MySidebar = ({ isSignedIn }: IProps) => {
-  const users = useRandomUsers() as UserProfile[];
+  const [users, usersLoading] = useRandomUsers() as [UserProfile[], boolean];
 
   const handleSignUp = (name: string) => () => {
     loginWithProvider(name);
   };
+
+  console.log(usersLoading);
 
   return (
     <div id='sidebar'>
@@ -56,8 +59,14 @@ const MySidebar = ({ isSignedIn }: IProps) => {
         </div>
       ) : (
         <div id='who-to-follow'>
-          <h3>Who To Follow</h3>
-          <ListOfUsers users={users} compact />
+          {!usersLoading ? (
+            <>
+              <h3>Who To Follow</h3>
+              <ListOfUsers users={users} compact />
+            </>
+          ) : (
+            <Spinner />
+          )}
         </div>
       )}
       <MyFooter />
