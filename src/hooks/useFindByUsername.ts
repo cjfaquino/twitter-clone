@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { getDocs, collection, query } from 'firebase/firestore';
 import { db } from '../firebase-config';
 import { UserProfile } from '../interfaces/UserProfile';
-import getUserName from '../utils/getUserName';
 
 export default function useFindByUsername(username: string) {
   const [userProfile, setUserProfile] = useState<UserProfile>({

@@ -3,7 +3,7 @@ import { collection, getDocs, limit, query } from 'firebase/firestore';
 import { db } from '../firebase-config';
 
 export default function useRandomUsers() {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<Object[]>([]);
 
   // todo make random
   const getUsers = async () => {
@@ -11,7 +11,10 @@ export default function useRandomUsers() {
     const qSnap = await getDocs(queryRef);
 
     qSnap.forEach((item) =>
-      setUsers((prev) => [...prev, { id: item.id, ...item.data() }])
+      setUsers((prev) => [
+        ...prev,
+        { id: item.id, ...item.data(), doneLoading: true },
+      ])
     );
   };
 

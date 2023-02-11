@@ -6,6 +6,7 @@ import unfollowUser from '../utils/unfollowUser';
 import checkAlreadyFollowing from '../utils/checkAlreadyFollowing';
 import eventFollow from '../events/eventFollow';
 import { UserProfile } from '../interfaces/UserProfile';
+import getUserUid from '../utils/getUserUid';
 
 export default function useFollowStatus(
   userProfile: UserProfile
@@ -22,7 +23,11 @@ export default function useFollowStatus(
   }, [followed]);
 
   const updateFollow = () => {
+    // don't update when user hasn't loaded
     if (!userProfile.doneLoading) return;
+
+    // don't update state if current user
+    if (userProfile.id === getUserUid()) return;
 
     checkAlreadyFollowing(userProfile.id).then(setFollowed);
   };
