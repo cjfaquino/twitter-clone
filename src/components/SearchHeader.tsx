@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faClose, faSearch } from '@fortawesome/free-solid-svg-icons';
 import useInput from '../hooks/useInput';
 
 interface IProps {
@@ -36,7 +36,7 @@ const SearchHeader = ({ searched }: IProps & typeof defaultProps) => {
         <input
           type='text'
           value={search}
-          placeholder='search'
+          placeholder={`Search ${import.meta.env.VITE_APP_NAME}`}
           onChange={handleSearch}
         />
         <button type='submit' className='btn-search'>
@@ -48,7 +48,7 @@ const SearchHeader = ({ searched }: IProps & typeof defaultProps) => {
             className='btn-reset-search'
             onClick={clrSearch}
           >
-            X
+            <FontAwesomeIcon icon={faClose} />
           </button>
         )}
       </form>

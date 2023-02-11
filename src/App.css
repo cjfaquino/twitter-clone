@@ -912,31 +912,39 @@ header.search {
 .search-form input {
   width: 100%;
   font-size: 1.3rem;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  border-right: none;
+  border-radius: 20px;
+  padding: 10px 10px 10px 60px;
+}
+
+.search-form button {
+  align-self: center;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .search-form .btn-search {
   flex-shrink: 0;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  padding: 10px 33px;
+  padding: 10px 20px;
+  background-color: transparent;
 }
 
 .search-form .btn-reset-search {
-  align-self: center;
-  position: absolute;
-  right: 100px;
+  right: 25px;
   color: grey;
   background-color: transparent;
   flex-shrink: 0;
-  height: 40px;
-  width: 40px;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
   padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+}
+
+.search-form .btn-reset-search:hover {
+  background-color: rgba(255, 0, 0, 0.243);
 }
 
 /* profile page */

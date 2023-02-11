@@ -14,7 +14,7 @@ const MySidebar = ({ isSignedIn }: IProps) => (
   <div id='sidebar'>
     {!isSignedIn ? (
       <div className='sidebar-signup'>
-        <h3>New to Twitter Clone?</h3>
+        <h3>New to {import.meta.env.VITE_APP_NAME}?</h3>
         <p>Sign up now to get your own personalized timeline!</p>
         <ProviderButtons mode='Sign up' />
         <OrSeparator />

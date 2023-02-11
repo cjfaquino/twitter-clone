@@ -8,7 +8,9 @@ const LogInBanner = ({ isSignedIn }: { isSignedIn: boolean }) => (
         <ul>
           <li>
             <h2>Miss what&apos;s happening!</h2>
-            <div>People on Twitter Clone are the last to know.</div>
+            <div>
+              People on {import.meta.env.VITE_APP_NAME} are the last to know.
+            </div>
           </li>
           <li className='logout'>
             <Link to='/login'>

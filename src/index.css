@@ -53,6 +53,10 @@ input {
   padding: 0 10px;
 }
 
+input:focus {
+  border-color: var(--theme-color);
+}
+
 button {
   border: none;
   font-size: 1rem;
