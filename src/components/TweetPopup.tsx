@@ -28,7 +28,7 @@ const TweetPopup = ({ toggleTweetPopup, setNewTweet }: IProps) => {
       }
     } else {
       // show login popup
-      navigate('/login', { state: { error: 'must be logged in' } });
+      navigate('/login', { state: { error: 'no-login' } });
     }
   };
 
