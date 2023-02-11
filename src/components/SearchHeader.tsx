@@ -9,10 +9,10 @@ interface IProps {
 }
 
 const defaultProps = {
-  searched: false,
+  searched: '',
 };
 
-const SearchHeader = ({ searched }: IProps) => {
+const SearchHeader = ({ searched }: IProps & typeof defaultProps) => {
   const [search, handleSearch, setSearch] = useInput(searched);
   const navigate = useNavigate();
   const clrSearch = () => {
@@ -22,7 +22,7 @@ const SearchHeader = ({ searched }: IProps) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (searched) {
+    if (search) {
       navigate({
         pathname: '/search',
         search: createSearchParams({ q: search }).toString(),

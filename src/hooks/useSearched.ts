@@ -19,7 +19,7 @@ const useSearched = (search: string): Array<Object | TweetObj> => {
       queryRef = query(
         collection(db, 'tweets'),
         orderBy('timestamp', 'desc'),
-        where('tags', 'array-contains', search)
+        where('tags', 'array-contains', search.toLowerCase())
       );
     }
 
