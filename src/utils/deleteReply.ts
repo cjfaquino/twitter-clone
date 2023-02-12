@@ -1,7 +1,7 @@
 import { deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase-config';
 
-const deleteReply = async (replyID, mainTweetID) => {
+const deleteReply = async (replyID: string, mainTweetID: string) => {
   try {
     // delete ref from replies collection
     const replyRef = doc(db, 'tweets', mainTweetID, 'replies', replyID);

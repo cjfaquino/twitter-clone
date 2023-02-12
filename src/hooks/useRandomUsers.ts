@@ -17,6 +17,8 @@ export default function useRandomUsers() {
         id: item.id,
         ...item.data(),
         doneLoading: true,
+        // for algolia
+        objectID: item.id,
       }));
 
       const shuffled = shuffle(userArr);

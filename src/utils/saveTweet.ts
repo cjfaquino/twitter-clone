@@ -1,10 +1,12 @@
 import { collection, addDoc, doc, setDoc } from 'firebase/firestore';
+import { indexTweets } from '../algolia-config';
 import { db } from '../firebase-config';
+import { TweetObj } from '../interfaces/TweetObj';
 import Tweet from './Tweet';
 
 // converts Tweet for firestore
 const tweetConverter = {
-  toFirestore: (tweet) => ({
+  toFirestore: (tweet: TweetObj) => ({
     USER_ID: tweet.USER_ID,
     USER_NAME: tweet.USER_NAME,
     USER_DISPLAY: tweet.USER_DISPLAY,
@@ -25,11 +27,14 @@ const tweetConverter = {
 
 // Save all tweets to tweets doc
 
-const saveTweet = async (messageText, aReplyTo = null) => {
+const saveTweet = async (
+  messageText: string,
+  aReplyTo: TweetObj | null = null
+) => {
   try {
     const tweetRef = collection(db, 'tweets').withConverter(tweetConverter);
 
-    const tweet = new Tweet(messageText, aReplyTo);
+    let tweet = new Tweet(messageText, aReplyTo);
     let docRef;
 
     if (aReplyTo) {
@@ -48,8 +53,18 @@ const saveTweet = async (messageText, aReplyTo = null) => {
       setDoc(replyRef, tweet);
     } else {
       // create normal tweet
-      docRef = await addDoc(tweetRef, { ...tweet, aReplyTo });
+      console.log(tweet, { ...tweet, aReplyTo });
+      tweet = { ...tweet, aReplyTo };
+      docRef = await addDoc(tweetRef, tweet);
     }
+
+    // add to algolia 'tweets' index
+    const timeInSeconds = new Date().getTime() / 1000;
+    indexTweets.saveObject({
+      ...tweet,
+      objectID: docRef.id,
+      timestamp: { seconds: timeInSeconds },
+    });
 
     // return firebase doc id
     return docRef.id;

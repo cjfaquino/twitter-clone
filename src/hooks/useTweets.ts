@@ -50,6 +50,8 @@ export default function useTweets(filter: string, userID?: string) {
       const results = qSnap.docs.map((item) => ({
         id: item.id,
         ...item.data(),
+        // for algolia
+        objectID: item.id,
       }));
       setTweets(results);
     } catch (error) {

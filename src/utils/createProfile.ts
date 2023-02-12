@@ -4,6 +4,7 @@ import { db } from '../firebase-config';
 import getProfilePicUrl from './getProfilePicUrl';
 import updateDisplayNameAndPhoto from './updateDisplayNameAndPhoto';
 import eventProfileEdit from '../events/eventProfileEdit';
+import { indexUsers } from '../algolia-config';
 
 interface CreateProfile {
   user: User;
@@ -20,16 +21,26 @@ const createProfile = async ({
 }: CreateProfile) => {
   try {
     // update firebase auth user
-    await updateDisplayNameAndPhoto({ displayName, photoURL });
+    const profilePromise = updateDisplayNameAndPhoto({ displayName, photoURL });
 
-    // save new profile to firestore
+    // save new profile to firestore 'users' collection
     const userRef = doc(db, 'users', user.uid);
-    await setDoc(userRef, {
+
+    const newUser = {
       userName,
       displayName,
       photoURL,
       metadata: { ...user.metadata },
+    };
+    const firestorePromise = setDoc(userRef, newUser);
+
+    // save new profile to algolia 'users' index
+    const algoliaPromise = indexUsers.saveObject({
+      ...newUser,
+      objectID: user.uid,
     });
+
+    await Promise.all([profilePromise, firestorePromise, algoliaPromise]);
 
     // dispatch event 'profile edit'
     eventProfileEdit();

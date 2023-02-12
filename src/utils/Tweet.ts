@@ -5,6 +5,8 @@ import getUserName from './getUserName';
 import getUserUid from './getUserUid';
 import textToCleanedTextArray from './textToCleanedTextArray';
 import getTagsFromTextArray from './getTagsFromTextArray';
+// eslint-disable-next-line import/no-cycle
+import { TweetObj } from '../interfaces/TweetObj';
 
 interface Tweet {
   USER_NAME: string;
@@ -17,11 +19,11 @@ interface Tweet {
   likes: number;
   retweets: number;
   views: number;
-  aReplyTo: Tweet | null;
+  aReplyTo: TweetObj | null;
 }
 
 class Tweet {
-  constructor(messageText: string, aReplyTo: Tweet | null = null) {
+  constructor(messageText: string, aReplyTo: TweetObj | null = null) {
     const textArray = textToCleanedTextArray(messageText);
 
     this.USER_NAME = getUserName();
