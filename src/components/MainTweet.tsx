@@ -61,8 +61,10 @@ const MainTweet = ({ tweetObj }: IProps) => {
   useEffect(() => {
     if (!tweetObj) return undefined;
 
-    // increase view on tweetObj load
-    updateView(tweetObj);
+    // increase view after small delay
+    const timeoutId = setTimeout(() => {
+      updateView(tweetObj);
+    }, 500);
 
     // dynamically scroll past .replying-to-tweet-item on load
     if (tweetObj.aReplyTo) {
@@ -73,6 +75,8 @@ const MainTweet = ({ tweetObj }: IProps) => {
     }
 
     return () => {
+      // clean timeout on quick rerenders
+      clearTimeout(timeoutId);
       // reset scroll when navigating
       window.scrollTo(0, 0);
     };
