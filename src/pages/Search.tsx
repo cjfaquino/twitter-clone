@@ -59,17 +59,16 @@ const Search = () => {
 
       {resultsLoading && <Spinner />}
 
-      {filter === 'people' && results.length !== 0 && (
+      {filter === 'people' && !resultsLoading && (
         <ListOfUsers users={results} />
       )}
 
-      {filter === 'latest' && results.length !== 0 && (
-        <ListOfTweets tweets={results} customClass='search' />
-      )}
-      {!resultsLoading && results.length === 0 && (
-        <div className='missing'>
-          Couldn&apos;t find what you&apos;re looking for
-        </div>
+      {filter === 'latest' && !resultsLoading && (
+        <ListOfTweets
+          tweets={results}
+          customClass='search'
+          missingText="Couldn't find any posts"
+        />
       )}
     </div>
   );
