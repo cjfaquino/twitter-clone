@@ -58,7 +58,11 @@ const Replies = ({ tweetObj, fetchedReplies }: IProps) => {
         </form>
       )}
       {fetchedReplies && (
-        <ListOfTweets tweets={fetchedReplies} customClass='reply' />
+        <ListOfTweets
+          tweets={fetchedReplies}
+          customClass='reply'
+          missingText='No replies yet'
+        />
       )}
     </div>
   );
