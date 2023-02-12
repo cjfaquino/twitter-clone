@@ -6,15 +6,21 @@ import { UserProfile } from '../interfaces/UserProfile';
 interface IProps {
   users: UserProfile[];
   compact?: boolean;
+  missingText?: string;
 }
 
 const defaultProps = {
   compact: false,
+  missingText: "There's no users here",
 };
 
-const ListOfUsers = ({ users, compact }: IProps & typeof defaultProps) => (
-  // eslint-disable-next-line react/jsx-no-useless-fragment
+const ListOfUsers = ({
+  users,
+  compact,
+  missingText,
+}: IProps & typeof defaultProps) => (
   <div className='list'>
+    {users.length === 0 && <div className='missing'>{missingText}</div>}
     {compact
       ? users.map((usr) => (
           <ProfileSmall key={`profile-small-${usr.id}`} userProfile={usr} />
