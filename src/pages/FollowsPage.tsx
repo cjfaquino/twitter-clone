@@ -4,6 +4,7 @@ import GoBackHeader from '../components/GoBackHeader';
 import useFindByUsername from '../hooks/useFindByUsername';
 import useFollowsList from '../hooks/useFollowsList';
 import ListOfUsers from '../components/ListOfUsers';
+import isUserSignedIn from '../utils/isUserSignedIn';
 
 const FollowsPage = () => {
   const params = useParams();
@@ -16,13 +17,15 @@ const FollowsPage = () => {
     <>
       <GoBackHeader targetUser={targetUser} />
       <div className='filter-buttons-container'>
-        <NavLink
-          to={`/${params.username}/followers_you_follow`}
-          className='styled-filter-link'
-          state={{ targetUser }}
-        >
-          <span>Followers you know</span>
-        </NavLink>
+        {isUserSignedIn() && (
+          <NavLink
+            to={`/${params.username}/followers_you_follow`}
+            className='styled-filter-link'
+            state={{ targetUser }}
+          >
+            <span>Followers you know</span>
+          </NavLink>
+        )}
         <NavLink
           end
           to={`/${params.username}/followers`}
