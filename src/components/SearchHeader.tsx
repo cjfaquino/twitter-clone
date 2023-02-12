@@ -6,14 +6,25 @@ import useInput from '../hooks/useInput';
 
 interface IProps {
   searched?: string;
+  query?: string;
+  filter?: string;
+  setQuery?: Function;
 }
 
 const defaultProps = {
   searched: '',
+  query: '',
+  filter: 'latest',
+  setQuery: (e: any) => e,
 };
 
-const SearchHeader = ({ searched }: IProps & typeof defaultProps) => {
-  const [search, handleSearch, setSearch] = useInput(searched);
+const SearchHeader = ({
+  searched,
+  query,
+  filter,
+  setQuery,
+}: IProps & typeof defaultProps) => {
+  const [search, handleSearch, setSearch] = useInput(query || searched);
   const navigate = useNavigate();
   const clrSearch = () => {
     setSearch('');
@@ -25,7 +36,7 @@ const SearchHeader = ({ searched }: IProps & typeof defaultProps) => {
     if (search) {
       navigate({
         pathname: '/search',
-        search: createSearchParams({ q: search }).toString(),
+        search: createSearchParams({ q: search, f: filter }).toString(),
       });
     }
   };
@@ -37,7 +48,10 @@ const SearchHeader = ({ searched }: IProps & typeof defaultProps) => {
           type='text'
           value={search}
           placeholder={`Search ${import.meta.env.VITE_APP_NAME}`}
-          onChange={handleSearch}
+          onChange={(e) => {
+            handleSearch(e);
+            setQuery(e.target.value);
+          }}
         />
         <button type='submit' className='btn-search'>
           <FontAwesomeIcon icon={faSearch} />

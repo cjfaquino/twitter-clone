@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import indexTweets from '../algolia-config';
+import { indexTweets, indexUsers } from '../algolia-config';
 import getUpdatedTweetByID from '../utils/getUpdatedTweetByID';
 
-export default function useAlgoliaSearch(query: string) {
+export default function useAlgoliaSearch(query: string, filter: string) {
   const [results, setResults] = useState<any>([]);
   const [loading, setLoading] = useState(false);
 
-  const getResults = async () => {
+  const getTweets = async () => {
     try {
       setLoading(true);
       const { hits } = await indexTweets.search(query, {
@@ -24,6 +24,25 @@ export default function useAlgoliaSearch(query: string) {
     setLoading(false);
   };
 
+  const getUsers = async () => {
+    try {
+      setLoading(true);
+      const { hits } = await indexUsers.search(query, {
+        hitsPerPage: 30,
+      });
+
+      setResults(hits);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
+  };
+
+  const getResults = async () => {
+    if (filter === 'latest') getTweets();
+    if (filter === 'people') getUsers();
+  };
+
   let ran = false;
   useEffect(() => {
     if (!ran) {
@@ -34,7 +53,7 @@ export default function useAlgoliaSearch(query: string) {
     return () => {
       setResults([]);
     };
-  }, [query]);
+  }, [query, filter]);
 
   return [results, loading];
 }

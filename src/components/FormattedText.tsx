@@ -23,7 +23,7 @@ const FormattedText: FunctionComponent<MyComponentProps> = ({
           <Link
             to={{
               pathname: '/search',
-              search: createSearchParams({ q: word }).toString(),
+              search: createSearchParams({ q: word, f: 'latest' }).toString(),
             }}
             key={`hash-${word}-${index}-${itemID}`}
             className='link-hash'

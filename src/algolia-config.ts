@@ -5,10 +5,9 @@ const client = algoliasearch(
   import.meta.env.VITE_ALGOLIA_API_KEY
 );
 
-const indexTweets = client.initIndex('tweets');
+export const indexTweets = client.initIndex('tweets');
+export const indexUsers = client.initIndex('users');
 
 // index
 //   .search('samsung', { attributesToRetrieve: ['name'], hitsPerPage: 10 })
 //   .then(({ hits }) => console.log(hits));
-
-export default indexTweets;
