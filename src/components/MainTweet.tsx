@@ -20,13 +20,14 @@ import OptionsPopup from './OptionsPopup';
 import FormattedText from './FormattedText';
 import useFindByUsername from '../hooks/useFindByUsername';
 import { TweetObj } from '../interfaces/TweetObj';
+import checkUserAlreadyReplied from '../utils/checkUserAlreadyReplied';
 
 interface IProps {
   tweetObj: TweetObj;
-  // userProfile: UserProfile;
+  fetchedReplies: TweetObj[];
 }
 
-const MainTweet = ({ tweetObj }: IProps) => {
+const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
   const navigate = useNavigate();
   const params = useParams();
   const targetUser = useFindByUsername(params.username!);
@@ -194,7 +195,12 @@ const MainTweet = ({ tweetObj }: IProps) => {
           </span>
         </div>
         <div className={`${customClass}-item-buttons`}>
-          <button type='button' className='btn-replies grey'>
+          <button
+            type='button'
+            className={`btn-replies grey ${
+              checkUserAlreadyReplied(fetchedReplies) ? 'replied' : ''
+            }`}
+          >
             <span className='btn-blue'>
               <FontAwesomeIcon icon={faComment} />
             </span>

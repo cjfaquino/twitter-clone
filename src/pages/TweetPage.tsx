@@ -7,11 +7,16 @@ import GoBackHeader from '../components/GoBackHeader';
 import TweetItem from '../components/TweetItem';
 import useReplies from '../hooks/useReplies';
 import Spinner from '../components/Spinner';
+import { TweetObj } from '../interfaces/TweetObj';
 
 const TweetPage = () => {
   const params = useParams();
   const [tweet] = useOneTweet(params.tweet!);
-  const [fetchedReplies, repliesLoading] = useReplies(params.tweet!);
+  const [fetchedReplies, repliesLoading, setReplies] = useReplies(
+    params.tweet!
+  );
+
+  const replies = fetchedReplies as unknown as TweetObj[];
 
   return (
     <div id='tweet-page'>
@@ -24,8 +29,12 @@ const TweetPage = () => {
               <TweetItem tweetObj={tweet.aReplyTo} />
             </div>
           )}
-          <MainTweet tweetObj={tweet} />
-          <Replies fetchedReplies={fetchedReplies} tweetObj={tweet} />
+          <MainTweet tweetObj={tweet} fetchedReplies={replies} />
+          <Replies
+            fetchedReplies={replies}
+            setReplies={setReplies}
+            tweetObj={tweet}
+          />
         </>
       ) : (
         <Spinner />

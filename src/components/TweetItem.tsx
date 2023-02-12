@@ -21,6 +21,7 @@ import isUserSignedIn from '../utils/isUserSignedIn';
 import FormattedText from './FormattedText';
 import useFindByUsername from '../hooks/useFindByUsername';
 import { TweetObj } from '../interfaces/TweetObj';
+import checkUserAlreadyReplied from '../utils/checkUserAlreadyReplied';
 
 interface IProps {
   tweetObj: TweetObj;
@@ -35,7 +36,7 @@ const TweetItem = ({ tweetObj }: IProps) => {
   const { views, text: textArr, timestamp, USER_ID, id: TWEET_ID } = tweetObj;
 
   const [showOptionsPopup, toggleOptionsPopup] = useToggle(false);
-  const [, repLength] = useReplies(TWEET_ID);
+  const [replies, repliesLoading] = useReplies(TWEET_ID);
 
   const customClass = 'tweet';
 
@@ -123,7 +124,7 @@ const TweetItem = ({ tweetObj }: IProps) => {
       onClick={navToPage}
       aria-hidden
     >
-      {targetUser.doneLoading && (
+      {targetUser.doneLoading && !repliesLoading && (
         <>
           <div className={`${customClass}-item-left-half`}>
             <div
@@ -175,12 +176,17 @@ const TweetItem = ({ tweetObj }: IProps) => {
               customClass={customClass}
             />
             <div className={`${customClass}-item-buttons`}>
-              <button type='button' className='btn-replies grey'>
+              <button
+                type='button'
+                className={`btn-replies grey ${
+                  checkUserAlreadyReplied(replies) ? 'replied' : ''
+                }`}
+              >
                 <span className='btn-blue'>
                   <FontAwesomeIcon icon={faComment} />
                 </span>{' '}
                 <span className='replies-number'>
-                  {repLength > 0 && repLength}
+                  {replies.length > 0 && replies.length}
                 </span>
               </button>
               <button type='button' className='btn-retweets grey'>

@@ -9,9 +9,10 @@ import ListOfTweets from './ListOfTweets';
 interface IProps {
   tweetObj: TweetObj;
   fetchedReplies: TweetObj[];
+  setReplies: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
-const Replies = ({ tweetObj, fetchedReplies }: IProps) => {
+const Replies = ({ tweetObj, fetchedReplies, setReplies }: IProps) => {
   const [replyMessage, setReplyMessage] = useState('');
 
   const handleReplyInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -31,7 +32,7 @@ const Replies = ({ tweetObj, fetchedReplies }: IProps) => {
     if (docID) {
       // send to TweetPage
       const replyObj = { id: docID, ...new Tweet(replyMessage, tweetObj) };
-      fetchedReplies.push(replyObj);
+      setReplies((prev) => [...prev, replyObj]);
       setReplyMessage('');
     } else {
       // error sending

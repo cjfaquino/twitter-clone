@@ -6,11 +6,14 @@ import {
   doc,
   getDoc,
   orderBy,
+  DocumentData,
 } from 'firebase/firestore';
 import { db } from '../firebase-config';
 
-export default function useReplies(tweetID: string): any {
-  const [replies, setReplies] = useState<any>([]);
+export default function useReplies(
+  tweetID: string
+): [DocumentData[], boolean, React.Dispatch<React.SetStateAction<any[]>>] {
+  const [replies, setReplies] = useState<DocumentData[]>([]);
   const [loading, setLoading] = useState(true);
 
   const getUpdatedReply = async (replyId: string) => {
@@ -47,5 +50,5 @@ export default function useReplies(tweetID: string): any {
     };
   }, [tweetID]);
 
-  return [replies, loading];
+  return [replies, loading, setReplies];
 }
