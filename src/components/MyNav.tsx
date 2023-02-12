@@ -1,6 +1,10 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { faGear, faHashtag } from '@fortawesome/free-solid-svg-icons';
+import {
+  faGear,
+  faHashtag,
+  faHomeUser,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { User } from 'firebase/auth';
@@ -37,6 +41,16 @@ const MyNav = ({ currentUser, userProfile, toggleTweetPopup }: IProps) => {
   return (
     <nav id='menubar'>
       <ul className='menu-list'>
+        {currentUser && userProfile.id !== 'no-id' && (
+          <li className='nav-list-item'>
+            <NavLink to='/home'>
+              <div className='link-item'>
+                <FontAwesomeIcon icon={faHomeUser} />
+                <span>Home</span>
+              </div>
+            </NavLink>
+          </li>
+        )}
         <li className='nav-list-item'>
           <NavLink to='/explore'>
             <div className='link-item'>

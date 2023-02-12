@@ -9,9 +9,8 @@ import {
 import { useEffect, useState } from 'react';
 import { UserProfile } from '../interfaces/UserProfile';
 import { db } from '../firebase-config';
-import isUserSignedIn from '../utils/isUserSignedIn';
-import getUserUid from '../utils/getUserUid';
 import findDuplicatesByField from '../utils/findDuplicatesByField';
+import getFollowers from '../utils/getFollowers';
 
 export default function useFollowsList(typeOfList: string, userID: string) {
   const [userList, setUserList] = useState<UserProfile[]>([]);
@@ -66,22 +65,19 @@ export default function useFollowsList(typeOfList: string, userID: string) {
   const getListFollowersYouFollow = async (): Promise<
     DocumentData[] | void
   > => {
-    if (!isUserSignedIn()) return setUserList([]);
+    const [usersFollowers, targetsFollowers] = await Promise.all([
+      getFollowers(),
+      getListOfUsers('followers', true),
+    ]);
 
-    const queryRef = collection(db, 'users', getUserUid(), 'following');
-    const qSnap = await getDocs(queryRef);
+    const filtered = findDuplicatesByField(
+      usersFollowers,
+      targetsFollowers,
+      'id'
+    );
 
-    const users = qSnap.docs.map((item) => ({
-      id: item.id,
-      ...item.data(),
-      // for algolia 'users' index
-      objectID: item.id,
-    }));
-
-    const targetsFollowers = await getListOfUsers('followers', true);
-    const filtered = findDuplicatesByField(users, targetsFollowers, 'id');
     setUserList(filtered);
-    return users;
+    return usersFollowers;
   };
 
   useEffect(() => {

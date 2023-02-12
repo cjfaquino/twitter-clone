@@ -41,6 +41,8 @@ button svg {
   font-size: 1.3rem;
   font-weight: 700;
   height: 20vh;
+  padding: 90px;
+  text-align: center;
 }
 
 .missing,
@@ -891,6 +893,13 @@ header {
   z-index: 100;
   background-color: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
+}
+
+/* home header */
+
+#home header h2 {
+  padding: 20px;
+  cursor: pointer;
 }
 
 /* goback header */

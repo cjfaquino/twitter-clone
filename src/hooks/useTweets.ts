@@ -64,7 +64,7 @@ export default function useTweets(filter: string, userID?: string) {
   const getLikes = async () => {
     try {
       const likesQuery = query(
-        collection(db, 'users', userID, 'likes'),
+        collection(db, 'users', userID!, 'likes'),
         orderBy('likedAt', 'desc')
       );
       const qSnap = await getDocs(likesQuery);

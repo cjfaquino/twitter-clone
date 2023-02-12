@@ -16,6 +16,7 @@ import ProfilePage from './pages/ProfilePage';
 import Search from './pages/Search';
 import FollowsPage from './pages/FollowsPage';
 import SignUpContinue from './pages/SignUpContinue';
+import Home from './pages/Home';
 
 const App = () => {
   const [currentUser, userProfile] = useAuthStateObserver();
@@ -38,6 +39,7 @@ const App = () => {
 
         <div id='centerbar'>
           <Routes>
+            <Route path='/home' element={<Home />} />
             <Route
               path='/explore'
               element={
