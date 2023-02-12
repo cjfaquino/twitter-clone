@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './index.css';
 import './firebase-config';
+import './algolia-config';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
