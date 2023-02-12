@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User } from 'firebase/auth';
+import { sendEmailVerification, User } from 'firebase/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import useInput from '../hooks/useInput';
 import updateProfile from '../utils/updateProfile';
 import updateUserEmail from '../utils/updateEmail';
 import isEmailVerified from '../utils/isEmailVerified';
-import sendEmailVerification from '../utils/sendEmailVerification';
 import validateUsername from '../utils/validateUsername';
 import { UserProfile } from '../interfaces/UserProfile';
 import GoogleIcon from '../assets/GoogleIcon';
@@ -116,7 +115,7 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
               ) : (
                 <button
                   type='button'
-                  onClick={sendEmailVerification}
+                  onClick={() => sendEmailVerification(currentUser)}
                   className='btn-verify-email'
                 >
                   Verify email
