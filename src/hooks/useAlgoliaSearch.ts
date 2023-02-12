@@ -4,9 +4,11 @@ import getUpdatedTweetByID from '../utils/getUpdatedTweetByID';
 
 export default function useAlgoliaSearch(query: string) {
   const [results, setResults] = useState<any>([]);
+  const [loading, setLoading] = useState(false);
 
   const getResults = async () => {
     try {
+      setLoading(true);
       const { hits } = await indexTweets.search(query, {
         hitsPerPage: 30,
       });
@@ -19,6 +21,7 @@ export default function useAlgoliaSearch(query: string) {
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   let ran = false;
@@ -33,5 +36,5 @@ export default function useAlgoliaSearch(query: string) {
     };
   }, [query]);
 
-  return results;
+  return [results, loading];
 }
