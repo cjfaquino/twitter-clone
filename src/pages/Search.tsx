@@ -13,12 +13,16 @@ const Search = () => {
   return (
     <div id='search'>
       <SearchHeader searched={searched} />
-      {!resultsLoading ? (
+
+      {resultsLoading && <Spinner />}
+
+      {results.length !== 0 &&
         results.map((twt: Object) => (
           <TweetItem key={`results-${twt.id}`} tweetObj={twt} />
-        ))
-      ) : (
-        <Spinner />
+        ))}
+
+      {!resultsLoading && results.length === 0 && (
+        <div className='missing'>Couldn't find what you're looking for</div>
       )}
     </div>
   );

@@ -37,12 +37,22 @@ button svg {
   height: 20px !important;
 }
 
+.missing {
+  font-size: 1.3rem;
+  font-weight: 700;
+  height: 20vh;
+}
+
+.missing,
 .loader {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 40vh;
   width: 100%;
+}
+
+.loader {
+  height: 40vh;
 }
 
 .spinner {
