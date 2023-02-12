@@ -7,6 +7,7 @@ import {
 } from 'firebase/auth';
 import useUserProfile from './useUserProfile';
 import { UserProfile } from '../interfaces/UserProfile';
+import { auth } from '../firebase-config';
 
 function useAuthStateObserver(): [User | null, UserProfile] {
   // will be null when signed out
@@ -34,7 +35,7 @@ function useAuthStateObserver(): [User | null, UserProfile] {
   useEffect(() => {
     // Listen to auth state changes.
     const unsub = onAuthStateChanged(
-      getAuth(),
+      auth,
       authStateObserver as NextOrObserver<User>
     );
 

@@ -1,7 +1,7 @@
-import { getAuth } from 'firebase/auth';
+import { auth } from '../firebase-config';
 
 // Returns true if a user is signed-in.
 
 export default function isUserSignedIn() {
-  return !!getAuth().currentUser;
+  return !!auth.currentUser;
 }

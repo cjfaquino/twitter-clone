@@ -1,9 +1,9 @@
 import {
-  getAuth,
   GithubAuthProvider,
   GoogleAuthProvider,
   signInWithPopup,
 } from 'firebase/auth';
+import { auth } from '../firebase-config';
 import firebaseErrorMessage from './firebaseErrorMessages';
 import setErrorMessage from './setErrorMessage';
 
@@ -22,7 +22,6 @@ export default async function loginWithProvider(providerName: string) {
       default:
         throw Error('No provider');
     }
-    const auth = getAuth();
     await signInWithPopup(auth, provider);
 
     return true;

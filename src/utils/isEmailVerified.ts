@@ -1,7 +1,7 @@
-import { getAuth } from 'firebase/auth';
+import { auth } from '../firebase-config';
 import isUserSignedIn from './isUserSignedIn';
 
 export default function isEmailVerified() {
   if (!isUserSignedIn()) return undefined;
-  return getAuth().currentUser.emailVerified;
+  return auth.currentUser!.emailVerified;
 }

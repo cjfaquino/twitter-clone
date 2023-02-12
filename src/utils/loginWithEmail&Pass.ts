@@ -1,10 +1,10 @@
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase-config';
 import firebaseErrorMessage from './firebaseErrorMessages';
 import setErrorMessage from './setErrorMessage';
 
 const loginWithEmailAndPass = async (email: string, password: string) => {
   try {
-    const auth = getAuth();
     const userCredential = await signInWithEmailAndPassword(
       auth,
       email,

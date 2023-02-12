@@ -1,12 +1,11 @@
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from 'firebase/auth';
+import { auth } from '../firebase-config';
 
 const createUser = async (email: string, password: string) => {
   try {
-    const auth = getAuth();
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,

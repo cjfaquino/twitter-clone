@@ -1,8 +1,7 @@
-import { getAuth } from 'firebase/auth';
+import { auth } from '../firebase-config';
 
 // Returns the signed-in user's display name.
 
-const getDisplayName = () =>
-  getAuth().currentUser && getAuth().currentUser!.displayName;
+const getDisplayName = () => auth.currentUser && auth.currentUser!.displayName;
 
 export default getDisplayName;

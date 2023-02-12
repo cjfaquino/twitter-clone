@@ -1,10 +1,10 @@
 import {
-  getAuth,
   GoogleAuthProvider,
   GithubAuthProvider,
   linkWithPopup,
 } from 'firebase/auth';
 import eventProvider from '../events/eventProvider';
+import { auth } from '../firebase-config';
 import firebaseErrorMessage from './firebaseErrorMessages';
 import setErrorMessage from './setErrorMessage';
 
@@ -24,7 +24,6 @@ export default async function linkWithProvider(providerName: string) {
         throw Error('No provider');
     }
 
-    const auth = getAuth();
     const result = await linkWithPopup(auth.currentUser!, provider);
 
     // fire event on success

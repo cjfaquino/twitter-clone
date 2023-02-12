@@ -1,10 +1,10 @@
-import { getAuth, unlink } from 'firebase/auth';
+import { unlink } from 'firebase/auth';
 import eventProvider from '../events/eventProvider';
+import { auth } from '../firebase-config';
 import firebaseErrorMessage from './firebaseErrorMessages';
 import setErrorMessage from './setErrorMessage';
 
 export default function unlinkProvider(providerName: string) {
-  const auth = getAuth();
   unlink(auth.currentUser!, providerName)
     .then(() => {
       // Auth provider unlinked from account

@@ -1,4 +1,5 @@
-import { updateProfile, getAuth } from 'firebase/auth';
+import { updateProfile } from 'firebase/auth';
+import { auth } from '../firebase-config';
 import getDisplayName from './getDisplayName';
 import getProfilePicUrl from './getProfilePicUrl';
 
@@ -8,7 +9,6 @@ interface IArgs {
 }
 
 const updateDisplayNameAndPhoto = async ({ displayName, photoURL }: IArgs) => {
-  const auth = getAuth();
   await updateProfile(auth.currentUser!, {
     displayName: displayName || getDisplayName(),
     photoURL: photoURL || getProfilePicUrl(),

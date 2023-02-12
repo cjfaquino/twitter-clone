@@ -1,7 +1,7 @@
-import { getAuth, sendEmailVerification as sendEmail } from 'firebase/auth';
+import { sendEmailVerification as sendEmail } from 'firebase/auth';
+import { auth } from '../firebase-config';
 
 export default function sendEmailVerification() {
-  const auth = getAuth();
   sendEmail(auth.currentUser!)
     .then(() => {
       // Email verification sent!

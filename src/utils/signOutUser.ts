@@ -1,8 +1,9 @@
-import { getAuth, signOut } from 'firebase/auth';
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase-config';
 
 const signOutUser = () => {
   // Sign out of Firebase.
-  signOut(getAuth());
+  signOut(auth);
 };
 
 export default signOutUser;

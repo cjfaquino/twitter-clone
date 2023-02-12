@@ -1,6 +1,5 @@
 import { doc, updateDoc } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
-import { db } from '../firebase-config';
+import { auth, db } from '../firebase-config';
 import eventProfileEdit from '../events/eventProfileEdit';
 import getProfilePicUrl from './getProfilePicUrl';
 import { UserProfile } from '../interfaces/UserProfile';
@@ -28,7 +27,7 @@ const updateProfile = async ({
   bio,
 }: IArgs) => {
   try {
-    const currentUser = getAuth().currentUser!;
+    const currentUser = auth.currentUser!;
     // update stored profile
     const userRef = doc(db, 'users', currentUser.uid);
 
