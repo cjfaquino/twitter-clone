@@ -31,6 +31,7 @@ const ChangeProfileIcon = () => {
           <FontAwesomeIcon icon={faClose} />
         </button>
       )}
+
       <label htmlFor='photoURL' className='img-file-upload' title='Add photo'>
         <FontAwesomeIcon icon={faImage} />
         <input
@@ -39,7 +40,7 @@ const ChangeProfileIcon = () => {
           name='photoURL'
           id='photoURL'
           onChange={handleImg}
-          accept='image/jpeg'
+          accept='image/jpeg, image/png'
         />
       </label>
     </div>

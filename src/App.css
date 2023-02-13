@@ -476,6 +476,10 @@ form button {
   padding: 40px;
 }
 
+.sign-up-form .change-profile-icon {
+  margin: 20px auto;
+}
+
 .login-form,
 .login-form form {
   display: flex;
@@ -1134,8 +1138,8 @@ header.search {
 
 .change-profile-icon .btn-cancel-img {
   position: absolute;
-  top: -75px;
-  left: 9px;
+  top: -10px;
+  left: -10px;
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -1149,20 +1153,23 @@ header.search {
 
 .change-profile-icon .img-file-upload {
   position: absolute;
-  top: -26px;
-  left: 60px;
+  top: 40px;
+  left: 40px;
 }
 
 .change-profile-icon img {
   filter: brightness(0.5);
 }
 
-.edit-profile .img-container {
+.edit-profile .change-profile-icon {
   position: relative;
   top: -65px;
   left: 20px;
-  background-color: black;
+}
+
+.edit-profile .change-profile-icon .img-container {
   border: 5px solid black;
+  background-color: grey;
 }
 
 .edit-bottom {
