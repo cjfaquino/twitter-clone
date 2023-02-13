@@ -1097,6 +1097,7 @@ header.search {
 
 .edit-images {
   position: relative;
+  height: 205px;
   border: 3px solid black;
 }
 
@@ -1105,9 +1106,24 @@ header.search {
 }
 
 .edit-backdrop {
+  position: relative;
   width: var(--feed-width);
-  height: 205px;
+  height: 100%;
   background-color: grey;
+}
+
+.edit-backdrop img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  filter: brightness(0.5);
+}
+
+.edit-backdrop .img-file-upload {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .change-profile-icon {
@@ -1150,6 +1166,7 @@ header.search {
 }
 
 .edit-bottom {
+  margin-top: 75px;
   padding: 15px;
   width: var(--feed-width);
 }

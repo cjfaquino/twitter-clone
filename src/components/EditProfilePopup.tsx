@@ -1,6 +1,6 @@
-import { faClose } from '@fortawesome/free-solid-svg-icons';
+import { faClose, faImage } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useState } from 'react';
 import useInput from '../hooks/useInput';
 import { UserProfile } from '../interfaces/UserProfile';
 import updateProfile from '../utils/updateProfile';
@@ -8,7 +8,9 @@ import ChangeProfileIcon from './ChangeProfileIcon';
 
 interface IProps {
   userProfile: UserProfile;
-  toggleEditProfilePopup: React.MouseEventHandler<HTMLDivElement>;
+  toggleEditProfilePopup: React.MouseEventHandler<
+    HTMLDivElement | HTMLButtonElement
+  >;
 }
 
 const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
@@ -16,6 +18,13 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
   const [bio, handleBio] = useInput(userProfile.bio || '');
   const [website, handleWebsite] = useInput(userProfile.website || '');
   const [location, handleLocation] = useInput(userProfile.location || '');
+  const [selectedBackdrop, setSelectedBackdrop] = useState<File | null>(null);
+  const [backdropURL, setBackdropURL] = useState(userProfile.backdropURL);
+
+  const handleBackdrop = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedBackdrop(e.target.files![0]);
+    setBackdropURL(URL.createObjectURL(e.target.files![0]));
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -36,10 +45,14 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
 
   return (
     <>
-      <div className='edit-profile popup'>
+      <div className='edit-profile'>
         <form onSubmit={handleSubmit}>
           <header className='edit-top'>
-            <button type='button' className='btn-cancel-edit'>
+            <button
+              type='button'
+              className='btn-cancel-edit'
+              onClick={toggleEditProfilePopup}
+            >
               <FontAwesomeIcon icon={faClose} />
             </button>
             <h2>Edit profile</h2>
@@ -48,8 +61,17 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
 
           <div className='edit-images'>
             <div className='edit-backdrop'>
-              <img src='' alt='backdrop not found' />
-              <input type='file' name='backdropURL' id='backdropURL' />
+              <img src={backdropURL} alt='backdrop' />
+              <label htmlFor='backdropURL' className='img-file-upload'>
+                <FontAwesomeIcon icon={faImage} />
+                <input
+                  onChange={handleBackdrop}
+                  type='file'
+                  name='backdropURL'
+                  id='backdropURL'
+                  accept='image/jpeg'
+                />
+              </label>
             </div>
             <ChangeProfileIcon />
           </div>
