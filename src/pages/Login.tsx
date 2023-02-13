@@ -6,11 +6,14 @@ import setErrorMessage from '../utils/setErrorMessage.js';
 import OrSeparator from '../components/OrSeparator';
 import HaveAnAccount from '../components/HaveAnAccount';
 import ProviderButtons from '../components/ProviderButtons';
+import useToggle from '../hooks/useToggle';
+import ResetPasswordPopup from '../components/ResetPasswordPopup';
 
 const Login = () => {
   const [emailVal, handleEmail] = useInput();
   const [passwordVal, handlePassword] = useInput();
   const [submitting, setSubmitting] = useState(false);
+  const [showResetPopup, toggleResetPopup] = useToggle();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -72,10 +75,21 @@ const Login = () => {
             value={passwordVal}
             onChange={handlePassword}
           />
+          Forgot your password?{' '}
+          <button
+            type='button'
+            className='btn-reset-pass'
+            onClick={toggleResetPopup}
+          >
+            Reset
+          </button>
         </label>
         <button type='submit'>{submitting ? 'Logging In...' : 'Log In'}</button>
         <HaveAnAccount />
       </form>
+      {showResetPopup && (
+        <ResetPasswordPopup toggleResetPopup={toggleResetPopup} />
+      )}
     </div>
   );
 };

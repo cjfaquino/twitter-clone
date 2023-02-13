@@ -420,6 +420,59 @@ button svg {
   outline: none;
 }
 
+#reset-password {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: 500px;
+  transform: translate(-50%, -50%);
+  background-color: black;
+  padding: 20px;
+  border-radius: 15px;
+  z-index: 4;
+}
+
+#reset-password h2 {
+  margin-bottom: 20px;
+}
+
+#reset-password form {
+  position: relative;
+  flex-direction: row;
+  align-items: flex-end;
+  flex: 1 1 auto;
+  width: 100%;
+}
+
+#reset-password input,
+#reset-password label {
+  width: 100%;
+  margin: 0;
+}
+
+#reset-password input {
+  padding-right: 80px;
+}
+
+#reset-password .btn-cancel:hover {
+  color: red;
+}
+
+#reset-password button {
+  position: absolute;
+  margin: 0;
+  right: 0;
+  padding: 10px 20px;
+  border-radius: 0;
+  background-color: transparent;
+  color: grey;
+}
+
+#reset-password button:hover {
+  background-color: transparent;
+  color: var(--theme-color);
+}
+
 /* Center column */
 
 #centerbar {
@@ -522,6 +575,20 @@ form button {
 .sign-up-form h2,
 .settings-forms h2 {
   margin-bottom: 20px;
+}
+
+.btn-reset-pass {
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+  display: inline-block;
+  background-color: transparent;
+  color: var(--theme-color);
+  font-weight: 500;
+}
+
+.btn-reset-pass:hover {
+  background-color: transparent;
 }
 
 .disclaimer {
