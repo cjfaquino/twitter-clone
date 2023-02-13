@@ -12,6 +12,27 @@ input:focus {
   outline: none;
 }
 
+input[type='file'] {
+  display: none;
+}
+
+.img-file-upload {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 1.4rem;
+  z-index: 2;
+}
+
+.img-file-upload:hover {
+  background-color: rgb(49, 49, 49);
+}
+
 #root {
   position: absolute;
   display: flex;
@@ -1089,9 +1110,40 @@ header.search {
   background-color: grey;
 }
 
-.edit-profile .img-container {
+.change-profile-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.change-profile-icon .btn-cancel-img {
   position: absolute;
-  top: 45%;
+  top: -75px;
+  left: 9px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: rgb(50, 50, 50);
+  z-index: 2;
+}
+
+.change-profile-icon .btn-cancel-img:hover {
+  background-color: rgb(177, 0, 0);
+}
+
+.change-profile-icon .img-file-upload {
+  position: absolute;
+  top: -26px;
+  left: 60px;
+}
+
+.change-profile-icon img {
+  filter: brightness(0.5);
+}
+
+.edit-profile .img-container {
+  position: relative;
+  top: -65px;
   left: 20px;
   background-color: black;
   border: 5px solid black;
