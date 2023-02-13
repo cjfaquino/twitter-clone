@@ -16,8 +16,10 @@ const ProfileMedium = ({ userProfile }: IProps) => {
 
   const navToPage = (e: React.MouseEvent<HTMLDivElement>) => {
     const element = e.target as HTMLElement;
+
     const targetName = element.className;
-    if (targetName !== 'btn-follow') navigate(`/${userProfile.userName}`);
+    if (!targetName.includes('btn-follow'))
+      navigate(`/${userProfile.userName}`);
   };
 
   const { photoURL, displayName, userName, id, bio } = userProfile;
