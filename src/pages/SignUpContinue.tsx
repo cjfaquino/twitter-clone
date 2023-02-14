@@ -51,34 +51,37 @@ const SignUpContinue = ({ currentUser }: IProps) => {
   return (
     <form onSubmit={handleSubmit} className='sign-up-form continue-signup'>
       <h2>Create your profile</h2>
-      <ChangeProfileIcon
-        photoURL={photoURL}
-        setPhotoURL={setPhotoURL}
-        setSelectedPhoto={setSelectedPhoto}
-        selectedPhoto={selectedPhoto}
-      />
-
-      <label htmlFor='displayName'>
-        Display name
-        <input
-          type='text'
-          id='displayName'
-          value={displayName}
-          onChange={handleDisplayName}
-          required
+      <div className='signup-card'>
+        <ChangeProfileIcon
+          photoURL={photoURL}
+          setPhotoURL={setPhotoURL}
+          setSelectedPhoto={setSelectedPhoto}
+          selectedPhoto={selectedPhoto}
         />
-      </label>
-      <label htmlFor='userName'>
-        Username @
-        <input
-          type='text'
-          id='userName'
-          value={userName}
-          onChange={handleUsername}
-          autoComplete='off'
-          required
-        />
-      </label>
+        <section>
+          <label htmlFor='displayName'>
+            Display name
+            <input
+              type='text'
+              id='displayName'
+              value={displayName}
+              onChange={handleDisplayName}
+              required
+            />
+          </label>
+          <label htmlFor='userName'>
+            Username @
+            <input
+              type='text'
+              id='userName'
+              value={userName}
+              onChange={handleUsername}
+              autoComplete='off'
+              required
+            />
+          </label>
+        </section>
+      </div>
       <SubmitButton submitting={submitting} text='Submit' width={100} />
     </form>
   );
