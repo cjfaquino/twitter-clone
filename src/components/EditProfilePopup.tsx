@@ -7,6 +7,7 @@ import getProfilePicUrl from '../utils/getProfilePicUrl';
 import updateProfile from '../utils/updateProfile';
 import uploadImage from '../utils/uploadImage';
 import ChangeProfileIcon from './ChangeProfileIcon';
+import SubmitButton from './SubmitButton';
 
 interface IProps {
   userProfile: UserProfile;
@@ -83,10 +84,7 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
               <FontAwesomeIcon icon={faClose} />
             </button>
             <h2>Edit profile</h2>
-            <button type='submit' disabled={submitting}>
-              {' '}
-              {submitting ? 'Saving...' : 'Save'}
-            </button>
+            <SubmitButton submitting={submitting} text='Save' width={100} />
           </header>
 
           <div className='edit-images'>

@@ -66,29 +66,11 @@ button svg {
   text-align: center;
 }
 
-.missing,
-.loader {
+.missing {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-}
-
-.loader {
-  height: 40vh;
-}
-
-.spinner {
-  border: 6px solid rgb(74, 74, 74);
-  border-top: 6px solid var(--theme-color);
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  animation: spin 1s ease-in-out infinite;
-}
-
-#who-to-follow .loader {
-  height: 300px;
 }
 
 @keyframes spin {
@@ -1041,7 +1023,7 @@ header.search {
   align-items: center;
 }
 
-.search-form .btn-search {
+.search-form button[type='submit'] {
   flex-shrink: 0;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
@@ -1153,10 +1135,6 @@ header.search {
 
 .edit-profile button[type='button'] {
   margin: 0;
-}
-
-.edit-profile button[type='submit'] {
-  padding: 7px 15px;
 }
 
 .btn-cancel-edit {

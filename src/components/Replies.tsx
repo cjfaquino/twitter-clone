@@ -5,6 +5,7 @@ import { TweetObj } from '../interfaces/TweetObj';
 import getProfilePicUrl from '../utils/getProfilePicUrl';
 import isUserSignedIn from '../utils/isUserSignedIn';
 import ListOfTweets from './ListOfTweets';
+import SubmitButton from './SubmitButton';
 
 interface IProps {
   tweetObj: TweetObj;
@@ -14,6 +15,7 @@ interface IProps {
 
 const Replies = ({ tweetObj, fetchedReplies, setReplies }: IProps) => {
   const [replyMessage, setReplyMessage] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
   const handleReplyInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setReplyMessage(e.target.value);
@@ -24,6 +26,7 @@ const Replies = ({ tweetObj, fetchedReplies, setReplies }: IProps) => {
 
   const handleSubmitReply = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setSubmitting(true);
     if (!isUserSignedIn()) {
       return; // show login popup
     }
@@ -37,6 +40,7 @@ const Replies = ({ tweetObj, fetchedReplies, setReplies }: IProps) => {
     } else {
       // error sending
     }
+    setSubmitting(false);
   };
 
   return (
@@ -53,9 +57,7 @@ const Replies = ({ tweetObj, fetchedReplies, setReplies }: IProps) => {
             onChange={handleReplyInput}
             className='reply-input'
           />
-          <button type='submit' className='btn-submit-reply'>
-            Reply
-          </button>
+          <SubmitButton submitting={submitting} text='Reply' width={120} />
         </form>
       )}
       {fetchedReplies && (

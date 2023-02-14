@@ -53,7 +53,7 @@ const SearchHeader = ({
             setQuery(e.target.value);
           }}
         />
-        <button type='submit' className='btn-search'>
+        <button type='submit'>
           <FontAwesomeIcon icon={faSearch} />
         </button>
         {search && (

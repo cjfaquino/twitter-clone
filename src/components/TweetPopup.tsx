@@ -6,6 +6,7 @@ import isUserSignedIn from '../utils/isUserSignedIn';
 import saveTweet from '../utils/saveTweet';
 import Tweet from '../utils/Tweet';
 import getProfilePicUrl from '../utils/getProfilePicUrl';
+import SubmitButton from './SubmitButton';
 
 interface IProps {
   toggleTweetPopup: any;
@@ -15,9 +16,11 @@ interface IProps {
 const TweetPopup = ({ toggleTweetPopup, setNewTweet }: IProps) => {
   const navigate = useNavigate();
   const [input, setInput] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setSubmitting(true);
     if (isUserSignedIn()) {
       // save tweet
       const docID = await saveTweet(input);
@@ -30,6 +33,7 @@ const TweetPopup = ({ toggleTweetPopup, setNewTweet }: IProps) => {
       // show login popup
       navigate('/login', { state: { error: 'no-login' } });
     }
+    setSubmitting(false);
   };
 
   return (
@@ -63,7 +67,7 @@ const TweetPopup = ({ toggleTweetPopup, setNewTweet }: IProps) => {
               maxLength={280}
             />
             <div className='hor-line' />
-            <button type='submit'>Tweet</button>
+            <SubmitButton submitting={submitting} text='Tweet' width={100} />
           </form>
         </div>
       </div>

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import useInput from '../hooks/useInput';
 import HaveAnAccount from '../components/HaveAnAccount';
 import createUser from '../utils/createUser';
+import SubmitButton from '../components/SubmitButton';
 
 const SignUp = () => {
   const [email, handleEmail] = useInput();
@@ -62,7 +63,8 @@ const SignUp = () => {
           required
         />
       </label>
-      <button type='submit'>{submitting ? 'Submitting...' : 'Submit'}</button>
+      <SubmitButton submitting={submitting} text='Continue' width={120} />
+
       <HaveAnAccount exists />
       <p className='disclaimer'>
         <strong>Disclaimer</strong>: This project is for educational purposes

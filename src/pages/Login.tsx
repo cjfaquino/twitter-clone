@@ -8,6 +8,7 @@ import HaveAnAccount from '../components/HaveAnAccount';
 import ProviderButtons from '../components/ProviderButtons';
 import useToggle from '../hooks/useToggle';
 import ResetPasswordPopup from '../components/ResetPasswordPopup';
+import SubmitButton from '../components/SubmitButton';
 
 const Login = () => {
   const [emailVal, handleEmail] = useInput();
@@ -84,7 +85,7 @@ const Login = () => {
             Reset
           </button>
         </label>
-        <button type='submit'>{submitting ? 'Logging In...' : 'Log In'}</button>
+        <SubmitButton submitting={submitting} text='Log In' width={100} />
         <HaveAnAccount />
       </form>
       {showResetPopup && (

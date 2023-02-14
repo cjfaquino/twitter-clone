@@ -11,6 +11,7 @@ import validateUsername from '../utils/validateUsername';
 import { UserProfile } from '../interfaces/UserProfile';
 import GoogleIcon from '../assets/GoogleIcon';
 import useProviderLinkStatus from '../hooks/useProviderLinkStatus';
+import SubmitButton from '../components/SubmitButton';
 
 interface IProps {
   currentUser: User;
@@ -97,9 +98,11 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
               maxLength={15}
             />
           </label>
-          <button type='submit'>
-            {submittingUsername ? 'Submitting...' : 'Change'}
-          </button>
+          <SubmitButton
+            submitting={submittingUsername}
+            text='Change'
+            width={100}
+          />
         </form>
         <form onSubmit={handleSubmitEmail} className='email-form'>
           <h2>Contact Details</h2>
@@ -130,9 +133,11 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
             />
           </label>
 
-          <button type='submit'>
-            {submittingEmail ? 'Submitting...' : 'Change'}
-          </button>
+          <SubmitButton
+            submitting={submittingEmail}
+            text='Change'
+            width={100}
+          />
         </form>
 
         <div className='link-accounts'>

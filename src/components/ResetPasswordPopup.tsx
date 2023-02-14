@@ -4,6 +4,7 @@ import { sendPasswordResetEmail } from 'firebase/auth';
 import React, { useState } from 'react';
 import { auth } from '../firebase-config';
 import useInput from '../hooks/useInput';
+import SubmitButton from './SubmitButton';
 
 const ResetPasswordPopup = ({
   toggleResetPopup,
@@ -44,9 +45,7 @@ const ResetPasswordPopup = ({
               onChange={handleEmail}
             />
           </label>
-          <button type='submit' disabled={submitting}>
-            {submitting ? 'Sending..' : 'Send'}
-          </button>
+          <SubmitButton submitting={submitting} text='Send' width={85} />
         </form>
       </div>
     </>

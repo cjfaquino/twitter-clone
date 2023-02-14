@@ -2,6 +2,7 @@ import { User } from 'firebase/auth';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ChangeProfileIcon from '../components/ChangeProfileIcon';
+import SubmitButton from '../components/SubmitButton';
 import useInput from '../hooks/useInput';
 import createProfile from '../utils/createProfile';
 import getProfilePicUrl from '../utils/getProfilePicUrl';
@@ -78,7 +79,7 @@ const SignUpContinue = ({ currentUser }: IProps) => {
           required
         />
       </label>
-      <button type='submit'>{submitting ? 'Submitting...' : 'Submit'}</button>
+      <SubmitButton submitting={submitting} text='Submit' width={100} />
     </form>
   );
 };
