@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { indexTweets, indexUsers } from '../algolia-config';
+import { indexTweets, indexTweetsTags, indexUsers } from '../algolia-config';
 import getUpdatedTweetByID from '../utils/getUpdatedTweetByID';
 
 export default function useAlgoliaSearch(query: string, filter: string) {
@@ -9,9 +9,19 @@ export default function useAlgoliaSearch(query: string, filter: string) {
   const getTweets = async () => {
     try {
       setLoading(true);
-      const { hits } = await indexTweets.search(query, {
-        hitsPerPage: 30,
-      });
+      let res;
+
+      if (query.startsWith('#')) {
+        res = await indexTweetsTags.search(query, {
+          hitsPerPage: 30,
+        });
+      } else {
+        res = await indexTweets.search(query, {
+          hitsPerPage: 30,
+        });
+      }
+
+      const { hits } = res;
 
       const updatedHits = hits.map((twt) => getUpdatedTweetByID(twt.objectID));
 

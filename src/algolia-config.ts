@@ -6,6 +6,7 @@ const client = algoliasearch(
 );
 
 export const indexTweets = client.initIndex('tweets');
+export const indexTweetsTags = client.initIndex('tweets_tags_only');
 export const indexUsers = client.initIndex('users');
 
 // index
