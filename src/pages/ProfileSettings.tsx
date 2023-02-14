@@ -161,17 +161,13 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
           <div>
             <span>Created at: </span>{' '}
             <span>
-              {new Date(
-                Number(currentUser.metadata.createdAt)
-              ).toLocaleString()}
+              {new Date(currentUser.metadata.creationTime!).toLocaleString()}
             </span>
           </div>
           <div>
             <span>Last login at: </span>{' '}
             <span>
-              {new Date(
-                Number(currentUser.metadata.lastLoginAt)
-              ).toLocaleString()}
+              {new Date(currentUser.metadata.lastSignInTime!).toLocaleString()}
             </span>
           </div>
         </div>
