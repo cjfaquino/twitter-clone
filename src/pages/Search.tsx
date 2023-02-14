@@ -3,7 +3,7 @@ import { createSearchParams, Link, useSearchParams } from 'react-router-dom';
 import ListOfTweets from '../components/ListOfTweets';
 import ListOfUsers from '../components/ListOfUsers';
 import SearchHeader from '../components/SearchHeader';
-import Spinner from '../components/Spinner';
+import Spinner from '../components/Loaders/Spinner';
 import useAlgoliaSearch from '../hooks/useAlgoliaSearch';
 
 const Search = () => {

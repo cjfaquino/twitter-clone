@@ -3,7 +3,7 @@ import useTweets from '../hooks/useTweets';
 import SearchHeader from '../components/SearchHeader';
 import { TweetObj } from '../interfaces/TweetObj';
 import ListOfTweets from '../components/ListOfTweets';
-import Spinner from '../components/Spinner';
+import Spinner from '../components/Loaders/Spinner';
 
 interface IProps {
   newTweet: TweetObj;

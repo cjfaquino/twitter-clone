@@ -2,7 +2,7 @@ import React from 'react';
 import useRandomUsers from '../hooks/useRandomUsers';
 import { UserProfile } from '../interfaces/UserProfile';
 import ListOfUsers from './ListOfUsers';
-import Spinner from './Spinner';
+import Spinner from './Loaders/Spinner';
 
 const WhoToFollow = () => {
   const [users, usersLoading] = useRandomUsers() as [UserProfile[], boolean];

@@ -12,7 +12,7 @@ import ProfileLarge from '../components/ProfileLarge';
 import useFindByUsername from '../hooks/useFindByUsername';
 import ProfileFeed from '../components/ProfileFeed';
 import { UserProfile } from '../interfaces/UserProfile';
-import Spinner from '../components/Spinner';
+import Spinner from '../components/Loaders/Spinner';
 
 interface IProps {
   currentUser: User;

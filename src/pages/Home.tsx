@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import ListOfTweets from '../components/ListOfTweets';
-import Spinner from '../components/Spinner';
+import Spinner from '../components/Loaders/Spinner';
 import useFollowsList from '../hooks/useFollowsList';
 import useTweets from '../hooks/useTweets';
 import findDuplicatesByField from '../utils/findDuplicatesByField';

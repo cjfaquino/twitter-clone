@@ -6,7 +6,7 @@ import useOneTweet from '../hooks/useOneTweet';
 import GoBackHeader from '../components/GoBackHeader';
 import TweetItem from '../components/TweetItem';
 import useReplies from '../hooks/useReplies';
-import Spinner from '../components/Spinner';
+import Spinner from '../components/Loaders/Spinner';
 import { TweetObj } from '../interfaces/TweetObj';
 
 const TweetPage = () => {
