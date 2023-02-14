@@ -1,4 +1,5 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React from 'react';
+import useDelay from '../hooks/useDelay';
 import { TweetObj } from '../interfaces/TweetObj';
 import TweetItem from './TweetItem';
 
@@ -17,20 +18,7 @@ const ListOfTweets = ({
   customClass,
   missingText,
 }: IProps & typeof defaultProps) => {
-  const [empty, setEmpty] = useState(false);
-
-  useLayoutEffect(() => {
-    let timer: NodeJS.Timeout;
-    if (tweets.length === 0) {
-      timer = setTimeout(() => {
-        setEmpty(true);
-      }, 500);
-    }
-    return () => {
-      clearInterval(timer);
-      setEmpty(false);
-    };
-  }, [tweets]);
+  const empty = useDelay(500, tweets.length === 0, tweets);
 
   return (
     <div className='list'>

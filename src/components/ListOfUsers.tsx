@@ -1,7 +1,8 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React from 'react';
 import ProfileSmall from './ProfileSmall';
 import ProfileMedium from './ProfileMedium';
 import { UserProfile } from '../interfaces/UserProfile';
+import useDelay from '../hooks/useDelay';
 
 interface IProps {
   users: UserProfile[];
@@ -19,20 +20,7 @@ const ListOfUsers = ({
   compact,
   missingText,
 }: IProps & typeof defaultProps) => {
-  const [empty, setEmpty] = useState(false);
-
-  useLayoutEffect(() => {
-    let timer: NodeJS.Timeout;
-    if (users.length === 0) {
-      timer = setTimeout(() => {
-        setEmpty(true);
-      }, 500);
-    }
-    return () => {
-      clearInterval(timer);
-      setEmpty(false);
-    };
-  }, [users]);
+  const empty = useDelay(500, users.length === 0, users);
 
   return (
     <div className='list'>
