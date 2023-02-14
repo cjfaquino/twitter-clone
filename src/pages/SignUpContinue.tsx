@@ -5,6 +5,7 @@ import ChangeProfileIcon from '../components/ChangeProfileIcon';
 import useInput from '../hooks/useInput';
 import createProfile from '../utils/createProfile';
 import getProfilePicUrl from '../utils/getProfilePicUrl';
+import uploadImage from '../utils/uploadImage';
 
 interface IProps {
   currentUser: User;
@@ -15,17 +16,26 @@ const SignUpContinue = ({ currentUser }: IProps) => {
   const [displayName, handleDisplayName] = useInput();
   const [submitting, setSubmitting] = useState(false);
   const [photoURL, setPhotoURL] = useState(getProfilePicUrl());
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    let newPhotoURL = photoURL;
+
+    if (selectedPhoto) {
+      newPhotoURL = await uploadImage(
+        `/users/${currentUser.uid}/icon`,
+        selectedPhoto
+      );
+    }
+
     setSubmitting(true);
     const created = await createProfile({
       userName,
       displayName,
-      photoURL,
+      photoURL: newPhotoURL,
       user: currentUser,
     });
     setSubmitting(false);
@@ -37,20 +47,15 @@ const SignUpContinue = ({ currentUser }: IProps) => {
     }
   };
 
-  const resetImg = () => {
-    setPhotoURL(getProfilePicUrl());
-    setSelectedImage(null);
-  };
-
-  const handleImg = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedImage(e.target.files![0]);
-    setPhotoURL(URL.createObjectURL(e.target.files![0]));
-  };
-
   return (
     <form onSubmit={handleSubmit} className='sign-up-form continue-signup'>
       <h2>Create your profile</h2>
-      <ChangeProfileIcon />
+      <ChangeProfileIcon
+        photoURL={photoURL}
+        setPhotoURL={setPhotoURL}
+        setSelectedPhoto={setSelectedPhoto}
+        selectedPhoto={selectedPhoto}
+      />
 
       <label htmlFor='displayName'>
         Display name

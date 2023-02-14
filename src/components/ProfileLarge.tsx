@@ -31,7 +31,7 @@ const ProfileLarge = ({ currentUser, targetUser, userProfile }: IProps) => {
       Number(targetUser.userProfile.metadata!.createdAt)
     );
 
-    const options = {
+    const options: Intl.DateTimeFormatOptions = {
       year: 'numeric',
       month: 'short',
     };
@@ -51,7 +51,9 @@ const ProfileLarge = ({ currentUser, targetUser, userProfile }: IProps) => {
         <div className={`${customClass}`}>
           {targetUser.doneLoading && (
             <div id={`${customClass}-${targetUser.userProfile.id}`}>
-              <div className='top-half' />
+              <div className='top-half img-backdrop'>
+                <img src={targetUser.userProfile.backdropURL} alt='' />
+              </div>
               <div className='bottom-half'>
                 <div className='user-pic edit'>
                   <div className='user-profile-img-container'>

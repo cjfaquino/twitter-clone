@@ -3,7 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import useInput from '../hooks/useInput';
 import { UserProfile } from '../interfaces/UserProfile';
+import getProfilePicUrl from '../utils/getProfilePicUrl';
 import updateProfile from '../utils/updateProfile';
+import uploadImage from '../utils/uploadImage';
 import ChangeProfileIcon from './ChangeProfileIcon';
 
 interface IProps {
@@ -19,7 +21,12 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
   const [website, handleWebsite] = useInput(userProfile.website || '');
   const [location, handleLocation] = useInput(userProfile.location || '');
   const [selectedBackdrop, setSelectedBackdrop] = useState<File | null>(null);
+  const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null);
   const [backdropURL, setBackdropURL] = useState(userProfile.backdropURL);
+  const [photoURL, setPhotoURL] = useState(
+    userProfile.photoURL || getProfilePicUrl()
+  );
+  const [submitting, setSubmitting] = useState(false);
 
   const handleBackdrop = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedBackdrop(e.target.files![0]);
@@ -28,19 +35,39 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setSubmitting(true);
+    let newPhotoURL = photoURL;
+    let newBackdropURL = backdropURL;
+
+    if (selectedPhoto) {
+      newPhotoURL = await uploadImage(
+        `users/${userProfile.id}/icon`,
+        selectedPhoto
+      );
+    }
+    if (selectedBackdrop) {
+      newBackdropURL = await uploadImage(
+        `users/${userProfile.id}/backdrop`,
+        selectedBackdrop
+      );
+    }
+
     const result = await updateProfile({
       userProfile,
       displayName,
       bio,
       website,
       location,
-      backdropURL: '',
+      backdropURL: newBackdropURL,
+      photoURL: newPhotoURL,
     });
 
     if (result) (toggleEditProfilePopup as Function)();
     else {
       // error
     }
+
+    setSubmitting(false);
   };
 
   return (
@@ -56,12 +83,15 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
               <FontAwesomeIcon icon={faClose} />
             </button>
             <h2>Edit profile</h2>
-            <button type='submit'>Save</button>
+            <button type='submit' disabled={submitting}>
+              {' '}
+              {submitting ? 'Saving...' : 'Save'}
+            </button>
           </header>
 
           <div className='edit-images'>
-            <div className='edit-backdrop'>
-              <img src={backdropURL} alt='backdrop' />
+            <div className='img-backdrop'>
+              <img src={backdropURL} alt='backdrop' className='img-overlay' />
               <label htmlFor='backdropURL' className='img-file-upload'>
                 <FontAwesomeIcon icon={faImage} />
                 <input
@@ -73,40 +103,53 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
                 />
               </label>
             </div>
-            <ChangeProfileIcon />
+            <ChangeProfileIcon
+              photoURL={photoURL}
+              selectedPhoto={selectedPhoto}
+              setPhotoURL={setPhotoURL}
+              setSelectedPhoto={setSelectedPhoto}
+            />
           </div>
 
           <section className='edit-bottom'>
-            <label htmlFor='displayName'>Display name</label>
-            <input
-              type='text'
-              id='displayName'
-              value={displayName}
-              onChange={handleDisplayName}
-            />
-            <label htmlFor='bio'>Bio</label>
-            <textarea
-              id='bio'
-              maxLength={160}
-              value={bio}
-              onChange={handleBio}
-            />
-            <label htmlFor='location'>Location</label>
-            <input
-              type='text'
-              id='location'
-              maxLength={30}
-              value={location}
-              onChange={handleLocation}
-            />
-            <label htmlFor='website'>Website</label>
-            <input
-              type='url'
-              id='website'
-              maxLength={100}
-              value={website}
-              onChange={handleWebsite}
-            />
+            <label htmlFor='displayName'>
+              Display name
+              <input
+                type='text'
+                id='displayName'
+                value={displayName}
+                onChange={handleDisplayName}
+              />
+            </label>
+            <label htmlFor='bio'>
+              Bio
+              <textarea
+                id='bio'
+                maxLength={160}
+                value={bio}
+                onChange={handleBio}
+              />
+            </label>
+            <label htmlFor='location'>
+              Location
+              <input
+                type='text'
+                id='location'
+                maxLength={30}
+                value={location}
+                onChange={handleLocation}
+              />
+            </label>
+            <label htmlFor='website'>
+              Website
+              <input
+                type='url'
+                id='website'
+                maxLength={100}
+                value={website}
+                onChange={handleWebsite}
+              />
+            </label>
           </section>
         </form>
       </div>

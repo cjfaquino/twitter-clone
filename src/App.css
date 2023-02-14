@@ -1079,6 +1079,19 @@ header.search {
   height: 205px;
 }
 
+.img-backdrop {
+  position: relative;
+  width: var(--feed-width);
+  height: 100%;
+  background-color: grey;
+}
+
+.img-backdrop img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
 .profile-large .bottom-half {
   --profile-bottom-half-padding: 15px;
   padding: var(--profile-bottom-half-padding);
@@ -1176,21 +1189,11 @@ header.search {
   width: min-content;
 }
 
-.edit-backdrop {
-  position: relative;
-  width: var(--feed-width);
-  height: 100%;
-  background-color: grey;
-}
-
-.edit-backdrop img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
+.img-overlay {
   filter: brightness(0.5);
 }
 
-.edit-backdrop .img-file-upload {
+.img-backdrop .img-file-upload {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -1224,14 +1227,11 @@ header.search {
   left: 40px;
 }
 
-.change-profile-icon img {
-  filter: brightness(0.5);
-}
-
 .edit-profile .change-profile-icon {
   position: relative;
   top: -65px;
   left: 20px;
+  width: min-content;
 }
 
 .edit-profile .change-profile-icon .img-container {
@@ -1245,7 +1245,7 @@ header.search {
   width: var(--feed-width);
 }
 
-.edit-bottom input:last-child {
+.edit-bottom label:last-child input {
   margin: 0;
 }
 
