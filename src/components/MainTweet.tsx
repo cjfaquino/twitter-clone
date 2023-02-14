@@ -5,7 +5,7 @@ import {
   faArrowUpFromBracket,
   faRetweet,
 } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import deleteTweet from '../utils/deleteTweet';
 import useToggle from '../hooks/useToggle';
 import getTimeString from '../utils/getTimeString';
@@ -163,12 +163,15 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
             targetUser={targetUser}
           />
         </div>
-        {tweetObj.aReplyTo && (
+        {tweetObj.aReplyTo && !tweetObj.aReplyTo.id.startsWith('null') && (
           <div className='replying-to-info'>
             Replying to{' '}
-            <span className='profile-link username'>
+            <Link
+              to={`/${tweetObj.aReplyTo.USER_NAME}`}
+              className='username-link'
+            >
               @{tweetObj.aReplyTo.USER_NAME}
-            </span>
+            </Link>
           </div>
         )}
         <FormattedText

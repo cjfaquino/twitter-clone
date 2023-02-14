@@ -817,8 +817,9 @@ button:hover > .btn-red {
   text-decoration: underline;
 }
 
-.replying-to-info .profile-link {
+.replying-to-info .username-link {
   color: var(--theme-color);
+  cursor: pointer;
 }
 
 .options-background {

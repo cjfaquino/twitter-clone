@@ -10,7 +10,7 @@ const getUpdatedTweetByID = async (tweetID: string) => {
     tweet = { id: repSnap.id, ...repSnap.data() };
   } else {
     console.log(`Tweet ${tweetID} does not exist`);
-    tweet = { id: `null-${tweetID}` };
+    tweet = { id: `null-${tweetID}`, USER_NAME: '[deleted]' };
   }
 
   return tweet;

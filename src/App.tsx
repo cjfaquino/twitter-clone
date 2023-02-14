@@ -74,6 +74,7 @@ const App = () => {
                 element={<FollowsPage />}
               />
             ))}
+
             <Route
               path='/settings'
               element={
@@ -81,6 +82,12 @@ const App = () => {
                   currentUser={currentUser}
                   userProfile={userProfile}
                 />
+              }
+            />
+            <Route
+              path='/[deleted]'
+              element={
+                <div className='missing'> That item doesn&apos;t exist</div>
               }
             />
             <Route path='*' element={<Navigate to='/explore' replace />} />

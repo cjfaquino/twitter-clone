@@ -30,7 +30,12 @@ export default function useOneTweet(tweetID: string): [any, boolean] {
         ...{ aReplyTo: replyingTo },
       };
 
-      setTweet({ id: docSnap.id, ...newTwt });
+      setTweet({
+        id: docSnap.id,
+        ...newTwt,
+        // for algolia 'tweets' index
+        objectID: docSnap.id,
+      });
       setLoading(false);
       return true;
     } catch (error) {

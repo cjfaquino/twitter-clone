@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment, faHeart } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -167,12 +167,16 @@ const TweetItem = ({ tweetObj }: IProps) => {
                 targetUser={targetUser}
               />
             </div>
-            {tweetObj.aReplyTo && (
+            {tweetObj.aReplyTo && !tweetObj.aReplyTo.id.startsWith('null') && (
               <div className='replying-to-info'>
-                Replying to{' '}
-                <span className='username profile-link'>
+                Replying to (
+                <Link
+                  to={`/${tweetObj.aReplyTo.USER_NAME}`}
+                  className='username-link'
+                >
                   @{tweetObj.aReplyTo.USER_NAME}
-                </span>
+                </Link>
+                )
               </div>
             )}
             <FormattedText

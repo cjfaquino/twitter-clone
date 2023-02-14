@@ -48,13 +48,28 @@ export default function useTweets(filter: string, userID?: string) {
 
       const qSnap = await getDocs(queryRef);
 
-      const results = qSnap.docs.map((item) => ({
-        id: item.id,
-        ...item.data(),
-        // for algolia
-        objectID: item.id,
-      }));
-      setTweets(results);
+      const resultsPromise = qSnap.docs.map(async (item) => {
+        let replyingTo = null;
+        if (item.data().aReplyTo) {
+          const replyingToID = item.data().aReplyTo.id;
+          replyingTo = await getUpdatedTweetByID(replyingToID);
+        }
+        const newTwt = {
+          ...item.data(),
+          ...{ aReplyTo: replyingTo },
+        };
+        return {
+          id: item.id,
+          ...newTwt,
+
+          // for algolia
+          objectID: item.id,
+        };
+      });
+
+      const fetched = await Promise.all(resultsPromise);
+
+      setTweets(fetched);
     } catch (error) {
       console.log(error);
     }
