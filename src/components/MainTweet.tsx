@@ -88,7 +88,7 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
   const {
     views,
     retweets,
-    text: textArr,
+    text,
     timestamp,
     USER_ICON,
     USER_NAME,
@@ -175,7 +175,7 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
           </div>
         )}
         <FormattedText
-          textArr={textArr}
+          text={text}
           itemID={TWEET_ID}
           customClass={customClass}
         />

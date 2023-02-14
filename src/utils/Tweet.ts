@@ -13,8 +13,8 @@ interface Tweet {
   USER_DISPLAY: string;
   USER_ID: string;
   USER_ICON: string;
-  text: string[];
-  tags: string[];
+  text: string;
+  tags: string;
   timestamp: Timestamp;
   likes: number;
   retweets: number;
@@ -31,7 +31,7 @@ class Tweet {
     this.USER_ID = getUserUid();
     this.USER_ICON = getProfilePicUrl();
     this.timestamp = serverTimestamp() as Timestamp;
-    this.text = textArray;
+    this.text = messageText.trim();
     this.tags = getTagsFromTextArray(textArray);
     this.likes = 0;
     this.retweets = 0;

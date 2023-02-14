@@ -33,7 +33,7 @@ const TweetItem = ({ tweetObj }: IProps) => {
   const likesRef = useRef<HTMLButtonElement>(null);
   const navigate = useNavigate();
 
-  const { views, text: textArr, timestamp, USER_ID, id: TWEET_ID } = tweetObj;
+  const { views, text, timestamp, USER_ID, id: TWEET_ID } = tweetObj;
 
   const [showOptionsPopup, toggleOptionsPopup] = useToggle(false);
   const [replies, repliesLoading] = useReplies(TWEET_ID);
@@ -180,7 +180,7 @@ const TweetItem = ({ tweetObj }: IProps) => {
               </div>
             )}
             <FormattedText
-              textArr={textArr}
+              text={text}
               itemID={TWEET_ID}
               customClass={customClass}
             />

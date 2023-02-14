@@ -1,4 +1,5 @@
 export default function textToCleanedTextArray(text: string): Array<string> {
+  if (!text) return [];
   const trimmed = text.trim(); // Trim white spaces in the beginning & end
   const cleanedArr = trimmed
     .replace(/ +/g, ' ') // Prevent more than 1 space
