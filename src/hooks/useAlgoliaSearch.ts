@@ -13,7 +13,7 @@ export default function useAlgoliaSearch(query: string, filter: string) {
         hitsPerPage: 30,
       });
 
-      const updatedHits = hits.map((twt) => getUpdatedTweetByID(twt.id));
+      const updatedHits = hits.map((twt) => getUpdatedTweetByID(twt.objectID));
 
       const readyHits = await Promise.all(updatedHits);
 

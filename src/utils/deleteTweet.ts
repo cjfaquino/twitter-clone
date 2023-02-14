@@ -18,9 +18,7 @@ const deleteTweet = async (tweetObj: TweetObj) => {
     }
 
     // delete from algolia 'tweets' index
-    indexTweets.deleteObject(
-      (tweetObj.aReplyTo && tweetObj.aReplyTo.id) || tweetObj.id
-    );
+    indexTweets.deleteObject(tweetObj.id);
 
     return true;
   } catch (error) {
