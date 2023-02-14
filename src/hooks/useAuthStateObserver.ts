@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
-import {
-  onAuthStateChanged,
-  getAuth,
-  User,
-  NextOrObserver,
-} from 'firebase/auth';
+import { onAuthStateChanged, User, NextOrObserver } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 import useUserProfile from './useUserProfile';
 import { UserProfile } from '../interfaces/UserProfile';
 import { auth } from '../firebase-config';
@@ -15,6 +11,7 @@ function useAuthStateObserver(): [User | null, UserProfile] {
 
   const [currentUser, setCurrentUser] = useState<User | null>(cUser);
   const [userProfile] = useUserProfile(currentUser);
+  const navigate = useNavigate();
 
   const authStateObserver = (user: User) => {
     if (user) {
@@ -24,6 +21,7 @@ function useAuthStateObserver(): [User | null, UserProfile] {
       localStorage.setItem('userProfile', JSON.stringify(userProfile));
     } else {
       // User is signed out!
+      navigate('/explore');
       setCurrentUser(null);
       localStorage.removeItem('firebaseUser');
       localStorage.removeItem('userProfile');
