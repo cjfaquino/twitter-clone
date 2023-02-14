@@ -3,12 +3,11 @@ import {
   query,
   getDocs,
   collection,
-  doc,
-  getDoc,
   orderBy,
   DocumentData,
 } from 'firebase/firestore';
 import { db } from '../firebase-config';
+import getUpdatedTweetByID from '../utils/getUpdatedTweetByID';
 
 export default function useReplies(
   tweetID: string
@@ -16,25 +15,15 @@ export default function useReplies(
   const [replies, setReplies] = useState<DocumentData[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const getUpdatedReply = async (replyId: string) => {
-    const docRef = doc(db, 'tweets', replyId);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      setReplies((prev: any) => [
-        ...prev,
-        { id: docSnap.id, ...docSnap.data() },
-      ]);
-    }
-  };
-
   const getReplies = async () => {
     const queryRef = query(
       collection(db, 'tweets', tweetID, 'replies'),
       orderBy('timestamp', 'asc')
     );
     const qSnap = await getDocs(queryRef);
-    qSnap.forEach((rep) => getUpdatedReply(rep.id));
+    const repliesPromise = qSnap.docs.map((rep) => getUpdatedTweetByID(rep.id));
+    const fetched = await Promise.all(repliesPromise);
+    setReplies(fetched);
     setLoading(false);
   };
 
