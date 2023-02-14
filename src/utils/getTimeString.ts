@@ -1,6 +1,9 @@
 import { Timestamp } from 'firebase/firestore';
 
-const getTimeString = (timestamp: Timestamp, format?: string): string => {
+const getTimeString = (
+  timestamp: Timestamp | undefined,
+  format?: string
+): string => {
   if (!timestamp) return '';
 
   if (!format) {
@@ -18,7 +21,12 @@ const getTimeString = (timestamp: Timestamp, format?: string): string => {
       ? timestamp.toDate().toLocaleDateString()
       : `${new Date().toLocaleDateString()}`;
 
-    const diff = new Date().getTime() - timestamp.toDate().getTime();
+    const currentTime = new Date().getTime();
+    const tweetTime = timestamp.toDate
+      ? timestamp.toDate().getTime()
+      : Date.now();
+
+    const diff = currentTime - tweetTime;
 
     let msec = diff;
     const hh = Math.floor(msec / 1000 / 60 / 60);
