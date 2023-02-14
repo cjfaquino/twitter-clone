@@ -81,7 +81,7 @@ const TweetItem = ({ tweetObj }: IProps) => {
 
     if (await checkAlreadyLiked(TWEET_ID)) {
       // already liked
-      await undoLike(tweetObj);
+      await undoLike(TWEET_ID);
       likesRef.current.classList.remove('liked');
       setLikes((prev) => prev - 1);
     } else {
@@ -116,6 +116,11 @@ const TweetItem = ({ tweetObj }: IProps) => {
       document.removeEventListener('auth state changed', updateLikes);
     };
   }, [targetUser.doneLoading]);
+
+  if (TWEET_ID.startsWith('null')) {
+    // prevent app from crashing when trying to load a tweet that doesn't exist
+    return null;
+  }
 
   return (
     <div
@@ -179,7 +184,9 @@ const TweetItem = ({ tweetObj }: IProps) => {
               <button
                 type='button'
                 className={`btn-replies grey ${
-                  checkUserAlreadyReplied(replies) ? 'replied' : ''
+                  checkUserAlreadyReplied(replies as TweetObj[])
+                    ? 'replied'
+                    : ''
                 }`}
               >
                 <span className='btn-blue'>

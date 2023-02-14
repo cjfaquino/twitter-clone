@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { collection, query, getDocs, orderBy, where } from 'firebase/firestore';
 import { db } from '../firebase-config';
 import getUpdatedTweetByID from '../utils/getUpdatedTweetByID';
+import undoLike from '../utils/undoLike';
 
 export default function useTweets(filter: string, userID?: string) {
   const [tweets, setTweets] = useState<any>([]);
@@ -71,7 +72,18 @@ export default function useTweets(filter: string, userID?: string) {
 
       const results = qSnap.docs.map((item) => getUpdatedTweetByID(item.id));
       const likedTweets = await Promise.all(results);
-      setTweets(likedTweets);
+
+      // if original tweets are deleted but still referenced in likes, filter them out before displaying
+      const filtered = likedTweets.filter((twt) => !twt.id.startsWith('null'));
+      // removes like reference from users collection
+      likedTweets.forEach((twt) => {
+        if (twt.id.startsWith('null')) {
+          const deletedID = twt.id.replace(/null-/, '');
+          undoLike(deletedID, userID, true);
+        }
+      });
+
+      setTweets(filtered);
     } catch (error) {
       console.log(error);
     }

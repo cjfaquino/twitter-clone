@@ -1,4 +1,4 @@
-import { serverTimestamp } from 'firebase/firestore';
+import { serverTimestamp, Timestamp } from 'firebase/firestore';
 import getProfilePicUrl from './getProfilePicUrl';
 import getDisplayName from './getDisplayName';
 import getUserName from './getUserName';
@@ -15,7 +15,7 @@ interface Tweet {
   USER_ICON: string;
   text: string[];
   tags: string[];
-  timestamp: {};
+  timestamp: Timestamp;
   likes: number;
   retweets: number;
   views: number;
@@ -30,7 +30,7 @@ class Tweet {
     this.USER_DISPLAY = getDisplayName()!;
     this.USER_ID = getUserUid();
     this.USER_ICON = getProfilePicUrl();
-    this.timestamp = serverTimestamp();
+    this.timestamp = serverTimestamp() as Timestamp;
     this.text = textArray;
     this.tags = getTagsFromTextArray(textArray);
     this.likes = 0;

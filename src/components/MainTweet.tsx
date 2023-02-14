@@ -108,7 +108,7 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
 
     if (likesRef.current && (await checkAlreadyLiked(TWEET_ID))) {
       // already liked
-      await undoLike(tweetObj);
+      await undoLike(TWEET_ID);
       setLikes((prev) => prev - 1);
       likesRef.current.classList.remove('liked');
     } else {

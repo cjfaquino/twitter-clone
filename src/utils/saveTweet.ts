@@ -53,7 +53,6 @@ const saveTweet = async (
       setDoc(replyRef, tweet);
     } else {
       // create normal tweet
-      console.log(tweet, { ...tweet, aReplyTo });
       tweet = { ...tweet, aReplyTo };
       docRef = await addDoc(tweetRef, tweet);
     }

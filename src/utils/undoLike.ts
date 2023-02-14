@@ -2,20 +2,33 @@ import { deleteDoc, doc, increment, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase-config';
 import eventProfileEdit from '../events/eventProfileEdit';
 import getUserUid from './getUserUid';
-import { TweetObj } from '../interfaces/TweetObj';
 
-const undoLike = async (tweetObj: TweetObj) => {
+const undoLike = async (
+  tweetID: string,
+  userID?: string | undefined,
+  alreadyDeleted?: boolean
+) => {
   try {
-    const likesRef = doc(db, 'users', getUserUid(), 'likes', tweetObj.id);
-    const tweetLikesRef = doc(db, 'tweets', tweetObj.id, 'likes', getUserUid());
-    const tweetRef = doc(db, 'tweets', tweetObj.id);
+    // gets passed users's like
+    // otherwise get current user's like
+    const likesRef = doc(db, 'users', userID || getUserUid(), 'likes', tweetID);
+    const tweetLikesRef = doc(
+      db,
+      'tweets',
+      tweetID,
+      'likes',
+      userID || getUserUid()
+    );
+    const tweetRef = doc(db, 'tweets', tweetID);
 
     // remove liked tweetObj from users>likes collection
     deleteDoc(likesRef);
     deleteDoc(tweetLikesRef);
 
-    // update tweet document
-    updateDoc(tweetRef, { likes: increment(-1) });
+    if (!alreadyDeleted) {
+      // update tweet document
+      updateDoc(tweetRef, { likes: increment(-1) });
+    }
 
     eventProfileEdit();
   } catch (error) {
