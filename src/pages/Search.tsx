@@ -10,7 +10,7 @@ const Search = () => {
   const [searchParams] = useSearchParams();
   const searched = searchParams.get('q') || '';
   const filter = searchParams.get('f');
-  const [results, resultsLoading] = useAlgoliaSearch(searched, filter!);
+  const [tweets, users, resultsLoading] = useAlgoliaSearch(searched, filter!);
   const [query, setQuery] = useState('');
 
   return (
@@ -59,13 +59,11 @@ const Search = () => {
 
       {resultsLoading && <Spinner />}
 
-      {filter === 'people' && !resultsLoading && (
-        <ListOfUsers users={results} />
-      )}
+      {filter === 'people' && !resultsLoading && <ListOfUsers users={users} />}
 
       {filter === 'latest' && !resultsLoading && (
         <ListOfTweets
-          tweets={results}
+          tweets={tweets}
           customClass='search'
           missingText="Couldn't find any posts"
         />

@@ -3,12 +3,12 @@ import { indexTweets, indexTweetsTags, indexUsers } from '../algolia-config';
 import getUpdatedTweetByID from '../utils/getUpdatedTweetByID';
 
 export default function useAlgoliaSearch(query: string, filter: string) {
-  const [results, setResults] = useState<any>([]);
-  const [loading, setLoading] = useState(false);
+  const [tweets, setTweets] = useState<any>([]);
+  const [users, setUsers] = useState<any>([]);
+  const [loading, setLoading] = useState(true);
 
   const getTweets = async () => {
     try {
-      setLoading(true);
       let res;
 
       if (query.startsWith('#')) {
@@ -27,7 +27,7 @@ export default function useAlgoliaSearch(query: string, filter: string) {
 
       const readyHits = await Promise.all(updatedHits);
 
-      setResults(readyHits);
+      setTweets(readyHits);
     } catch (error) {
       console.log(error);
     }
@@ -36,12 +36,11 @@ export default function useAlgoliaSearch(query: string, filter: string) {
 
   const getUsers = async () => {
     try {
-      setLoading(true);
       const { hits } = await indexUsers.search(query, {
         hitsPerPage: 30,
       });
 
-      setResults(hits);
+      setUsers(hits);
     } catch (error) {
       console.log(error);
     }
@@ -56,14 +55,17 @@ export default function useAlgoliaSearch(query: string, filter: string) {
   let ran = false;
   useEffect(() => {
     if (!ran) {
+      setLoading(true);
       getResults();
       ran = true;
     }
 
     return () => {
-      setResults([]);
+      setTweets([]);
+      setUsers([]);
+      setLoading(true);
     };
   }, [query, filter]);
 
-  return [results, loading];
+  return [tweets, users, loading];
 }
