@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, DocumentData, getDoc } from 'firebase/firestore';
 import { db } from '../firebase-config';
 import getUpdatedTweetByID from '../utils/getUpdatedTweetByID';
+import { TweetObj } from '../interfaces/TweetObj';
 
-export default function useOneTweet(tweetID: string): [any, boolean] {
-  const [tweet, setTweet] = useState<any | null>(null);
+export default function useOneTweet(
+  tweetID: string
+): [TweetObj | null, boolean] {
+  const [tweet, setTweet] = useState<DocumentData | null>(null);
   const [loading, setLoading] = useState(true);
 
   const loadTweet = async () => {
@@ -52,5 +55,5 @@ export default function useOneTweet(tweetID: string): [any, boolean] {
     };
   }, [tweetID]);
 
-  return [tweet, loading];
+  return [tweet as TweetObj, loading];
 }
