@@ -1,6 +1,6 @@
 :root {
   --login-banner-size: 70px;
-  --menubar-width: 275px;
+  --menubar-width: 320px;
   --feed-width: 600px;
   --sidebar-width: 390px;
   --pfp-size: 50px;
@@ -249,7 +249,7 @@ button svg {
 }
 
 .menu-list a {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
 }
 
 .menu-list a:hover > .link-item,
@@ -277,6 +277,7 @@ button svg {
 
 .nav-user {
   position: relative;
+  isolation: isolate;
   cursor: pointer;
   margin-top: auto;
   margin-bottom: 10px;
@@ -286,10 +287,22 @@ button svg {
   --pfp-size: 40px;
   padding: 10px;
   border-radius: 15px;
-  display: flex;
+  display: grid;
   align-items: center;
+  width: 100%;
+  grid-template-columns: var(--pfp-size) 165px 1fr;
   gap: 10px;
-  transition: background 0.2s ease-in-out;
+}
+
+.nav-username {
+  font-weight: 300;
+}
+
+.nav-username,
+.nav-display-name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .nav-options-popup {
@@ -298,7 +311,7 @@ button svg {
   left: 0;
   width: 100%;
   border-radius: 13px;
-  z-index: 20;
+  z-index: 2;
 }
 
 .btn-nav-tweet {

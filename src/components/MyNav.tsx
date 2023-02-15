@@ -98,7 +98,12 @@ const MyNav = ({ currentUser, userProfile, toggleTweetPopup }: IProps) => {
                     alt={currentUser.displayName!}
                   />
                 </div>
-                <div>{currentUser.displayName}</div>
+                <div className='nav-contact'>
+                  <div className='nav-display-name'>
+                    {currentUser.displayName}
+                  </div>
+                  <div className='nav-username grey'>{`@${userProfile.userName}`}</div>
+                </div>
                 <ThreeDots />
               </div>
               {logoutPopup && (
