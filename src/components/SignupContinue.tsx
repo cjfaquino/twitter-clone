@@ -1,4 +1,3 @@
-import { User } from 'firebase/auth';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ChangeProfileIcon from './ChangeProfileIcon';
@@ -7,15 +6,12 @@ import useInput from '../hooks/useInput';
 import createProfile from '../utils/createProfile';
 import getProfilePicUrl from '../utils/getProfilePicUrl';
 import uploadImage from '../utils/uploadImage';
-
-interface IProps {
-  currentUser: User;
-}
+import { IProps } from './SignupStart';
 
 const SignupContinue = ({ currentUser }: IProps) => {
   const [userName, handleUsername] = useInput();
   const [displayName, handleDisplayName] = useInput(
-    currentUser.displayName || ''
+    (currentUser && currentUser.displayName) || ''
   );
   const [submitting, setSubmitting] = useState(false);
   const [photoURL, setPhotoURL] = useState(getProfilePicUrl());
@@ -29,7 +25,7 @@ const SignupContinue = ({ currentUser }: IProps) => {
 
     if (selectedPhoto) {
       newPhotoURL = await uploadImage(
-        `/users/${currentUser.uid}/icon`,
+        `/users/${currentUser!.uid}/icon`,
         selectedPhoto
       );
     }
@@ -39,7 +35,7 @@ const SignupContinue = ({ currentUser }: IProps) => {
       userName,
       displayName,
       photoURL: newPhotoURL,
-      user: currentUser,
+      user: currentUser!,
     });
     setSubmitting(false);
 

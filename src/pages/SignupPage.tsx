@@ -1,11 +1,6 @@
-import { User } from 'firebase/auth';
 import React from 'react';
 import SignupContinue from '../components/SignupContinue';
-import SignupStart from '../components/SignupStart';
-
-interface IProps {
-  currentUser: User;
-}
+import SignupStart, { IProps } from '../components/SignupStart';
 
 const SignupPage = ({ currentUser }: IProps) => (
   <div id='signup'>

@@ -1,15 +1,15 @@
 import React from 'react';
 
 const defaultProps = {
-  onClick: null,
+  handleClick: null,
 };
 
 const ThreeDots = ({
-  onClick,
+  handleClick,
 }: {
-  onClick?: React.MouseEventHandler<HTMLDivElement>;
-} & typeof defaultProps) => (
-  <div className='more-options' onClick={onClick} aria-hidden>
+  handleClick?: React.MouseEventHandler<HTMLDivElement>;
+}) => (
+  <div className='more-options' onClick={handleClick} aria-hidden>
     <div className='dots' />
     <div className='dots' />
     <div className='dots' />

@@ -5,12 +5,14 @@ import HaveAnAccount from './HaveAnAccount';
 import createUser from '../utils/createUser';
 import SubmitButton from './SubmitButton';
 
-interface IProps {
-  currentUser: User;
+export interface IProps {
+  currentUser: User | null;
 }
 
 const SignupStart = ({ currentUser }: IProps) => {
-  const [email, handleEmail] = useInput(currentUser.email || '');
+  const [email, handleEmail] = useInput(
+    (currentUser && currentUser.email) || ''
+  );
   const [password, handlePwd] = useInput();
   const [confirmPassword, handleConfirmPwd] = useInput();
   const [submitting, setSubmitting] = useState(false);
@@ -30,10 +32,6 @@ const SignupStart = ({ currentUser }: IProps) => {
       // error
     }
   };
-
-  const isTypeEmailAndPass = () =>
-    currentUser.providerData.some((prov) => prov.providerId === 'password') ||
-    !currentUser;
 
   return (
     <form onSubmit={handleSubmit} className='sign-up-form'>

@@ -1,7 +1,7 @@
 import { User } from 'firebase/auth';
 
 export default function checkOnlyLinkedProviders(
-  user: User,
+  user: User | null,
   providerName: string
 ) {
   return (

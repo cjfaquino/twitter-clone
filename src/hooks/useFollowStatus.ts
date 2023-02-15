@@ -11,11 +11,11 @@ import getUserUid from '../utils/getUserUid';
 export default function useFollowStatus(
   userProfile: UserProfile
 ): [
-  boolean | null,
+  boolean | undefined | null,
   (e: React.MouseEvent<HTMLButtonElement>) => Promise<void>,
-  React.Dispatch<React.SetStateAction<boolean | null>>
+  React.Dispatch<React.SetStateAction<boolean | undefined | null>>
 ] {
-  const [followed, setFollowed] = useState<boolean | null>(null);
+  const [followed, setFollowed] = useState<boolean | undefined | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function useFollowStatus(
     // don't update state if current user
     if (userProfile.id === getUserUid()) return;
 
-    checkAlreadyFollowing(userProfile.id).then(setFollowed);
+    checkAlreadyFollowing(userProfile.id).then((res) => setFollowed(res));
   };
 
   const handleFollow = async (e: React.MouseEvent<HTMLButtonElement>) => {

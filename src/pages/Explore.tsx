@@ -6,7 +6,7 @@ import ListOfTweets from '../components/ListOfTweets';
 import Spinner from '../components/Loaders/Spinner';
 
 interface IProps {
-  newTweet: TweetObj;
+  newTweet: TweetObj | null;
   clrNewTweet: Function;
 }
 

@@ -2,10 +2,10 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase-config';
 
 const checkDocAlreadyExists = async (
-  firstCollection,
-  firstID,
-  nestedCollection,
-  secondID
+  firstCollection: string,
+  firstID: string,
+  nestedCollection: string,
+  secondID: string
 ) => {
   try {
     const userRef = doc(

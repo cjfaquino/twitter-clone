@@ -15,7 +15,7 @@ import { UserProfile } from '../interfaces/UserProfile';
 import FormattedText from './FormattedText';
 
 interface IProps {
-  currentUser: User;
+  currentUser: User | null;
   targetUser: TargetUser;
   userProfile: UserProfile;
 }
@@ -96,7 +96,7 @@ const ProfileLarge = ({ currentUser, targetUser, userProfile }: IProps) => {
                 <div className={`${customClass}-bio`}>
                   {targetUser.userProfile.bio && (
                     <FormattedText
-                      textArr={targetUser.userProfile.bio!.split(/\s/)}
+                      text={targetUser.userProfile.bio!}
                       customClass={customClass}
                       itemID={targetUser.userProfile.id}
                     />

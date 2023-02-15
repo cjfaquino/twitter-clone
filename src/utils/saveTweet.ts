@@ -1,4 +1,11 @@
-import { collection, addDoc, doc, setDoc } from 'firebase/firestore';
+import {
+  collection,
+  addDoc,
+  doc,
+  setDoc,
+  QueryDocumentSnapshot,
+  SnapshotOptions,
+} from 'firebase/firestore';
 import { indexTweets } from '../algolia-config';
 import { db } from '../firebase-config';
 import { TweetObj } from '../interfaces/TweetObj';
@@ -19,10 +26,13 @@ const tweetConverter = {
     views: tweet.views,
     aReplyTo: tweet.aReplyTo,
   }),
-  // fromFirestore: (snapshot, options) => {
-  //   const data = snapshot.data(options);
-  //   return data;
-  // },
+  fromFirestore: (
+    snapshot: QueryDocumentSnapshot,
+    options: SnapshotOptions
+  ) => {
+    const data = snapshot.data(options);
+    return data;
+  },
 };
 
 // Save all tweets to tweets doc

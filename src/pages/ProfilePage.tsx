@@ -15,7 +15,7 @@ import { UserProfile } from '../interfaces/UserProfile';
 import Spinner from '../components/Loaders/Spinner';
 
 interface IProps {
-  currentUser: User;
+  currentUser: User | null;
   userProfile: UserProfile;
 }
 

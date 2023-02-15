@@ -14,7 +14,7 @@ import ThreeDots from './ThreeDots';
 import { UserProfile } from '../interfaces/UserProfile';
 
 interface IProps {
-  currentUser: User;
+  currentUser: User | null;
   userProfile: UserProfile;
   toggleTweetPopup: Function;
 }
@@ -35,7 +35,7 @@ const MyNav = ({ currentUser, userProfile, toggleTweetPopup }: IProps) => {
 
   const handleSignOut = () => {
     signOutUser();
-    toggleLogoutPopup();
+    (toggleLogoutPopup as Function)();
   };
 
   return (

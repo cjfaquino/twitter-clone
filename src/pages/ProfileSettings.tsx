@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { sendEmailVerification, User } from 'firebase/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import useInput from '../hooks/useInput';
 import updateProfile from '../utils/updateProfile';
 import updateUserEmail from '../utils/updateEmail';
@@ -14,7 +15,7 @@ import useProviderLinkStatus from '../hooks/useProviderLinkStatus';
 import SubmitButton from '../components/SubmitButton';
 
 interface IProps {
-  currentUser: User;
+  currentUser: User | null;
   userProfile: UserProfile;
 }
 
@@ -58,7 +59,7 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
 
   const setFields = async () => {
     // update inputs if data is available
-    setEmail(currentUser.email || '');
+    setEmail((currentUser && currentUser.email) || '');
 
     if (userProfile.doneLoading) {
       setUserName(userProfile.userName!);
@@ -78,106 +79,94 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
     }
 
     setFields();
-    return undefined;
+    return () => {};
   }, [userProfile]);
 
   return (
-    userProfile.id !== 'no-id' &&
-    userProfile.doneLoading && (
-      <div className='settings-forms'>
-        <form onSubmit={handleSubmitUsername}>
-          <h2>Your Profile</h2>
-          <label htmlFor='userName'>
-            Username <span className='verify-username error' />
-            <input
-              type='text'
-              id='userName'
-              value={userName}
-              onChange={handleUserName}
-              minLength={2}
-              maxLength={15}
-            />
-          </label>
-          <SubmitButton
-            submitting={submittingUsername}
-            text='Change'
-            width={100}
+    <div className='settings-forms'>
+      <form onSubmit={handleSubmitUsername}>
+        <h2>Your Profile</h2>
+        <label htmlFor='userName'>
+          Username <span className='verify-username error' />
+          <input
+            type='text'
+            id='userName'
+            value={userName}
+            onChange={handleUserName}
+            minLength={2}
+            maxLength={15}
           />
-        </form>
-        <form onSubmit={handleSubmitEmail} className='email-form'>
-          <h2>Contact Details</h2>
-          <label htmlFor='email'>
-            Email{' '}
-            <span
-              className={
-                isEmailVerified() ? 'verify-email verified' : 'verify-email'
-              }
-            >
-              {isEmailVerified() ? (
-                'verified ✓'
-              ) : (
-                <button
-                  type='button'
-                  onClick={() => sendEmailVerification(currentUser)}
-                  className='btn-verify-email'
-                >
-                  Verify email
-                </button>
-              )}
-            </span>
-            <input
-              type='text'
-              id='email'
-              value={email}
-              onChange={handleEmail}
-            />
-          </label>
-
-          <SubmitButton
-            submitting={submittingEmail}
-            text='Change'
-            width={100}
-          />
-        </form>
-
-        <div className='link-accounts'>
-          <span className='error' />
-
-          <button
-            type='button'
-            onClick={handleGithub}
-            className='btn-with-provider'
+        </label>
+        <SubmitButton
+          submitting={submittingUsername}
+          text='Change'
+          width={100}
+        />
+      </form>
+      <form onSubmit={handleSubmitEmail} className='email-form'>
+        <h2>Contact Details</h2>
+        <label htmlFor='email'>
+          Email{' '}
+          <span
+            className={
+              isEmailVerified() ? 'verify-email verified' : 'verify-email'
+            }
           >
-            <FontAwesomeIcon icon={faGithub} />
-            {githubStatus ? 'Unlink' : 'Link'} Github account
-          </button>
+            {isEmailVerified() ? (
+              'verified ✓'
+            ) : (
+              <button
+                type='button'
+                onClick={() => sendEmailVerification(currentUser!)}
+                className='btn-verify-email'
+              >
+                Verify email
+              </button>
+            )}
+          </span>
+          <input type='text' id='email' value={email} onChange={handleEmail} />
+        </label>
 
-          <button
-            type='button'
-            onClick={handleGoogle}
-            className='btn-with-provider'
-          >
-            <GoogleIcon />
-            {googleStatus ? 'Unlink' : 'Link'} Google account
-          </button>
+        <SubmitButton submitting={submittingEmail} text='Change' width={100} />
+      </form>
+
+      <div className='link-accounts'>
+        <span className='error' />
+
+        <button
+          type='button'
+          onClick={handleGithub}
+          className='btn-with-provider'
+        >
+          <FontAwesomeIcon icon={faGithub as IconProp} />
+          {githubStatus ? 'Unlink' : 'Link'} Github account
+        </button>
+
+        <button
+          type='button'
+          onClick={handleGoogle}
+          className='btn-with-provider'
+        >
+          <GoogleIcon />
+          {googleStatus ? 'Unlink' : 'Link'} Google account
+        </button>
+      </div>
+
+      <div className='account-stats'>
+        <div>
+          <span>Created at: </span>{' '}
+          <span>
+            {new Date(currentUser!.metadata.creationTime!).toLocaleString()}
+          </span>
         </div>
-
-        <div className='account-stats'>
-          <div>
-            <span>Created at: </span>{' '}
-            <span>
-              {new Date(currentUser.metadata.creationTime!).toLocaleString()}
-            </span>
-          </div>
-          <div>
-            <span>Last login at: </span>{' '}
-            <span>
-              {new Date(currentUser.metadata.lastSignInTime!).toLocaleString()}
-            </span>
-          </div>
+        <div>
+          <span>Last login at: </span>{' '}
+          <span>
+            {new Date(currentUser!.metadata.lastSignInTime!).toLocaleString()}
+          </span>
         </div>
       </div>
-    )
+    </div>
   );
 };
 

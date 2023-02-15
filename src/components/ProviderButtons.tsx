@@ -1,3 +1,4 @@
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
@@ -29,7 +30,7 @@ const ProviderButtons = ({ mode }: { mode: string }) => {
         onClick={handleSignUp('github.com')}
         className='btn-with-provider'
       >
-        <FontAwesomeIcon icon={faGithub} /> {mode} with Github
+        <FontAwesomeIcon icon={faGithub as IconProp} /> {mode} with Github
       </button>
     </>
   );

@@ -62,7 +62,7 @@ const ProfileMedium = ({ userProfile }: IProps) => {
             <div>
               {bio && (
                 <FormattedText
-                  textArr={bio!.split(/\s/)}
+                  text={bio}
                   customClass={customClass}
                   itemID={id}
                 />

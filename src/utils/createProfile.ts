@@ -31,6 +31,12 @@ const createProfile = async ({
       displayName,
       photoURL,
       metadata: { ...user.metadata },
+      followers: 0,
+      following: 0,
+      backdropURL: '',
+      bio: '',
+      location: '',
+      website: '',
     };
     const firestorePromise = setDoc(userRef, newUser);
 

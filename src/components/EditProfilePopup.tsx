@@ -23,7 +23,7 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
   const [location, handleLocation] = useInput(userProfile.location || '');
   const [selectedBackdrop, setSelectedBackdrop] = useState<File | null>(null);
   const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null);
-  const [backdropURL, setBackdropURL] = useState(userProfile.backdropURL);
+  const [backdropURL, setBackdropURL] = useState(userProfile.backdropURL || '');
   const [photoURL, setPhotoURL] = useState(
     userProfile.photoURL || getProfilePicUrl()
   );

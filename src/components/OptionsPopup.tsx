@@ -26,7 +26,7 @@ const OptionsPopup = ({
 
   return (
     <div className='dots-container'>
-      <ThreeDots onClick={toggleOptionsPopup} />
+      <ThreeDots handleClick={toggleOptionsPopup} />
       {showOptionsPopup && (
         <>
           <div className='options-popup popup'>
