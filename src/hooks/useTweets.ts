@@ -1,11 +1,22 @@
-import { useEffect, useState } from 'react';
-import { collection, query, getDocs, orderBy, where } from 'firebase/firestore';
+import { useCallback, useEffect, useState } from 'react';
+import {
+  collection,
+  query,
+  getDocs,
+  orderBy,
+  where,
+  DocumentData,
+} from 'firebase/firestore';
 import { db } from '../firebase-config';
 import getUpdatedTweetByID from '../utils/getUpdatedTweetByID';
 import undoLike from '../utils/undoLike';
+import { TweetObj } from '../interfaces/TweetObj';
 
-export default function useTweets(filter: string, userID?: string) {
-  const [tweets, setTweets] = useState<any>([]);
+export default function useTweets(
+  filter: string,
+  userID?: string
+): [DocumentData[], Function, boolean] {
+  const [tweets, setTweets] = useState<DocumentData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   const getTweets = async () => {
@@ -126,9 +137,9 @@ export default function useTweets(filter: string, userID?: string) {
   }, [filter, userID]);
 
   // add temp tweet to DOM
-  const addTweetToDOM = (tweetObj: any) => {
-    setTweets((prev: any) => [tweetObj, ...prev]);
-  };
+  const addTweetToDOM = useCallback((tweetObj: TweetObj) => {
+    setTweets((prev) => [tweetObj, ...prev]);
+  }, []);
 
-  return [tweets, addTweetToDOM, loading];
+  return [tweets as TweetObj[], addTweetToDOM, loading];
 }

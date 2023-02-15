@@ -3,6 +3,7 @@ import useTweets from '../hooks/useTweets';
 import ListOfTweets from './ListOfTweets';
 import { TargetUser } from '../interfaces/TargetUser';
 import Spinner from './Loaders/Spinner';
+import { TweetObj } from '../interfaces/TweetObj';
 
 interface IProps {
   filter: string;
@@ -18,7 +19,10 @@ const ProfileFeed = ({ filter, targetUser }: IProps) => {
   return tweetsLoading ? (
     <Spinner />
   ) : (
-    <ListOfTweets tweets={userTweets} customClass='profile-tweets' />
+    <ListOfTweets
+      tweets={userTweets as TweetObj[]}
+      customClass='profile-tweets'
+    />
   );
 };
 

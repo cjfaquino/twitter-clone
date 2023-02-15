@@ -17,11 +17,12 @@ import FollowsPage from './pages/FollowsPage';
 import Home from './pages/Home';
 import SignupPage from './pages/SignupPage';
 import ProfileContext from './context/ProfileContext';
+import { TweetObj } from './interfaces/TweetObj';
 
 const App = () => {
   const [currentUser, userProfile] = useAuthStateObserver();
   const [showTweetPopup, toggleTweetPopup] = useToggle();
-  const [newTweet, setNewTweet] = useState(null);
+  const [newTweet, setNewTweet] = useState<TweetObj | null>(null);
 
   const clrNewTweet = () => {
     setNewTweet(null);

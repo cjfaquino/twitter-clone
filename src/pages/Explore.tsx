@@ -31,7 +31,7 @@ const Explore = ({ newTweet, clrNewTweet }: IProps) => {
         {isTweetsLoading ? (
           <Spinner />
         ) : (
-          <ListOfTweets tweets={tweets} customClass='tweets' />
+          <ListOfTweets tweets={tweets as TweetObj[]} customClass='tweets' />
         )}
       </div>
     </div>

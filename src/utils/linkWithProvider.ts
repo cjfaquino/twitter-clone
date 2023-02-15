@@ -2,6 +2,7 @@ import {
   GoogleAuthProvider,
   GithubAuthProvider,
   linkWithPopup,
+  AuthError,
 } from 'firebase/auth';
 import eventProvider from '../events/eventProvider';
 import { auth } from '../firebase-config';
@@ -30,8 +31,8 @@ export default async function linkWithProvider(providerName: string) {
     eventProvider(providerName);
 
     return result.user;
-  } catch (error: any) {
-    const message = firebaseErrorMessage(error.code);
+  } catch (error: unknown) {
+    const message = firebaseErrorMessage((error as AuthError).code);
 
     setErrorMessage('.link-accounts > .error', message);
     return false;

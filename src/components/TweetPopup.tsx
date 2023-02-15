@@ -7,10 +7,11 @@ import saveTweet from '../utils/saveTweet';
 import Tweet from '../utils/Tweet';
 import getProfilePicUrl from '../utils/getProfilePicUrl';
 import SubmitButton from './SubmitButton';
+import { TweetObj } from '../interfaces/TweetObj';
 
 interface IProps {
-  toggleTweetPopup: any;
-  setNewTweet: any;
+  toggleTweetPopup: React.MouseEventHandler<Element>;
+  setNewTweet: React.Dispatch<React.SetStateAction<TweetObj | null>>;
 }
 
 const TweetPopup = ({ toggleTweetPopup, setNewTweet }: IProps) => {
@@ -26,8 +27,8 @@ const TweetPopup = ({ toggleTweetPopup, setNewTweet }: IProps) => {
       const docID = await saveTweet(input);
       if (docID) {
         // send to Feed
-        setNewTweet({ id: docID, ...new Tweet(input) });
-        toggleTweetPopup();
+        setNewTweet({ id: docID, ...new Tweet(input) } as TweetObj);
+        (toggleTweetPopup as Function)();
       }
     } else {
       // show login popup

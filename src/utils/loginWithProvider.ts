@@ -1,4 +1,5 @@
 import {
+  AuthError,
   GithubAuthProvider,
   GoogleAuthProvider,
   signInWithPopup,
@@ -25,8 +26,8 @@ export default async function loginWithProvider(providerName: string) {
     await signInWithPopup(auth, provider);
 
     return true;
-  } catch (error: any) {
-    const message = firebaseErrorMessage(error.code);
+  } catch (error: unknown) {
+    const message = firebaseErrorMessage((error as AuthError).code);
 
     setErrorMessage('.login-form .login-provider.error', message);
 

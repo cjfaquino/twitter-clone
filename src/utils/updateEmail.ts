@@ -1,12 +1,12 @@
-import { updateEmail } from 'firebase/auth';
+import { AuthError, updateEmail } from 'firebase/auth';
 import { auth } from '../firebase-config';
 
 async function updateUserEmail(email: string) {
   try {
     const res = await updateEmail(auth.currentUser!, email);
     return res;
-  } catch (error: any) {
-    return error.code;
+  } catch (error: unknown) {
+    return (error as AuthError).code;
   }
 }
 
