@@ -37,15 +37,19 @@ const App = () => {
         />
         <div id='centerbar'>
           <Routes>
+            {!currentUser &&
+              ['/home', '/settings'].map((path) => (
+                <Route
+                  key={`redirect-${path}`}
+                  path={path}
+                  element={<Navigate to='/explore' replace />}
+                />
+              ))}
             <Route path='/home' element={<Home />} />
             <Route
               path='/explore'
               element={
-                <Explore
-                  newTweet={newTweet}
-                  clrNewTweet={clrNewTweet}
-                  userProfile={userProfile}
-                />
+                <Explore newTweet={newTweet} clrNewTweet={clrNewTweet} />
               }
             />
             <Route path='/search' element={<Search />} />
@@ -88,6 +92,7 @@ const App = () => {
                 <div className='missing'> That item doesn&apos;t exist</div>
               }
             />
+
             <Route path='*' element={<Navigate to='/explore' replace />} />
           </Routes>
         </div>
