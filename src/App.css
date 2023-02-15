@@ -1407,10 +1407,10 @@ header.search {
 
 .user-card-small {
   padding: 15px;
-  display: flex;
+  display: grid;
   align-items: center;
+  grid-template-columns: var(--pfp-size) 120px 1fr;
   gap: 15px;
-  transition: background-color 0.2s;
 }
 
 .user-card-small:hover {
@@ -1418,7 +1418,6 @@ header.search {
 }
 
 .user-card-small-contact {
-  max-width: 150px;
   line-height: 20px;
 }
 
@@ -1426,9 +1425,14 @@ header.search {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 0.9rem;
 }
 
-.user-card-small button {
+.user-card-small-display-name {
+  font-weight: 600;
+}
+
+.user-card-small .btn-follow {
   padding: 7px 15px;
   margin-right: 0;
   margin-left: auto;
