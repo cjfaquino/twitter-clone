@@ -8,15 +8,14 @@ import MySidebar from './components/MySidebar';
 import Explore from './pages/Explore';
 import TweetPage from './pages/TweetPage';
 import TweetPopup from './components/TweetPopup';
-import SignUp from './pages/SignUp';
 import useToggle from './hooks/useToggle';
 import ProfileSettings from './pages/ProfileSettings';
 import Login from './pages/Login';
 import ProfilePage from './pages/ProfilePage';
 import Search from './pages/Search';
 import FollowsPage from './pages/FollowsPage';
-import SignUpContinue from './pages/SignUpContinue';
 import Home from './pages/Home';
+import SignupPage from './pages/SignupPage';
 
 const App = () => {
   const [currentUser, userProfile] = useAuthStateObserver();
@@ -36,7 +35,6 @@ const App = () => {
           userProfile={userProfile}
           toggleTweetPopup={toggleTweetPopup}
         />
-
         <div id='centerbar'>
           <Routes>
             <Route path='/home' element={<Home />} />
@@ -51,10 +49,10 @@ const App = () => {
               }
             />
             <Route path='/search' element={<Search />} />
-            <Route path='/signup' element={<SignUp />} />
+
             <Route
-              path='/signup/continue'
-              element={<SignUpContinue currentUser={currentUser} />}
+              path='/signup'
+              element={<SignupPage currentUser={currentUser} />}
             />
             <Route path='/login' element={<Login />} />
             <Route

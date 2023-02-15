@@ -1,8 +1,8 @@
 import { User } from 'firebase/auth';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ChangeProfileIcon from '../components/ChangeProfileIcon';
-import SubmitButton from '../components/SubmitButton';
+import ChangeProfileIcon from './ChangeProfileIcon';
+import SubmitButton from './SubmitButton';
 import useInput from '../hooks/useInput';
 import createProfile from '../utils/createProfile';
 import getProfilePicUrl from '../utils/getProfilePicUrl';
@@ -12,9 +12,11 @@ interface IProps {
   currentUser: User;
 }
 
-const SignUpContinue = ({ currentUser }: IProps) => {
+const SignupContinue = ({ currentUser }: IProps) => {
   const [userName, handleUsername] = useInput();
-  const [displayName, handleDisplayName] = useInput();
+  const [displayName, handleDisplayName] = useInput(
+    currentUser.displayName || ''
+  );
   const [submitting, setSubmitting] = useState(false);
   const [photoURL, setPhotoURL] = useState(getProfilePicUrl());
   const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null);
@@ -87,4 +89,4 @@ const SignUpContinue = ({ currentUser }: IProps) => {
   );
 };
 
-export default SignUpContinue;
+export default SignupContinue;

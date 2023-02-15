@@ -20,7 +20,7 @@ function useUserProfile(userObj: User | null): [UserProfile, boolean] {
           // no user exists in firestore db users
           setProfile({ ...noProfile, doneLoading: true });
           // create user profile
-          navigate(`/signup/continue`);
+          navigate(`/signup`);
         }
       });
     }

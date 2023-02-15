@@ -471,8 +471,8 @@ button svg {
 
 #explore > div,
 #settings,
+#signup,
 .settings-forms,
-.sign-up-form,
 .login-form {
   height: 100%;
 }
@@ -505,12 +505,13 @@ form button {
   padding: 10px;
 }
 
+#signup,
 .login-form,
-.sign-up-form,
 .settings-forms {
   padding: 40px;
 }
 
+#signup,
 .login-form,
 .login-form form {
   display: flex;
@@ -588,6 +589,10 @@ form button {
   margin-top: auto;
   margin-bottom: 100px;
   font-size: 0.8rem;
+}
+
+.disclaimer strong {
+  font-size: 1rem;
 }
 
 .link-accounts {
