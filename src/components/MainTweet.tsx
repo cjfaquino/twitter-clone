@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment, faHeart } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -21,6 +21,7 @@ import FormattedText from './FormattedText';
 import useFindByUsername from '../hooks/useFindByUsername';
 import { TweetObj } from '../interfaces/TweetObj';
 import checkUserAlreadyReplied from '../utils/checkUserAlreadyReplied';
+import ProfileContext from '../context/ProfileContext';
 
 interface IProps {
   tweetObj: TweetObj;
@@ -32,32 +33,11 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
   const params = useParams();
   const targetUser = useFindByUsername(params.username!);
   const [showOptionsPopup, toggleOptionsPopup] = useToggle(false);
-  const [likes, setLikes] = useState<number>(0);
+  const [likes, setLikes] = useState<number>(tweetObj.likes);
+  const userProfile = useContext(ProfileContext);
   const tweetRef = useRef(null);
-  const likesRef = useRef(null);
 
   const customClass = 'main-tweet';
-
-  useEffect(() => {
-    const updateLikes = async () => {
-      if (await checkAlreadyLiked(tweetObj.id)) {
-        likesRef.current.classList.add('liked');
-      } else {
-        likesRef.current.classList.remove('liked');
-      }
-    };
-
-    if (tweetObj) {
-      setLikes(tweetObj.likes);
-
-      updateLikes();
-      document.addEventListener('auth state changed', updateLikes);
-    }
-
-    return () => {
-      document.removeEventListener('auth state changed', updateLikes);
-    };
-  }, [tweetObj]);
 
   useEffect(() => {
     if (!tweetObj) return undefined;
@@ -68,10 +48,10 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
     }, 500);
 
     // dynamically scroll past .replying-to-tweet-item on load
-    if (tweetObj.aReplyTo) {
-      const replyingTo = tweetRef.current.parentNode.querySelector(
-        '.replying-to-tweet-item'
-      );
+    if (tweetObj.aReplyTo && tweetRef.current) {
+      const replyingTo = (
+        tweetRef.current as HTMLElement
+      ).parentNode!.querySelector('.replying-to-tweet-item')!;
       window.scrollTo(0, replyingTo.clientHeight);
     }
 
@@ -106,16 +86,14 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
   const handleLike = async () => {
     if (!isUserSignedIn()) return navigate('/login');
 
-    if (likesRef.current && (await checkAlreadyLiked(TWEET_ID))) {
+    if (checkAlreadyLiked(TWEET_ID, userProfile)) {
       // already liked
       await undoLike(TWEET_ID);
       setLikes((prev) => prev - 1);
-      likesRef.current.classList.remove('liked');
     } else {
       // not yet liked
       await likeTweet(tweetObj);
       setLikes((prev) => prev + 1);
-      likesRef.current.classList.add('liked');
     }
 
     return undefined;
@@ -123,6 +101,7 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
 
   const navToPage = async (e: React.MouseEvent<HTMLDivElement>) => {
     const targetName = (e.target as HTMLElement).className;
+
     // conditions
     if (targetName.includes('profile-link')) {
       // go to user page
@@ -215,9 +194,10 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
           </button>
           <button
             type='button'
-            className='btn-likes grey'
+            className={`btn-likes grey ${
+              checkAlreadyLiked(TWEET_ID, userProfile) ? 'liked' : ''
+            }`}
             onClick={handleLike}
-            ref={likesRef}
           >
             <span className='btn-red'>
               <FontAwesomeIcon icon={faHeart} />

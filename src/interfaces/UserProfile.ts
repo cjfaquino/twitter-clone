@@ -1,3 +1,5 @@
+import { TweetObj } from './TweetObj';
+
 export interface UserProfile {
   id: string;
   bio?: string;
@@ -9,6 +11,7 @@ export interface UserProfile {
   backdropURL?: string;
   followers?: number;
   following?: number;
+  likes?: TweetObj[];
   metadata?: {
     createdAt: string;
     creationTime: string;

@@ -16,6 +16,7 @@ import Search from './pages/Search';
 import FollowsPage from './pages/FollowsPage';
 import Home from './pages/Home';
 import SignupPage from './pages/SignupPage';
+import ProfileContext from './context/ProfileContext';
 
 const App = () => {
   const [currentUser, userProfile] = useAuthStateObserver();
@@ -27,7 +28,7 @@ const App = () => {
   };
 
   return (
-    <>
+    <ProfileContext.Provider value={userProfile}>
       <div className='app wrapper'>
         <LogInBanner isSignedIn={!!currentUser} />
         <MyNav
@@ -105,7 +106,7 @@ const App = () => {
           setNewTweet={setNewTweet}
         />
       )}
-    </>
+    </ProfileContext.Provider>
   );
 };
 

@@ -25,6 +25,8 @@ const undoLike = async (
     deleteDoc(likesRef);
     deleteDoc(tweetLikesRef);
 
+    await Promise.all([deleteDoc(likesRef), deleteDoc(tweetLikesRef)]);
+
     if (!alreadyDeleted) {
       // update tweet document
       updateDoc(tweetRef, { likes: increment(-1) });

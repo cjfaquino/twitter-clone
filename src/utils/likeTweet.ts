@@ -5,6 +5,7 @@ import {
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
+import eventProfileEdit from '../events/eventProfileEdit';
 import { db } from '../firebase-config';
 import { TweetObj } from '../interfaces/TweetObj';
 import getUserUid from './getUserUid';
@@ -17,12 +18,22 @@ const likeTweet = async (tweetObj: TweetObj) => {
     const tweetRef = doc(db, 'tweets', tweetObj.id);
 
     // add to likes collection in users
-    setDoc(likesRef, { ...tweetObj, likedAt: serverTimestamp() });
+    const userPromise = setDoc(likesRef, {
+      ...tweetObj,
+      likedAt: serverTimestamp(),
+    });
 
     // update tweet document
-    setDoc(tweetLikesRef, { id: getUserUid(), likedAt: serverTimestamp() });
+    const tweetPromise = setDoc(tweetLikesRef, {
+      id: getUserUid(),
+      likedAt: serverTimestamp(),
+    });
+
+    await Promise.all([userPromise, tweetPromise]);
 
     updateDoc(tweetRef, { likes: increment(1) });
+
+    eventProfileEdit();
   } catch (error) {
     console.log(error);
   }

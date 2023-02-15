@@ -10,7 +10,7 @@ function useAuthStateObserver(): [User | null, UserProfile] {
   const cUser: User | null = JSON.parse(localStorage.getItem('firebaseUser')!);
 
   const [currentUser, setCurrentUser] = useState<User | null>(cUser);
-  const [userProfile] = useUserProfile(currentUser);
+  const [userProfile] = useUserProfile(currentUser && currentUser.uid);
   const navigate = useNavigate();
 
   const authStateObserver = (user: User) => {
