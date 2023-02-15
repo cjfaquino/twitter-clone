@@ -4,6 +4,7 @@ import SearchHeader from '../components/SearchHeader';
 import { TweetObj } from '../interfaces/TweetObj';
 import ListOfTweets from '../components/ListOfTweets';
 import Spinner from '../components/Loaders/Spinner';
+import useWindowTitle from '../hooks/useWindowTitle';
 
 interface IProps {
   newTweet: TweetObj | null;
@@ -11,6 +12,7 @@ interface IProps {
 }
 
 const Explore = ({ newTweet, clrNewTweet }: IProps) => {
+  useWindowTitle('Explore');
   const [tweets, addTweetToDOM, isTweetsLoading] = useTweets('explore');
 
   useEffect(() => {

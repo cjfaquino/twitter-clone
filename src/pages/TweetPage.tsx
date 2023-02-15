@@ -8,12 +8,21 @@ import TweetItem from '../components/TweetItem';
 import useReplies from '../hooks/useReplies';
 import Spinner from '../components/Loaders/Spinner';
 import { TweetObj } from '../interfaces/TweetObj';
+import useWindowTitle from '../hooks/useWindowTitle';
 
 const TweetPage = () => {
   const params = useParams();
   const [tweet] = useOneTweet(params.tweet!);
   const [fetchedReplies, repliesLoading, setReplies] = useReplies(
     params.tweet!
+  );
+
+  useWindowTitle(
+    tweet &&
+      !repliesLoading &&
+      `${tweet.USER_DISPLAY} on ${import.meta.env.VITE_APP_NAME}: "${
+        tweet.text
+      }" `
   );
 
   const replies = fetchedReplies as unknown as TweetObj[];

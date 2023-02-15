@@ -9,8 +9,10 @@ import ProviderButtons from '../components/ProviderButtons';
 import useToggle from '../hooks/useToggle';
 import ResetPasswordPopup from '../components/ResetPasswordPopup';
 import SubmitButton from '../components/SubmitButton';
+import useWindowTitle from '../hooks/useWindowTitle';
 
 const Login = () => {
+  useWindowTitle('Log In');
   const [emailVal, handleEmail] = useInput();
   const [passwordVal, handlePassword] = useInput();
   const [submitting, setSubmitting] = useState(false);

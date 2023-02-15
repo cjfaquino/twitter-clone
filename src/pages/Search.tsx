@@ -5,6 +5,7 @@ import ListOfUsers from '../components/ListOfUsers';
 import SearchHeader from '../components/SearchHeader';
 import Spinner from '../components/Loaders/Spinner';
 import useAlgoliaSearch from '../hooks/useAlgoliaSearch';
+import useWindowTitle from '../hooks/useWindowTitle';
 
 const Search = () => {
   const [searchParams] = useSearchParams();
@@ -12,6 +13,7 @@ const Search = () => {
   const filter = searchParams.get('f');
   const [tweets, users, resultsLoading] = useAlgoliaSearch(searched, filter!);
   const [query, setQuery] = useState('');
+  useWindowTitle(`${searched} - Search`);
 
   return (
     <div id='search'>

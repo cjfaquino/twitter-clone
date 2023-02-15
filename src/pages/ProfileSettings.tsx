@@ -13,6 +13,7 @@ import { UserProfile } from '../interfaces/UserProfile';
 import GoogleIcon from '../assets/GoogleIcon';
 import useProviderLinkStatus from '../hooks/useProviderLinkStatus';
 import SubmitButton from '../components/SubmitButton';
+import useWindowTitle from '../hooks/useWindowTitle';
 
 interface IProps {
   currentUser: User | null;
@@ -20,6 +21,7 @@ interface IProps {
 }
 
 const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
+  useWindowTitle('Settings');
   const [userName, handleUserName, setUserName] = useInput();
   const [email, handleEmail, setEmail] = useInput();
   const [submittingUsername, setSubmittingUsername] = useState(false);

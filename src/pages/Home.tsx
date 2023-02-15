@@ -4,11 +4,13 @@ import ListOfTweets from '../components/ListOfTweets';
 import Spinner from '../components/Loaders/Spinner';
 import useFollowsList from '../hooks/useFollowsList';
 import useTweets from '../hooks/useTweets';
+import useWindowTitle from '../hooks/useWindowTitle';
 import findDuplicatesByField from '../utils/findDuplicatesByField';
 import getUserUid from '../utils/getUserUid';
 import isUserSignedIn from '../utils/isUserSignedIn';
 
 const Home = () => {
+  useWindowTitle('Home');
   const [tweets, , isTweetsLoading] = useTweets('explore');
   const [followedUsers] = useFollowsList('following', getUserUid());
   const filtered = findDuplicatesByField(

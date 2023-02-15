@@ -5,13 +5,37 @@ import useFindByUsername from '../hooks/useFindByUsername';
 import useFollowsList from '../hooks/useFollowsList';
 import ListOfUsers from '../components/ListOfUsers';
 import isUserSignedIn from '../utils/isUserSignedIn';
+import useWindowTitle from '../hooks/useWindowTitle';
 
 const FollowsPage = () => {
   const params = useParams();
   const location = useLocation();
   const targetUser = useFindByUsername(params.username!);
-  const typeOfList = location.pathname.split('/').pop();
+  const typeOfList = location.pathname.split('/')[2];
   const [userLists] = useFollowsList(typeOfList!, targetUser.userProfile.id);
+
+  const windowTitle = (listName: string) => {
+    let title = '';
+    const name = `${targetUser.userProfile.displayName} (@${targetUser.userProfile.userName})`;
+    switch (listName) {
+      case 'followers':
+        title = `People following ${name}`;
+        break;
+      case 'following':
+        title = `People followed by ${name}`;
+        break;
+      case 'followers_you_follow':
+        title = `People you know following ${name}`;
+        break;
+
+      default:
+        title = '';
+        break;
+    }
+
+    return title;
+  };
+  useWindowTitle(windowTitle(typeOfList));
 
   return (
     <>

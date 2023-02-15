@@ -13,6 +13,7 @@ import useFindByUsername from '../hooks/useFindByUsername';
 import ProfileFeed from '../components/ProfileFeed';
 import { UserProfile } from '../interfaces/UserProfile';
 import Spinner from '../components/Loaders/Spinner';
+import useWindowTitle from '../hooks/useWindowTitle';
 
 interface IProps {
   currentUser: User | null;
@@ -23,6 +24,10 @@ const ProfilePage = ({ currentUser, userProfile }: IProps) => {
   const params = useParams();
   const navigate = useNavigate();
   const targetUser = useFindByUsername(params.username!);
+  useWindowTitle(
+    targetUser.doneLoading &&
+      `${targetUser.userProfile.displayName} (@${targetUser.userProfile.userName})`
+  );
 
   useEffect(() => {
     // has not finished signup
