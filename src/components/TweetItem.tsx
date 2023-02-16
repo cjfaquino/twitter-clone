@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment, faHeart } from '@fortawesome/free-regular-svg-icons';
 import {
   faArrowUpFromBracket,
@@ -24,6 +23,7 @@ import { TweetObj } from '../interfaces/TweetObj';
 import checkUserAlreadyReplied from '../utils/checkUserAlreadyReplied';
 import ProfileContext from '../context/ProfileContext';
 import { UserProfile } from '../interfaces/UserProfile';
+import TweetItemButton from './TweetItemButton';
 
 interface IProps {
   tweetObj: TweetObj;
@@ -142,14 +142,13 @@ const TweetItem = ({ tweetObj }: IProps) => {
             </div>
             {tweetObj.aReplyTo && !tweetObj.aReplyTo.id.startsWith('null') && (
               <div className='replying-to-info'>
-                Replying to (
+                {'Replying to '}
                 <Link
                   to={`/${tweetObj.aReplyTo.USER_NAME}`}
                   className='username-link'
                 >
                   @{tweetObj.aReplyTo.USER_NAME}
                 </Link>
-                )
               </div>
             )}
             <FormattedText
@@ -158,49 +157,64 @@ const TweetItem = ({ tweetObj }: IProps) => {
               customClass={customClass}
             />
             <div className={`${customClass}-item-buttons`}>
-              <button
-                type='button'
+              <TweetItemButton
                 className={`btn-replies grey ${
                   checkUserAlreadyReplied(replies as TweetObj[])
                     ? 'replied'
                     : ''
                 }`}
-              >
-                <span className='btn-blue'>
-                  <FontAwesomeIcon icon={faComment} />
-                </span>{' '}
-                <span className='replies-number'>
-                  {replies.length > 0 && replies.length}
-                </span>
-              </button>
-              <button type='button' className='btn-retweets grey'>
-                <span className='btn-green'>
-                  <FontAwesomeIcon icon={faRetweet} />
-                </span>
-              </button>{' '}
-              <button
-                type='button'
+                handleClick={() =>
+                  navigate(
+                    `/${targetUser.userProfile.userName}/tweet/${TWEET_ID}`
+                  )
+                }
+                color='blue'
+                icon={faComment}
+                type='replies'
+                number={replies.length}
+              />
+
+              <TweetItemButton
+                className='btn-retweets grey'
+                // change when retweets are made
+                handleClick={() =>
+                  navigate(
+                    `/${targetUser.userProfile.userName}/tweet/${TWEET_ID}`
+                  )
+                }
+                color='green'
+                icon={faRetweet}
+                type='retweets'
+                // add retweets number to tweetObj
+                number={views}
+              />
+
+              <TweetItemButton
                 className={`btn-likes grey ${
                   checkAlreadyLiked(TWEET_ID, userProfile) ? 'liked' : ''
                 }`}
-                onClick={handleLike}
-              >
-                <span className='btn-red'>
-                  <FontAwesomeIcon icon={faHeart} />
-                </span>{' '}
-                <span className='likes-number'>{likes}</span>
-              </button>
-              <button type='button' className='btn-views grey'>
-                <span className='btn-blue'>
-                  <FontAwesomeIcon icon={faChartSimple} />
-                </span>{' '}
-                <span className='views-number'>{views}</span>
-              </button>
-              <button type='button' className='btn-shares grey'>
-                <span className='btn-blue'>
-                  <FontAwesomeIcon icon={faArrowUpFromBracket} />
-                </span>
-              </button>
+                handleClick={handleLike}
+                color='red'
+                icon={faHeart}
+                type='likes'
+                number={likes}
+              />
+
+              <TweetItemButton
+                className='btn-views grey'
+                handleClick={handleLike}
+                color='blue'
+                icon={faChartSimple}
+                type='views'
+                number={views}
+              />
+
+              <TweetItemButton
+                className='btn-shares grey'
+                color='blue'
+                icon={faArrowUpFromBracket}
+                type='copy link'
+              />
             </div>
           </div>
         </>
