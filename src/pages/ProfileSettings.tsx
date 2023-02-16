@@ -107,25 +107,21 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
       </form>
       <form onSubmit={handleSubmitEmail} className='email-form'>
         <h2>Contact Details</h2>
+        <span className={`verify-email ${isEmailVerified() ? 'verified' : ''}`}>
+          {isEmailVerified() ? (
+            'verified ✓'
+          ) : (
+            <button
+              type='button'
+              onClick={() => sendEmailVerification(currentUser!)}
+              className='btn-verify-email'
+            >
+              Verify email
+            </button>
+          )}
+        </span>
         <label htmlFor='email'>
-          Email{' '}
-          <span
-            className={
-              isEmailVerified() ? 'verify-email verified' : 'verify-email'
-            }
-          >
-            {isEmailVerified() ? (
-              'verified ✓'
-            ) : (
-              <button
-                type='button'
-                onClick={() => sendEmailVerification(currentUser!)}
-                className='btn-verify-email'
-              >
-                Verify email
-              </button>
-            )}
-          </span>
+          Email
           <input type='text' id='email' value={email} onChange={handleEmail} />
         </label>
 

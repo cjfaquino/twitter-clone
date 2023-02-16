@@ -50,11 +50,36 @@ input {
   background-color: black;
   border: 1px solid grey;
   border-radius: 5px;
+  width: 100%;
   padding: 0 10px;
+  font-size: 1rem;
 }
 
+textarea {
+  resize: none;
+}
+
+input:disabled {
+  border-color: rgb(36, 36, 36);
+  color: rgb(181, 181, 181);
+}
+
+input[type='file'] {
+  display: none;
+}
+
+textarea:focus,
 input:focus {
+  outline: none;
   border-color: var(--theme-color);
+}
+
+label {
+  color: grey;
+}
+
+label:focus-within {
+  color: var(--theme-color);
 }
 
 button {

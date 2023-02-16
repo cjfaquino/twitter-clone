@@ -78,7 +78,9 @@ const Login = () => {
             value={passwordVal}
             onChange={handlePassword}
           />
-          Forgot your password?{' '}
+        </label>
+        <span className='forgot-password'>
+          Forgot your password?
           <button
             type='button'
             className='btn-reset-pass'
@@ -86,7 +88,7 @@ const Login = () => {
           >
             Reset
           </button>
-        </label>
+        </span>
         <SubmitButton submitting={submitting} text='Log In' width={100} />
         <HaveAnAccount />
       </form>
