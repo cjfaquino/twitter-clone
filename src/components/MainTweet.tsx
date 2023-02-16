@@ -22,6 +22,7 @@ import useFindByUsername from '../hooks/useFindByUsername';
 import { TweetObj } from '../interfaces/TweetObj';
 import checkUserAlreadyReplied from '../utils/checkUserAlreadyReplied';
 import ProfileContext from '../context/ProfileContext';
+import fancyNumbers from '../utils/fancyNumbers';
 
 interface IProps {
   tweetObj: TweetObj;
@@ -167,13 +168,18 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
         </div>
         <div className={`${customClass}-item-stats`}>
           <span className='views grey'>
-            <span className='views-number'>{views}</span> Views
+            <span className='views-number'>{fancyNumbers(views, true)}</span>{' '}
+            Views
           </span>
           <span className='retweets grey'>
-            <span className='retweets-number'>{retweets}</span> Retweets
+            <span className='retweets-number'>
+              {fancyNumbers(retweets, true)}
+            </span>{' '}
+            Retweets
           </span>
           <span className='likes grey'>
-            <span className='likes-number'>{likes}</span> Likes
+            <span className='likes-number'>{fancyNumbers(likes, true)}</span>{' '}
+            Likes
           </span>
         </div>
         <div className={`${customClass}-item-buttons`}>

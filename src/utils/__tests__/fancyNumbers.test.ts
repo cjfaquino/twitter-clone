@@ -7,6 +7,10 @@ describe('fancyNumbers a number formatter', () => {
     expect(fancyNumbers(-1)).toBe('');
   });
 
+  it('should return string "0" if second arg passed', () => {
+    expect(fancyNumbers(0, true)).toBe('0');
+  });
+
   it('should output numbers below 5 digits to show value as string', () => {
     expect(fancyNumbers(9999)).toBe('9,999');
     expect(fancyNumbers(5000)).toBe('5,000');

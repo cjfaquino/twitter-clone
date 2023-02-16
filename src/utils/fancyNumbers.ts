@@ -1,5 +1,6 @@
-export default (number?: number): string => {
-  if (number === undefined || number < 1) return '';
+export default (number?: number, returnZero?: boolean): string => {
+  if (number === undefined || (!returnZero && number < 1)) return '';
+  if (returnZero && number < 1) return '0';
 
   let formatted = new Intl.NumberFormat('en-us').format(number);
   const { length } = number.toString();
