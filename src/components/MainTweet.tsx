@@ -177,10 +177,10 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
             </span>{' '}
             Retweets
           </span>
-          <span className='likes grey'>
+          <Link to='likes' className='likes grey'>
             <span className='likes-number'>{fancyNumbers(likes, true)}</span>{' '}
             Likes
-          </span>
+          </Link>
         </div>
         <div className={`${customClass}-item-buttons`}>
           <button

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import './App.css';
 import useAuthStateObserver from './hooks/useAuthStateObserver';
 import LogInBanner from './components/LogInBanner';
@@ -70,7 +70,9 @@ const App = () => {
                 />
               }
             />
-            <Route path='/:username/tweet/:tweet' element={<TweetPage />} />
+            <Route path='/:username/tweet/:tweet/*' element={<TweetPage />}>
+              <Route path='likes' element={<Outlet />} />
+            </Route>
             {['followers', 'following', 'followers_you_follow'].map((path) => (
               <Route
                 key={`profile-${path}`}

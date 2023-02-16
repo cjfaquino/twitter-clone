@@ -933,6 +933,10 @@ button:hover > .btn-red {
   gap: 15px;
 }
 
+.main-tweet-item-stats a:hover {
+  text-decoration: underline;
+}
+
 .main-tweet-item-stats .retweets-number,
 .main-tweet-item-stats .views-number,
 .main-tweet-item-stats .likes-number {
@@ -953,7 +957,7 @@ button:hover > .btn-red {
   border-color: rgb(85, 85, 85);
 }
 
-/* replies */
+/* tweet page replies */
 
 .reply-input-container {
   display: flex;
@@ -986,6 +990,33 @@ button:hover > .btn-red {
   padding: 8px;
   width: 120px;
   background: var(--theme-color);
+}
+
+/* tweet page likes */
+
+#likes-popup {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--feed-width);
+  height: 600px;
+  background-color: black;
+  border-radius: 15px;
+  z-index: 5;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+#likes-popup header {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  padding: 15px;
+}
+
+#likes-popup .list {
+  padding-bottom: 100%;
 }
 
 /* headers */
