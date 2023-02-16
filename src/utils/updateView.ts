@@ -1,4 +1,5 @@
 import { TweetObj } from '../interfaces/TweetObj';
+import fancyNumbers from './fancyNumbers';
 import increaseViewCount from './increaseViewCount';
 
 const updateView = async (tweetObj: TweetObj) => {
@@ -6,7 +7,7 @@ const updateView = async (tweetObj: TweetObj) => {
     `div.main-tweet-item-stats > span.views > span.views-number`
   )!;
   await increaseViewCount(tweetObj);
-  viewsDOM.textContent = (Number(viewsDOM.textContent) + 1).toString();
+  viewsDOM.textContent = fancyNumbers(tweetObj.views + 1);
 };
 
 export default updateView;

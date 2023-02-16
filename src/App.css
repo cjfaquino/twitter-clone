@@ -744,16 +744,15 @@ form button {
 
 .tweet-item-buttons {
   margin-top: 30px;
-  display: flex;
-  margin-right: 150px;
-  justify-content: space-between;
+  width: 360px;
+  display: grid;
+  grid-template-columns: repeat(4, 97px) 35px;
   align-items: flex-end;
 }
 
 .tweet-item-buttons button {
   font-size: 0.8rem;
-  display: flex;
-  align-items: center;
+  justify-content: flex-start;
   gap: 5px;
   padding: 0 15px 0 0;
 }
