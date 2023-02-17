@@ -14,6 +14,7 @@ import GoogleIcon from '../assets/GoogleIcon';
 import useProviderLinkStatus from '../hooks/useProviderLinkStatus';
 import SubmitButton from '../components/SubmitButton';
 import useWindowTitle from '../hooks/useWindowTitle';
+import updatePassword from '../utils/updatePassword';
 
 interface IProps {
   currentUser: User | null;
@@ -24,8 +25,11 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
   useWindowTitle('Settings');
   const [userName, handleUserName, setUserName] = useInput();
   const [email, handleEmail, setEmail] = useInput();
+  const [newPass, handleNewPass, setNewPass] = useInput();
+  const [confirmNewPass, handleConfirmNewPass, setConfirmNewPass] = useInput();
   const [submittingUsername, setSubmittingUsername] = useState(false);
   const [submittingEmail, setSubmittingEmail] = useState(false);
+  const [submittingPassword, setSubmittingPassword] = useState(false);
   const [googleStatus, handleGoogle] = useProviderLinkStatus(
     currentUser,
     'google.com'
@@ -59,6 +63,20 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
     }
   };
 
+  const handleSubmitPassword = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (newPass !== confirmNewPass || !currentUser) return;
+
+    setSubmittingPassword(true);
+    const res = await updatePassword(currentUser, newPass, navigate);
+    setSubmittingPassword(false);
+
+    if (res === true) {
+      setNewPass('');
+      setConfirmNewPass('');
+    }
+  };
+
   const setFields = async () => {
     // update inputs if data is available
     setEmail((currentUser && currentUser.email) || '');
@@ -77,7 +95,7 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
 
     // has not finished signup
     if (userProfile.id === 'no-id' && userProfile.doneLoading) {
-      return navigate('/signup/continue');
+      return navigate('/signup');
     }
 
     setFields();
@@ -97,6 +115,7 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
             onChange={handleUserName}
             minLength={2}
             maxLength={15}
+            required
           />
         </label>
         <SubmitButton
@@ -122,10 +141,45 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
         </span>
         <label htmlFor='email'>
           Email
-          <input type='text' id='email' value={email} onChange={handleEmail} />
+          <input
+            type='text'
+            id='email'
+            value={email}
+            onChange={handleEmail}
+            required
+          />
         </label>
 
         <SubmitButton submitting={submittingEmail} text='Change' width={100} />
+      </form>
+
+      <form className='change-password-form' onSubmit={handleSubmitPassword}>
+        <h2>Change password</h2>
+        <label htmlFor='password'>
+          New password
+          <input
+            type='password'
+            id='password'
+            value={newPass}
+            onChange={handleNewPass}
+            required
+          />
+        </label>
+        <label htmlFor='confirm-password'>
+          Confirm new password
+          <input
+            type='password'
+            id='confirm-password'
+            value={confirmNewPass}
+            onChange={handleConfirmNewPass}
+            required
+          />
+        </label>
+        <SubmitButton
+          submitting={submittingPassword}
+          text='Change'
+          width={100}
+        />{' '}
       </form>
 
       <div className='link-accounts'>
