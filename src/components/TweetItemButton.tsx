@@ -14,7 +14,8 @@ interface IProps {
 }
 
 const defaultProps = {
-  handleClick: () => {},
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  handleClick: (e: any) => {},
   number: 0,
   type: '',
 };
@@ -39,6 +40,7 @@ const TweetItemButton = ({
     {!!type && !!number && (
       <span className={`${type}-number`}>{fancyNumbers(number)}</span>
     )}
+    <span className='extra-btn-text' />
   </button>
 );
 

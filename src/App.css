@@ -743,12 +743,13 @@ form button {
   margin-top: 30px;
   width: 360px;
   display: grid;
-  grid-template-columns: repeat(4, 97px) 35px;
+  grid-template-columns: repeat(5, 90px);
   align-items: flex-end;
 }
 
 .tweet-item-buttons button {
   font-size: 0.8rem;
+  font-weight: 300;
   justify-content: flex-start;
   gap: 5px;
   padding: 0 15px 0 0;
@@ -798,6 +799,7 @@ button:hover > .btn-green {
   background-color: rgba(0, 128, 0, 0.2) !important;
 }
 
+.copied,
 .replied,
 button:hover > .btn-blue,
 .btn-views:hover > span,

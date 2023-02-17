@@ -95,6 +95,19 @@ const TweetItem = ({ tweetObj }: IProps) => {
     return null;
   }
 
+  const handleShare = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const btn = e.currentTarget as HTMLElement;
+    const btnText = btn.querySelector('.extra-btn-text')!;
+
+    // show link is copied
+    btn.classList.add('copied');
+    btnText.textContent = 'copied';
+
+    // copy link to tweet page and write to clipboard
+    const linkText = `${window.location.origin}/${targetUser.userProfile.userName}/tweet/${TWEET_ID}`;
+    navigator.clipboard.writeText(linkText);
+  };
+
   return (
     <div
       className={`${customClass}-item`}
@@ -202,7 +215,6 @@ const TweetItem = ({ tweetObj }: IProps) => {
 
               <TweetItemButton
                 className='btn-views grey'
-                handleClick={handleLike}
                 color='blue'
                 icon={faChartSimple}
                 type='views'
@@ -211,6 +223,7 @@ const TweetItem = ({ tweetObj }: IProps) => {
 
               <TweetItemButton
                 className='btn-shares grey'
+                handleClick={handleShare}
                 color='blue'
                 icon={faArrowUpFromBracket}
                 type='copy link'
