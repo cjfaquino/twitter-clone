@@ -7,13 +7,13 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import { User } from 'firebase/auth';
-import GoBackHeader from '../components/GoBackHeader';
-import ProfileLarge from '../components/ProfileLarge';
-import useFindByUsername from '../hooks/useFindByUsername';
-import ProfileFeed from '../components/ProfileFeed';
-import { UserProfile } from '../interfaces/UserProfile';
-import Spinner from '../components/Loaders/Spinner';
-import useWindowTitle from '../hooks/useWindowTitle';
+import GoBackHeader from '../../components/GoBackHeader';
+import ProfileLarge from './ProfileLarge';
+import useFindByUsername from '../../hooks/useFindByUsername';
+import ProfileFeed from './ProfileFeed';
+import { UserProfile } from '../../interfaces/UserProfile';
+import Spinner from '../../components/Loaders/Spinner';
+import useWindowTitle from '../../hooks/useWindowTitle';
 
 interface IProps {
   currentUser: User | null;

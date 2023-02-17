@@ -1,9 +1,9 @@
 import React from 'react';
-import useTweets from '../hooks/useTweets';
-import ListOfTweets from './ListOfTweets';
-import { TargetUser } from '../interfaces/TargetUser';
-import Spinner from './Loaders/Spinner';
-import { TweetObj } from '../interfaces/TweetObj';
+import useTweets from '../../hooks/useTweets';
+import ListOfTweets from '../../components/ListOfTweets';
+import { TargetUser } from '../../interfaces/TargetUser';
+import Spinner from '../../components/Loaders/Spinner';
+import { TweetObj } from '../../interfaces/TweetObj';
 
 interface IProps {
   filter: string;

@@ -11,7 +11,7 @@ import TweetPopup from './components/TweetPopup';
 import useToggle from './hooks/useToggle';
 import ProfileSettings from './pages/ProfileSettings';
 import Login from './pages/Login';
-import ProfilePage from './pages/ProfilePage';
+import ProfilePage from './pages/ProfilePage/ProfilePage';
 import Search from './pages/Search';
 import FollowsPage from './pages/FollowsPage';
 import Home from './pages/Home';

@@ -1,13 +1,13 @@
 import { faClose, faImage } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
-import useInput from '../hooks/useInput';
-import { UserProfile } from '../interfaces/UserProfile';
-import getProfilePicUrl from '../utils/getProfilePicUrl';
-import updateProfile from '../utils/updateProfile';
-import uploadImage from '../utils/uploadImage';
-import ChangeProfileIcon from './ChangeProfileIcon';
-import SubmitButton from './SubmitButton';
+import useInput from '../../hooks/useInput';
+import { UserProfile } from '../../interfaces/UserProfile';
+import getProfilePicUrl from '../../utils/getProfilePicUrl';
+import updateProfile from '../../utils/updateProfile';
+import uploadImage from '../../utils/uploadImage';
+import ChangeProfileIcon from '../../components/ChangeProfileIcon';
+import SubmitButton from '../../components/SubmitButton';
 
 interface IProps {
   userProfile: UserProfile;

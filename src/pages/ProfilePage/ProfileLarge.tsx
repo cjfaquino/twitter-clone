@@ -7,12 +7,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { User } from 'firebase/auth';
-import useFollowStatus from '../hooks/useFollowStatus';
-import { TargetUser } from '../interfaces/TargetUser';
-import useToggle from '../hooks/useToggle';
+import useFollowStatus from '../../hooks/useFollowStatus';
+import { TargetUser } from '../../interfaces/TargetUser';
+import useToggle from '../../hooks/useToggle';
 import EditProfilePopup from './EditProfilePopup';
-import { UserProfile } from '../interfaces/UserProfile';
-import FormattedText from './FormattedText';
+import { UserProfile } from '../../interfaces/UserProfile';
+import FormattedText from '../../components/FormattedText';
 
 interface IProps {
   currentUser: User | null;
