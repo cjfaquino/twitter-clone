@@ -12,6 +12,7 @@ export default async (userID: string) => {
       return {
         id: dSnap.id,
         ...dSnap.data(),
+        doneLoading: true,
         // for algolia 'users' index
         objectID: dSnap.id,
       };
