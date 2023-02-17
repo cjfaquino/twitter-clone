@@ -8,7 +8,11 @@ import unlinkProvider from '../utils/unlinkProvider';
 export default function useProviderLinkStatus(
   currentUser: User | null,
   providerName: string
-): [boolean | null, React.MouseEventHandler<HTMLButtonElement>] {
+): [
+  boolean | null,
+  React.MouseEventHandler<HTMLButtonElement>,
+  React.Dispatch<React.SetStateAction<boolean | null>>
+] {
   const [link, setLink] = useState<boolean | null>(null);
 
   const checkLinkedProviders = () =>
@@ -57,5 +61,5 @@ export default function useProviderLinkStatus(
     };
   }, [currentUser]);
 
-  return [link, handleLink];
+  return [link, handleLink, setLink];
 }

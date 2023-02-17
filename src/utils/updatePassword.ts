@@ -16,6 +16,6 @@ export default async (user: User, newPass: string, navigate: Function) => {
       default:
         break;
     }
-    return false;
+    return errorCode;
   }
 };

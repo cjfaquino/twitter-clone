@@ -4,6 +4,7 @@ import { sendEmailVerification, User } from 'firebase/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faPaperPlane } from '@fortawesome/free-regular-svg-icons';
 import useInput from '../hooks/useInput';
 import updateProfile from '../utils/updateProfile';
 import updateUserEmail from '../utils/updateEmail';
@@ -15,6 +16,7 @@ import useProviderLinkStatus from '../hooks/useProviderLinkStatus';
 import SubmitButton from '../components/SubmitButton';
 import useWindowTitle from '../hooks/useWindowTitle';
 import updatePassword from '../utils/updatePassword';
+import addPassword from '../utils/addPassword';
 
 interface IProps {
   currentUser: User | null;
@@ -38,6 +40,8 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
     currentUser,
     'github.com'
   );
+  const [emailProviderStatus, handleEmailProvider, setEmailProvider] =
+    useProviderLinkStatus(currentUser, 'password');
 
   const navigate = useNavigate();
 
@@ -68,12 +72,22 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
     if (newPass !== confirmNewPass || !currentUser) return;
 
     setSubmittingPassword(true);
-    const res = await updatePassword(currentUser, newPass, navigate);
+    let res;
+    if (emailProviderStatus) {
+      res = await updatePassword(currentUser, newPass, navigate);
+    } else {
+      res = await addPassword(currentUser, email, newPass, navigate);
+    }
+
     setSubmittingPassword(false);
 
     if (res === true) {
       setNewPass('');
       setConfirmNewPass('');
+      setEmailProvider(true);
+    } else {
+      // error code
+      console.log(res);
     }
   };
 
@@ -154,7 +168,7 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
       </form>
 
       <form className='change-password-form' onSubmit={handleSubmitPassword}>
-        <h2>Change password</h2>
+        <h2>{emailProviderStatus ? 'Change' : 'Add'} password</h2>
         <label htmlFor='password'>
           New password
           <input
@@ -184,6 +198,17 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
 
       <div className='link-accounts'>
         <span className='error' />
+
+        {emailProviderStatus && (
+          <button
+            type='button'
+            onClick={handleEmailProvider}
+            className='btn-with-provider'
+          >
+            <FontAwesomeIcon icon={faPaperPlane} />
+            Unlink Email account
+          </button>
+        )}
 
         <button
           type='button'
