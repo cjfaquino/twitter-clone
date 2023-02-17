@@ -24,7 +24,7 @@ const MySidebar = ({ isSignedIn }: IProps) => {
         <div className='sidebar-signup'>
           <h3>New to {import.meta.env.VITE_APP_NAME}?</h3>
           <p>Sign up now to get your own personalized timeline!</p>
-          <ProviderButtons mode='Sign up' />
+          <ProviderButtons mode='Sign up' google github />
           <OrSeparator />
           <Link to='/signup'>
             <button type='button' className='btn-sidebar-signup'>
