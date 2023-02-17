@@ -9,7 +9,7 @@ export default async (
   user: User,
   email: string,
   password: string,
-  navigate: Function
+  toggleLoginPopup: Function
 ) => {
   try {
     const credential = EmailAuthProvider.credential(email, password);
@@ -22,7 +22,7 @@ export default async (
     // error
     switch (errorCode) {
       case 'auth/requires-recent-login':
-        navigate('/login', { state: { error: 'reauth' } });
+        toggleLoginPopup();
         break;
 
       default:

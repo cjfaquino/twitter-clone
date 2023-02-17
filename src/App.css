@@ -326,6 +326,7 @@ button svg {
   z-index: 2;
 }
 
+.login-popup,
 .tweet-popup {
   position: fixed;
   left: 50%;

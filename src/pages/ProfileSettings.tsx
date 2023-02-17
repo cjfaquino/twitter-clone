@@ -17,6 +17,8 @@ import SubmitButton from '../components/SubmitButton';
 import useWindowTitle from '../hooks/useWindowTitle';
 import updatePassword from '../utils/updatePassword';
 import addPassword from '../utils/addPassword';
+import useToggle from '../hooks/useToggle';
+import Login from './Login';
 
 interface IProps {
   currentUser: User | null;
@@ -25,6 +27,7 @@ interface IProps {
 
 const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
   useWindowTitle('Settings');
+  const [showLoginPopup, toggleLoginPopup] = useToggle();
   const [userName, handleUserName, setUserName] = useInput();
   const [email, handleEmail, setEmail] = useInput();
   const [newPass, handleNewPass, setNewPass] = useInput();
@@ -74,9 +77,9 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
     setSubmittingPassword(true);
     let res;
     if (emailProviderStatus) {
-      res = await updatePassword(currentUser, newPass, navigate);
+      res = await updatePassword(currentUser, newPass, toggleLoginPopup);
     } else {
-      res = await addPassword(currentUser, email, newPass, navigate);
+      res = await addPassword(currentUser, email, newPass, toggleLoginPopup);
     }
 
     setSubmittingPassword(false);
@@ -247,6 +250,15 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
           </span>
         </div>
       </div>
+
+      {showLoginPopup && (
+        <>
+          <div id='popup-background' onClick={toggleLoginPopup} aria-hidden />
+          <div className='login-popup'>
+            <Login toggleLoginPopup={toggleLoginPopup} asPopup reauthenticate />
+          </div>
+        </>
+      )}
     </div>
   );
 };

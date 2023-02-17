@@ -10,8 +10,21 @@ import useToggle from '../hooks/useToggle';
 import ResetPasswordPopup from '../components/ResetPasswordPopup';
 import SubmitButton from '../components/SubmitButton';
 import useWindowTitle from '../hooks/useWindowTitle';
+import reauthenticateEmailPass from '../utils/reauthenticateEmail&Pass';
 
-const Login = () => {
+interface IProps {
+  asPopup?: boolean;
+  reauthenticate?: boolean;
+  toggleLoginPopup?: React.MouseEventHandler<Element>;
+}
+
+const defaultProps = {
+  asPopup: false,
+  reauthenticate: false,
+  toggleLoginPopup: () => {},
+};
+
+const Login = ({ asPopup, reauthenticate, toggleLoginPopup }: IProps) => {
   useWindowTitle('Log In');
   const [emailVal, handleEmail] = useInput();
   const [passwordVal, handlePassword] = useInput();
@@ -22,7 +35,16 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const result = await loginWithEmailAndPass(emailVal, passwordVal);
+
+    setSubmitting(true);
+
+    let result;
+    if (reauthenticate) {
+      await reauthenticateEmailPass(emailVal, passwordVal, toggleLoginPopup!);
+    } else {
+      result = await loginWithEmailAndPass(emailVal, passwordVal);
+    }
+
     setSubmitting(false);
 
     if (result) navigate('/');
@@ -58,7 +80,11 @@ const Login = () => {
     <div className='login-form'>
       <form onSubmit={handleSubmit}>
         <div className='login-provider error' />
-        <ProviderButtons mode='Log in' />
+        <ProviderButtons
+          mode='Log in'
+          reauthenticate={reauthenticate}
+          toggleLoginPopup={toggleLoginPopup}
+        />
         <OrSeparator />
         <div className='login-email error' />
         <label htmlFor='email-login'>
@@ -90,7 +116,7 @@ const Login = () => {
           </button>
         </span>
         <SubmitButton submitting={submitting} text='Log In' width={100} />
-        <HaveAnAccount />
+        {!asPopup && <HaveAnAccount />}
       </form>
       {showResetPopup && (
         <ResetPasswordPopup toggleResetPopup={toggleResetPopup} />
@@ -98,5 +124,7 @@ const Login = () => {
     </div>
   );
 };
+
+Login.defaultProps = defaultProps;
 
 export default Login;

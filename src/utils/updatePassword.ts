@@ -1,6 +1,10 @@
 import { AuthError, updatePassword, User } from 'firebase/auth';
 
-export default async (user: User, newPass: string, navigate: Function) => {
+export default async (
+  user: User,
+  newPass: string,
+  toggleLoginPopup: Function
+) => {
   try {
     await updatePassword(user, newPass);
 
@@ -10,7 +14,7 @@ export default async (user: User, newPass: string, navigate: Function) => {
     // error
     switch (errorCode) {
       case 'auth/requires-recent-login':
-        navigate('/login', { state: { error: 'reauth' } });
+        toggleLoginPopup();
         break;
 
       default:

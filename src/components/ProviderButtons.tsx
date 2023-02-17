@@ -5,17 +5,41 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import GoogleIcon from '../assets/GoogleIcon';
 import loginWithProvider from '../utils/loginWithProvider';
+import reauthenticateProvider from '../utils/reauthenticateProvider';
 
-const ProviderButtons = ({ mode }: { mode: string }) => {
+interface IProps {
+  mode: string;
+  reauthenticate?: boolean;
+  toggleLoginPopup?: React.MouseEventHandler<Element>;
+}
+
+const defaultProps = {
+  reauthenticate: false,
+  toggleLoginPopup: () => {},
+};
+
+const ProviderButtons = ({
+  mode,
+  reauthenticate,
+  toggleLoginPopup,
+}: IProps) => {
   const navigate = useNavigate();
+
   const handleSignUp = (name: string) => async () => {
-    const result = await loginWithProvider(name);
+    let result;
+    if (reauthenticate) {
+      await reauthenticateProvider(name, toggleLoginPopup as Function);
+    } else {
+      result = await loginWithProvider(name);
+    }
+
     if (result) {
       navigate('/');
     } else {
       // error
     }
   };
+
   return (
     <>
       <button
@@ -35,5 +59,7 @@ const ProviderButtons = ({ mode }: { mode: string }) => {
     </>
   );
 };
+
+ProviderButtons.defaultProps = defaultProps;
 
 export default ProviderButtons;
