@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ChangeProfileIcon from './ChangeProfileIcon';
-import SubmitButton from './SubmitButton';
-import useInput from '../hooks/useInput';
-import createProfile from '../utils/createProfile';
-import getProfilePicUrl from '../utils/getProfilePicUrl';
-import uploadImage from '../utils/uploadImage';
+import ChangeProfileIcon from '../../components/ChangeProfileIcon';
+import SubmitButton from '../../components/SubmitButton';
+import useInput from '../../hooks/useInput';
+import createProfile from '../../utils/createProfile';
+import getProfilePicUrl from '../../utils/getProfilePicUrl';
+import uploadImage from '../../utils/uploadImage';
 import { IProps } from './SignupStart';
 
 const SignupContinue = ({ currentUser }: IProps) => {

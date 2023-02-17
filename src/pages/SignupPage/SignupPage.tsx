@@ -1,7 +1,7 @@
 import React from 'react';
-import SignupContinue from '../components/SignupContinue';
-import SignupStart, { IProps } from '../components/SignupStart';
-import useWindowTitle from '../hooks/useWindowTitle';
+import SignupContinue from './SignupContinue';
+import SignupStart, { IProps } from './SignupStart';
+import useWindowTitle from '../../hooks/useWindowTitle';
 
 const SignupPage = ({ currentUser }: IProps) => {
   useWindowTitle('Sign Up');

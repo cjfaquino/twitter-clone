@@ -15,7 +15,7 @@ import ProfilePage from './pages/ProfilePage/ProfilePage';
 import Search from './pages/Search';
 import FollowsPage from './pages/FollowsPage';
 import Home from './pages/Home';
-import SignupPage from './pages/SignupPage';
+import SignupPage from './pages/SignupPage/SignupPage';
 import ProfileContext from './context/ProfileContext';
 import { TweetObj } from './interfaces/TweetObj';
 

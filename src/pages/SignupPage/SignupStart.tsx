@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { User } from 'firebase/auth';
-import useInput from '../hooks/useInput';
-import HaveAnAccount from './HaveAnAccount';
-import createUser from '../utils/createUser';
-import SubmitButton from './SubmitButton';
+import useInput from '../../hooks/useInput';
+import HaveAnAccount from '../../components/HaveAnAccount';
+import createUser from '../../utils/createUser';
+import SubmitButton from '../../components/SubmitButton';
 
 export interface IProps {
   currentUser: User | null;
