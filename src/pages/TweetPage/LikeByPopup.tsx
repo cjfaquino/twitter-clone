@@ -4,11 +4,12 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useLikedByList from '../../hooks/useLikedByList';
 import ListOfUsers from '../../components/ListOfUsers';
+import Spinner from '../../components/Loaders/Spinner';
 
 const LikeByPopup = () => {
   const params = useParams();
   const navigate = useNavigate();
-  const [users] = useLikedByList(params.tweet!);
+  const [users, usersLoading] = useLikedByList(params.tweet!);
 
   const goBackToTweet = () => {
     navigate(`/${params.username}/tweet/${params.tweet}`);
@@ -27,7 +28,11 @@ const LikeByPopup = () => {
           </button>
           <h2>Liked by</h2>
         </header>
-        <ListOfUsers users={users} missingText='Be the first to like this' />
+        {usersLoading ? (
+          <Spinner />
+        ) : (
+          <ListOfUsers users={users} missingText='Be the first to like this' />
+        )}
       </div>
     </>
   );

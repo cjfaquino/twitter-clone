@@ -10,21 +10,28 @@ import { db } from '../firebase-config';
 import { UserProfile } from '../interfaces/UserProfile';
 import getUpdatedUserByID from '../utils/getUpdatedUserByID';
 
-export default (tweetID: string) => {
+export default (tweetID: string): [UserProfile[], boolean] => {
   const [users, setUsers] = useState<DocumentData[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const getUsers = async () => {
-    const likesRef = query(
-      collection(db, 'tweets', tweetID, 'likes'),
-      orderBy('likedAt', 'asc')
-    );
+    try {
+      setLoading(true);
+      const likesRef = query(
+        collection(db, 'tweets', tweetID, 'likes'),
+        orderBy('likedAt', 'asc')
+      );
 
-    const qSnap = await getDocs(likesRef);
-    const listPromise = qSnap.docs.map((usr) => getUpdatedUserByID(usr.id));
+      const qSnap = await getDocs(likesRef);
+      const listPromise = qSnap.docs.map((usr) => getUpdatedUserByID(usr.id));
 
-    const list = await Promise.all(listPromise);
+      const list = await Promise.all(listPromise);
 
-    setUsers(list);
+      setUsers(list);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -35,5 +42,5 @@ export default (tweetID: string) => {
     };
   }, [tweetID]);
 
-  return [users as UserProfile[]];
+  return [users as UserProfile[], loading];
 };
