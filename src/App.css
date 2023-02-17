@@ -54,6 +54,10 @@ button svg {
   color: grey;
 }
 
+.success {
+  color: rgb(68, 255, 47) !important;
+}
+
 .error {
   color: red;
 }
@@ -646,7 +650,6 @@ form button {
 .verify-email {
   position: absolute;
   right: 0;
-  color: grey;
 }
 
 .verify-email,
@@ -666,10 +669,6 @@ form button {
 .btn-verify-email:hover {
   background-color: transparent;
   color: grey;
-}
-
-.verify-email.verified {
-  color: rgb(68, 255, 47);
 }
 
 /* MySidebar */

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { sendEmailVerification, User } from 'firebase/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -47,6 +47,7 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
     useProviderLinkStatus(currentUser, 'password');
 
   const navigate = useNavigate();
+  const passwordRef = useRef(null);
 
   const handleSubmitUsername = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -72,6 +73,7 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
 
   const handleSubmitPassword = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    (passwordRef.current! as HTMLElement).textContent = '';
     if (newPass !== confirmNewPass || !currentUser) return;
 
     setSubmittingPassword(true);
@@ -87,6 +89,9 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
     if (res === true) {
       setNewPass('');
       setConfirmNewPass('');
+      (passwordRef.current! as HTMLElement).textContent = `Successfully ${
+        emailProviderStatus ? 'changed' : 'added'
+      } password`;
       setEmailProvider(true);
     } else {
       // error code
@@ -143,7 +148,7 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
       </form>
       <form onSubmit={handleSubmitEmail} className='email-form'>
         <h2>Contact Details</h2>
-        <span className={`verify-email ${isEmailVerified() ? 'verified' : ''}`}>
+        <span className={`verify-email ${isEmailVerified() ? 'success' : ''}`}>
           {isEmailVerified() ? (
             'verified ✓'
           ) : (
@@ -196,7 +201,8 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
           submitting={submittingPassword}
           text='Change'
           width={100}
-        />{' '}
+        />
+        <div className='success-password success' ref={passwordRef} />
       </form>
 
       <div className='link-accounts'>
