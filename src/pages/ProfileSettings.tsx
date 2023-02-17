@@ -255,7 +255,14 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
         <>
           <div id='popup-background' onClick={toggleLoginPopup} aria-hidden />
           <div className='login-popup'>
-            <Login toggleLoginPopup={toggleLoginPopup} asPopup reauthenticate />
+            <Login
+              toggleLoginPopup={toggleLoginPopup}
+              asPopup
+              reauthenticate
+              google={googleStatus}
+              github={githubStatus}
+              email={emailProviderStatus}
+            />
           </div>
         </>
       )}

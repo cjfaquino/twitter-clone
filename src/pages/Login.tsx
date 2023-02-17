@@ -13,18 +13,31 @@ import useWindowTitle from '../hooks/useWindowTitle';
 import reauthenticateEmailPass from '../utils/reauthenticateEmail&Pass';
 
 interface IProps {
+  google?: boolean | null;
+  github?: boolean | null;
+  email?: boolean | null;
   asPopup?: boolean;
   reauthenticate?: boolean;
   toggleLoginPopup?: React.MouseEventHandler<Element>;
 }
 
 const defaultProps = {
+  google: false,
+  github: false,
+  email: false,
   asPopup: false,
   reauthenticate: false,
   toggleLoginPopup: () => {},
 };
 
-const Login = ({ asPopup, reauthenticate, toggleLoginPopup }: IProps) => {
+const Login = ({
+  asPopup,
+  reauthenticate,
+  toggleLoginPopup,
+  google,
+  github,
+  email,
+}: IProps) => {
   useWindowTitle('Log In');
   const [emailVal, handleEmail] = useInput();
   const [passwordVal, handlePassword] = useInput();
@@ -52,6 +65,8 @@ const Login = ({ asPopup, reauthenticate, toggleLoginPopup }: IProps) => {
       // error
     }
   };
+
+  const showSeparator = (email && github) || (email && google);
 
   useEffect(() => {
     if (location.state) {
@@ -84,39 +99,45 @@ const Login = ({ asPopup, reauthenticate, toggleLoginPopup }: IProps) => {
           mode='Log in'
           reauthenticate={reauthenticate}
           toggleLoginPopup={toggleLoginPopup}
+          google={google}
+          github={github}
         />
-        <OrSeparator />
-        <div className='login-email error' />
-        <label htmlFor='email-login'>
-          Email
-          <input
-            type='email'
-            id='email-login'
-            value={emailVal}
-            onChange={handleEmail}
-          />
-        </label>
-        <label htmlFor='password-login'>
-          Password
-          <input
-            type='password'
-            id='password-login'
-            value={passwordVal}
-            onChange={handlePassword}
-          />
-        </label>
-        <span className='forgot-password'>
-          Forgot your password?
-          <button
-            type='button'
-            className='btn-reset-pass'
-            onClick={toggleResetPopup}
-          >
-            Reset
-          </button>
-        </span>
-        <SubmitButton submitting={submitting} text='Log In' width={100} />
-        {!asPopup && <HaveAnAccount />}
+        {showSeparator && <OrSeparator />}
+        {email && (
+          <>
+            <div className='login-email error' />
+            <label htmlFor='email-login'>
+              Email
+              <input
+                type='email'
+                id='email-login'
+                value={emailVal}
+                onChange={handleEmail}
+              />
+            </label>
+            <label htmlFor='password-login'>
+              Password
+              <input
+                type='password'
+                id='password-login'
+                value={passwordVal}
+                onChange={handlePassword}
+              />
+            </label>
+            <span className='forgot-password'>
+              Forgot your password?
+              <button
+                type='button'
+                className='btn-reset-pass'
+                onClick={toggleResetPopup}
+              >
+                Reset
+              </button>
+            </span>
+            <SubmitButton submitting={submitting} text='Log In' width={100} />
+            {!asPopup && <HaveAnAccount />}
+          </>
+        )}
       </form>
       {showResetPopup && (
         <ResetPasswordPopup toggleResetPopup={toggleResetPopup} />

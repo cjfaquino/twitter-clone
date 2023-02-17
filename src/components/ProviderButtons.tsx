@@ -8,17 +8,23 @@ import loginWithProvider from '../utils/loginWithProvider';
 import reauthenticateProvider from '../utils/reauthenticateProvider';
 
 interface IProps {
+  google?: boolean | null;
+  github?: boolean | null;
   mode: string;
   reauthenticate?: boolean;
   toggleLoginPopup?: React.MouseEventHandler<Element>;
 }
 
 const defaultProps = {
+  google: false,
+  github: false,
   reauthenticate: false,
   toggleLoginPopup: () => {},
 };
 
 const ProviderButtons = ({
+  google,
+  github,
   mode,
   reauthenticate,
   toggleLoginPopup,
@@ -42,20 +48,24 @@ const ProviderButtons = ({
 
   return (
     <>
-      <button
-        type='button'
-        onClick={handleSignUp('google.com')}
-        className='btn-with-provider'
-      >
-        <GoogleIcon /> {mode} with Google
-      </button>
-      <button
-        type='button'
-        onClick={handleSignUp('github.com')}
-        className='btn-with-provider'
-      >
-        <FontAwesomeIcon icon={faGithub as IconProp} /> {mode} with Github
-      </button>
+      {google && (
+        <button
+          type='button'
+          onClick={handleSignUp('google.com')}
+          className='btn-with-provider'
+        >
+          <GoogleIcon /> {mode} with Google
+        </button>
+      )}
+      {github && (
+        <button
+          type='button'
+          onClick={handleSignUp('github.com')}
+          className='btn-with-provider'
+        >
+          <FontAwesomeIcon icon={faGithub as IconProp} /> {mode} with Github
+        </button>
+      )}
     </>
   );
 };

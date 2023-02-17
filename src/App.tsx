@@ -60,7 +60,7 @@ const App = () => {
               path='/signup'
               element={<SignupPage currentUser={currentUser} />}
             />
-            <Route path='/login' element={<Login />} />
+            <Route path='/login' element={<Login google github email />} />
             <Route
               path='/:username/*'
               element={
