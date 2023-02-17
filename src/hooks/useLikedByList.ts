@@ -16,7 +16,7 @@ export default (tweetID: string) => {
   const getUsers = async () => {
     const likesRef = query(
       collection(db, 'tweets', tweetID, 'likes'),
-      orderBy('likedAt', 'desc')
+      orderBy('likedAt', 'asc')
     );
 
     const qSnap = await getDocs(likesRef);
