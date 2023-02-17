@@ -94,6 +94,7 @@ const Login = ({
   return (
     <div className='login-form'>
       <form onSubmit={handleSubmit}>
+        {reauthenticate && <h2>Re-authenticate before continuing</h2>}
         <div className='login-provider error' />
         <ProviderButtons
           mode='Log in'
