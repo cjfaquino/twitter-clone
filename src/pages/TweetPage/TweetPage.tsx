@@ -1,15 +1,15 @@
 import React from 'react';
 import { Route, Routes, useParams } from 'react-router-dom';
-import Replies from '../components/Replies';
-import MainTweet from '../components/MainTweet';
-import useOneTweet from '../hooks/useOneTweet';
-import GoBackHeader from '../components/GoBackHeader';
-import TweetItem from '../components/TweetItem';
-import useReplies from '../hooks/useReplies';
-import Spinner from '../components/Loaders/Spinner';
-import { TweetObj } from '../interfaces/TweetObj';
-import useWindowTitle from '../hooks/useWindowTitle';
-import LikeByPopup from '../components/LikeByPopup';
+import Replies from './Replies';
+import MainTweet from './MainTweet';
+import useOneTweet from '../../hooks/useOneTweet';
+import GoBackHeader from '../../components/GoBackHeader';
+import TweetItem from '../../components/TweetItem';
+import useReplies from '../../hooks/useReplies';
+import Spinner from '../../components/Loaders/Spinner';
+import { TweetObj } from '../../interfaces/TweetObj';
+import useWindowTitle from '../../hooks/useWindowTitle';
+import LikeByPopup from './LikeByPopup';
 
 const TweetPage = () => {
   const params = useParams();

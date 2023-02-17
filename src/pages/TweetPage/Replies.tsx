@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import saveTweet from '../utils/saveTweet';
-import Tweet from '../utils/Tweet';
-import { TweetObj } from '../interfaces/TweetObj';
-import getProfilePicUrl from '../utils/getProfilePicUrl';
-import isUserSignedIn from '../utils/isUserSignedIn';
-import ListOfTweets from './ListOfTweets';
-import SubmitButton from './SubmitButton';
+import saveTweet from '../../utils/saveTweet';
+import Tweet from '../../utils/Tweet';
+import { TweetObj } from '../../interfaces/TweetObj';
+import getProfilePicUrl from '../../utils/getProfilePicUrl';
+import isUserSignedIn from '../../utils/isUserSignedIn';
+import ListOfTweets from '../../components/ListOfTweets';
+import SubmitButton from '../../components/SubmitButton';
 
 interface IProps {
   tweetObj: TweetObj;

@@ -6,23 +6,23 @@ import {
   faRetweet,
 } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import deleteTweet from '../utils/deleteTweet';
-import useToggle from '../hooks/useToggle';
-import getTimeString from '../utils/getTimeString';
-import updateView from '../utils/updateView';
-import checkMatchingUser from '../utils/checkMatchingUser';
-import getUserUid from '../utils/getUserUid';
-import likeTweet from '../utils/likeTweet';
-import undoLike from '../utils/undoLike';
-import checkAlreadyLiked from '../utils/checkAlreadyLiked';
-import isUserSignedIn from '../utils/isUserSignedIn';
-import OptionsPopup from './OptionsPopup';
-import FormattedText from './FormattedText';
-import useFindByUsername from '../hooks/useFindByUsername';
-import { TweetObj } from '../interfaces/TweetObj';
-import checkUserAlreadyReplied from '../utils/checkUserAlreadyReplied';
-import ProfileContext from '../context/ProfileContext';
-import fancyNumbers from '../utils/fancyNumbers';
+import deleteTweet from '../../utils/deleteTweet';
+import useToggle from '../../hooks/useToggle';
+import getTimeString from '../../utils/getTimeString';
+import updateView from '../../utils/updateView';
+import checkMatchingUser from '../../utils/checkMatchingUser';
+import getUserUid from '../../utils/getUserUid';
+import likeTweet from '../../utils/likeTweet';
+import undoLike from '../../utils/undoLike';
+import checkAlreadyLiked from '../../utils/checkAlreadyLiked';
+import isUserSignedIn from '../../utils/isUserSignedIn';
+import OptionsPopup from '../../components/OptionsPopup';
+import FormattedText from '../../components/FormattedText';
+import useFindByUsername from '../../hooks/useFindByUsername';
+import { TweetObj } from '../../interfaces/TweetObj';
+import checkUserAlreadyReplied from '../../utils/checkUserAlreadyReplied';
+import ProfileContext from '../../context/ProfileContext';
+import fancyNumbers from '../../utils/fancyNumbers';
 
 interface IProps {
   tweetObj: TweetObj;

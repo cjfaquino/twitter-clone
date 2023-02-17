@@ -6,7 +6,7 @@ import LogInBanner from './components/LogInBanner';
 import MyNav from './components/MyNav';
 import MySidebar from './components/MySidebar';
 import Explore from './pages/Explore';
-import TweetPage from './pages/TweetPage';
+import TweetPage from './pages/TweetPage/TweetPage';
 import TweetPopup from './components/TweetPopup';
 import useToggle from './hooks/useToggle';
 import ProfileSettings from './pages/ProfileSettings';

@@ -2,8 +2,8 @@ import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import useLikedByList from '../hooks/useLikedByList';
-import ListOfUsers from './ListOfUsers';
+import useLikedByList from '../../hooks/useLikedByList';
+import ListOfUsers from '../../components/ListOfUsers';
 
 const LikeByPopup = () => {
   const params = useParams();
