@@ -1,8 +1,8 @@
 import { AuthError, signInWithPopup } from 'firebase/auth';
-import { auth } from '../firebase-config';
-import firebaseErrorMessage from './firebaseErrorMessages';
+import { auth } from '../../firebase-config';
+import firebaseErrorMessage from '../firebaseErrorMessages';
 import getProvider from './getProvider';
-import setErrorMessage from './setErrorMessage';
+import setErrorMessage from '../setErrorMessage';
 
 export default async function loginWithProvider(providerName: string) {
   try {

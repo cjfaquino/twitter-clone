@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import GoogleIcon from '../assets/GoogleIcon';
-import loginWithProvider from '../utils/loginWithProvider';
-import reauthenticateProvider from '../utils/reauthenticateProvider';
+import loginWithProvider from '../utils/auth/loginWithProvider';
+import reauthenticateProvider from '../utils/auth/reauthenticateProvider';
 
 interface IProps {
   google?: boolean | null;

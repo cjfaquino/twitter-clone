@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import useInput from '../hooks/useInput';
-import loginWithEmailAndPass from '../utils/loginWithEmail&Pass';
+import loginWithEmailAndPass from '../utils/auth/loginWithEmail&Pass';
 import setErrorMessage from '../utils/setErrorMessage.js';
 import OrSeparator from '../components/OrSeparator';
 import HaveAnAccount from '../components/HaveAnAccount';
@@ -10,7 +10,7 @@ import useToggle from '../hooks/useToggle';
 import ResetPasswordPopup from '../components/ResetPasswordPopup';
 import SubmitButton from '../components/SubmitButton';
 import useWindowTitle from '../hooks/useWindowTitle';
-import reauthenticateEmailPass from '../utils/reauthenticateEmail&Pass';
+import reauthenticateEmailPass from '../utils/auth/reauthenticateEmail&Pass';
 import InputPasswordConfirm from '../components/InputPasswordConfirm';
 import InputEmail from '../components/InputEmail';
 

@@ -3,9 +3,9 @@ import {
   EmailAuthProvider,
   reauthenticateWithCredential,
 } from 'firebase/auth';
-import { auth } from '../firebase-config';
-import firebaseErrorMessage from './firebaseErrorMessages';
-import setErrorMessage from './setErrorMessage';
+import { auth } from '../../firebase-config';
+import firebaseErrorMessage from '../firebaseErrorMessages';
+import setErrorMessage from '../setErrorMessage';
 
 export default async (
   email: string,

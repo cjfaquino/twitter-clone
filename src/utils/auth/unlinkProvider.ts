@@ -1,8 +1,8 @@
 import { unlink } from 'firebase/auth';
-import eventProvider from '../events/eventProvider';
-import { auth } from '../firebase-config';
-import firebaseErrorMessage from './firebaseErrorMessages';
-import setErrorMessage from './setErrorMessage';
+import eventProvider from '../../events/eventProvider';
+import { auth } from '../../firebase-config';
+import firebaseErrorMessage from '../firebaseErrorMessages';
+import setErrorMessage from '../setErrorMessage';
 
 export default function unlinkProvider(providerName: string) {
   unlink(auth.currentUser!, providerName)

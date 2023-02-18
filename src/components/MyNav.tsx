@@ -8,7 +8,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { User } from 'firebase/auth';
-import signOutUser from '../utils/signOutUser';
+import signOutUser from '../utils/auth/signOutUser';
 import useToggle from '../hooks/useToggle';
 import ThreeDots from './ThreeDots';
 import { UserProfile } from '../interfaces/UserProfile';

@@ -3,9 +3,9 @@ import React, { useRef, useState } from 'react';
 import InputPasswordConfirm from '../../components/InputPasswordConfirm';
 import SubmitButton from '../../components/SubmitButton';
 import useInput from '../../hooks/useInput';
-import addPassword from '../../utils/addPassword';
+import addPassword from '../../utils/auth/addPassword';
 import setErrorMessage from '../../utils/setErrorMessage';
-import updatePassword from '../../utils/updatePassword';
+import updatePassword from '../../utils/auth/updatePassword';
 import validatePassword from '../../utils/validatePassword';
 
 interface IProps {

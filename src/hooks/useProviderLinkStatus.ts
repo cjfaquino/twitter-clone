@@ -1,9 +1,9 @@
 import { User } from 'firebase/auth';
 import { useEffect, useState } from 'react';
-import checkOnlyLinkedProviders from '../utils/checkOnlyLinkedProvider';
-import linkWithProvider from '../utils/linkWithProvider';
+import checkOnlyLinkedProviders from '../utils/auth/checkOnlyLinkedProvider';
+import linkWithProvider from '../utils/auth/linkWithProvider';
 import setErrorMessage from '../utils/setErrorMessage';
-import unlinkProvider from '../utils/unlinkProvider';
+import unlinkProvider from '../utils/auth/unlinkProvider';
 
 export default function useProviderLinkStatus(
   currentUser: User | null,

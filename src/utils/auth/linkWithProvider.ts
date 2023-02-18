@@ -4,10 +4,10 @@ import {
   linkWithPopup,
   AuthError,
 } from 'firebase/auth';
-import eventProvider from '../events/eventProvider';
-import { auth } from '../firebase-config';
-import firebaseErrorMessage from './firebaseErrorMessages';
-import setErrorMessage from './setErrorMessage';
+import eventProvider from '../../events/eventProvider';
+import { auth } from '../../firebase-config';
+import firebaseErrorMessage from '../firebaseErrorMessages';
+import setErrorMessage from '../setErrorMessage';
 
 export default async function linkWithProvider(providerName: string) {
   try {
