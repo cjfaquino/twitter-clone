@@ -1,6 +1,6 @@
 import { doc, increment, updateDoc } from 'firebase/firestore';
 import { TweetObj } from '../interfaces/TweetObj';
-import fancyNumbers from './fancyNumbers';
+import fancyNumbers from './formatters/fancyNumbers';
 import { db } from '../firebase-config';
 
 const updateView = async (tweetObj: TweetObj) => {

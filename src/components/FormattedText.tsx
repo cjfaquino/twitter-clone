@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
 import { createSearchParams, Link } from 'react-router-dom';
-import textToCleanedTextArray from '../utils/textToCleanedTextArray';
+import textToCleanedTextArray from '../utils/formatters/textToCleanedTextArray';
 
 interface IArgs {
   text: string;

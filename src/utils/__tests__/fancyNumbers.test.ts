@@ -1,4 +1,4 @@
-import fancyNumbers from '../fancyNumbers';
+import fancyNumbers from '../formatters/fancyNumbers';
 
 describe('fancyNumbers a number formatter', () => {
   it('should return an empty string if less than one', () => {

@@ -1,5 +1,5 @@
 import { serverTimestamp, Timestamp } from 'firebase/firestore';
-import getTimeString from '../getTimeString';
+import getTimeString from '../formatters/getTimeString';
 
 describe('getTimeString function', () => {
   const mockTimestamp = (msec: number) => {

@@ -3,8 +3,8 @@ import getProfilePicUrl from '../utils/user/getProfilePicUrl';
 import getDisplayName from '../utils/user/getDisplayName';
 import getUserName from '../utils/user/getUserName';
 import getUserUid from '../utils/user/getUserUid';
-import textToCleanedTextArray from '../utils/textToCleanedTextArray';
-import getTagsFromTextArray from '../utils/getTagsFromTextArray';
+import textToCleanedTextArray from '../utils/formatters/textToCleanedTextArray';
+import getTagsFromTextArray from '../utils/formatters/getTagsFromTextArray';
 // eslint-disable-next-line import/no-cycle
 import { TweetObj } from '../interfaces/TweetObj';
 

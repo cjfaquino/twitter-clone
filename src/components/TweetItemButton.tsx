@@ -2,7 +2,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import fancyNumbers from '../utils/fancyNumbers';
+import fancyNumbers from '../utils/formatters/fancyNumbers';
 
 interface IProps {
   className: string;

@@ -8,7 +8,7 @@ import {
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import deleteTweet from '../../utils/tweets/deleteTweet';
 import useToggle from '../../hooks/useToggle';
-import getTimeString from '../../utils/getTimeString';
+import getTimeString from '../../utils/formatters/getTimeString';
 import updateView from '../../utils/updateView';
 import checkMatchingUser from '../../utils/user/checkMatchingUser';
 import getUserUid from '../../utils/user/getUserUid';
@@ -22,7 +22,7 @@ import useFindByUsername from '../../hooks/useFindByUsername';
 import { TweetObj } from '../../interfaces/TweetObj';
 import checkUserAlreadyReplied from '../../utils/tweets/checkUserAlreadyReplied';
 import ProfileContext from '../../context/ProfileContext';
-import fancyNumbers from '../../utils/fancyNumbers';
+import fancyNumbers from '../../utils/formatters/fancyNumbers';
 
 interface IProps {
   tweetObj: TweetObj;

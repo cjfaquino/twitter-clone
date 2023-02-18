@@ -9,7 +9,7 @@ import {
 import deleteTweet from '../utils/tweets/deleteTweet';
 import OptionsPopup from './OptionsPopup';
 import useToggle from '../hooks/useToggle';
-import getTimeString from '../utils/getTimeString';
+import getTimeString from '../utils/formatters/getTimeString';
 import checkMatchingUser from '../utils/user/checkMatchingUser';
 import deleteTweetFromDOM from '../utils/tweets/deleteTweetFromDOM';
 import useReplies from '../hooks/useReplies';
