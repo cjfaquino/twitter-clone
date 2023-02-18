@@ -1,6 +1,7 @@
 import { sendEmailVerification, User } from 'firebase/auth';
 import React, { ChangeEventHandler, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import InputEmail from '../../components/InputEmail';
 import SubmitButton from '../../components/SubmitButton';
 import isEmailVerified from '../../utils/isEmailVerified';
 import updateUserEmail from '../../utils/updateEmail';
@@ -44,16 +45,8 @@ const VerifyEmailForm = ({ email, handleEmail, currentUser }: IProps) => {
           </button>
         )}
       </span>
-      <label htmlFor='email'>
-        Email
-        <input
-          type='email'
-          id='email'
-          value={email}
-          onChange={handleEmail}
-          required
-        />
-      </label>
+
+      <InputEmail email={email} handleEmail={handleEmail} />
 
       <SubmitButton submitting={submittingEmail} text='Change' width={100} />
     </form>

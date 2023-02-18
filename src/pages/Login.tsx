@@ -12,6 +12,7 @@ import SubmitButton from '../components/SubmitButton';
 import useWindowTitle from '../hooks/useWindowTitle';
 import reauthenticateEmailPass from '../utils/reauthenticateEmail&Pass';
 import InputPasswordConfirm from '../components/InputPasswordConfirm';
+import InputEmail from '../components/InputEmail';
 
 interface IProps {
   google?: boolean | null;
@@ -108,15 +109,9 @@ const Login = ({
         {email && (
           <>
             <div className='login-email error' />
-            <label htmlFor='email-login'>
-              Email
-              <input
-                type='email'
-                id='email-login'
-                value={emailVal}
-                onChange={handleEmail}
-              />
-            </label>
+
+            <InputEmail email={emailVal} handleEmail={handleEmail} />
+
             <InputPasswordConfirm
               password={passwordVal}
               handlePassword={handlePassword}

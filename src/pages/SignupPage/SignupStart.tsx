@@ -7,6 +7,7 @@ import SubmitButton from '../../components/SubmitButton';
 import validatePassword from '../../utils/validatePassword';
 import setErrorMessage from '../../utils/setErrorMessage';
 import InputPasswordConfirm from '../../components/InputPasswordConfirm';
+import InputEmail from '../../components/InputEmail';
 
 export interface IProps {
   currentUser: User | null;
@@ -54,17 +55,13 @@ const SignupStart = ({ currentUser }: IProps) => {
   return (
     <form onSubmit={handleSubmit} className='sign-up-form'>
       <h2>Create your account</h2>
-      <label htmlFor='email'>
-        Email
-        <input
-          type='email'
-          id='email'
-          value={email}
-          onChange={handleEmail}
-          disabled={!!currentUser}
-          required
-        />
-      </label>
+
+      <InputEmail
+        email={email}
+        handleEmail={handleEmail}
+        disabled={!!currentUser}
+      />
+
       {!currentUser && (
         <>
           <InputPasswordConfirm
