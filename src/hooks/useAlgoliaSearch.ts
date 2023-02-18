@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { indexTweets, indexTweetsTags, indexUsers } from '../algolia-config';
-import getUpdatedTweetByID from '../utils/getUpdatedTweetByID';
+import getUpdatedTweetByID from '../utils/tweets/getUpdatedTweetByID';
 
 export default function useAlgoliaSearch(query: string, filter: string) {
   const [tweets, setTweets] = useState<any>([]);

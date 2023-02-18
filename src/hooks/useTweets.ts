@@ -8,7 +8,7 @@ import {
   DocumentData,
 } from 'firebase/firestore';
 import { db } from '../firebase-config';
-import getUpdatedTweetByID from '../utils/getUpdatedTweetByID';
+import getUpdatedTweetByID from '../utils/tweets/getUpdatedTweetByID';
 import undoLike from '../utils/likes/undoLike';
 import { TweetObj } from '../interfaces/TweetObj';
 

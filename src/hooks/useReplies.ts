@@ -7,7 +7,7 @@ import {
   DocumentData,
 } from 'firebase/firestore';
 import { db } from '../firebase-config';
-import getUpdatedTweetByID from '../utils/getUpdatedTweetByID';
+import getUpdatedTweetByID from '../utils/tweets/getUpdatedTweetByID';
 
 export default function useReplies(
   tweetID: string

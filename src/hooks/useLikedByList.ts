@@ -8,7 +8,7 @@ import {
 import { useEffect, useState } from 'react';
 import { db } from '../firebase-config';
 import { UserProfile } from '../interfaces/UserProfile';
-import getUpdatedUserByID from '../utils/getUpdatedUserByID';
+import getUpdatedUserByID from '../utils/user/getUpdatedUserByID';
 
 export default (tweetID: string): [UserProfile[], boolean] => {
   const [users, setUsers] = useState<DocumentData[]>([]);

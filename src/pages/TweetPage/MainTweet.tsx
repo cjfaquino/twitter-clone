@@ -9,7 +9,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import deleteTweet from '../../utils/tweets/deleteTweet';
 import useToggle from '../../hooks/useToggle';
 import getTimeString from '../../utils/formatters/getTimeString';
-import updateView from '../../utils/updateView';
+import updateView from '../../utils/tweets/updateView';
 import checkMatchingUser from '../../utils/user/checkMatchingUser';
 import getUserUid from '../../utils/user/getUserUid';
 import likeTweet from '../../utils/likes/likeTweet';

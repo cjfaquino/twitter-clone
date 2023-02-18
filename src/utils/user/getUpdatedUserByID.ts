@@ -1,5 +1,5 @@
 import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../firebase-config';
+import { db } from '../../firebase-config';
 
 export default async (userID: string) => {
   const noProfile = { id: 'no-id', doneLoading: true };

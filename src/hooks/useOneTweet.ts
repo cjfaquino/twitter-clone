@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { doc, DocumentData, getDoc } from 'firebase/firestore';
 import { db } from '../firebase-config';
-import getUpdatedTweetByID from '../utils/getUpdatedTweetByID';
+import getUpdatedTweetByID from '../utils/tweets/getUpdatedTweetByID';
 import { TweetObj } from '../interfaces/TweetObj';
 
 export default function useOneTweet(
