@@ -1,6 +1,6 @@
 import UserName from '../classes/UserName';
 import { CustomError } from '../interfaces/CustomError';
-import checkUserNameAlreadyExists from './checkUsernameAlreadyExists';
+import checkUserNameAlreadyExists from './user/checkUsernameAlreadyExists';
 
 const validateUsername = async (username: string): Promise<CustomError> => {
   const regex = /^[a-zA-Z][a-zA-Z0-9_]+$/;

@@ -3,8 +3,8 @@ import React, { ChangeEventHandler, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import InputEmail from '../../components/InputEmail';
 import SubmitButton from '../../components/SubmitButton';
-import isEmailVerified from '../../utils/isEmailVerified';
-import updateUserEmail from '../../utils/updateEmail';
+import isEmailVerified from '../../utils/user/isEmailVerified';
+import updateUserEmail from '../../utils/user/updateEmail';
 
 interface IProps {
   email: string;

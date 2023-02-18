@@ -6,8 +6,8 @@ import useFollowsList from '../hooks/useFollowsList';
 import useTweets from '../hooks/useTweets';
 import useWindowTitle from '../hooks/useWindowTitle';
 import findDuplicatesByField from '../utils/findDuplicatesByField';
-import getUserUid from '../utils/getUserUid';
-import isUserSignedIn from '../utils/isUserSignedIn';
+import getUserUid from '../utils/user/getUserUid';
+import isUserSignedIn from '../utils/user/isUserSignedIn';
 
 const Home = () => {
   useWindowTitle('Home');

@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import isUserSignedIn from '../utils/isUserSignedIn';
+import isUserSignedIn from '../utils/user/isUserSignedIn';
 import followUser from '../utils/follows/followUser';
 import unfollowUser from '../utils/follows/unfollowUser';
 import checkAlreadyFollowing from '../utils/follows/checkAlreadyFollowing';
 import eventFollow from '../events/eventFollow';
 import { UserProfile } from '../interfaces/UserProfile';
-import getUserUid from '../utils/getUserUid';
+import getUserUid from '../utils/user/getUserUid';
 
 export default function useFollowStatus(
   userProfile: UserProfile

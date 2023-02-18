@@ -3,7 +3,7 @@ import InputUsername from '../../components/InputUsername';
 import SubmitButton from '../../components/SubmitButton';
 import { UserProfile } from '../../interfaces/UserProfile';
 import setErrorMessage from '../../utils/setErrorMessage';
-import updateProfile from '../../utils/updateProfile';
+import updateProfile from '../../utils/user/updateProfile';
 import validateUsername from '../../utils/validateUsername';
 
 interface IProps {

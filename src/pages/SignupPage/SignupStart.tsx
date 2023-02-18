@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { User } from 'firebase/auth';
 import useInput from '../../hooks/useInput';
 import HaveAnAccount from '../../components/HaveAnAccount';
-import createUser from '../../utils/createUser';
+import createUser from '../../utils/user/createUser';
 import SubmitButton from '../../components/SubmitButton';
 import validatePassword from '../../utils/validatePassword';
 import setErrorMessage from '../../utils/setErrorMessage';

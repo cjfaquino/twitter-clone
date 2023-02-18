@@ -1,5 +1,5 @@
 import { updateProfile } from 'firebase/auth';
-import { auth } from '../firebase-config';
+import { auth } from '../../firebase-config';
 import getDisplayName from './getDisplayName';
 import getProfilePicUrl from './getProfilePicUrl';
 

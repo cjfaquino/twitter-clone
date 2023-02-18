@@ -1,5 +1,5 @@
-import { db } from '../firebase-config';
 import { collection, query, getDocs, where } from 'firebase/firestore';
+import { db } from '../../firebase-config';
 
 const checkUserNameAlreadyExists = async (name: string): Promise<boolean> => {
   const queryRef = query(

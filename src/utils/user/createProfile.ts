@@ -1,10 +1,10 @@
 import { doc, setDoc } from 'firebase/firestore';
 import { User } from 'firebase/auth';
-import { db } from '../firebase-config';
+import { db } from '../../firebase-config';
 import getProfilePicUrl from './getProfilePicUrl';
 import updateDisplayNameAndPhoto from './updateDisplayNameAndPhoto';
-import eventProfileEdit from '../events/eventProfileEdit';
-import { indexUsers } from '../algolia-config';
+import eventProfileEdit from '../../events/eventProfileEdit';
+import { indexUsers } from '../../algolia-config';
 
 interface CreateProfile {
   user: User;

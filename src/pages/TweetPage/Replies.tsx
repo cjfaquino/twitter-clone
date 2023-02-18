@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import saveTweet from '../../utils/tweets/saveTweet';
 import Tweet from '../../classes/Tweet';
 import { TweetObj } from '../../interfaces/TweetObj';
-import getProfilePicUrl from '../../utils/getProfilePicUrl';
-import isUserSignedIn from '../../utils/isUserSignedIn';
+import getProfilePicUrl from '../../utils/user/getProfilePicUrl';
+import isUserSignedIn from '../../utils/user/isUserSignedIn';
 import ListOfTweets from '../../components/ListOfTweets';
 import SubmitButton from '../../components/SubmitButton';
 

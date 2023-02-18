@@ -1,8 +1,8 @@
 import { doc, updateDoc } from 'firebase/firestore';
-import { auth, db } from '../firebase-config';
-import eventProfileEdit from '../events/eventProfileEdit';
+import { auth, db } from '../../firebase-config';
+import eventProfileEdit from '../../events/eventProfileEdit';
 import getProfilePicUrl from './getProfilePicUrl';
-import { UserProfile } from '../interfaces/UserProfile';
+import { UserProfile } from '../../interfaces/UserProfile';
 import updateDisplayNameAndPhoto from './updateDisplayNameAndPhoto';
 
 interface IArgs {

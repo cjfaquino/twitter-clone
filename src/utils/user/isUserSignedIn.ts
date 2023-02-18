@@ -1,4 +1,4 @@
-import { auth } from '../firebase-config';
+import { auth } from '../../firebase-config';
 
 // Returns true if a user is signed-in.
 

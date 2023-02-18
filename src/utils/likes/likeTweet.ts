@@ -8,7 +8,7 @@ import {
 import eventProfileEdit from '../../events/eventProfileEdit';
 import { db } from '../../firebase-config';
 import { TweetObj } from '../../interfaces/TweetObj';
-import getUserUid from '../getUserUid';
+import getUserUid from '../user/getUserUid';
 
 const likeTweet = async (tweetObj: TweetObj) => {
   // add tweet to like in user profile

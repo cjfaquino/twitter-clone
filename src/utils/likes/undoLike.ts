@@ -1,7 +1,7 @@
 import { deleteDoc, doc, increment, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase-config';
 import eventProfileEdit from '../../events/eventProfileEdit';
-import getUserUid from '../getUserUid';
+import getUserUid from '../user/getUserUid';
 
 const undoLike = async (
   tweetID: string,

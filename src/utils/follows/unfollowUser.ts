@@ -1,5 +1,5 @@
 import { deleteDoc, doc, increment, updateDoc } from 'firebase/firestore';
-import getUserUid from '../getUserUid';
+import getUserUid from '../user/getUserUid';
 import { db } from '../../firebase-config';
 import eventProfileEdit from '../../events/eventProfileEdit';
 import { UserProfile } from '../../interfaces/UserProfile';

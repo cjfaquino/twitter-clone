@@ -1,6 +1,6 @@
 import checkDocAlreadyExists from '../checkDocAlreadyExists';
-import getUserUid from '../getUserUid';
-import isUserSignedIn from '../isUserSignedIn';
+import getUserUid from '../user/getUserUid';
+import isUserSignedIn from '../user/isUserSignedIn';
 
 const checkAlreadyFollowing = async (targetID: string) => {
   if (isUserSignedIn()) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import useFollowStatus from '../hooks/useFollowStatus';
-import checkMatchingUser from '../utils/checkMatchingUser';
+import checkMatchingUser from '../utils/user/checkMatchingUser';
 import { UserProfile } from '../interfaces/UserProfile';
 
 interface IProps {

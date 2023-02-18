@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserMinus, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import ThreeDots from './ThreeDots';
-import checkMatchingUser from '../utils/checkMatchingUser';
-import isUserSignedIn from '../utils/isUserSignedIn';
+import checkMatchingUser from '../utils/user/checkMatchingUser';
+import isUserSignedIn from '../utils/user/isUserSignedIn';
 import useFollowStatus from '../hooks/useFollowStatus';
 import { TargetUser } from '../interfaces/TargetUser';
 

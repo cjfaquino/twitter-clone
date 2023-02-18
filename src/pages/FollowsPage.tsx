@@ -4,7 +4,7 @@ import GoBackHeader from '../components/GoBackHeader';
 import useFindByUsername from '../hooks/useFindByUsername';
 import useFollowsList from '../hooks/useFollowsList';
 import ListOfUsers from '../components/ListOfUsers';
-import isUserSignedIn from '../utils/isUserSignedIn';
+import isUserSignedIn from '../utils/user/isUserSignedIn';
 import useWindowTitle from '../hooks/useWindowTitle';
 
 const FollowsPage = () => {

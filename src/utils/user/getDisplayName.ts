@@ -1,4 +1,4 @@
-import { auth } from '../firebase-config';
+import { auth } from '../../firebase-config';
 
 // Returns the signed-in user's display name.
 

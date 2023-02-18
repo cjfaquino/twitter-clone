@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
-import isUserSignedIn from '../utils/isUserSignedIn';
+import isUserSignedIn from '../utils/user/isUserSignedIn';
 import saveTweet from '../utils/tweets/saveTweet';
 import Tweet from '../classes/Tweet';
-import getProfilePicUrl from '../utils/getProfilePicUrl';
+import getProfilePicUrl from '../utils/user/getProfilePicUrl';
 import SubmitButton from './SubmitButton';
 import { TweetObj } from '../interfaces/TweetObj';
 

@@ -1,8 +1,8 @@
 import { serverTimestamp, Timestamp } from 'firebase/firestore';
-import getProfilePicUrl from '../utils/getProfilePicUrl';
-import getDisplayName from '../utils/getDisplayName';
-import getUserName from '../utils/getUserName';
-import getUserUid from '../utils/getUserUid';
+import getProfilePicUrl from '../utils/user/getProfilePicUrl';
+import getDisplayName from '../utils/user/getDisplayName';
+import getUserName from '../utils/user/getUserName';
+import getUserUid from '../utils/user/getUserUid';
 import textToCleanedTextArray from '../utils/textToCleanedTextArray';
 import getTagsFromTextArray from '../utils/getTagsFromTextArray';
 // eslint-disable-next-line import/no-cycle

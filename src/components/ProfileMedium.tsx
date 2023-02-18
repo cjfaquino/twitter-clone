@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import useFollowStatus from '../hooks/useFollowStatus';
 import { UserProfile } from '../interfaces/UserProfile';
-import checkMatchingUser from '../utils/checkMatchingUser';
+import checkMatchingUser from '../utils/user/checkMatchingUser';
 import FormattedText from './FormattedText';
 
 interface IProps {

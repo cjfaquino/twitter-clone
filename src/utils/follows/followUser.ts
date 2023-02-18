@@ -1,7 +1,7 @@
 import { doc, increment, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase-config';
 import eventProfileEdit from '../../events/eventProfileEdit';
-import getUserUid from '../getUserUid';
+import getUserUid from '../user/getUserUid';
 import { UserProfile } from '../../interfaces/UserProfile';
 import followsConverter from './followsConverter';
 
