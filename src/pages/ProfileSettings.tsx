@@ -19,6 +19,7 @@ import updatePassword from '../utils/updatePassword';
 import addPassword from '../utils/addPassword';
 import useToggle from '../hooks/useToggle';
 import Login from './Login';
+import setErrorMessage from '../utils/setErrorMessage';
 
 interface IProps {
   currentUser: User | null;
@@ -51,12 +52,14 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
 
   const handleSubmitUsername = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!(await validateUsername(userName, 2, 20))) {
-      return;
-    }
-
     setSubmittingUsername(true);
-    await updateProfile({ userProfile, userName });
+    const res = await validateUsername(userName);
+
+    if (res.validity) {
+      await updateProfile({ userProfile, userName });
+    } else {
+      setErrorMessage('.verify-username', res.errorMessage);
+    }
     setSubmittingUsername(false);
   };
 
@@ -135,7 +138,7 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
             id='userName'
             value={userName}
             onChange={handleUserName}
-            minLength={2}
+            minLength={4}
             maxLength={15}
             required
           />

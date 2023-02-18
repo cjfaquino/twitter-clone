@@ -1,28 +1,34 @@
-import setErrorMessage from './setErrorMessage';
+import { CustomError } from '../interfaces/CustomError';
 import checkUserNameAlreadyExists from './checkUsernameAlreadyExists';
 
-const validateUsername = async (
-  username: string,
-  min: number,
-  max: number
-): Promise<boolean> => {
+const validateUsername = async (username: string): Promise<CustomError> => {
   const regex = /^[a-zA-Z][a-zA-Z0-9_]+$/;
+  const firstLetterRegex = /^[a-zA-Z]/;
+  const MAX = 15;
+  const MIN = 4;
 
-  const minLength: boolean = username.length >= min;
-  const maxLength: boolean = username.length <= max;
+  const minLength: boolean = username.length >= MIN;
+  const maxLength: boolean = username.length <= MAX;
+  const firstLetter: boolean = firstLetterRegex.test(username);
   const nameRegex: boolean = regex.test(username);
   const exists: boolean = await checkUserNameAlreadyExists(username);
 
-  let errorMessage: string = '';
+  let errorMessage = '';
 
-  if (!nameRegex) errorMessage = 'only letters, numbers, & underscores allowed';
-  if (!minLength) errorMessage = `minimum of ${min} characters`;
-  if (!maxLength) errorMessage = `maximum of ${max} characters`;
-  if (exists) errorMessage = 'already exists';
+  if (!firstLetter) {
+    errorMessage = 'first letter must be a letter';
+  } else if (!nameRegex) {
+    errorMessage = 'only letters, numbers, & underscores allowed';
+  } else if (!minLength) {
+    errorMessage = `minimum of ${MIN} characters`;
+  } else if (!maxLength) {
+    errorMessage = `maximum of ${MAX} characters`;
+  } else if (exists) errorMessage = 'already exists';
 
-  setErrorMessage('.verify-username', errorMessage);
+  const validity =
+    !exists && minLength && maxLength && nameRegex && firstLetter;
 
-  return !exists && minLength && maxLength && nameRegex;
+  return { validity, errorMessage };
 };
 
 export default validateUsername;
