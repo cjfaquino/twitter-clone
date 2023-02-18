@@ -6,6 +6,7 @@ import createUser from '../../utils/createUser';
 import SubmitButton from '../../components/SubmitButton';
 import validatePassword from '../../utils/validatePassword';
 import setErrorMessage from '../../utils/setErrorMessage';
+import InputPasswordConfirm from '../../components/InputPasswordConfirm';
 
 export interface IProps {
   currentUser: User | null;
@@ -15,8 +16,8 @@ const SignupStart = ({ currentUser }: IProps) => {
   const [email, handleEmail] = useInput(
     (currentUser && currentUser.email) || ''
   );
-  const [password, handlePwd] = useInput();
-  const [confirmPassword, handleConfirmPwd] = useInput();
+  const [password, handlePassword] = useInput();
+  const [confirmPassword, handleConfirmPassword] = useInput();
   const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -66,29 +67,13 @@ const SignupStart = ({ currentUser }: IProps) => {
       </label>
       {!currentUser && (
         <>
-          <label htmlFor='password'>
-            Password <span className='verify-password verify error' />
-            <input
-              type='password'
-              id='password'
-              value={password}
-              onChange={handlePwd}
-              disabled={!!currentUser}
-              required
-            />
-          </label>
-          <label htmlFor='confirm-password'>
-            Confirm Password{' '}
-            <span className='verify-confirm-password verify error' />
-            <input
-              type='password'
-              id='confirm-password'
-              value={confirmPassword}
-              onChange={handleConfirmPwd}
-              disabled={!!currentUser}
-              required
-            />
-          </label>
+          <InputPasswordConfirm
+            password={password}
+            confirmPassword={confirmPassword}
+            handlePassword={handlePassword}
+            handleConfirmPassword={handleConfirmPassword}
+          />
+
           <SubmitButton submitting={submitting} text='Continue' width={120} />
           <HaveAnAccount exists />
         </>

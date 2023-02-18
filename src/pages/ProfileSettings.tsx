@@ -22,6 +22,7 @@ import Login from './Login';
 import setErrorMessage from '../utils/setErrorMessage';
 import validatePassword from '../utils/validatePassword';
 import UserName from '../classes/UserName';
+import InputPasswordConfirm from '../components/InputPasswordConfirm';
 
 interface IProps {
   currentUser: User | null;
@@ -209,30 +210,15 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
 
       <form className='change-password-form' onSubmit={handleSubmitPassword}>
         <h2>{emailProviderStatus ? 'Change' : 'Add'} password</h2>
-        <label htmlFor='password'>
-          New password <span className='verify-password verify error' />
-          <input
-            type='password'
-            id='password'
-            value={newPass}
-            onChange={handleNewPass}
-            required
-          />
-        </label>
-        <label htmlFor='confirm-password'>
-          Confirm new password{' '}
-          <span className='verify-confirm-password verify error' />
-          <input
-            type='password'
-            id='confirm-password'
-            value={confirmNewPass}
-            onChange={handleConfirmNewPass}
-            required
-          />
-        </label>
+        <InputPasswordConfirm
+          password={newPass}
+          confirmPassword={confirmNewPass}
+          handlePassword={handleNewPass}
+          handleConfirmPassword={handleConfirmNewPass}
+        />
         <SubmitButton
           submitting={submittingPassword}
-          text='Change'
+          text={emailProviderStatus ? 'Change' : 'Add'}
           width={100}
         />
         <div className='success-password success' ref={passwordRef} />

@@ -11,6 +11,7 @@ import ResetPasswordPopup from '../components/ResetPasswordPopup';
 import SubmitButton from '../components/SubmitButton';
 import useWindowTitle from '../hooks/useWindowTitle';
 import reauthenticateEmailPass from '../utils/reauthenticateEmail&Pass';
+import InputPasswordConfirm from '../components/InputPasswordConfirm';
 
 interface IProps {
   google?: boolean | null;
@@ -116,15 +117,11 @@ const Login = ({
                 onChange={handleEmail}
               />
             </label>
-            <label htmlFor='password-login'>
-              Password
-              <input
-                type='password'
-                id='password-login'
-                value={passwordVal}
-                onChange={handlePassword}
-              />
-            </label>
+            <InputPasswordConfirm
+              password={passwordVal}
+              handlePassword={handlePassword}
+              noConfirm
+            />
             <span className='forgot-password'>
               Forgot your password?
               <button
