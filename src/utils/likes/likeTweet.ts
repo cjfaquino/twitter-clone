@@ -5,10 +5,10 @@ import {
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
-import eventProfileEdit from '../events/eventProfileEdit';
-import { db } from '../firebase-config';
-import { TweetObj } from '../interfaces/TweetObj';
-import getUserUid from './getUserUid';
+import eventProfileEdit from '../../events/eventProfileEdit';
+import { db } from '../../firebase-config';
+import { TweetObj } from '../../interfaces/TweetObj';
+import getUserUid from '../getUserUid';
 
 const likeTweet = async (tweetObj: TweetObj) => {
   // add tweet to like in user profile
@@ -19,7 +19,7 @@ const likeTweet = async (tweetObj: TweetObj) => {
 
     // add to likes collection in users
     const userPromise = setDoc(likesRef, {
-      ...tweetObj,
+      id: tweetObj.id,
       likedAt: serverTimestamp(),
     });
 

@@ -9,7 +9,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '../firebase-config';
 import getUpdatedTweetByID from '../utils/getUpdatedTweetByID';
-import undoLike from '../utils/undoLike';
+import undoLike from '../utils/likes/undoLike';
 import { TweetObj } from '../interfaces/TweetObj';
 
 export default function useTweets(

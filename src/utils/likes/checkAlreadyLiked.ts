@@ -1,5 +1,5 @@
-import { TweetObj } from '../interfaces/TweetObj';
-import { UserProfile } from '../interfaces/UserProfile';
+import { TweetObj } from '../../interfaces/TweetObj';
+import { UserProfile } from '../../interfaces/UserProfile';
 
 const checkAlreadyLiked = (tweetID: string, userProfile: UserProfile) => {
   if (!userProfile) return false;
