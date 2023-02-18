@@ -8,6 +8,7 @@ import updateProfile from '../../utils/updateProfile';
 import uploadImage from '../../utils/uploadImage';
 import ChangeProfileIcon from '../../components/ChangeProfileIcon';
 import SubmitButton from '../../components/SubmitButton';
+import DisplayName from '../../classes/DisplayName';
 
 interface IProps {
   userProfile: UserProfile;
@@ -116,7 +117,10 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
                 type='text'
                 id='displayName'
                 value={displayName}
+                minLength={DisplayName.min}
+                maxLength={DisplayName.max}
                 onChange={handleDisplayName}
+                required
               />
             </label>
             <label htmlFor='bio'>

@@ -21,6 +21,7 @@ import useToggle from '../hooks/useToggle';
 import Login from './Login';
 import setErrorMessage from '../utils/setErrorMessage';
 import validatePassword from '../utils/validatePassword';
+import UserName from '../classes/UserName';
 
 interface IProps {
   currentUser: User | null;
@@ -162,8 +163,8 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
             id='userName'
             value={userName}
             onChange={handleUserName}
-            minLength={4}
-            maxLength={15}
+            minLength={UserName.min}
+            maxLength={UserName.max}
             required
           />
         </label>

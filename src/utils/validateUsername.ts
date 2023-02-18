@@ -1,11 +1,12 @@
+import UserName from '../classes/UserName';
 import { CustomError } from '../interfaces/CustomError';
 import checkUserNameAlreadyExists from './checkUsernameAlreadyExists';
 
 const validateUsername = async (username: string): Promise<CustomError> => {
   const regex = /^[a-zA-Z][a-zA-Z0-9_]+$/;
   const firstLetterRegex = /^[a-zA-Z]/;
-  const MAX = 15;
-  const MIN = 4;
+  const MAX = UserName.max;
+  const MIN = UserName.min;
 
   const minLength: boolean = username.length >= MIN;
   const maxLength: boolean = username.length <= MAX;
