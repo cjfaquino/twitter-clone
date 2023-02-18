@@ -39,11 +39,8 @@ const ChangePasswordForm = ({
     setSubmittingPassword(true);
 
     try {
-      const password = validatePassword(newPass, confirmNewPass);
-
-      if (!password.validity) {
-        throw Error(password.errorMessage);
-      }
+      // will throw error if invalid
+      validatePassword(newPass, confirmNewPass);
 
       let res;
       if (emailProviderStatus) {
@@ -64,13 +61,22 @@ const ChangePasswordForm = ({
         // error code
         console.log(res);
       }
-    } catch (error: unknown) {
-      const errorMessage = (error as Error).message;
+    } catch (er: unknown) {
+      const error = er as Error;
+      const errorName = error.name;
+      const errorMessage = error.message;
 
-      if (errorMessage === 'should be matching') {
-        setErrorMessage('.verify-confirm-password', errorMessage);
-      } else {
-        setErrorMessage('.verify-password', errorMessage);
+      switch (errorName) {
+        case 'Confirm Password Error':
+          setErrorMessage('.verify-confirm-password', errorMessage);
+          break;
+        case 'Password Error':
+          setErrorMessage('.verify-password', errorMessage);
+          break;
+
+        default:
+          console.log(error);
+          break;
       }
     }
     setSubmittingPassword(false);

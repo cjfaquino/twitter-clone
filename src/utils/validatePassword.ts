@@ -1,6 +1,7 @@
-import { CustomError } from '../interfaces/CustomError';
+import ConfirmPasswordError from '../classes/ConfirmPasswordError';
+import PasswordError from '../classes/PasswordError';
 
-export default (password: string, confirmPassword: string): CustomError => {
+export default (password: string, confirmPassword: string): boolean => {
   const digitRegex = /(?=.*\d)/;
   const letterRegex = /(?=.*[a-zA-Z])/;
   const specialRegex = /(?=.*[!@#$%^&*()_+])/;
@@ -32,8 +33,10 @@ export default (password: string, confirmPassword: string): CustomError => {
     maxLength &&
     atLeastOneDigit &&
     atLeastOneLetter &&
-    atLeastOneSpecial &&
-    matching;
+    atLeastOneSpecial;
 
-  return { validity, errorMessage };
+  if (!validity) throw new PasswordError(errorMessage);
+  if (!matching) throw new ConfirmPasswordError(errorMessage);
+
+  return validity && matching;
 };

@@ -29,24 +29,30 @@ const SignupStart = ({ currentUser }: IProps) => {
     setSubmitting(true);
 
     try {
-      const passCheck = validatePassword(password, confirmPassword);
-
-      if (!passCheck.validity) {
-        throw Error(passCheck.errorMessage);
-      }
+      // will throw error if invalid
+      validatePassword(password, confirmPassword);
 
       const created = await createUser(email, password);
 
       if (!created) {
         // error
       }
-    } catch (error: unknown) {
-      const errorMessage = (error as Error).message;
+    } catch (er: unknown) {
+      const error = er as Error;
+      const errorName = error.name;
+      const errorMessage = error.message;
 
-      if (errorMessage === 'should be matching') {
-        setErrorMessage('.verify-confirm-password', errorMessage);
-      } else {
-        setErrorMessage('.verify-password', errorMessage);
+      switch (errorName) {
+        case 'Confirm Password Error':
+          setErrorMessage('.verify-confirm-password', errorMessage);
+          break;
+        case 'Password Error':
+          setErrorMessage('.verify-password', errorMessage);
+          break;
+
+        default:
+          console.log(error);
+          break;
       }
     }
     setSubmitting(false);
