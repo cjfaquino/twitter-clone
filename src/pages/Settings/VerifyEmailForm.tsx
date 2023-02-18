@@ -1,6 +1,5 @@
-import { sendEmailVerification, User } from 'firebase/auth';
+import { AuthError, sendEmailVerification, User } from 'firebase/auth';
 import React, { ChangeEventHandler, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import InputEmail from '../../components/InputEmail';
 import SubmitButton from '../../components/SubmitButton';
 import isEmailVerified from '../../utils/user/isEmailVerified';
@@ -10,21 +9,36 @@ interface IProps {
   email: string;
   handleEmail: ChangeEventHandler<HTMLInputElement>;
   currentUser: User | null;
+  toggleLoginPopup: Function;
 }
 
-const VerifyEmailForm = ({ email, handleEmail, currentUser }: IProps) => {
+const VerifyEmailForm = ({
+  email,
+  handleEmail,
+  currentUser,
+  toggleLoginPopup,
+}: IProps) => {
   const [submittingEmail, setSubmittingEmail] = useState(false);
-  const navigate = useNavigate();
 
   const handleSubmitEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmittingEmail(true);
-    const res = await updateUserEmail(email);
-    setSubmittingEmail(false);
+    try {
+      setSubmittingEmail(true);
+      await updateUserEmail(email);
+      sendEmailVerification(currentUser!);
+    } catch (error) {
+      const errorCode = (error as AuthError).message;
+      // error
+      switch (errorCode) {
+        case 'auth/requires-recent-login':
+          toggleLoginPopup();
+          break;
 
-    if (res === 'auth/requires-recent-login') {
-      navigate('/login', { state: { error: 'reauth' } });
+        default:
+          break;
+      }
     }
+    setSubmittingEmail(false);
   };
 
   return (

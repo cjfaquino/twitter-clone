@@ -75,6 +75,7 @@ const Settings = ({ currentUser, userProfile }: IProps) => {
         email={email}
         handleEmail={handleEmail}
         currentUser={currentUser}
+        toggleLoginPopup={toggleLoginPopup}
       />
 
       <ChangePasswordForm

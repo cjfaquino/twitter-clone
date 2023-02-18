@@ -6,7 +6,8 @@ async function updateUserEmail(email: string) {
     const res = await updateEmail(auth.currentUser!, email);
     return res;
   } catch (error: unknown) {
-    return (error as AuthError).code;
+    const errorCode = (error as AuthError).code;
+    throw Error(errorCode);
   }
 }
 
