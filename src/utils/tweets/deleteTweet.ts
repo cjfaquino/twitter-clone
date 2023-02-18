@@ -1,7 +1,7 @@
 import { doc, deleteDoc } from 'firebase/firestore';
-import { indexTweets } from '../algolia-config';
-import { db } from '../firebase-config';
-import { TweetObj } from '../interfaces/TweetObj';
+import { indexTweets } from '../../algolia-config';
+import { db } from '../../firebase-config';
+import { TweetObj } from '../../interfaces/TweetObj';
 import deleteReply from './deleteReply';
 
 // delete tweet by tweet uid from firestore

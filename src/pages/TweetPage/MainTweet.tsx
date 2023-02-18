@@ -6,7 +6,7 @@ import {
   faRetweet,
 } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import deleteTweet from '../../utils/deleteTweet';
+import deleteTweet from '../../utils/tweets/deleteTweet';
 import useToggle from '../../hooks/useToggle';
 import getTimeString from '../../utils/getTimeString';
 import updateView from '../../utils/updateView';
@@ -20,7 +20,7 @@ import OptionsPopup from '../../components/OptionsPopup';
 import FormattedText from '../../components/FormattedText';
 import useFindByUsername from '../../hooks/useFindByUsername';
 import { TweetObj } from '../../interfaces/TweetObj';
-import checkUserAlreadyReplied from '../../utils/checkUserAlreadyReplied';
+import checkUserAlreadyReplied from '../../utils/tweets/checkUserAlreadyReplied';
 import ProfileContext from '../../context/ProfileContext';
 import fancyNumbers from '../../utils/fancyNumbers';
 

@@ -1,5 +1,5 @@
 import { deleteDoc, doc } from 'firebase/firestore';
-import { db } from '../firebase-config';
+import { db } from '../../firebase-config';
 
 const deleteReply = async (replyID: string, mainTweetID: string) => {
   try {

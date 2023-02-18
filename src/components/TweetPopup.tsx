@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import isUserSignedIn from '../utils/isUserSignedIn';
-import saveTweet from '../utils/saveTweet';
+import saveTweet from '../utils/tweets/saveTweet';
 import Tweet from '../classes/Tweet';
 import getProfilePicUrl from '../utils/getProfilePicUrl';
 import SubmitButton from './SubmitButton';

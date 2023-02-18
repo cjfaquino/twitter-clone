@@ -6,12 +6,12 @@ import {
   faChartSimple,
   faRetweet,
 } from '@fortawesome/free-solid-svg-icons';
-import deleteTweet from '../utils/deleteTweet';
+import deleteTweet from '../utils/tweets/deleteTweet';
 import OptionsPopup from './OptionsPopup';
 import useToggle from '../hooks/useToggle';
 import getTimeString from '../utils/getTimeString';
 import checkMatchingUser from '../utils/checkMatchingUser';
-import deleteTweetFromDOM from '../utils/deleteTweetFromDOM';
+import deleteTweetFromDOM from '../utils/tweets/deleteTweetFromDOM';
 import useReplies from '../hooks/useReplies';
 import checkAlreadyLiked from '../utils/likes/checkAlreadyLiked';
 import undoLike from '../utils/likes/undoLike';
@@ -20,7 +20,7 @@ import isUserSignedIn from '../utils/isUserSignedIn';
 import FormattedText from './FormattedText';
 import useFindByUsername from '../hooks/useFindByUsername';
 import { TweetObj } from '../interfaces/TweetObj';
-import checkUserAlreadyReplied from '../utils/checkUserAlreadyReplied';
+import checkUserAlreadyReplied from '../utils/tweets/checkUserAlreadyReplied';
 import ProfileContext from '../context/ProfileContext';
 import { UserProfile } from '../interfaces/UserProfile';
 import TweetItemButton from './TweetItemButton';

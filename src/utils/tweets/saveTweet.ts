@@ -1,39 +1,10 @@
-import {
-  collection,
-  addDoc,
-  doc,
-  setDoc,
-  QueryDocumentSnapshot,
-  SnapshotOptions,
-} from 'firebase/firestore';
-import { indexTweets } from '../algolia-config';
-import { db } from '../firebase-config';
-import { TweetObj } from '../interfaces/TweetObj';
-import Tweet from '../classes/Tweet';
-
-// converts Tweet for firestore
-const tweetConverter = {
-  toFirestore: (tweet: TweetObj) => ({
-    USER_ID: tweet.USER_ID,
-    USER_NAME: tweet.USER_NAME,
-    USER_DISPLAY: tweet.USER_DISPLAY,
-    USER_ICON: tweet.USER_ICON,
-    text: tweet.text,
-    tags: tweet.tags,
-    timestamp: tweet.timestamp,
-    retweets: tweet.retweets,
-    likes: tweet.likes,
-    views: tweet.views,
-    aReplyTo: tweet.aReplyTo,
-  }),
-  fromFirestore: (
-    snapshot: QueryDocumentSnapshot,
-    options: SnapshotOptions
-  ) => {
-    const data = snapshot.data(options);
-    return data;
-  },
-};
+import { collection, addDoc, doc, setDoc } from 'firebase/firestore';
+import { indexTweets } from '../../algolia-config';
+import { db } from '../../firebase-config';
+import { TweetObj } from '../../interfaces/TweetObj';
+import Tweet from '../../classes/Tweet';
+import tweetConverter from './tweetConverter';
+import replyConverter from './replyConverter';
 
 // Save all tweets to tweets doc
 
@@ -42,6 +13,7 @@ const saveTweet = async (
   aReplyTo: TweetObj | null = null
 ) => {
   try {
+    // ref for original tweet
     const tweetRef = collection(db, 'tweets').withConverter(tweetConverter);
 
     let tweet = new Tweet(messageText, aReplyTo);
@@ -52,14 +24,14 @@ const saveTweet = async (
       // create new tweet
       docRef = await addDoc(tweetRef, tweet);
 
-      // add to aReplyTo's replies collection
+      // add to aReplyTo's replies collection pointing to original
       const replyRef = doc(
         db,
         'tweets',
         aReplyTo.id,
         'replies',
         docRef.id
-      ).withConverter(tweetConverter);
+      ).withConverter(replyConverter);
       setDoc(replyRef, tweet);
     } else {
       // create normal tweet
