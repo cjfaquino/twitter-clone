@@ -1,7 +1,7 @@
 import { collection, DocumentData, getDocs } from 'firebase/firestore';
-import { db } from '../firebase-config';
-import getUserUid from './getUserUid';
-import isUserSignedIn from './isUserSignedIn';
+import { db } from '../../firebase-config';
+import getUserUid from '../getUserUid';
+import isUserSignedIn from '../isUserSignedIn';
 
 export default async function getFollowers(): Promise<DocumentData[]> {
   try {

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import isUserSignedIn from '../utils/isUserSignedIn';
-import followUser from '../utils/followUser';
-import unfollowUser from '../utils/unfollowUser';
-import checkAlreadyFollowing from '../utils/checkAlreadyFollowing';
+import followUser from '../utils/follows/followUser';
+import unfollowUser from '../utils/follows/unfollowUser';
+import checkAlreadyFollowing from '../utils/follows/checkAlreadyFollowing';
 import eventFollow from '../events/eventFollow';
 import { UserProfile } from '../interfaces/UserProfile';
 import getUserUid from '../utils/getUserUid';

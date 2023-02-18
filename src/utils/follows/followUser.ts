@@ -1,8 +1,9 @@
 import { doc, increment, setDoc, updateDoc } from 'firebase/firestore';
-import { db } from '../firebase-config';
-import eventProfileEdit from '../events/eventProfileEdit';
-import getUserUid from './getUserUid';
-import { UserProfile } from '../interfaces/UserProfile';
+import { db } from '../../firebase-config';
+import eventProfileEdit from '../../events/eventProfileEdit';
+import getUserUid from '../getUserUid';
+import { UserProfile } from '../../interfaces/UserProfile';
+import followsConverter from './followsConverter';
 
 export default async function followUser(
   currentUserProfileObj: UserProfile,
@@ -17,7 +18,7 @@ export default async function followUser(
       targetUserProfileObj.id,
       'followers',
       getUserUid()
-    );
+    ).withConverter(followsConverter);
     // add to your following
     const followingRef = doc(
       db,
@@ -25,7 +26,7 @@ export default async function followUser(
       getUserUid(),
       'following',
       targetUserProfileObj.id
-    );
+    ).withConverter(followsConverter);
 
     // increase currentUser's following count
     const countRef = doc(db, 'users', getUserUid());
@@ -33,7 +34,7 @@ export default async function followUser(
     // increase targetUser's follower count
     const targetCountRef = doc(db, 'users', targetUserProfileObj.id);
 
-    // add to follwers & following collection in users
+    // add to followers & following collection in users
     await Promise.all([
       setDoc(followersRef, currentUserProfileObj),
       setDoc(followingRef, targetUserProfileObj),

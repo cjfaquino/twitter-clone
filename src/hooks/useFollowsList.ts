@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import { UserProfile } from '../interfaces/UserProfile';
 import { db } from '../firebase-config';
 import findDuplicatesByField from '../utils/findDuplicatesByField';
-import getFollowers from '../utils/getFollowers';
+import getFollowers from '../utils/follows/getFollowers';
 
 export default function useFollowsList(typeOfList: string, userID: string) {
   const [userList, setUserList] = useState<UserProfile[]>([]);
