@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DisplayName from '../../classes/DisplayName';
 import ChangeProfileIcon from '../../components/ChangeProfileIcon';
+import InputDisplayName from '../../components/InputDisplayName';
 import InputUsername from '../../components/InputUsername';
 import SubmitButton from '../../components/SubmitButton';
 import useInput from '../../hooks/useInput';
@@ -75,18 +75,10 @@ const SignupContinue = ({ currentUser }: IProps) => {
           selectedPhoto={selectedPhoto}
         />
         <section>
-          <label htmlFor='displayName'>
-            Display name
-            <input
-              type='text'
-              id='displayName'
-              value={displayName}
-              onChange={handleDisplayName}
-              minLength={DisplayName.min}
-              maxLength={DisplayName.max}
-              required
-            />
-          </label>
+          <InputDisplayName
+            displayName={displayName}
+            handleDisplayName={handleDisplayName}
+          />
 
           <InputUsername userName={userName} handleUserName={handleUserName} />
         </section>
