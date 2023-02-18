@@ -1,10 +1,10 @@
 import { serverTimestamp, Timestamp } from 'firebase/firestore';
-import getProfilePicUrl from './getProfilePicUrl';
-import getDisplayName from './getDisplayName';
-import getUserName from './getUserName';
-import getUserUid from './getUserUid';
-import textToCleanedTextArray from './textToCleanedTextArray';
-import getTagsFromTextArray from './getTagsFromTextArray';
+import getProfilePicUrl from '../utils/getProfilePicUrl';
+import getDisplayName from '../utils/getDisplayName';
+import getUserName from '../utils/getUserName';
+import getUserUid from '../utils/getUserUid';
+import textToCleanedTextArray from '../utils/textToCleanedTextArray';
+import getTagsFromTextArray from '../utils/getTagsFromTextArray';
 // eslint-disable-next-line import/no-cycle
 import { TweetObj } from '../interfaces/TweetObj';
 

@@ -9,7 +9,7 @@ import {
 import { indexTweets } from '../algolia-config';
 import { db } from '../firebase-config';
 import { TweetObj } from '../interfaces/TweetObj';
-import Tweet from './Tweet';
+import Tweet from '../classes/Tweet';
 
 // converts Tweet for firestore
 const tweetConverter = {

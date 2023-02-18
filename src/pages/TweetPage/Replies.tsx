@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import saveTweet from '../../utils/saveTweet';
-import Tweet from '../../utils/Tweet';
+import Tweet from '../../classes/Tweet';
 import { TweetObj } from '../../interfaces/TweetObj';
 import getProfilePicUrl from '../../utils/getProfilePicUrl';
 import isUserSignedIn from '../../utils/isUserSignedIn';

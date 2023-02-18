@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import isUserSignedIn from '../utils/isUserSignedIn';
 import saveTweet from '../utils/saveTweet';
-import Tweet from '../utils/Tweet';
+import Tweet from '../classes/Tweet';
 import getProfilePicUrl from '../utils/getProfilePicUrl';
 import SubmitButton from './SubmitButton';
 import { TweetObj } from '../interfaces/TweetObj';
