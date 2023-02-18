@@ -499,7 +499,7 @@ button svg {
   margin-bottom: 30px;
 }
 
-.settings-forms form {
+form {
   position: relative;
 }
 
@@ -641,15 +641,13 @@ form button {
   padding-right: 80px;
 }
 
-.verify-username {
-  color: red;
+.verify {
   position: absolute;
   right: 0;
 }
 
-.verify-email {
-  position: absolute;
-  right: 0;
+.verify-username {
+  color: red;
 }
 
 .verify-email,

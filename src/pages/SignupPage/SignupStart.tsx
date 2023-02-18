@@ -4,6 +4,8 @@ import useInput from '../../hooks/useInput';
 import HaveAnAccount from '../../components/HaveAnAccount';
 import createUser from '../../utils/createUser';
 import SubmitButton from '../../components/SubmitButton';
+import validatePassword from '../../utils/validatePassword';
+import setErrorMessage from '../../utils/setErrorMessage';
 
 export interface IProps {
   currentUser: User | null;
@@ -17,20 +19,35 @@ const SignupStart = ({ currentUser }: IProps) => {
   const [confirmPassword, handleConfirmPwd] = useInput();
   const [submitting, setSubmitting] = useState(false);
 
-  const checkSamePass = () => password === confirmPassword;
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (!checkSamePass) return;
-
+    // clean up inputs
+    setErrorMessage('.verify-password', '');
+    setErrorMessage('.verify-confirm-password', '');
     setSubmitting(true);
-    const created = await createUser(email, password);
-    setSubmitting(false);
 
-    if (!created) {
-      // error
+    try {
+      const passCheck = validatePassword(password, confirmPassword);
+
+      if (!passCheck.validity) {
+        throw Error(passCheck.errorMessage);
+      }
+
+      const created = await createUser(email, password);
+
+      if (!created) {
+        // error
+      }
+    } catch (error: unknown) {
+      const errorMessage = (error as Error).message;
+
+      if (errorMessage === 'should be matching') {
+        setErrorMessage('.verify-confirm-password', errorMessage);
+      } else {
+        setErrorMessage('.verify-password', errorMessage);
+      }
     }
+    setSubmitting(false);
   };
 
   return (
@@ -49,22 +66,23 @@ const SignupStart = ({ currentUser }: IProps) => {
       </label>
       {!currentUser && (
         <>
-          <label htmlFor='pwd'>
-            Password
+          <label htmlFor='password'>
+            Password <span className='verify-password verify error' />
             <input
               type='password'
-              id='pwd'
+              id='password'
               value={password}
               onChange={handlePwd}
               disabled={!!currentUser}
               required
             />
           </label>
-          <label htmlFor='confirm-pwd'>
-            Confirm Password
+          <label htmlFor='confirm-password'>
+            Confirm Password{' '}
+            <span className='verify-confirm-password verify error' />
             <input
               type='password'
-              id='confirm-pwd'
+              id='confirm-password'
               value={confirmPassword}
               onChange={handleConfirmPwd}
               disabled={!!currentUser}

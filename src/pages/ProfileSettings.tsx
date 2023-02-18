@@ -20,6 +20,7 @@ import addPassword from '../utils/addPassword';
 import useToggle from '../hooks/useToggle';
 import Login from './Login';
 import setErrorMessage from '../utils/setErrorMessage';
+import validatePassword from '../utils/validatePassword';
 
 interface IProps {
   currentUser: User | null;
@@ -52,7 +53,10 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
 
   const handleSubmitUsername = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // clear error on try
+    setErrorMessage('.verify-username', '');
     setSubmittingUsername(true);
+
     const res = await validateUsername(userName);
 
     if (res.validity) {
@@ -77,29 +81,49 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
   const handleSubmitPassword = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     (passwordRef.current! as HTMLElement).textContent = '';
-    if (newPass !== confirmNewPass || !currentUser) return;
+    if (!currentUser) return;
 
+    // clear error on try
+    setErrorMessage('.verify-password', '');
+    setErrorMessage('.verify-confirm-password', '');
     setSubmittingPassword(true);
-    let res;
-    if (emailProviderStatus) {
-      res = await updatePassword(currentUser, newPass, toggleLoginPopup);
-    } else {
-      res = await addPassword(currentUser, email, newPass, toggleLoginPopup);
-    }
 
+    try {
+      const password = validatePassword(newPass, confirmNewPass);
+
+      if (!password.validity) {
+        throw Error(password.errorMessage);
+      }
+
+      let res;
+      if (emailProviderStatus) {
+        res = await updatePassword(currentUser, newPass, toggleLoginPopup);
+      } else {
+        res = await addPassword(currentUser, email, newPass, toggleLoginPopup);
+      }
+
+      if (res === true) {
+        // cleanup inputs
+        setNewPass('');
+        setConfirmNewPass('');
+        (passwordRef.current! as HTMLElement).textContent = `Successfully ${
+          emailProviderStatus ? 'changed' : 'added'
+        } password`;
+        setEmailProvider(true);
+      } else {
+        // error code
+        console.log(res);
+      }
+    } catch (error: unknown) {
+      const errorMessage = (error as Error).message;
+
+      if (errorMessage === 'should be matching') {
+        setErrorMessage('.verify-confirm-password', errorMessage);
+      } else {
+        setErrorMessage('.verify-password', errorMessage);
+      }
+    }
     setSubmittingPassword(false);
-
-    if (res === true) {
-      setNewPass('');
-      setConfirmNewPass('');
-      (passwordRef.current! as HTMLElement).textContent = `Successfully ${
-        emailProviderStatus ? 'changed' : 'added'
-      } password`;
-      setEmailProvider(true);
-    } else {
-      // error code
-      console.log(res);
-    }
   };
 
   const setFields = async () => {
@@ -132,7 +156,7 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
       <form onSubmit={handleSubmitUsername}>
         <h2>Your Profile</h2>
         <label htmlFor='userName'>
-          Username <span className='verify-username error' />
+          Username <span className='verify-username verify error' />
           <input
             type='text'
             id='userName'
@@ -151,7 +175,11 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
       </form>
       <form onSubmit={handleSubmitEmail} className='email-form'>
         <h2>Contact Details</h2>
-        <span className={`verify-email ${isEmailVerified() ? 'success' : ''}`}>
+        <span
+          className={`verify-email verify ${
+            isEmailVerified() ? 'success' : ''
+          }`}
+        >
           {isEmailVerified() ? (
             'verified ✓'
           ) : (
@@ -167,7 +195,7 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
         <label htmlFor='email'>
           Email
           <input
-            type='text'
+            type='email'
             id='email'
             value={email}
             onChange={handleEmail}
@@ -181,7 +209,7 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
       <form className='change-password-form' onSubmit={handleSubmitPassword}>
         <h2>{emailProviderStatus ? 'Change' : 'Add'} password</h2>
         <label htmlFor='password'>
-          New password
+          New password <span className='verify-password verify error' />
           <input
             type='password'
             id='password'
@@ -191,7 +219,8 @@ const ProfileSettings = ({ currentUser, userProfile }: IProps) => {
           />
         </label>
         <label htmlFor='confirm-password'>
-          Confirm new password
+          Confirm new password{' '}
+          <span className='verify-confirm-password verify error' />
           <input
             type='password'
             id='confirm-password'
