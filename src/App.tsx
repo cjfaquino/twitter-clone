@@ -9,7 +9,7 @@ import Explore from './pages/Explore';
 import TweetPage from './pages/TweetPage/TweetPage';
 import TweetPopup from './components/TweetPopup';
 import useToggle from './hooks/useToggle';
-import ProfileSettings from './pages/ProfileSettings';
+import Settings from './pages/Settings/Settings';
 import Login from './pages/Login';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import Search from './pages/Search';
@@ -84,10 +84,7 @@ const App = () => {
             <Route
               path='/settings'
               element={
-                <ProfileSettings
-                  currentUser={currentUser}
-                  userProfile={userProfile}
-                />
+                <Settings currentUser={currentUser} userProfile={userProfile} />
               }
             />
             <Route
