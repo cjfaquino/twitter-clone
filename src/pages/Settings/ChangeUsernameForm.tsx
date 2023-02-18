@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import UserName from '../../classes/UserName';
+import InputUsername from '../../components/InputUsername';
 import SubmitButton from '../../components/SubmitButton';
 import { UserProfile } from '../../interfaces/UserProfile';
 import setErrorMessage from '../../utils/setErrorMessage';
@@ -38,18 +38,7 @@ const ChangeUsernameForm = ({
   return (
     <form onSubmit={handleSubmitUsername}>
       <h2>Your Profile</h2>
-      <label htmlFor='userName'>
-        Username <span className='verify-username verify error' />
-        <input
-          type='text'
-          id='userName'
-          value={userName}
-          onChange={handleUserName}
-          minLength={UserName.min}
-          maxLength={UserName.max}
-          required
-        />
-      </label>
+      <InputUsername userName={userName} handleUserName={handleUserName} />
       <SubmitButton submitting={submittingUsername} text='Change' width={100} />
     </form>
   );

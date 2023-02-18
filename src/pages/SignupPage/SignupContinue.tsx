@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DisplayName from '../../classes/DisplayName';
-import UserName from '../../classes/UserName';
 import ChangeProfileIcon from '../../components/ChangeProfileIcon';
+import InputUsername from '../../components/InputUsername';
 import SubmitButton from '../../components/SubmitButton';
 import useInput from '../../hooks/useInput';
 import createProfile from '../../utils/createProfile';
@@ -13,7 +13,7 @@ import validateUsername from '../../utils/validateUsername';
 import { IProps } from './SignupStart';
 
 const SignupContinue = ({ currentUser }: IProps) => {
-  const [userName, handleUsername] = useInput();
+  const [userName, handleUserName] = useInput();
   const [displayName, handleDisplayName] = useInput(
     (currentUser && currentUser.displayName) || ''
   );
@@ -87,19 +87,8 @@ const SignupContinue = ({ currentUser }: IProps) => {
               required
             />
           </label>
-          <label htmlFor='userName'>
-            Username @ <span className='verify-username verify error' />
-            <input
-              type='text'
-              id='userName'
-              value={userName}
-              onChange={handleUsername}
-              autoComplete='off'
-              minLength={UserName.min}
-              maxLength={UserName.max}
-              required
-            />
-          </label>
+
+          <InputUsername userName={userName} handleUserName={handleUserName} />
         </section>
       </div>
       <SubmitButton submitting={submitting} text='Submit' width={100} />
