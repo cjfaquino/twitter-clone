@@ -1113,6 +1113,23 @@ header.goback {
   font-size: 1.4rem;
 }
 
+.goback-text section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.header-display-name {
+  width: calc(var(--feed-width) - 100px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header-username {
+  font-size: 1rem;
+}
+
 /* search header */
 
 header.search {
