@@ -31,10 +31,16 @@ const Replies = ({ tweetObj, fetchedReplies, setReplies }: IProps) => {
       return; // show login popup
     }
 
-    const docID = await saveTweet(replyMessage, tweetObj);
+    const docID = await saveTweet({
+      messageText: replyMessage,
+      aReplyTo: tweetObj,
+    });
     if (docID) {
       // send to TweetPage
-      const replyObj = { id: docID, ...new Tweet(replyMessage, tweetObj) };
+      const replyObj = {
+        id: docID,
+        ...new Tweet({ messageText: replyMessage, aReplyTo: tweetObj }),
+      };
       setReplies((prev) => [...prev, replyObj]);
       setReplyMessage('');
     } else {

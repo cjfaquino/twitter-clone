@@ -70,6 +70,7 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
     views,
     retweets,
     text,
+    imgURL,
     timestamp,
     USER_ICON,
     USER_NAME,
@@ -159,6 +160,11 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
           itemID={TWEET_ID}
           customClass={customClass}
         />
+        {imgURL && (
+          <div className='tweet-img-container'>
+            <img src={imgURL} alt='' />
+          </div>
+        )}
 
         <div
           className={`${customClass}-item-time grey`}

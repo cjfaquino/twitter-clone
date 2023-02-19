@@ -1,22 +1,30 @@
-import { collection, addDoc, doc, setDoc } from 'firebase/firestore';
+import { collection, addDoc, doc, setDoc, updateDoc } from 'firebase/firestore';
 import { indexTweets } from '../../algolia-config';
 import { db } from '../../firebase-config';
-import { TweetObj } from '../../interfaces/TweetObj';
-import Tweet from '../../classes/Tweet';
 import tweetConverter from './tweetConverter';
 import replyConverter from './replyConverter';
+import uploadImage from '../uploadImage';
+import { TweetObj } from '../../interfaces/TweetObj';
+import Tweet from '../../classes/Tweet';
+
+interface IArgs {
+  messageText: string;
+  messageImgFile?: File | null;
+  aReplyTo?: TweetObj | null;
+}
 
 // Save all tweets to tweets doc
 
-const saveTweet = async (
-  messageText: string,
-  aReplyTo: TweetObj | null = null
-) => {
+const saveTweet = async ({
+  messageText,
+  messageImgFile = null,
+  aReplyTo = null,
+}: IArgs) => {
   try {
     // ref for original tweet
     const tweetRef = collection(db, 'tweets').withConverter(tweetConverter);
 
-    let tweet = new Tweet(messageText, aReplyTo);
+    let tweet = new Tweet({ messageText, aReplyTo });
     let docRef;
 
     if (aReplyTo) {
@@ -39,6 +47,17 @@ const saveTweet = async (
       docRef = await addDoc(tweetRef, tweet);
     }
 
+    if (messageImgFile) {
+      // upload img if available
+      const uploadedURL = await uploadImage(
+        `/tweets/${docRef.id}/image`,
+        messageImgFile
+      );
+
+      // update tweetObj with url
+      updateDoc(docRef, { imgURL: uploadedURL });
+    }
+
     // add to algolia 'tweets' index
     const timeInSeconds = new Date().getTime() / 1000;
     indexTweets.saveObject({
@@ -50,7 +69,7 @@ const saveTweet = async (
     // return firebase doc id
     return docRef.id;
   } catch (error) {
-    console.error('Error writing new message to Firebase Database', error);
+    console.error('Error writing new tweet to Firebase Database', error);
     return false;
   }
 };

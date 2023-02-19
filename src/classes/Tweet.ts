@@ -13,6 +13,7 @@ interface Tweet {
   USER_DISPLAY: string;
   USER_ID: string;
   USER_ICON: string;
+  imgURL: string | null;
   text: string;
   tags: string;
   timestamp: Timestamp;
@@ -22,8 +23,13 @@ interface Tweet {
   aReplyTo: TweetObj | null;
 }
 
+export interface IArgs {
+  messageText: string;
+  messageImg?: string | null;
+  aReplyTo?: TweetObj | null;
+}
 class Tweet {
-  constructor(messageText: string, aReplyTo: TweetObj | null = null) {
+  constructor({ messageText, messageImg = null, aReplyTo = null }: IArgs) {
     const textArray = textToCleanedTextArray(messageText);
 
     this.USER_NAME = getUserName();
@@ -31,6 +37,7 @@ class Tweet {
     this.USER_ID = getUserUid();
     this.USER_ICON = getProfilePicUrl();
     this.timestamp = serverTimestamp() as Timestamp;
+    this.imgURL = messageImg;
     this.text = messageText.trim();
     this.tags = getTagsFromTextArray(textArray);
     this.likes = 0;

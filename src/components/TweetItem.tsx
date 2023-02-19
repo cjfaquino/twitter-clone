@@ -37,7 +37,7 @@ const TweetItem = ({ tweetObj }: IProps) => {
   const userProfile: UserProfile = useContext(ProfileContext);
   const navigate = useNavigate();
 
-  const { views, text, timestamp, USER_ID, id: TWEET_ID } = tweetObj;
+  const { views, text, imgURL, timestamp, USER_ID, id: TWEET_ID } = tweetObj;
   const customClass = 'tweet';
 
   const handleDelete = async () => {
@@ -169,6 +169,11 @@ const TweetItem = ({ tweetObj }: IProps) => {
               itemID={TWEET_ID}
               customClass={customClass}
             />
+            {imgURL && (
+              <div className='tweet-img-container'>
+                <img src={imgURL} alt='' />
+              </div>
+            )}
             <div className={`${customClass}-item-buttons`}>
               <TweetItemButton
                 className={`btn-replies grey ${

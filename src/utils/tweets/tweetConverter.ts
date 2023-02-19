@@ -8,6 +8,7 @@ const tweetConverter = {
     USER_NAME: tweet.USER_NAME,
     USER_DISPLAY: tweet.USER_DISPLAY,
     USER_ICON: tweet.USER_ICON,
+    imgURL: tweet.imgURL,
     text: tweet.text,
     tags: tweet.tags,
     timestamp: tweet.timestamp,
