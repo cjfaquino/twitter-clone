@@ -17,6 +17,7 @@ const TweetPage = () => {
   const [fetchedReplies, repliesLoading, setReplies] = useReplies(
     params.tweet!
   );
+  const replies = fetchedReplies as unknown as TweetObj[];
 
   useWindowTitle(
     tweet &&
@@ -25,8 +26,6 @@ const TweetPage = () => {
         tweet.text
       }" `
   );
-
-  const replies = fetchedReplies as unknown as TweetObj[];
 
   return (
     <>

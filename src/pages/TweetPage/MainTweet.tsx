@@ -101,6 +101,19 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
     return undefined;
   };
 
+  const handleShare = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const btn = e.currentTarget as HTMLElement;
+    const btnText = btn.querySelector('.extra-btn-text')!;
+
+    // copy link to tweet page and write to clipboard
+    const linkText = `${window.location.origin}/${USER_NAME}/tweet/${TWEET_ID}`;
+    await navigator.clipboard.writeText(linkText);
+
+    // show link is copied
+    btn.classList.add('copied');
+    btnText.textContent = 'copied';
+  };
+
   const navToPage = async (e: React.MouseEvent<HTMLDivElement>) => {
     const targetName = (e.target as HTMLElement).className;
 
@@ -215,7 +228,11 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
               <FontAwesomeIcon icon={faHeart} />
             </span>
           </button>
-          <button type='button' className='btn-shares grey'>
+          <button
+            type='button'
+            className='btn-shares grey'
+            onClick={handleShare}
+          >
             <span className='btn-blue'>
               <FontAwesomeIcon icon={faArrowUpFromBracket} />
             </span>
