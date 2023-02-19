@@ -72,6 +72,14 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
     setSubmitting(false);
   };
 
+  const nothingChanged =
+    displayName === userProfile.displayName ||
+    bio === userProfile.bio ||
+    website === userProfile.website ||
+    location === userProfile.location ||
+    photoURL === userProfile.photoURL ||
+    backdropURL === userProfile.backdropURL;
+
   return (
     <>
       <div className='edit-profile'>
@@ -85,7 +93,12 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
               <FontAwesomeIcon icon={faClose} />
             </button>
             <h2>Edit profile</h2>
-            <SubmitButton submitting={submitting} text='Save' width={100} />
+            <SubmitButton
+              submitting={submitting}
+              text='Save'
+              width={100}
+              disabled={nothingChanged}
+            />
           </header>
 
           <div className='edit-images'>

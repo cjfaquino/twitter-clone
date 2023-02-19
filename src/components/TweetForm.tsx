@@ -84,7 +84,12 @@ const TweetForm = ({
               accept='image/jpeg'
             />
           </label>
-          <SubmitButton submitting={submitting} text={btnText} width={100} />
+          <SubmitButton
+            submitting={submitting}
+            text={btnText}
+            width={100}
+            disabled={!input}
+          />
         </section>
       </form>
     </section>

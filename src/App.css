@@ -518,6 +518,11 @@ button svg {
   color: var(--theme-color);
 }
 
+#reset-password button:disabled,
+#reset-password button:hover:disabled {
+  color: rgb(60, 60, 60);
+}
+
 /* Center column */
 
 #centerbar {

@@ -5,9 +5,10 @@ interface IProps {
   submitting: boolean;
   text: string;
   width: number;
+  disabled?: boolean;
 }
 
-const SubmitButton = ({ submitting, text, width }: IProps) => {
+const SubmitButton = ({ submitting, text, width, disabled }: IProps) => {
   const styles = {
     padding: '7px 15px',
     height: '42px',
@@ -15,10 +16,14 @@ const SubmitButton = ({ submitting, text, width }: IProps) => {
   };
 
   return (
-    <button type='submit' style={styles} disabled={submitting}>
+    <button type='submit' style={styles} disabled={disabled || submitting}>
       {submitting ? <Dots /> : text}
     </button>
   );
+};
+
+SubmitButton.defaultProps = {
+  disabled: false,
 };
 
 export default SubmitButton;

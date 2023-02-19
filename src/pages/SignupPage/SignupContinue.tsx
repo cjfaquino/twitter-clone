@@ -93,7 +93,12 @@ const SignupContinue = ({ currentUser }: IProps) => {
           <InputUsername userName={userName} handleUserName={handleUserName} />
         </section>
       </div>
-      <SubmitButton submitting={submitting} text='Submit' width={100} />
+      <SubmitButton
+        submitting={submitting}
+        text='Submit'
+        width={100}
+        disabled={!(userName && displayName)}
+      />
     </form>
   );
 };

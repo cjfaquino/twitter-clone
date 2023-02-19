@@ -95,6 +95,7 @@ const ChangePasswordForm = ({
         submitting={submittingPassword}
         text={emailProviderStatus ? 'Change' : 'Add'}
         width={100}
+        disabled={!(newPass && confirmNewPass)}
       />
       <div className='success-password success' ref={passwordRef} />
     </form>

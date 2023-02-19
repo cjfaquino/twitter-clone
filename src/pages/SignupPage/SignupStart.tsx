@@ -77,7 +77,12 @@ const SignupStart = ({ currentUser }: IProps) => {
             handleConfirmPassword={handleConfirmPassword}
           />
 
-          <SubmitButton submitting={submitting} text='Continue' width={120} />
+          <SubmitButton
+            submitting={submitting}
+            text='Continue'
+            width={120}
+            disabled={!(email && password && confirmPassword)}
+          />
           <HaveAnAccount exists />
         </>
       )}

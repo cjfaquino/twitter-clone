@@ -51,7 +51,12 @@ const ChangeUsernameForm = ({
     <form onSubmit={handleSubmitUsername}>
       <h2>Your Profile</h2>
       <InputUsername userName={userName} handleUserName={handleUserName} />
-      <SubmitButton submitting={submittingUsername} text='Change' width={100} />
+      <SubmitButton
+        submitting={submittingUsername}
+        text='Change'
+        width={100}
+        disabled={userName === userProfile.userName}
+      />
     </form>
   );
 };

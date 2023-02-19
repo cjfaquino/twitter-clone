@@ -62,7 +62,12 @@ const VerifyEmailForm = ({
 
       <InputEmail email={email} handleEmail={handleEmail} />
 
-      <SubmitButton submitting={submittingEmail} text='Change' width={100} />
+      <SubmitButton
+        submitting={submittingEmail}
+        text='Change'
+        width={100}
+        disabled={email === currentUser!.email}
+      />
     </form>
   );
 };

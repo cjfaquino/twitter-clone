@@ -45,7 +45,12 @@ const ResetPasswordPopup = ({
               onChange={handleEmail}
             />
           </label>
-          <SubmitButton submitting={submitting} text='Send' width={85} />
+          <SubmitButton
+            submitting={submitting}
+            text='Send'
+            width={85}
+            disabled={!email}
+          />
         </form>
       </div>
     </>

@@ -127,7 +127,12 @@ const Login = ({
                 Reset
               </button>
             </span>
-            <SubmitButton submitting={submitting} text='Log In' width={100} />
+            <SubmitButton
+              submitting={submitting}
+              text='Log In'
+              width={100}
+              disabled={!(emailVal && passwordVal)}
+            />
             {!asPopup && <HaveAnAccount />}
           </>
         )}
