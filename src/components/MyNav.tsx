@@ -62,7 +62,7 @@ const MyNav = ({ currentUser, userProfile, toggleTweetPopup }: IProps) => {
         {currentUser && userProfile.id !== 'no-id' ? (
           <>
             <li className='nav-list-item'>
-              <NavLink to={`${userProfile.userName}`}>
+              <NavLink end to={`${userProfile.userName}`}>
                 <div className='link-item'>
                   <FontAwesomeIcon icon={faUser} />
                   <span>Profile</span>
