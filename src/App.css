@@ -372,27 +372,34 @@ button svg {
   gap: 15px;
 }
 
+.input-container form {
+  display: flex;
+  flex-direction: column;
+}
+
 .input-container form,
-#tweet-input {
+.tweet-input {
   width: 100%;
 }
 
-#tweet-input,
+.tweet-input,
+.reply-input,
 .main-tweet-item-message,
 .tweet-item-message {
   white-space: pre-line;
 }
 
-#tweet-input {
+#tweet-page .input-container {
+  border-bottom: 1px solid grey;
+  padding: 15px;
+}
+
+.tweet-input {
   resize: none;
   min-height: 100px;
   background-color: transparent;
   border: none;
   font-size: 1.5rem;
-}
-
-.tweet-popup .hor-line {
-  margin: 15px 0;
 }
 
 .tweet-popup form {
@@ -440,7 +447,7 @@ button svg {
   padding: 10px;
   border-radius: 50px;
   aspect-ratio: 1/ 1;
-  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .tweet-img-container button:hover {
@@ -624,6 +631,7 @@ form button {
 }
 
 .hor-line {
+  margin: 15px 0;
   width: 100%;
   height: 0px;
   border-bottom: 1px solid grey;

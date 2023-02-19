@@ -18,7 +18,7 @@ export default function useReplies(
   const getReplies = async () => {
     const queryRef = query(
       collection(db, 'tweets', tweetID, 'replies'),
-      orderBy('timestamp', 'asc')
+      orderBy('repliedAt', 'asc')
     );
     const qSnap = await getDocs(queryRef);
     const repliesPromise = qSnap.docs.map((rep) => getUpdatedTweetByID(rep.id));

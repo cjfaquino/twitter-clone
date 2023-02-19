@@ -53,12 +53,17 @@ const TweetItem = ({ tweetObj }: IProps) => {
 
   const navToPage = async (e: React.MouseEvent<HTMLDivElement>) => {
     const element = e.target as HTMLDivElement;
+
+    // prevent errors when svg, path is selected
+    if (element.tagName === 'svg' || element.tagName === 'path') return;
     const targetName = element.className;
+
     // conditions
     const toUser = ['profile-link'];
     const toTweetPage = [
       'info',
       'right-half',
+      'left-half',
       'message',
       'time',
       'buttons',

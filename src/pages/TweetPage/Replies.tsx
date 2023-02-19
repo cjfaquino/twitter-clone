@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import saveTweet from '../../utils/tweets/saveTweet';
 import Tweet from '../../classes/Tweet';
 import { TweetObj } from '../../interfaces/TweetObj';
-import getProfilePicUrl from '../../utils/user/getProfilePicUrl';
 import isUserSignedIn from '../../utils/user/isUserSignedIn';
 import ListOfTweets from '../../components/ListOfTweets';
-import SubmitButton from '../../components/SubmitButton';
+import TweetForm from '../../components/TweetForm';
 
 interface IProps {
   tweetObj: TweetObj;
@@ -15,14 +14,9 @@ interface IProps {
 
 const Replies = ({ tweetObj, fetchedReplies, setReplies }: IProps) => {
   const [replyMessage, setReplyMessage] = useState('');
+  const [selectedImg, setSelectedImg] = useState<File | null>(null);
+
   const [submitting, setSubmitting] = useState(false);
-
-  const handleReplyInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setReplyMessage(e.target.value);
-
-    e.target.style.height = '5px';
-    e.target.style.height = `${e.target.scrollHeight}px`;
-  };
 
   const handleSubmitReply = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,6 +28,7 @@ const Replies = ({ tweetObj, fetchedReplies, setReplies }: IProps) => {
     const docID = await saveTweet({
       messageText: replyMessage,
       aReplyTo: tweetObj,
+      messageImgFile: selectedImg,
     });
     if (docID) {
       // send to TweetPage
@@ -50,21 +45,18 @@ const Replies = ({ tweetObj, fetchedReplies, setReplies }: IProps) => {
   };
 
   return (
-    <div>
+    <>
       {isUserSignedIn() && (
-        <form onSubmit={handleSubmitReply} className='reply-input-container'>
-          <div className='reply-input-img-container img-container'>
-            <img src={getProfilePicUrl()} alt='current user' />
-          </div>
-          <textarea
-            rows={1}
-            placeholder='Tweet your reply'
-            value={replyMessage}
-            onChange={handleReplyInput}
-            className='reply-input'
-          />
-          <SubmitButton submitting={submitting} text='Reply' width={120} />
-        </form>
+        <TweetForm
+          btnText='Reply'
+          placeholder='Tweet your reply'
+          input={replyMessage}
+          setInput={setReplyMessage}
+          submitting={submitting}
+          setSelectedImg={setSelectedImg}
+          selectedImg={selectedImg}
+          handleSubmit={handleSubmitReply}
+        />
       )}
       {fetchedReplies && (
         <ListOfTweets
@@ -73,7 +65,7 @@ const Replies = ({ tweetObj, fetchedReplies, setReplies }: IProps) => {
           missingText='No replies yet'
         />
       )}
-    </div>
+    </>
   );
 };
 
