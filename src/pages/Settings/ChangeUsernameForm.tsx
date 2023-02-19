@@ -25,12 +25,24 @@ const ChangeUsernameForm = ({
     setErrorMessage('.verify-username', '');
     setSubmittingUsername(true);
 
-    const res = await validateUsername(userName);
+    try {
+      await validateUsername(userName);
 
-    if (res.validity) {
       await updateProfile({ userProfile, userName });
-    } else {
-      setErrorMessage('.verify-username', res.errorMessage);
+    } catch (er) {
+      const error = er as Error;
+      const errorName = error.name;
+      const errorMessage = error.message;
+
+      switch (errorName) {
+        case 'Username Error':
+          setErrorMessage('.verify-username', errorMessage);
+          break;
+
+        default:
+          console.log(error);
+          break;
+      }
     }
     setSubmittingUsername(false);
   };

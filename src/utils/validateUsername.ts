@@ -1,8 +1,8 @@
 import UserName from '../classes/UserName';
-import { CustomError } from '../interfaces/CustomError';
+import UsernameError from '../classes/UsernameError';
 import checkUserNameAlreadyExists from './user/checkUsernameAlreadyExists';
 
-const validateUsername = async (username: string): Promise<CustomError> => {
+const validateUsername = async (username: string): Promise<boolean> => {
   const regex = /^[a-zA-Z][a-zA-Z0-9_]+$/;
   const firstLetterRegex = /^[a-zA-Z]/;
   const MAX = UserName.max;
@@ -29,7 +29,9 @@ const validateUsername = async (username: string): Promise<CustomError> => {
   const validity =
     !exists && minLength && maxLength && nameRegex && firstLetter;
 
-  return { validity, errorMessage };
+  if (!validity) throw new UsernameError(errorMessage);
+
+  return validity;
 };
 
 export default validateUsername;

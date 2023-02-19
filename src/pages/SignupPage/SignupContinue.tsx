@@ -27,41 +27,51 @@ const SignupContinue = ({ currentUser }: IProps) => {
 
     let newPhotoURL = photoURL;
 
-    if (selectedPhoto) {
-      newPhotoURL = await uploadImage(
-        `/users/${currentUser!.uid}/icon`,
-        selectedPhoto
-      );
-    }
-
-    // clear error on try
-    setErrorMessage('.verify-password', '');
+    // clear error on new try
+    setErrorMessage('.verify-username', '');
     setSubmitting(true);
 
     try {
-      const userNameResult = await validateUsername(userName);
+      // throw on invalid
+      await validateUsername(userName);
 
-      if (!userNameResult.validity) {
-        throw Error(userNameResult.errorMessage);
+      // upload photo & get URL
+      if (selectedPhoto) {
+        newPhotoURL = await uploadImage(
+          `/users/${currentUser!.uid}/icon`,
+          selectedPhoto
+        );
       }
 
+      // create create new profile
       const created = await createProfile({
         userName,
         displayName,
         photoURL: newPhotoURL,
         user: currentUser!,
       });
-      setSubmitting(false);
 
       if (created) {
         navigate(`/explore`);
       } else {
         // error
       }
-    } catch (error: unknown) {
-      const errorMessage = (error as Error).message;
-      setErrorMessage('.verify-password', errorMessage);
+    } catch (er) {
+      const error = er as Error;
+      const errorName = error.name;
+      const errorMessage = error.message;
+
+      switch (errorName) {
+        case 'Username Error':
+          setErrorMessage('.verify-username', errorMessage);
+          break;
+
+        default:
+          console.log(error);
+          break;
+      }
     }
+    setSubmitting(false);
   };
 
   return (
