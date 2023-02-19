@@ -6,6 +6,7 @@ import useFollowsList from '../hooks/useFollowsList';
 import ListOfUsers from '../components/ListOfUsers';
 import isUserSignedIn from '../utils/user/isUserSignedIn';
 import useWindowTitle from '../hooks/useWindowTitle';
+import getUserUid from '../utils/user/getUserUid';
 
 const FollowsPage = () => {
   const params = useParams();
@@ -41,7 +42,7 @@ const FollowsPage = () => {
     <>
       <GoBackHeader targetUser={targetUser} />
       <div className='filter-buttons-container'>
-        {isUserSignedIn() && (
+        {isUserSignedIn() && targetUser.userProfile.id !== getUserUid() && (
           <NavLink
             to={`/${params.username}/followers_you_follow`}
             className='styled-filter-link'
