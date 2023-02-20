@@ -2,6 +2,7 @@ import { doc, deleteDoc } from 'firebase/firestore';
 import { indexTweets } from '../../algolia-config';
 import { db } from '../../firebase-config';
 import { TweetObj } from '../../interfaces/TweetObj';
+import deleteTweetImg from './deleteTweetImg';
 import deleteReply from './deleteReply';
 
 // delete tweet by tweet uid from firestore
@@ -15,6 +16,11 @@ const deleteTweet = async (tweetObj: TweetObj) => {
       // delete tweet
       const tweetRef = doc(db, 'tweets', tweetObj.id);
       await deleteDoc(tweetRef);
+    }
+
+    // delete image if available
+    if (tweetObj.imgURL) {
+      deleteTweetImg(tweetObj.id);
     }
 
     // delete from algolia 'tweets' index

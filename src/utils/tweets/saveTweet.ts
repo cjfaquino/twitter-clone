@@ -6,6 +6,7 @@ import replyConverter from './replyConverter';
 import uploadImage from '../uploadImage';
 import { TweetObj } from '../../interfaces/TweetObj';
 import Tweet from '../../classes/Tweet';
+import getUserUid from '../user/getUserUid';
 
 interface IArgs {
   messageText: string;
@@ -51,7 +52,7 @@ const saveTweet = async ({
     if (messageImgFile) {
       // upload img if available
       uploadedURL = await uploadImage(
-        `/tweets/${docRef.id}/image`,
+        `/users/${getUserUid()}/tweets/${docRef.id}/image`,
         messageImgFile
       );
 
