@@ -22,11 +22,7 @@ import { TweetObj } from './interfaces/TweetObj';
 const App = () => {
   const [currentUser, userProfile] = useAuthStateObserver();
   const [showTweetPopup, toggleTweetPopup] = useToggle();
-  const [newTweet, setNewTweet] = useState<TweetObj | null>(null);
-
-  const clrNewTweet = () => {
-    setNewTweet(null);
-  };
+  const [tweets, setTweets] = useState<TweetObj[]>([]);
 
   return (
     <ProfileContext.Provider value={userProfile}>
@@ -50,9 +46,7 @@ const App = () => {
             <Route path='/home' element={<Home />} />
             <Route
               path='/explore'
-              element={
-                <Explore newTweet={newTweet} clrNewTweet={clrNewTweet} />
-              }
+              element={<Explore tweets={tweets} setTweets={setTweets} />}
             />
             <Route path='/search' element={<Search />} />
 
@@ -101,10 +95,7 @@ const App = () => {
       </div>
 
       {currentUser && showTweetPopup && (
-        <TweetPopup
-          toggleTweetPopup={toggleTweetPopup}
-          setNewTweet={setNewTweet}
-        />
+        <TweetPopup toggleTweetPopup={toggleTweetPopup} setTweets={setTweets} />
       )}
     </ProfileContext.Provider>
   );

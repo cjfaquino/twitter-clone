@@ -7,22 +7,19 @@ import Spinner from '../components/Loaders/Spinner';
 import useWindowTitle from '../hooks/useWindowTitle';
 
 interface IProps {
-  newTweet: TweetObj | null;
-  clrNewTweet: Function;
+  tweets: TweetObj[];
+  setTweets: React.Dispatch<React.SetStateAction<TweetObj[]>>;
 }
 
-const Explore = ({ newTweet, clrNewTweet }: IProps) => {
+const Explore = ({ tweets, setTweets }: IProps) => {
   useWindowTitle('Explore');
-  const [tweets, addTweetToDOM, isTweetsLoading] = useTweets('explore');
+  const [fetchedTweets, addTweetToDOM, isTweetsLoading] = useTweets('explore');
 
   useEffect(() => {
-    if (newTweet) {
-      addTweetToDOM(newTweet);
-      clrNewTweet();
-    }
+    setTweets(fetchedTweets);
 
     return () => {};
-  }, [newTweet]);
+  }, [fetchedTweets]);
 
   return (
     <div id='explore'>
@@ -31,7 +28,7 @@ const Explore = ({ newTweet, clrNewTweet }: IProps) => {
         {isTweetsLoading ? (
           <Spinner />
         ) : (
-          <ListOfTweets tweets={tweets as TweetObj[]} customClass='tweets' />
+          <ListOfTweets tweets={tweets} customClass='tweets' />
         )}
       </div>
     </div>

@@ -7,10 +7,10 @@ import TweetForm from './TweetForm';
 
 interface IProps {
   toggleTweetPopup: React.MouseEventHandler<Element>;
-  setNewTweet: React.Dispatch<React.SetStateAction<TweetObj | null>>;
+  setTweets: React.Dispatch<React.SetStateAction<TweetObj[]>>;
 }
 
-const TweetPopup = ({ toggleTweetPopup, setNewTweet }: IProps) => {
+const TweetPopup = ({ toggleTweetPopup, setTweets }: IProps) => {
   // adds a temp local copy on top of Explore
   const addToExplore = ({
     id,
@@ -21,11 +21,13 @@ const TweetPopup = ({ toggleTweetPopup, setNewTweet }: IProps) => {
     messageImg: string;
     messageText: string;
   }) => {
-    // send a local copy to Explore if on Explore
-    setNewTweet({
+    const newTweet = {
       id,
       ...new Tweet({ messageText, messageImg }),
-    } as TweetObj);
+    } as TweetObj;
+    setTweets((prev) => [newTweet, ...prev]);
+
+    // close popup
     (toggleTweetPopup as Function)();
   };
 
