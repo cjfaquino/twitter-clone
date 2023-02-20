@@ -76,6 +76,7 @@ input:focus {
 
 label {
   color: grey;
+  position: relative;
 }
 
 label:focus-within {

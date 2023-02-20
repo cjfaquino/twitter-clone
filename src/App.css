@@ -615,6 +615,10 @@ form button {
   justify-content: space-between;
 }
 
+.continue-signup .error {
+  top: -20px;
+}
+
 .btn-with-provider {
   width: 100%;
   background-color: white;
@@ -1259,10 +1263,10 @@ header.search {
 .edit-profile {
   position: fixed;
   height: 550px;
-  top: 50%;
+  top: 100px;
   left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 3;
+  transform: translateX(-50%);
+  z-index: 4;
   background-color: black;
   border-radius: 20px;
   overflow-y: scroll;
