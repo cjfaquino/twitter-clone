@@ -102,8 +102,9 @@ button:hover {
 }
 
 button:disabled {
-  opacity: 0.9;
+  opacity: 0.8;
   cursor: default;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 button:hover:disabled {
