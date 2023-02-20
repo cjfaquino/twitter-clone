@@ -19,7 +19,7 @@ const saveTweet = async ({
   messageText,
   messageImgFile = null,
   aReplyTo = null,
-}: IArgs) => {
+}: IArgs): Promise<[string | null, string | null, Error | null]> => {
   try {
     // ref for original tweet
     const tweetRef = collection(db, 'tweets').withConverter(tweetConverter);
@@ -47,9 +47,10 @@ const saveTweet = async ({
       docRef = await addDoc(tweetRef, tweet);
     }
 
+    let uploadedURL = null;
     if (messageImgFile) {
       // upload img if available
-      const uploadedURL = await uploadImage(
+      uploadedURL = await uploadImage(
         `/tweets/${docRef.id}/image`,
         messageImgFile
       );
@@ -67,10 +68,11 @@ const saveTweet = async ({
     });
 
     // return firebase doc id
-    return docRef.id;
-  } catch (error) {
+    return [docRef.id, uploadedURL, null];
+  } catch (er) {
+    const error = er as Error;
     console.error('Error writing new tweet to Firebase Database', error);
-    return false;
+    return [null, null, error];
   }
 };
 

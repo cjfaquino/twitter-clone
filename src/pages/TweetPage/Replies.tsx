@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import saveTweet from '../../utils/tweets/saveTweet';
+import React from 'react';
 import Tweet from '../../classes/Tweet';
 import { TweetObj } from '../../interfaces/TweetObj';
 import isUserSignedIn from '../../utils/user/isUserSignedIn';
@@ -9,39 +8,31 @@ import TweetForm from '../../components/TweetForm';
 interface IProps {
   tweetObj: TweetObj;
   fetchedReplies: TweetObj[];
-  setReplies: React.Dispatch<React.SetStateAction<any[]>>;
+  setReplies: React.Dispatch<React.SetStateAction<TweetObj[]>>;
 }
 
 const Replies = ({ tweetObj, fetchedReplies, setReplies }: IProps) => {
-  const [replyMessage, setReplyMessage] = useState('');
-  const [selectedImg, setSelectedImg] = useState<File | null>(null);
-
-  const [submitting, setSubmitting] = useState(false);
-
-  const handleSubmitReply = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setSubmitting(true);
-    if (!isUserSignedIn()) {
-      return; // show login popup
-    }
-
-    const docID = await saveTweet({
-      messageText: replyMessage,
-      aReplyTo: tweetObj,
-      messageImgFile: selectedImg,
-    });
-    if (docID) {
-      // send to TweetPage
-      const replyObj = {
-        id: docID,
-        ...new Tweet({ messageText: replyMessage, aReplyTo: tweetObj }),
-      };
-      setReplies((prev) => [...prev, replyObj]);
-      setReplyMessage('');
-    } else {
-      // error sending
-    }
-    setSubmitting(false);
+  // adds a temp local copy under replies
+  const addToReplies = ({
+    id,
+    messageImg,
+    messageText,
+    aReplyTo,
+  }: {
+    id: string;
+    messageImg: string;
+    messageText: string;
+    aReplyTo: TweetObj;
+  }) => {
+    const replyObj = {
+      id,
+      ...new Tweet({
+        messageText,
+        messageImg,
+        aReplyTo,
+      }),
+    };
+    setReplies((prev) => [...prev, replyObj]);
   };
 
   return (
@@ -50,12 +41,8 @@ const Replies = ({ tweetObj, fetchedReplies, setReplies }: IProps) => {
         <TweetForm
           btnText='Reply'
           placeholder='Tweet your reply'
-          input={replyMessage}
-          setInput={setReplyMessage}
-          submitting={submitting}
-          setSelectedImg={setSelectedImg}
-          selectedImg={selectedImg}
-          handleSubmit={handleSubmitReply}
+          successCallback={addToReplies}
+          aReplyTo={tweetObj}
         />
       )}
       {fetchedReplies && (

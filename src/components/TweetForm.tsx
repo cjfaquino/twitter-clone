@@ -2,32 +2,32 @@ import { faImage } from '@fortawesome/free-regular-svg-icons';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { TweetObj } from '../interfaces/TweetObj';
+import saveTweet from '../utils/tweets/saveTweet';
 import getProfilePicUrl from '../utils/user/getProfilePicUrl';
+import isUserSignedIn from '../utils/user/isUserSignedIn';
 import SubmitButton from './SubmitButton';
 
 interface IProps {
-  input: string;
-  setInput: React.Dispatch<React.SetStateAction<string>>;
   placeholder: string;
   btnText: string;
-  selectedImg: File | null;
-  setSelectedImg: React.Dispatch<React.SetStateAction<File | null>>;
-  submitting: boolean;
-  handleSubmit: any;
+  successCallback: Function;
+  aReplyTo?: TweetObj | null;
 }
 
 const TweetForm = ({
-  handleSubmit,
-  submitting,
-  selectedImg,
-  setSelectedImg,
-  input,
-  setInput,
   placeholder,
   btnText,
+  aReplyTo,
+  successCallback,
 }: IProps) => {
   const [imgURL, setImgURL] = useState('');
+  const [input, setInput] = useState('');
+  const [selectedImg, setSelectedImg] = useState<File | null>(null);
+  const [submitting, setSubmitting] = useState(false);
   const inputRef = useRef(null);
+  const navigate = useNavigate();
   const type = btnText.toLowerCase();
 
   const resetImg = () => {
@@ -45,6 +45,41 @@ const TweetForm = ({
     setInput(e.target.value);
     e.target.style.height = '5px';
     e.target.style.height = `${e.target.scrollHeight}px`;
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!isUserSignedIn()) {
+      // go to login
+      navigate('/login', { state: { error: 'no-login' } });
+      return;
+    }
+
+    setSubmitting(true);
+
+    // save tweet
+    const [docID, uploadedImgURL, tweetError] = await saveTweet({
+      messageText: input,
+      messageImgFile: selectedImg,
+      aReplyTo,
+    });
+    if (docID) {
+      // send a local copy to Explore if on Explore
+      successCallback({
+        id: docID,
+        messageImg: uploadedImgURL,
+        messageText: input,
+        aReplyTo,
+      });
+      setInput('');
+      resetImg();
+    }
+
+    if (tweetError) {
+      // error
+    }
+
+    setSubmitting(false);
   };
 
   return (
@@ -94,6 +129,10 @@ const TweetForm = ({
       </form>
     </section>
   );
+};
+
+TweetForm.defaultProps = {
+  aReplyTo: null,
 };
 
 export default TweetForm;
