@@ -11,7 +11,7 @@ interface IProps {
 }
 
 const ProfileFeed = ({ filter, targetUser }: IProps) => {
-  const [userTweets, , tweetsLoading] = useTweets(
+  const [userTweets, tweetsLoading] = useTweets(
     filter,
     targetUser.userProfile && targetUser.userProfile.id
   );

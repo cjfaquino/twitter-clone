@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   collection,
   query,
@@ -15,7 +15,7 @@ import { TweetObj } from '../interfaces/TweetObj';
 export default function useTweets(
   filter: string,
   userID?: string
-): [DocumentData[], Function, boolean] {
+): [TweetObj[], boolean] {
   const [tweets, setTweets] = useState<DocumentData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -49,12 +49,16 @@ export default function useTweets(
           );
           break;
 
-        default:
+        case 'all':
           queryRef = query(
             collection(db, 'tweets'),
             orderBy('timestamp', 'desc')
           );
           break;
+
+        default:
+          // dont load tweets
+          return;
       }
 
       const qSnap = await getDocs(queryRef);
@@ -136,10 +140,5 @@ export default function useTweets(
     };
   }, [filter, userID]);
 
-  // add temp tweet to DOM
-  const addTweetToDOM = useCallback((tweetObj: TweetObj) => {
-    setTweets((prev) => [tweetObj, ...prev]);
-  }, []);
-
-  return [tweets as TweetObj[], addTweetToDOM, loading];
+  return [tweets as TweetObj[], loading];
 }

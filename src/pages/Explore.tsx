@@ -13,7 +13,7 @@ interface IProps {
 
 const Explore = ({ tweets, setTweets }: IProps) => {
   useWindowTitle('Explore');
-  const [fetchedTweets, addTweetToDOM, isTweetsLoading] = useTweets('explore');
+  const [fetchedTweets, isTweetsLoading] = useTweets('explore');
 
   useEffect(() => {
     setTweets(fetchedTweets);

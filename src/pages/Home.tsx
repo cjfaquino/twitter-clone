@@ -11,7 +11,7 @@ import isUserSignedIn from '../utils/user/isUserSignedIn';
 
 const Home = () => {
   useWindowTitle('Home');
-  const [tweets, , isTweetsLoading] = useTweets('explore');
+  const [tweets, isTweetsLoading] = useTweets('explore');
   const [followedUsers] = useFollowsList('following', getUserUid());
   const filtered = findDuplicatesByField(
     tweets,
