@@ -43,7 +43,10 @@ const App = () => {
                   element={<Navigate to='/explore' replace />}
                 />
               ))}
-            <Route path='/home' element={<Home />} />
+            <Route
+              path='/home'
+              element={<Home tweets={tweets} setTweets={setTweets} />}
+            />
             <Route
               path='/explore'
               element={<Explore tweets={tweets} setTweets={setTweets} />}
@@ -61,6 +64,8 @@ const App = () => {
                 <ProfilePage
                   currentUser={currentUser}
                   userProfile={userProfile}
+                  tweets={tweets}
+                  setTweets={setTweets}
                 />
               }
             />

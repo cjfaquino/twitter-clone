@@ -11,6 +11,7 @@ import { db } from '../firebase-config';
 import getUpdatedTweetByID from '../utils/tweets/getUpdatedTweetByID';
 import undoLike from '../utils/likes/undoLike';
 import { TweetObj } from '../interfaces/TweetObj';
+import getFollows from '../utils/follows/getFollows';
 
 export default function useTweets(
   filter: string,
@@ -47,6 +48,18 @@ export default function useTweets(
             where('aReplyTo', '==', null),
             orderBy('timestamp', 'desc')
           );
+          break;
+
+        case 'home':
+          {
+            const following = await getFollows('following');
+            queryRef = query(
+              collection(db, 'tweets'),
+              where('USER_ID', 'in', [userID, ...following]),
+              where('aReplyTo', '==', null),
+              orderBy('timestamp', 'desc')
+            );
+          }
           break;
 
         case 'all':
@@ -120,23 +133,24 @@ export default function useTweets(
     setLoading(false);
   };
 
-  let ran = false;
   useEffect(() => {
-    // filter is not likes
-    if (!ran && filter !== 'user likes') {
-      getTweets();
-      ran = true;
-    }
+    const timer = setTimeout(() => {
+      // filter is not likes
+      if (filter !== 'user likes') {
+        getTweets();
+      }
 
-    // filter is likes
-    if (!ran && filter === 'user likes') {
-      getLikes();
-      ran = true;
-    }
+      // filter is likes
+      if (filter === 'user likes') {
+        getLikes();
+      }
+      console.log('ran');
+    }, 200);
 
     return () => {
       setTweets([]);
       setLoading(true);
+      clearTimeout(timer);
     };
   }, [filter, userID]);
 

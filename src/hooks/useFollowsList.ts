@@ -1,16 +1,10 @@
-import {
-  collection,
-  doc,
-  DocumentData,
-  getDoc,
-  getDocs,
-  query,
-} from 'firebase/firestore';
+import { doc, DocumentData, getDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { UserProfile } from '../interfaces/UserProfile';
 import { db } from '../firebase-config';
 import findDuplicatesByField from '../utils/findDuplicatesByField';
 import getFollowers from '../utils/follows/getFollowers';
+import getFollows from '../utils/follows/getFollows';
 
 export default function useFollowsList(typeOfList: string, userID: string) {
   const [userList, setUserList] = useState<UserProfile[]>([]);
@@ -49,11 +43,10 @@ export default function useFollowsList(typeOfList: string, userID: string) {
     dontSetList?: boolean | undefined
   ) => {
     try {
-      const queryRef = query(collection(db, 'users', userID, type));
+      const list = await getFollows(type, userID);
 
-      const qSnap = await getDocs(queryRef);
       const users = await Promise.all(
-        qSnap.docs.map((item) => getUser(item.id, dontSetList))
+        list.map((id) => getUser(id, dontSetList))
       );
       return users;
     } catch (error) {

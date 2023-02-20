@@ -2,23 +2,22 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import ListOfTweets from '../components/ListOfTweets';
 import Spinner from '../components/Loaders/Spinner';
-import useFollowsList from '../hooks/useFollowsList';
+import useStoreTweets from '../hooks/useStoreTweets';
 import useTweets from '../hooks/useTweets';
 import useWindowTitle from '../hooks/useWindowTitle';
-import findDuplicatesByField from '../utils/findDuplicatesByField';
+import { TweetObj } from '../interfaces/TweetObj';
 import getUserUid from '../utils/user/getUserUid';
 import isUserSignedIn from '../utils/user/isUserSignedIn';
 
-const Home = () => {
+interface IProps {
+  tweets: TweetObj[];
+  setTweets: React.Dispatch<React.SetStateAction<TweetObj[]>>;
+}
+
+const Home = ({ tweets, setTweets }: IProps) => {
   useWindowTitle('Home');
-  const [tweets, isTweetsLoading] = useTweets('explore');
-  const [followedUsers] = useFollowsList('following', getUserUid());
-  const filtered = findDuplicatesByField(
-    tweets,
-    followedUsers,
-    'USER_ID',
-    'id'
-  );
+  const [fetchedTweets, isTweetsLoading] = useTweets('home', getUserUid());
+  useStoreTweets(fetchedTweets, setTweets);
 
   return (
     <div id='home'>
@@ -38,7 +37,7 @@ const Home = () => {
           <Spinner />
         ) : (
           <ListOfTweets
-            tweets={filtered}
+            tweets={tweets}
             customClass='tweets'
             missingText='Follow some users to start seeing a feed of people you follow'
           />

@@ -11,7 +11,7 @@ interface IProps {
 }
 
 const TweetPopup = ({ toggleTweetPopup, setTweets }: IProps) => {
-  // adds a temp local copy on top of Explore
+  // adds a temp local copy on top of current page between Home, Explore, or Profile Pages
   const addToExplore = ({
     id,
     messageImg,

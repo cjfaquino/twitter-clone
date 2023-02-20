@@ -14,13 +14,21 @@ import ProfileFeed from './ProfileFeed';
 import { UserProfile } from '../../interfaces/UserProfile';
 import Spinner from '../../components/Loaders/Spinner';
 import useWindowTitle from '../../hooks/useWindowTitle';
+import { TweetObj } from '../../interfaces/TweetObj';
 
 interface IProps {
   currentUser: User | null;
   userProfile: UserProfile;
+  tweets: TweetObj[];
+  setTweets: React.Dispatch<React.SetStateAction<TweetObj[]>>;
 }
 
-const ProfilePage = ({ currentUser, userProfile }: IProps) => {
+const ProfilePage = ({
+  currentUser,
+  userProfile,
+  tweets,
+  setTweets,
+}: IProps) => {
   const params = useParams();
   const navigate = useNavigate();
   const targetUser = useFindByUsername(params.username!);
@@ -70,20 +78,24 @@ const ProfilePage = ({ currentUser, userProfile }: IProps) => {
         </div>
       )}
       <Routes>
-        <Route
-          path=''
-          element={<ProfileFeed filter='user tweets' targetUser={targetUser} />}
-        />
-        <Route
-          path='with_replies'
-          element={
-            <ProfileFeed filter='user tweets&replies' targetUser={targetUser} />
-          }
-        />
-        <Route
-          path='likes'
-          element={<ProfileFeed filter='user likes' targetUser={targetUser} />}
-        />
+        {[
+          { path: '', filter: 'user tweets' },
+          { path: 'with_replies', filter: 'user tweets&replies' },
+          { path: 'likes', filter: 'user likes' },
+        ].map((item) => (
+          <Route
+            key={item.path}
+            path={item.path}
+            element={
+              <ProfileFeed
+                filter={item.filter}
+                targetUser={targetUser}
+                setTweets={setTweets}
+                tweets={tweets}
+              />
+            }
+          />
+        ))}
       </Routes>
     </div>
   ) : (
