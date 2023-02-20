@@ -116,7 +116,7 @@ const TweetForm = ({
               name={`${type}-img`}
               id={`${type}-img`}
               onChange={handleImg}
-              accept='image/jpeg'
+              accept='image/jpeg, image/webp'
             />
           </label>
           <SubmitButton

@@ -139,6 +139,7 @@ button svg {
 .img-container img {
   height: 100%;
   width: 100%;
+  background-color: black;
 }
 
 .btn-follow {

@@ -111,7 +111,7 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
                   type='file'
                   name='backdropURL'
                   id='backdropURL'
-                  accept='image/jpeg'
+                  accept='image/jpeg, image/webp'
                 />
               </label>
             </div>

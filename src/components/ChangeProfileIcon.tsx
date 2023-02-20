@@ -48,7 +48,7 @@ const ChangeProfileIcon = ({
           name='photoURL'
           id='photoURL'
           onChange={handleImg}
-          accept='image/jpeg'
+          accept='image/jpeg, image/webp'
         />
       </label>
     </div>
