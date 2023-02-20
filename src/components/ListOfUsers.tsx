@@ -26,10 +26,12 @@ const ListOfUsers = ({
     <div className='list'>
       {empty && <div className='missing'>{missingText}</div>}
       {compact
-        ? users.map((usr) => (
+        ? !empty &&
+          users.map((usr) => (
             <ProfileSmall key={`profile-small-${usr.id}`} userProfile={usr} />
           ))
-        : users.map((usr) => (
+        : !empty &&
+          users.map((usr) => (
             <ProfileMedium key={`profile-medium-${usr.id}`} userProfile={usr} />
           ))}
     </div>

@@ -1,89 +1,75 @@
-import { doc, DocumentData, getDoc } from 'firebase/firestore';
+import {
+  collection,
+  DocumentData,
+  getDocs,
+  query,
+  where,
+} from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { UserProfile } from '../interfaces/UserProfile';
 import { db } from '../firebase-config';
-import findDuplicatesByField from '../utils/findDuplicatesByField';
-import getFollowers from '../utils/follows/getFollowers';
 import getFollows from '../utils/follows/getFollows';
+import getUpdatedUserByID from '../utils/user/getUpdatedUserByID';
 
-export default function useFollowsList(typeOfList: string, userID: string) {
+export default function useFollowsList(
+  typeOfList: string,
+  userID: string
+): [UserProfile[], boolean] {
   const [userList, setUserList] = useState<UserProfile[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const getUser = async (
-    targetID: string,
-    skipSetList?: boolean | undefined
-  ) => {
-    try {
-      const docRef = doc(db, 'users', targetID);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        const user = {
-          id: docSnap.id,
-          doneLoading: true,
-          ...docSnap.data(),
-          // for algolia 'users' index
-          objectID: docSnap.id,
-        };
-
-        if (!skipSetList) {
-          setUserList((prev) => [...prev, user]);
-        }
-
-        return user;
-      }
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
-    return [];
-  };
-
-  const getListOfUsers = async (
-    type: string,
-    dontSetList?: boolean | undefined
-  ) => {
+  const getListOfUsers = async (type: string) => {
+    setLoading(true);
     try {
       const list = await getFollows(type, userID);
 
-      const users = await Promise.all(
-        list.map((id) => getUser(id, dontSetList))
-      );
-      return users;
+      const users = await Promise.all(list.map((id) => getUpdatedUserByID(id)));
+
+      setUserList(users);
     } catch (error) {
       console.log(error);
-      return [];
     }
+    setLoading(false);
   };
 
   const getListFollowersYouFollow = async (): Promise<
     DocumentData[] | void
   > => {
-    const [usersFollowers, targetsFollowers] = await Promise.all([
-      getFollowers(),
-      getListOfUsers('followers', true),
-    ]);
+    setLoading(true);
+    try {
+      // get currentUsers following
+      const following = await getFollows('following');
 
-    const filtered = findDuplicatesByField(
-      usersFollowers,
-      targetsFollowers,
-      'id'
-    );
+      // get list of target user's followers matching any in [following]
+      const listRef = query(
+        collection(db, 'users', userID, 'followers'),
+        where('__name__', 'in', following)
+      );
+      const qSnap = await getDocs(listRef);
 
-    setUserList(filtered);
-    return usersFollowers;
+      const filtered = await Promise.all(
+        qSnap.docs.map((item) => getUpdatedUserByID(item.id))
+      );
+
+      setUserList(filtered);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
   };
 
   useEffect(() => {
-    if (typeOfList !== 'followers_you_follow') {
-      getListOfUsers(typeOfList);
-    } else {
+    if (typeOfList === 'followers_you_follow') {
       getListFollowersYouFollow();
+    } else {
+      getListOfUsers(typeOfList);
     }
 
     return () => {
       setUserList([]);
+      setLoading(true);
     };
   }, [typeOfList, userID]);
 
-  return [userList];
+  return [userList, loading];
 }

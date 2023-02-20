@@ -7,13 +7,17 @@ import ListOfUsers from '../components/ListOfUsers';
 import isUserSignedIn from '../utils/user/isUserSignedIn';
 import useWindowTitle from '../hooks/useWindowTitle';
 import getUserUid from '../utils/user/getUserUid';
+import Spinner from '../components/Loaders/Spinner';
 
 const FollowsPage = () => {
   const params = useParams();
   const location = useLocation();
   const targetUser = useFindByUsername(params.username!);
   const typeOfList = location.pathname.split('/')[2];
-  const [userLists] = useFollowsList(typeOfList!, targetUser.userProfile.id);
+  const [userLists, usersLoading] = useFollowsList(
+    typeOfList!,
+    targetUser.userProfile.id
+  );
 
   const windowTitle = (listName: string) => {
     let title = '';
@@ -67,7 +71,7 @@ const FollowsPage = () => {
           <span>Following</span>
         </NavLink>
       </div>
-      <ListOfUsers users={userLists} />
+      {usersLoading ? <Spinner /> : <ListOfUsers users={userLists} />}
     </>
   );
 };
