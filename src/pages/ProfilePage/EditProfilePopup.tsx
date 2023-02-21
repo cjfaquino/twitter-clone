@@ -73,11 +73,11 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
   };
 
   const nothingChanged =
-    displayName === userProfile.displayName ||
-    bio === userProfile.bio ||
-    website === userProfile.website ||
-    location === userProfile.location ||
-    photoURL === userProfile.photoURL ||
+    displayName === userProfile.displayName &&
+    bio === userProfile.bio &&
+    website === userProfile.website &&
+    location === userProfile.location &&
+    photoURL === userProfile.photoURL &&
     backdropURL === userProfile.backdropURL;
 
   return (
