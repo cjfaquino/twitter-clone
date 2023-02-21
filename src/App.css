@@ -391,6 +391,7 @@ button svg {
   white-space: pre-line;
 }
 
+#home .input-container,
 #tweet-page .input-container {
   border-bottom: 1px solid var(--line-color);
   padding: 15px;
