@@ -30,3 +30,10 @@
 #who-to-follow .loader {
   height: 300px;
 }
+
+@media (prefers-color-scheme: light) {
+  .spinner {
+    border: 6px solid rgb(230, 230, 230);
+    border-top: 6px solid var(--theme-color);
+  }
+}

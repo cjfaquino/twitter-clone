@@ -19,6 +19,7 @@ const LikeByPopup = () => {
       <div id='popup-background' aria-hidden onClick={goBackToTweet} />
       <div id='likes-popup'>
         <header>
+          <h2>Liked by</h2>
           <button
             type='button'
             className='btn-cancel-edit'
@@ -26,7 +27,6 @@ const LikeByPopup = () => {
           >
             <FontAwesomeIcon icon={faClose} />
           </button>
-          <h2>Liked by</h2>
         </header>
         {usersLoading ? (
           <Spinner />

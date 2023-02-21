@@ -103,7 +103,9 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
 
           <div className='edit-images'>
             <div className='img-backdrop'>
-              <img src={backdropURL} alt='backdrop' className='img-overlay' />
+              {backdropURL && (
+                <img src={backdropURL} alt='backdrop' className='img-overlay' />
+              )}
               <label htmlFor='backdropURL' className='img-file-upload'>
                 <FontAwesomeIcon icon={faImage} />
                 <input

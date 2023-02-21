@@ -5,7 +5,7 @@
 footer {
   height: var(--footer-size);
   background-color: transparent;
-  color: white;
+  color: var(--text);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -19,9 +19,9 @@ footer a {
 }
 
 footer a:hover {
-  color: white;
+  color: var(--text);
 }
 
-footer img {
-  height: 14px;
+footer svg {
+  font-size: 15px;
 }

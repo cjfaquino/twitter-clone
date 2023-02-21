@@ -52,7 +52,9 @@ const ProfileLarge = ({ currentUser, targetUser, userProfile }: IProps) => {
           {targetUser.doneLoading && (
             <div id={`${customClass}-${targetUser.userProfile.id}`}>
               <div className='top-half img-backdrop'>
-                <img src={targetUser.userProfile.backdropURL} alt='' />
+                {targetUser.userProfile.backdropURL && (
+                  <img src={targetUser.userProfile.backdropURL} alt='' />
+                )}
               </div>
               <div className='bottom-half'>
                 <div className='user-pic edit'>
