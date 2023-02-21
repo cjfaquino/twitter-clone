@@ -122,4 +122,8 @@ button:hover:disabled {
     --text: black;
     --background-color: white;
   }
+
+  input:disabled {
+    border-color: rgb(240, 240, 240);
+  }
 }
