@@ -42,6 +42,16 @@ export default function useTweets(
           );
           break;
 
+        case 'user media':
+          queryRef = query(
+            collection(db, 'tweets'),
+            where('USER_ID', '==', userID),
+            where('imgURL', '!=', null),
+            orderBy('imgURL', 'desc'),
+            orderBy('timestamp', 'desc')
+          );
+          break;
+
         case 'explore':
           queryRef = query(
             collection(db, 'tweets'),
