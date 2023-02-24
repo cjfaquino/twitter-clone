@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { faComment, faHeart } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -29,6 +29,7 @@ import checkAlreadyRetweeted from '../utils/retweets/checkAlreadyRetweeted';
 import retweet from '../utils/retweets/retweet';
 import getUpdatedTweetByID from '../utils/tweets/getUpdatedTweetByID';
 import getUpdatedUserByID from '../utils/user/getUpdatedUserByID';
+import undoRetweet from '../utils/retweets/undoRetweet';
 
 interface IProps {
   tweetObj: TweetObj;
@@ -143,7 +144,7 @@ const TweetItem = ({ tweetObj }: IProps) => {
 
     if (checkAlreadyRetweeted(TWEET_ID, userProfile)) {
       // already retweeted
-
+      await undoRetweet(tweetObj, userProfile);
       setRetweets((prev) => prev - 1);
     } else {
       // not yet retweeted
@@ -170,6 +171,10 @@ const TweetItem = ({ tweetObj }: IProps) => {
     const linkText = `${window.location.origin}/${targetUser.userProfile.userName}/tweet/${TWEET_ID}`;
     navigator.clipboard.writeText(linkText);
   };
+
+  useEffect(() => {
+    console.log(checkAlreadyRetweeted(TWEET_ID, userProfile));
+  }, [TWEET_ID]);
 
   return (
     <div

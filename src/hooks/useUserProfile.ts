@@ -52,7 +52,7 @@ function useUserProfile(userID: string | null): [UserProfile, boolean] {
 
     const qSnap = await getDocs(queryRef);
 
-    return qSnap.docs.map((item) => item.data());
+    return qSnap.docs.map((item) => ({ id: item.id, ...item.data() }));
   };
 
   const getUser = async () => {

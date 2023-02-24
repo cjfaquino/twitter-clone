@@ -3,15 +3,18 @@ import { indexTweets } from '../../algolia-config';
 import { db } from '../../firebase-config';
 import { TweetObj } from '../../interfaces/TweetObj';
 import deleteTweetImg from './deleteTweetImg';
-import deleteReply from './deleteReply';
+import deletePointerTweet from './deletePointerTweet';
 
 // delete tweet by tweet uid from firestore
 
 const deleteTweet = async (tweetObj: TweetObj) => {
   try {
-    if (tweetObj.aReplyTo) {
+    if (tweetObj.aRetweetOf) {
       // if a reply to another tweet
-      await deleteReply(tweetObj.id, tweetObj.aReplyTo.id);
+      await deletePointerTweet('retweets', tweetObj.id, tweetObj.aRetweetOf.id);
+    } else if (tweetObj.aReplyTo) {
+      // if a reply to another tweet
+      await deletePointerTweet('replies', tweetObj.id, tweetObj.aReplyTo.id);
     } else {
       // delete tweet
       const tweetRef = doc(db, 'tweets', tweetObj.id);
@@ -28,7 +31,7 @@ const deleteTweet = async (tweetObj: TweetObj) => {
 
     return true;
   } catch (error) {
-    console.error('Error deleting message from Firebase Database', error);
+    console.log('Error deleting message from Firebase Database', error);
     return false;
   }
 };

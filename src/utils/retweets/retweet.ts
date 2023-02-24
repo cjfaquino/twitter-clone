@@ -19,8 +19,12 @@ export default async (tweetObj: TweetObj) => {
 
   if (docID) {
     // create retweet pointer in users>retweets
-    const userRef = doc(db, 'users', getUserUid(), 'retweets', docID);
-    setDoc(userRef, { id: getUserUid(), retweetedAt: serverTimestamp() });
+    const userRef = doc(db, 'users', getUserUid(), 'retweets', tweetObj.id);
+    setDoc(userRef, {
+      retweet_ID: docID,
+      USER_ID: getUserUid(),
+      retweetedAt: serverTimestamp(),
+    });
 
     // increment original tweets retweet by 1
     const tweetsRetweetsRef = doc(db, 'tweets', tweetObj.id);

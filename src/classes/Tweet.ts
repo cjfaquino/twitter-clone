@@ -22,6 +22,7 @@ interface Tweet {
   views: number;
   aReplyTo: TweetObj | null;
   aRetweetOf: TweetObj | null;
+  retweet_ID?: string;
 }
 
 export interface IArgs {
