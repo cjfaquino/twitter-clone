@@ -12,6 +12,7 @@ export interface UserProfile {
   followers?: number;
   following?: number;
   likes?: TweetObj[];
+  retweets?: TweetObj[];
   metadata?: {
     createdAt: string;
     creationTime: string;

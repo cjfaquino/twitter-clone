@@ -45,17 +45,27 @@ function useUserProfile(userID: string | null): [UserProfile, boolean] {
     return qSnap.docs.map((item) => item.data());
   };
 
+  const getRetweets = async () => {
+    if (!userID) return undefined;
+
+    const queryRef = query(collection(db, 'users', userID, 'retweets'));
+
+    const qSnap = await getDocs(queryRef);
+
+    return qSnap.docs.map((item) => item.data());
+  };
+
   const getUser = async () => {
     if (userID) {
-      const [fetchedProfile, fetchedLikes] = await Promise.all([
-        getUserProfile(),
-        getLikes(),
-      ]);
+      const [fetchedProfile, fetchedLikes, fetchedRetweets] = await Promise.all(
+        [getUserProfile(), getLikes(), getRetweets()]
+      );
 
       const finished = {
         ...fetchedProfile,
         doneLoading: true,
         likes: fetchedLikes,
+        retweets: fetchedRetweets,
       };
 
       setProfile(finished);

@@ -9,6 +9,7 @@ interface IProps {
   handleClick?: React.MouseEventHandler<HTMLButtonElement>;
   number?: number;
   type?: string;
+  disabled?: boolean;
   color: string;
   icon: IconDefinition | IconProp;
 }
@@ -18,21 +19,24 @@ const defaultProps = {
   handleClick: (e: any) => {},
   number: 0,
   type: '',
+  disabled: false,
 };
 
 const TweetItemButton = ({
   className,
   handleClick,
   number,
+  disabled,
   icon,
   type,
   color,
-}: IProps & typeof defaultProps) => (
+}: IProps) => (
   <button
     type='button'
     className={className}
     title={type}
     onClick={handleClick}
+    disabled={disabled}
   >
     <span className={`btn-${color}`}>
       <FontAwesomeIcon icon={icon} />

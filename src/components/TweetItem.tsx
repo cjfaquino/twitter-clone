@@ -24,6 +24,8 @@ import checkUserAlreadyReplied from '../utils/tweets/checkUserAlreadyReplied';
 import ProfileContext from '../context/ProfileContext';
 import { UserProfile } from '../interfaces/UserProfile';
 import TweetItemButton from './TweetItemButton';
+import checkAlreadyRetweeted from '../utils/retweets/checkAlreadyRetweeted';
+import retweet from '../utils/retweets/retweet';
 
 interface IProps {
   tweetObj: TweetObj;
@@ -31,6 +33,7 @@ interface IProps {
 
 const TweetItem = ({ tweetObj }: IProps) => {
   const [likes, setLikes] = useState(tweetObj.likes);
+  const [retweets, setRetweets] = useState(tweetObj.retweets);
   const targetUser = useFindByUsername(tweetObj.USER_NAME);
   const [showOptionsPopup, toggleOptionsPopup] = useToggle(false);
   const [replies, repliesLoading] = useReplies(tweetObj.id);
@@ -92,6 +95,21 @@ const TweetItem = ({ tweetObj }: IProps) => {
       setLikes((prev) => prev + 1);
     }
 
+    return undefined;
+  };
+
+  const handleRetweet = async () => {
+    if (!isUserSignedIn()) return navigate('/login');
+
+    if (checkAlreadyRetweeted(TWEET_ID, userProfile)) {
+      // already retweeted
+
+      setRetweets((prev) => prev - 1);
+    } else {
+      // not yet retweeted
+      await retweet(tweetObj);
+      setRetweets((prev) => prev + 1);
+    }
     return undefined;
   };
 
@@ -199,17 +217,12 @@ const TweetItem = ({ tweetObj }: IProps) => {
 
               <TweetItemButton
                 className='btn-retweets grey'
-                // change when retweets are made
-                handleClick={() =>
-                  navigate(
-                    `/${targetUser.userProfile.userName}/tweet/${TWEET_ID}`
-                  )
-                }
+                handleClick={handleRetweet}
+                disabled={tweetObj.USER_ID === userProfile.id}
                 color='green'
                 icon={faRetweet}
                 type='retweets'
-                // add retweets number to tweetObj
-                number={views}
+                number={retweets}
               />
 
               <TweetItemButton
