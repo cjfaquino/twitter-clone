@@ -791,6 +791,7 @@ form button {
 /* Tweet item  & reply item & main tweet item*/
 
 .tweet-item {
+  position: relative;
   border-radius: none;
   cursor: pointer;
   box-sizing: border-box;
@@ -813,6 +814,17 @@ form button {
   display: flex;
   align-items: flex-end;
   gap: 10px;
+}
+
+.tweet-item .retweeter-info {
+  position: absolute;
+  top: -3px;
+  font-size: 0.9rem;
+}
+
+.retweeter-info > span {
+  position: absolute;
+  left: -23px;
 }
 
 .tweet-item-display {
