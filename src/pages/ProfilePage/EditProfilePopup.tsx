@@ -10,6 +10,7 @@ import ChangeProfileIcon from '../../components/ChangeProfileIcon';
 import SubmitButton from '../../components/SubmitButton';
 import InputDisplayName from '../../components/InputDisplayName';
 import validateProfile from '../../utils/validateProfile';
+import setErrorMessage from '../../utils/setErrorMessage';
 
 interface IProps {
   userProfile: UserProfile;
@@ -80,8 +81,40 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
       else {
         // error
       }
-    } catch (error) {
-      console.log(error);
+    } catch (er) {
+      const error = er as Error;
+      const errorName = error.name;
+      const errorMessage = error.message;
+
+      let errorCss = '';
+
+      switch (errorName) {
+        case 'DisplayName Error':
+          errorCss = '.verify-display-name';
+          break;
+
+        case 'Bio Error':
+          errorCss = '.verify-bio';
+          break;
+
+        case 'Location Error':
+          errorCss = '.verify-location';
+          break;
+
+        case 'Website Error':
+          errorCss = '.verify-website';
+          break;
+
+        case 'Pic Error':
+          errorCss = '.verify-pic';
+          break;
+
+        default:
+          console.log(error);
+          break;
+      }
+
+      setErrorMessage(errorCss, errorMessage);
     }
 
     setSubmitting(false);
@@ -130,6 +163,8 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
                 />
               </label>
             </div>
+            <span className='verify-pic verify error' />
+
             <ChangeProfileIcon
               photoURL={photoURL}
               selectedPhoto={selectedPhoto}
@@ -144,7 +179,7 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
               handleDisplayName={handleDisplayName}
             />
             <label htmlFor='bio'>
-              Bio
+              Bio <span className='verify-bio verify error' />
               <textarea
                 id='bio'
                 maxLength={160}
@@ -154,6 +189,7 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
             </label>
             <label htmlFor='location'>
               Location
+              <span className='verify-location verify error' />
               <input
                 type='text'
                 id='location'
@@ -164,6 +200,7 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
             </label>
             <label htmlFor='website'>
               Website
+              <span className='verify-website verify error' />
               <input
                 type='url'
                 id='website'

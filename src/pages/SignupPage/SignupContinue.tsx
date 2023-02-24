@@ -11,6 +11,8 @@ import setErrorMessage from '../../utils/setErrorMessage';
 import uploadImage from '../../utils/uploadImage';
 import validateUsername from '../../utils/validateUsername';
 import { IProps } from './SignupStart';
+import validatePic from '../../utils/validatePic';
+import validateDisplayName from '../../utils/validateDisplayName';
 
 const SignupContinue = ({ currentUser }: IProps) => {
   const [userName, handleUserName] = useInput();
@@ -34,9 +36,12 @@ const SignupContinue = ({ currentUser }: IProps) => {
     try {
       // throw on invalid
       await validateUsername(userName);
+      validateDisplayName(displayName);
 
       // upload photo & get URL
       if (selectedPhoto) {
+        validatePic(selectedPhoto);
+
         newPhotoURL = await uploadImage(
           `/users/${currentUser!.uid}/icon`,
           selectedPhoto
@@ -66,6 +71,14 @@ const SignupContinue = ({ currentUser }: IProps) => {
           setErrorMessage('.verify-username', errorMessage);
           break;
 
+        case 'DisplayName Error':
+          setErrorMessage('.verify-display-name', errorMessage);
+          break;
+
+        case 'Pic Error':
+          setErrorMessage('.verify-pic', errorMessage);
+          break;
+
         default:
           console.log(error);
           break;
@@ -93,12 +106,15 @@ const SignupContinue = ({ currentUser }: IProps) => {
           <InputUsername userName={userName} handleUserName={handleUserName} />
         </section>
       </div>
-      <SubmitButton
-        submitting={submitting}
-        text='Submit'
-        width={100}
-        disabled={!(userName && displayName)}
-      />
+      <div className='bottom'>
+        <span className='verify-pic verify error' />
+        <SubmitButton
+          submitting={submitting}
+          text='Submit'
+          width={100}
+          disabled={!(userName && displayName)}
+        />
+      </div>
     </form>
   );
 };

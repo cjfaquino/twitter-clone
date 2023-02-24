@@ -619,6 +619,16 @@ form button {
   top: -20px;
 }
 
+.continue-signup .bottom {
+  display: flex;
+  align-items: center;
+}
+
+.continue-signup .verify-img {
+  position: static;
+  display: inline-block;
+}
+
 .btn-with-provider {
   width: 100%;
   background-color: white;
@@ -1297,6 +1307,10 @@ header.search {
   position: sticky;
   top: 0;
   background-color: rgba(0, 0, 0, 0.7);
+}
+
+.edit-profile .verify-img {
+  left: 50%;
 }
 
 .edit-images {
