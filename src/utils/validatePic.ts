@@ -1,4 +1,4 @@
-import PicError from '../classes/PicError';
+import CustomError from '../classes/CustomError';
 
 export default (img: File) => {
   const smallSize = img.size <= 1024 * 1024 * 5;
@@ -10,7 +10,7 @@ export default (img: File) => {
   if (!type) errorMessage = 'will only take jpeg or webp images';
 
   const validity = smallSize && type;
-  if (!validity) throw new PicError(errorMessage!);
+  if (!validity) throw new CustomError(errorMessage!, 'Pic Error');
 
   return validity;
 };

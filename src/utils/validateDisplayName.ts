@@ -1,5 +1,5 @@
+import CustomError from '../classes/CustomError';
 import DisplayName from '../classes/DisplayName';
-import DisplayNameError from '../classes/DisplayNameError';
 
 export default (name: string) => {
   const long = name.length <= DisplayName.max;
@@ -10,7 +10,7 @@ export default (name: string) => {
   if (!short) errorMessage = 'too short';
 
   const validity = long && short;
-  if (!validity) throw new DisplayNameError(errorMessage!);
+  if (!validity) throw new CustomError(errorMessage!, 'DisplayName Error');
 
   return validity;
 };
