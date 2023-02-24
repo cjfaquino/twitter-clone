@@ -815,13 +815,16 @@ form button {
 
 .tweet-item .retweeter-info {
   position: absolute;
-  top: -3px;
+  top: 3px;
   font-size: 0.9rem;
+  display: flex;
+  align-items: center;
 }
 
 .retweeter-info > span {
   position: absolute;
-  left: -23px;
+  left: -20px;
+  font-size: 0.8rem;
 }
 
 .tweet-item-display {
