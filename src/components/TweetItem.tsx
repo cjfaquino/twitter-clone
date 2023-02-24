@@ -50,8 +50,8 @@ const TweetItem = ({ tweetObj }: IProps) => {
   const getContents = () => {
     let obj;
 
-    if (retwt) {
-      obj = tweetObj.aRetweetOf;
+    if (tweetObj.aRetweetOf) {
+      obj = { ...tweetObj.aRetweetOf, USER_ID: tweetObj.USER_ID };
     } else {
       obj = tweetObj;
     }
@@ -222,7 +222,13 @@ const TweetItem = ({ tweetObj }: IProps) => {
                 toggleOptionsPopup={toggleOptionsPopup}
                 showOptionsPopup={showOptionsPopup}
                 handleDelete={handleDelete}
-                targetUser={targetUser}
+                targetUser={
+                  (retweeter && {
+                    userProfile: retweeter,
+                    doneLoading: true,
+                  }) ||
+                  targetUser
+                }
               />
             </div>
             {tweetObj.aReplyTo && !tweetObj.aReplyTo.id.startsWith('null') && (
