@@ -1,5 +1,5 @@
+import CustomError from '../classes/CustomError';
 import UserName from '../classes/UserName';
-import UsernameError from '../classes/UsernameError';
 import checkUserNameAlreadyExists from './user/checkUsernameAlreadyExists';
 
 const validateUsername = async (username: string): Promise<boolean> => {
@@ -29,7 +29,7 @@ const validateUsername = async (username: string): Promise<boolean> => {
   const validity =
     !exists && minLength && maxLength && nameRegex && firstLetter;
 
-  if (!validity) throw new UsernameError(errorMessage);
+  if (!validity) throw new CustomError(errorMessage, 'Username Error');
 
   return validity;
 };

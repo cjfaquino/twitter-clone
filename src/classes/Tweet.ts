@@ -21,15 +21,22 @@ interface Tweet {
   retweets: number;
   views: number;
   aReplyTo: TweetObj | null;
+  aRetweetOf: TweetObj | null;
 }
 
 export interface IArgs {
   messageText: string;
   messageImg?: string | null;
   aReplyTo?: TweetObj | null;
+  aRetweetOf?: TweetObj | null;
 }
 class Tweet {
-  constructor({ messageText, messageImg = null, aReplyTo = null }: IArgs) {
+  constructor({
+    messageText,
+    messageImg = null,
+    aReplyTo = null,
+    aRetweetOf = null,
+  }: IArgs) {
     const textArray = textToCleanedTextArray(messageText);
 
     this.USER_NAME = getUserName();
@@ -44,6 +51,7 @@ class Tweet {
     this.retweets = 0;
     this.views = 0;
     this.aReplyTo = aReplyTo;
+    this.aRetweetOf = aRetweetOf;
   }
 }
 

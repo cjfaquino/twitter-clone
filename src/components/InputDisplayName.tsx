@@ -8,7 +8,7 @@ interface IProps {
 
 const InputDisplayName = ({ displayName, handleDisplayName }: IProps) => (
   <label htmlFor='displayName'>
-    Display name
+    Display name <span className='verify-display-name verify error' />
     <input
       type='text'
       id='displayName'

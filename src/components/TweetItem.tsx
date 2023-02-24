@@ -6,6 +6,7 @@ import {
   faChartSimple,
   faRetweet,
 } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import deleteTweet from '../utils/tweets/deleteTweet';
 import OptionsPopup from './OptionsPopup';
 import useToggle from '../hooks/useToggle';
@@ -24,6 +25,10 @@ import checkUserAlreadyReplied from '../utils/tweets/checkUserAlreadyReplied';
 import ProfileContext from '../context/ProfileContext';
 import { UserProfile } from '../interfaces/UserProfile';
 import TweetItemButton from './TweetItemButton';
+import checkAlreadyRetweeted from '../utils/retweets/checkAlreadyRetweeted';
+import retweet from '../utils/retweets/retweet';
+import getUpdatedTweetByID from '../utils/tweets/getUpdatedTweetByID';
+import getUpdatedUserByID from '../utils/user/getUpdatedUserByID';
 
 interface IProps {
   tweetObj: TweetObj;
@@ -31,14 +36,52 @@ interface IProps {
 
 const TweetItem = ({ tweetObj }: IProps) => {
   const [likes, setLikes] = useState(tweetObj.likes);
-  const targetUser = useFindByUsername(tweetObj.USER_NAME);
+  const [retweets, setRetweets] = useState(tweetObj.retweets);
+  const targetUser = useFindByUsername(
+    (tweetObj.aRetweetOf && tweetObj.aRetweetOf.USER_NAME) || tweetObj.USER_NAME
+  );
   const [showOptionsPopup, toggleOptionsPopup] = useToggle(false);
   const [replies, repliesLoading] = useReplies(tweetObj.id);
+  const [retwt, setRetwt] = useState<TweetObj | null>(null);
+  const [retweeter, setRetweeter] = useState<UserProfile | null>(null);
   const userProfile: UserProfile = useContext(ProfileContext);
   const navigate = useNavigate();
 
-  const { views, text, imgURL, timestamp, USER_ID, id: TWEET_ID } = tweetObj;
+  const getContents = () => {
+    let obj;
+
+    if (retwt) {
+      obj = tweetObj.aRetweetOf;
+    } else {
+      obj = tweetObj;
+    }
+    return obj;
+  };
+
+  const {
+    views,
+    text,
+    imgURL,
+    timestamp,
+    USER_ID,
+    id: TWEET_ID,
+  } = getContents()!;
+
   const customClass = 'tweet';
+  const retweeterID = tweetObj.USER_ID;
+
+  if (tweetObj.aRetweetOf && retwt === null) {
+    getUpdatedTweetByID(tweetObj.aRetweetOf.id).then((data) => {
+      const twt = data as TweetObj;
+      setRetwt(twt);
+      setLikes(twt.likes);
+      setRetweets(twt.retweets);
+    });
+
+    getUpdatedUserByID(retweeterID).then((data) =>
+      setRetweeter(data as UserProfile)
+    );
+  }
 
   const handleDelete = async () => {
     // delete from DB
@@ -95,6 +138,21 @@ const TweetItem = ({ tweetObj }: IProps) => {
     return undefined;
   };
 
+  const handleRetweet = async () => {
+    if (!isUserSignedIn()) return navigate('/login');
+
+    if (checkAlreadyRetweeted(TWEET_ID, userProfile)) {
+      // already retweeted
+
+      setRetweets((prev) => prev - 1);
+    } else {
+      // not yet retweeted
+      await retweet(tweetObj);
+      setRetweets((prev) => prev + 1);
+    }
+    return undefined;
+  };
+
   if (TWEET_ID.startsWith('null')) {
     // prevent app from crashing when trying to load a tweet that doesn't exist
     return null;
@@ -122,7 +180,7 @@ const TweetItem = ({ tweetObj }: IProps) => {
     >
       {targetUser.doneLoading && !repliesLoading && (
         <>
-          <div className={`${customClass}-item-left-half`}>
+          <section className={`${customClass}-item-left-half`}>
             <div
               className={`${customClass}-item-img-container img-container profile-link`}
             >
@@ -133,9 +191,18 @@ const TweetItem = ({ tweetObj }: IProps) => {
               />
             </div>
             <div className='vert-line' />
-          </div>
+          </section>
 
-          <div className={`${customClass}-item-right-half`}>
+          <section className={`${customClass}-item-right-half`}>
+            {retweeter && (
+              <div className='retweeter-info grey'>
+                <span>
+                  <FontAwesomeIcon icon={faRetweet} />
+                </span>
+                {`${retweeter.displayName} Retweeted`}
+              </div>
+            )}
+
             <div className={`${customClass}-item-info`}>
               <div className={`${customClass}-item-display profile-link`}>
                 {targetUser.userProfile.displayName}
@@ -199,17 +266,12 @@ const TweetItem = ({ tweetObj }: IProps) => {
 
               <TweetItemButton
                 className='btn-retweets grey'
-                // change when retweets are made
-                handleClick={() =>
-                  navigate(
-                    `/${targetUser.userProfile.userName}/tweet/${TWEET_ID}`
-                  )
-                }
+                handleClick={handleRetweet}
+                disabled={tweetObj.USER_ID === userProfile.id}
                 color='green'
                 icon={faRetweet}
                 type='retweets'
-                // add retweets number to tweetObj
-                number={views}
+                number={retweets}
               />
 
               <TweetItemButton
@@ -239,7 +301,7 @@ const TweetItem = ({ tweetObj }: IProps) => {
                 type='copy link'
               />
             </div>
-          </div>
+          </section>
         </>
       )}
     </div>

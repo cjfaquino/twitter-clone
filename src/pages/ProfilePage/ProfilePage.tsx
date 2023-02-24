@@ -70,6 +70,12 @@ const ProfilePage = ({
             <span>Tweets & replies</span>
           </NavLink>
           <NavLink
+            to={`/${targetUser.userProfile.userName}/media`}
+            className='styled-filter-link'
+          >
+            <span>Media</span>
+          </NavLink>
+          <NavLink
             to={`/${targetUser.userProfile.userName}/likes`}
             className='styled-filter-link'
           >
@@ -82,6 +88,7 @@ const ProfilePage = ({
           { path: '', filter: 'user tweets' },
           { path: 'with_replies', filter: 'user tweets&replies' },
           { path: 'likes', filter: 'user likes' },
+          { path: 'media', filter: 'user media' },
         ].map((item) => (
           <Route
             key={item.path}

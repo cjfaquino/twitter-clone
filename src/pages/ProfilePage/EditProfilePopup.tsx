@@ -9,6 +9,8 @@ import uploadImage from '../../utils/uploadImage';
 import ChangeProfileIcon from '../../components/ChangeProfileIcon';
 import SubmitButton from '../../components/SubmitButton';
 import InputDisplayName from '../../components/InputDisplayName';
+import validateProfile from '../../utils/validateProfile';
+import setErrorMessage from '../../utils/setErrorMessage';
 
 interface IProps {
   userProfile: UserProfile;
@@ -38,35 +40,81 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitting(true);
-    let newPhotoURL = photoURL;
-    let newBackdropURL = backdropURL;
 
-    if (selectedPhoto) {
-      newPhotoURL = await uploadImage(
-        `users/${userProfile.id}/icon`,
-        selectedPhoto
-      );
-    }
-    if (selectedBackdrop) {
-      newBackdropURL = await uploadImage(
-        `users/${userProfile.id}/backdrop`,
-        selectedBackdrop
-      );
-    }
+    try {
+      validateProfile({
+        bio,
+        displayName,
+        website,
+        location,
+        profileImg: selectedPhoto,
+        backdropImg: selectedBackdrop,
+      });
 
-    const result = await updateProfile({
-      userProfile,
-      displayName,
-      bio,
-      website,
-      location,
-      backdropURL: newBackdropURL,
-      photoURL: newPhotoURL,
-    });
+      let newPhotoURL = photoURL;
+      let newBackdropURL = backdropURL;
 
-    if (result) (toggleEditProfilePopup as Function)();
-    else {
-      // error
+      if (selectedPhoto) {
+        newPhotoURL = await uploadImage(
+          `users/${userProfile.id}/icon`,
+          selectedPhoto
+        );
+      }
+      if (selectedBackdrop) {
+        newBackdropURL = await uploadImage(
+          `users/${userProfile.id}/backdrop`,
+          selectedBackdrop
+        );
+      }
+
+      const result = await updateProfile({
+        userProfile,
+        displayName,
+        bio,
+        website,
+        location,
+        backdropURL: newBackdropURL,
+        photoURL: newPhotoURL,
+      });
+
+      if (result) (toggleEditProfilePopup as Function)();
+      else {
+        // error
+      }
+    } catch (er) {
+      const error = er as Error;
+      const errorName = error.name;
+      const errorMessage = error.message;
+
+      let errorCss = '';
+
+      switch (errorName) {
+        case 'DisplayName Error':
+          errorCss = '.verify-display-name';
+          break;
+
+        case 'Bio Error':
+          errorCss = '.verify-bio';
+          break;
+
+        case 'Location Error':
+          errorCss = '.verify-location';
+          break;
+
+        case 'Website Error':
+          errorCss = '.verify-website';
+          break;
+
+        case 'Pic Error':
+          errorCss = '.verify-pic';
+          break;
+
+        default:
+          console.log(error);
+          break;
+      }
+
+      setErrorMessage(errorCss, errorMessage);
     }
 
     setSubmitting(false);
@@ -117,6 +165,8 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
                 />
               </label>
             </div>
+            <span className='verify-pic verify error' />
+
             <ChangeProfileIcon
               photoURL={photoURL}
               selectedPhoto={selectedPhoto}
@@ -131,7 +181,7 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
               handleDisplayName={handleDisplayName}
             />
             <label htmlFor='bio'>
-              Bio
+              Bio <span className='verify-bio verify error' />
               <textarea
                 id='bio'
                 maxLength={160}
@@ -141,6 +191,7 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
             </label>
             <label htmlFor='location'>
               Location
+              <span className='verify-location verify error' />
               <input
                 type='text'
                 id='location'
@@ -151,6 +202,7 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
             </label>
             <label htmlFor='website'>
               Website
+              <span className='verify-website verify error' />
               <input
                 type='url'
                 id='website'

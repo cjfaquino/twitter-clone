@@ -1,5 +1,4 @@
-import ConfirmPasswordError from '../classes/ConfirmPasswordError';
-import PasswordError from '../classes/PasswordError';
+import CustomError from '../classes/CustomError';
 
 export default (password: string, confirmPassword: string): boolean => {
   const digitRegex = /(?=.*\d)/;
@@ -35,8 +34,8 @@ export default (password: string, confirmPassword: string): boolean => {
     atLeastOneLetter &&
     atLeastOneSpecial;
 
-  if (!validity) throw new PasswordError(errorMessage);
-  if (!matching) throw new ConfirmPasswordError(errorMessage);
+  if (!validity) throw new CustomError(errorMessage, 'Password Error');
+  if (!matching) throw new CustomError(errorMessage, 'Confirm Password Error');
 
   return validity && matching;
 };
