@@ -5,8 +5,8 @@ import validatePic from './validatePic';
 interface IArgs {
   bio: string;
   displayName: string;
-  backdropImg: File;
-  profileImg: File;
+  backdropImg: File | null;
+  profileImg: File | null;
   website: string;
   location: string;
 }
@@ -27,9 +27,10 @@ export default ({
   if (!locationLength) throw new CustomError('too long', 'Location Error');
   if (!websiteLength) throw new CustomError('too long', 'Website Error');
 
+  if (backdropImg) validatePic(backdropImg);
+  if (profileImg) validatePic(profileImg);
+
   const validity =
-    validatePic(profileImg) &&
-    validatePic(backdropImg) &&
     validateDisplayName(displayName) &&
     bioLength &&
     locationLength &&

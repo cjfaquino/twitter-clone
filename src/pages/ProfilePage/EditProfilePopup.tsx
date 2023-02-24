@@ -9,6 +9,7 @@ import uploadImage from '../../utils/uploadImage';
 import ChangeProfileIcon from '../../components/ChangeProfileIcon';
 import SubmitButton from '../../components/SubmitButton';
 import InputDisplayName from '../../components/InputDisplayName';
+import validateProfile from '../../utils/validateProfile';
 
 interface IProps {
   userProfile: UserProfile;
@@ -38,35 +39,49 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitting(true);
-    let newPhotoURL = photoURL;
-    let newBackdropURL = backdropURL;
 
-    if (selectedPhoto) {
-      newPhotoURL = await uploadImage(
-        `users/${userProfile.id}/icon`,
-        selectedPhoto
-      );
-    }
-    if (selectedBackdrop) {
-      newBackdropURL = await uploadImage(
-        `users/${userProfile.id}/backdrop`,
-        selectedBackdrop
-      );
-    }
+    try {
+      validateProfile({
+        bio,
+        displayName,
+        website,
+        location,
+        profileImg: selectedPhoto,
+        backdropImg: selectedBackdrop,
+      });
 
-    const result = await updateProfile({
-      userProfile,
-      displayName,
-      bio,
-      website,
-      location,
-      backdropURL: newBackdropURL,
-      photoURL: newPhotoURL,
-    });
+      let newPhotoURL = photoURL;
+      let newBackdropURL = backdropURL;
 
-    if (result) (toggleEditProfilePopup as Function)();
-    else {
-      // error
+      if (selectedPhoto) {
+        newPhotoURL = await uploadImage(
+          `users/${userProfile.id}/icon`,
+          selectedPhoto
+        );
+      }
+      if (selectedBackdrop) {
+        newBackdropURL = await uploadImage(
+          `users/${userProfile.id}/backdrop`,
+          selectedBackdrop
+        );
+      }
+
+      const result = await updateProfile({
+        userProfile,
+        displayName,
+        bio,
+        website,
+        location,
+        backdropURL: newBackdropURL,
+        photoURL: newPhotoURL,
+      });
+
+      if (result) (toggleEditProfilePopup as Function)();
+      else {
+        // error
+      }
+    } catch (error) {
+      console.log(error);
     }
 
     setSubmitting(false);
