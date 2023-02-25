@@ -144,7 +144,10 @@ const TweetItem = ({ tweetObj }: IProps) => {
 
     if (checkAlreadyRetweeted(TWEET_ID, userProfile)) {
       // already retweeted
-      await undoRetweet(tweetObj, userProfile);
+      // use original tweet if aRetweetOf
+      // use current tweet if not
+      const tweetRef = (tweetObj.aRetweetOf && tweetObj.aRetweetOf) || tweetObj;
+      await undoRetweet(tweetRef, userProfile);
       setRetweets((prev) => prev - 1);
     } else {
       // not yet retweeted
@@ -278,7 +281,9 @@ const TweetItem = ({ tweetObj }: IProps) => {
                     : ''
                 }`}
                 handleClick={handleRetweet}
-                disabled={tweetObj.USER_ID === userProfile.id}
+                disabled={
+                  !tweetObj.aRetweetOf && tweetObj.USER_ID === userProfile.id
+                }
                 color='green'
                 icon={faRetweet}
                 type='retweets'
