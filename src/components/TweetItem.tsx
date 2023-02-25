@@ -220,13 +220,7 @@ const TweetItem = ({ tweetObj }: IProps) => {
                 toggleOptionsPopup={toggleOptionsPopup}
                 showOptionsPopup={showOptionsPopup}
                 handleDelete={handleDelete}
-                targetUser={
-                  (retweeter && {
-                    userProfile: retweeter,
-                    doneLoading: true,
-                  }) ||
-                  targetUser
-                }
+                targetUser={targetUser}
               />
             </div>
             {tweetObj.aReplyTo && !tweetObj.aReplyTo.id.startsWith('null') && (
@@ -276,7 +270,10 @@ const TweetItem = ({ tweetObj }: IProps) => {
                 }`}
                 handleClick={handleRetweet}
                 disabled={
-                  !tweetObj.aRetweetOf && tweetObj.USER_ID === userProfile.id
+                  (!tweetObj.aRetweetOf &&
+                    tweetObj.USER_ID === userProfile.id) ||
+                  (tweetObj.aRetweetOf! &&
+                    tweetObj.aRetweetOf.USER_ID === userProfile.id)
                 }
                 color='green'
                 icon={faRetweet}
