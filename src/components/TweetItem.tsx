@@ -12,7 +12,6 @@ import OptionsPopup from './OptionsPopup';
 import useToggle from '../hooks/useToggle';
 import getTimeString from '../utils/formatters/getTimeString';
 import checkMatchingUser from '../utils/user/checkMatchingUser';
-import deleteTweetFromDOM from '../utils/tweets/deleteTweetFromDOM';
 import useReplies from '../hooks/useReplies';
 import checkAlreadyLiked from '../utils/likes/checkAlreadyLiked';
 import undoLike from '../utils/likes/undoLike';
@@ -31,6 +30,7 @@ import getUpdatedTweetByID from '../utils/tweets/getUpdatedTweetByID';
 import getUpdatedUserByID from '../utils/user/getUpdatedUserByID';
 import undoRetweet from '../utils/retweets/undoRetweet';
 import getContents from '../utils/tweets/getContents';
+import TweetHandlerContext from '../context/TweetHandlerContext';
 
 interface IProps {
   tweetObj: TweetObj;
@@ -47,6 +47,7 @@ const TweetItem = ({ tweetObj }: IProps) => {
   const [retwt, setRetwt] = useState<TweetObj | null>(null);
   const [retweeter, setRetweeter] = useState<UserProfile | null>(null);
   const userProfile: UserProfile = useContext(ProfileContext);
+  const tweetHandler = useContext(TweetHandlerContext);
   const navigate = useNavigate();
 
   const {
@@ -79,7 +80,8 @@ const TweetItem = ({ tweetObj }: IProps) => {
     // delete from DB
     if (checkMatchingUser(USER_ID)) {
       await deleteTweet(tweetObj);
-      deleteTweetFromDOM(`${customClass}-${TWEET_ID}`);
+
+      tweetHandler.delete(TWEET_ID);
     }
   };
 
