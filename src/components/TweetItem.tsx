@@ -148,8 +148,11 @@ const TweetItem = ({ tweetObj }: IProps) => {
     return undefined;
   };
 
-  if (TWEET_ID.startsWith('null')) {
+  if (TWEET_ID.startsWith('null') || retwt?.id.startsWith('null')) {
     // prevent app from crashing when trying to load a tweet that doesn't exist
+    // or hide retweets when original is deleted
+
+    // TODO delete all retweets of deleted tweet
     return null;
   }
 
