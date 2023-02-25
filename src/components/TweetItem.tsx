@@ -59,9 +59,9 @@ const TweetItem = ({ tweetObj }: IProps) => {
   } = getContents(tweetObj);
 
   const customClass = 'tweet';
-  const retweeterID = tweetObj.USER_ID;
 
   if (tweetObj.aRetweetOf && retwt === null) {
+    // get updated stats of original tweet
     getUpdatedTweetByID(tweetObj.aRetweetOf.id).then((data) => {
       const twt = data as TweetObj;
       setRetwt(twt);
@@ -69,7 +69,8 @@ const TweetItem = ({ tweetObj }: IProps) => {
       setRetweets(twt.retweets);
     });
 
-    getUpdatedUserByID(retweeterID).then((data) =>
+    // get updated info for the retweeter
+    getUpdatedUserByID(tweetObj.USER_ID).then((data) =>
       setRetweeter(data as UserProfile)
     );
   }
@@ -189,12 +190,15 @@ const TweetItem = ({ tweetObj }: IProps) => {
 
           <section className={`${customClass}-item-right-half`}>
             {retweeter && (
-              <div className='retweeter-info grey'>
+              <Link
+                to={`/${retweeter.userName}`}
+                className='retweeter-name grey'
+              >
                 <span>
                   <FontAwesomeIcon icon={faRetweet} />
                 </span>
                 {`${retweeter.displayName} Retweeted`}
-              </div>
+              </Link>
             )}
 
             <div className={`${customClass}-item-info`}>

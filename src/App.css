@@ -813,7 +813,7 @@ form button {
   gap: 10px;
 }
 
-.tweet-item .retweeter-info {
+.tweet-item .retweeter-name {
   position: absolute;
   top: 3px;
   font-size: 0.9rem;
@@ -821,7 +821,7 @@ form button {
   align-items: center;
 }
 
-.retweeter-info > span {
+.retweeter-name > span {
   position: absolute;
   left: -20px;
   font-size: 0.8rem;
