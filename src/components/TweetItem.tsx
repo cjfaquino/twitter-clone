@@ -32,6 +32,7 @@ import undoRetweet from '../utils/retweets/undoRetweet';
 import getContents from '../utils/tweets/getContents';
 import TweetHandlerContext from '../context/TweetHandlerContext';
 import Tweet from '../classes/Tweet';
+import DisplayNameWithPopup from './DisplayNameWithPopup';
 
 interface IProps {
   tweetObj: TweetObj;
@@ -225,9 +226,10 @@ const TweetItem = ({ tweetObj }: IProps) => {
             )}
 
             <div className={`${customClass}-item-info`}>
-              <div className={`${customClass}-item-display profile-link`}>
+              {/* <div className={`${customClass}-item-display profile-link`}>
                 {targetUser.userProfile.displayName}
-              </div>
+              </div> */}
+              <DisplayNameWithPopup userProfile={targetUser.userProfile} />
               <div
                 className={`${customClass}-item-name profile-link grey username`}
               >

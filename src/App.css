@@ -384,6 +384,7 @@ button svg {
   width: 100%;
 }
 
+.formatted-text,
 .tweet-input,
 .reply-input,
 .main-tweet-item-message,
@@ -525,6 +526,44 @@ button svg {
 #reset-password button:disabled,
 #reset-password button:hover:disabled {
   color: rgb(60, 60, 60);
+}
+
+.profile-popup-wrapper {
+  position: relative;
+}
+
+.profile-popup {
+  position: absolute;
+  top: 25px;
+  left: 50%;
+  width: 275px;
+  padding: 15px;
+  transform: translateX(-50%);
+  background-color: var(--background-color);
+  border-radius: 15px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.profile-popup .top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.user-card-popup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.user-card-popup .stats {
+  display: flex;
+  gap: 10px;
+}
+
+.stats a {
+  color: var(--text);
 }
 
 /* Center column */
