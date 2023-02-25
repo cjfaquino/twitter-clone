@@ -23,6 +23,9 @@ import { TweetObj } from '../../interfaces/TweetObj';
 import checkUserAlreadyReplied from '../../utils/tweets/checkUserAlreadyReplied';
 import ProfileContext from '../../context/ProfileContext';
 import fancyNumbers from '../../utils/formatters/fancyNumbers';
+import checkAlreadyRetweeted from '../../utils/retweets/checkAlreadyRetweeted';
+import undoRetweet from '../../utils/retweets/undoRetweet';
+import retweet from '../../utils/retweets/retweet';
 
 interface IProps {
   tweetObj: TweetObj;
@@ -35,6 +38,7 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
   const targetUser = useFindByUsername(params.username!);
   const [showOptionsPopup, toggleOptionsPopup] = useToggle(false);
   const [likes, setLikes] = useState<number>(tweetObj.likes);
+  const [retweets, setRetweets] = useState(tweetObj.retweets);
   const userProfile = useContext(ProfileContext);
   const tweetRef = useRef(null);
 
@@ -68,7 +72,6 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
 
   const {
     views,
-    retweets,
     text,
     imgURL,
     timestamp,
@@ -98,6 +101,24 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
       setLikes((prev) => prev + 1);
     }
 
+    return undefined;
+  };
+
+  const handleRetweets = async () => {
+    if (!isUserSignedIn()) return navigate('/login');
+
+    if (checkAlreadyRetweeted(TWEET_ID, userProfile)) {
+      // already retweeted
+      // use original tweet if aRetweetOf
+      // use current tweet if not
+      const twtRef = (tweetObj.aRetweetOf && tweetObj.aRetweetOf) || tweetObj;
+      await undoRetweet(twtRef, userProfile);
+      setRetweets((prev) => prev - 1);
+    } else {
+      // not yet retweeted
+      await retweet(tweetObj);
+      setRetweets((prev) => prev + 1);
+    }
     return undefined;
   };
 
@@ -212,7 +233,13 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
               <FontAwesomeIcon icon={faComment} />
             </span>
           </button>
-          <button type='button' className='btn-retweets grey'>
+          <button
+            type='button'
+            className={`btn-retweets grey ${
+              checkAlreadyRetweeted(TWEET_ID, userProfile) ? 'retweeted' : ''
+            }`}
+            onClick={handleRetweets}
+          >
             <span className='btn-green'>
               <FontAwesomeIcon icon={faRetweet} />
             </span>
