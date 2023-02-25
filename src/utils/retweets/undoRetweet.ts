@@ -1,4 +1,5 @@
 import { deleteDoc, doc, increment, updateDoc } from 'firebase/firestore';
+import eventProfileEdit from '../../events/eventProfileEdit';
 import { db } from '../../firebase-config';
 import { TweetObj } from '../../interfaces/TweetObj';
 import { UserProfile } from '../../interfaces/UserProfile';
@@ -36,6 +37,8 @@ export default async (tweetObj: TweetObj, userProfile: UserProfile) => {
     // decrement original tweets retweet by 1
     const tweetsRetweetsRef = doc(db, 'tweets', tweetObj.id);
     updateDoc(tweetsRetweetsRef, { retweets: increment(-1) });
+
+    eventProfileEdit();
   } catch (error) {
     console.log(error);
   }

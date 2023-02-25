@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { faComment, faHeart } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -172,10 +172,6 @@ const TweetItem = ({ tweetObj }: IProps) => {
     navigator.clipboard.writeText(linkText);
   };
 
-  useEffect(() => {
-    console.log(checkAlreadyRetweeted(TWEET_ID, userProfile));
-  }, [TWEET_ID]);
-
   return (
     <div
       className={`${customClass}-item`}
@@ -276,7 +272,11 @@ const TweetItem = ({ tweetObj }: IProps) => {
               />
 
               <TweetItemButton
-                className='btn-retweets grey'
+                className={`btn-retweets grey ${
+                  checkAlreadyRetweeted(TWEET_ID, userProfile)
+                    ? 'retweeted'
+                    : ''
+                }`}
                 handleClick={handleRetweet}
                 disabled={tweetObj.USER_ID === userProfile.id}
                 color='green'
