@@ -40,11 +40,14 @@ interface IProps {
 const TweetItem = ({ tweetObj }: IProps) => {
   const [likes, setLikes] = useState(tweetObj.likes);
   const [retweets, setRetweets] = useState(tweetObj.retweets);
+  const [views, setViews] = useState(tweetObj.views);
   const targetUser = useFindByUsername(
     (tweetObj.aRetweetOf && tweetObj.aRetweetOf.USER_NAME) || tweetObj.USER_NAME
   );
   const [showOptionsPopup, toggleOptionsPopup] = useToggle(false);
-  const [replies, repliesLoading] = useReplies(tweetObj.id);
+  const [replies, repliesLoading] = useReplies(
+    (tweetObj.aRetweetOf && tweetObj.aRetweetOf.id) || tweetObj.id
+  );
   const [retwt, setRetwt] = useState<TweetObj | null>(null);
   const [retweeter, setRetweeter] = useState<UserProfile | null>(null);
   const userProfile: UserProfile = useContext(ProfileContext);
@@ -52,7 +55,6 @@ const TweetItem = ({ tweetObj }: IProps) => {
   const navigate = useNavigate();
 
   const {
-    views,
     text,
     imgURL,
     timestamp,
@@ -68,6 +70,7 @@ const TweetItem = ({ tweetObj }: IProps) => {
       const twt = data as TweetObj;
       setRetwt(twt);
       setLikes(twt.likes);
+      setViews(twt.views);
       setRetweets(twt.retweets);
     });
 
