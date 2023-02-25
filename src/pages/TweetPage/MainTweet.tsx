@@ -136,7 +136,11 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
   };
 
   const navToPage = async (e: React.MouseEvent<HTMLDivElement>) => {
-    const targetName = (e.target as HTMLElement).className;
+    const element = e.target as HTMLDivElement;
+
+    // prevent errors when svg, path is selected
+    if (element.tagName === 'svg' || element.tagName === 'path') return;
+    const targetName = element.className;
 
     // conditions
     if (targetName.includes('profile-link')) {
