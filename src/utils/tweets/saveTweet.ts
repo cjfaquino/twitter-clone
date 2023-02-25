@@ -77,13 +77,16 @@ const saveTweet = async ({
       updateDoc(docRef, { imgURL: uploadedURL });
     }
 
-    // add to algolia 'tweets' index
-    const timeInSeconds = new Date().getTime() / 1000;
-    indexTweets.saveObject({
-      ...tweet,
-      objectID: docRef.id,
-      timestamp: { seconds: timeInSeconds },
-    });
+    if (!aRetweetOf) {
+      // add to algolia 'tweets' index only if not a retweet
+      const timeInSeconds = new Date().getTime() / 1000;
+      indexTweets.saveObject({
+        ...tweet,
+        objectID: docRef.id,
+        id: docRef.id,
+        timestamp: { seconds: timeInSeconds },
+      });
+    }
 
     // return firebase doc id
     return [docRef.id, uploadedURL, null];
