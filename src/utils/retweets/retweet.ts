@@ -32,9 +32,12 @@ export default async (tweetObj: TweetObj) => {
     updateDoc(tweetsRetweetsRef, { retweets: increment(1) });
 
     eventProfileEdit();
+    return docID;
   }
 
   if (tweetError) {
     throw tweetError;
   }
+
+  return undefined;
 };

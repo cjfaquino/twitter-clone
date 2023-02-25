@@ -31,6 +31,7 @@ import getUpdatedUserByID from '../utils/user/getUpdatedUserByID';
 import undoRetweet from '../utils/retweets/undoRetweet';
 import getContents from '../utils/tweets/getContents';
 import TweetHandlerContext from '../context/TweetHandlerContext';
+import Tweet from '../classes/Tweet';
 
 interface IProps {
   tweetObj: TweetObj;
@@ -141,10 +142,24 @@ const TweetItem = ({ tweetObj }: IProps) => {
       // use current tweet if not
       const tweetRef = (tweetObj.aRetweetOf && tweetObj.aRetweetOf) || tweetObj;
       await undoRetweet(tweetRef, userProfile);
+      // remove from feed if clicked on retweet
+      if (tweetObj.aRetweetOf) {
+        tweetHandler.delete(tweetObj.id);
+      }
+      // update original tweets retweets count
       setRetweets((prev) => prev - 1);
     } else {
       // not yet retweeted
-      await retweet(tweetObj);
+      const docID = await retweet(tweetObj);
+      // add to top of feed
+      const temp = new Tweet({
+        messageText: '',
+        messageImg: tweetObj.imgURL,
+        aRetweetOf: tweetObj,
+      });
+      const newTwt = { id: docID, ...temp } as TweetObj;
+      tweetHandler.add(newTwt);
+      // update retweet count
       setRetweets((prev) => prev + 1);
     }
     return undefined;
