@@ -884,11 +884,11 @@ form button {
 .retweeted,
 button:hover > .btn-green,
 .btn-retweets:hover > span {
-  color: rgb(26, 190, 56) !important;
+  color: rgb(26, 190, 56);
 }
 
 button:hover > .btn-green {
-  background-color: rgba(0, 128, 0, 0.2) !important;
+  background-color: rgba(0, 128, 0, 0.2);
 }
 
 .copied,
@@ -897,21 +897,31 @@ button:hover > .btn-blue,
 .btn-views:hover > span,
 .btn-shares:hover > span,
 .btn-replies:hover > span {
-  color: var(--theme-color) !important;
+  color: var(--theme-color);
 }
 
 button:hover > .btn-blue {
-  background-color: rgba(0, 0, 255, 0.2) !important;
+  background-color: rgba(0, 0, 255, 0.2);
 }
 
 .liked,
 button:hover > .btn-red,
 .btn-likes:hover > span {
-  color: rgb(255, 0, 89) !important;
+  color: rgb(255, 0, 89);
 }
 
 button:hover > .btn-red {
-  background-color: rgba(255, 0, 0, 0.15) !important;
+  background-color: rgba(255, 0, 0, 0.15);
+}
+
+.main-tweet-item-buttons:disabled,
+.tweet-item-buttons button:disabled,
+.tweet-item-buttons button:disabled:hover,
+.main-tweet-item-buttons button:disabled:hover,
+button:disabled:hover > .btn-green,
+.btn-retweets:disabled:hover > span {
+  color: rgba(128, 128, 128, 0.5);
+  background-color: transparent;
 }
 
 .profile-link:not(img):hover {
