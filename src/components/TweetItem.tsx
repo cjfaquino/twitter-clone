@@ -30,6 +30,7 @@ import retweet from '../utils/retweets/retweet';
 import getUpdatedTweetByID from '../utils/tweets/getUpdatedTweetByID';
 import getUpdatedUserByID from '../utils/user/getUpdatedUserByID';
 import undoRetweet from '../utils/retweets/undoRetweet';
+import getContents from '../utils/tweets/getContents';
 
 interface IProps {
   tweetObj: TweetObj;
@@ -48,17 +49,6 @@ const TweetItem = ({ tweetObj }: IProps) => {
   const userProfile: UserProfile = useContext(ProfileContext);
   const navigate = useNavigate();
 
-  const getContents = () => {
-    let obj;
-
-    if (tweetObj.aRetweetOf) {
-      obj = { ...tweetObj.aRetweetOf, USER_ID: tweetObj.USER_ID };
-    } else {
-      obj = tweetObj;
-    }
-    return obj;
-  };
-
   const {
     views,
     text,
@@ -66,7 +56,7 @@ const TweetItem = ({ tweetObj }: IProps) => {
     timestamp,
     USER_ID,
     id: TWEET_ID,
-  } = getContents()!;
+  } = getContents(tweetObj);
 
   const customClass = 'tweet';
   const retweeterID = tweetObj.USER_ID;
