@@ -34,6 +34,17 @@ button svg {
   height: 20px !important;
 }
 
+.formatted-text {
+  white-space: pre-line;
+  word-wrap: break-word;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .missing {
   font-size: 1.3rem;
   font-weight: 700;
@@ -144,10 +155,14 @@ button svg {
 }
 
 .btn-follow {
+  padding: 5px 2px;
+  font-size: 0.9rem;
   border: 2px solid transparent;
   color: var(--background-color);
   background-color: var(--text);
-  min-width: 105px;
+  min-width: 80px;
+  margin-right: 0;
+  margin-left: auto;
 }
 
 .btn-follow:hover {
@@ -384,7 +399,6 @@ button svg {
   width: 100%;
 }
 
-.formatted-text,
 .tweet-input,
 .reply-input,
 .main-tweet-item-message,
@@ -1460,35 +1474,35 @@ header.search {
   outline: none;
 }
 
-.user-card-display-name {
+.profile-display-name {
   font-size: 1.5rem;
   font-weight: 800;
   line-height: 25px;
 }
 
-.user-card-username,
-.user-card-bio {
+.profile-username,
+.profile-bio {
   margin-bottom: 15px;
 }
 
-.user-card-extra-info {
+.profile-extra-info {
   display: flex;
   flex: 1 1 auto;
   gap: 15px;
   margin-bottom: 15px;
 }
 
-.user-card-extra-info svg {
+.profile-extra-info svg {
   margin-right: 5px;
 }
 
-.user-card-stats {
+.profile-stats {
   display: flex;
   gap: 20px;
 }
 
-.user-card-followers-number,
-.user-card-following-number {
+.profile-followers-number,
+.profile-following-number {
   font-weight: 700;
   color: var(--text);
 }
@@ -1537,85 +1551,48 @@ header.search {
 
 /* profile cards */
 
-.profile-medium,
-.profile-small {
+.profile-card {
   min-height: 72px;
   cursor: pointer;
 }
 
-.user-card-medium,
-.user-card-small {
+.user-card {
   padding: 15px;
   display: flex;
+  width: 100%;
   align-items: center;
   gap: 15px;
-  transition: background-color 0.2s;
 }
 
-/* profile medium */
-
-.user-card-medium {
-  align-items: flex-start;
+#who-to-follow .user-card:hover {
+  background-color: rgb(55, 55, 55);
 }
 
-.user-card-medium:hover {
+.user-card:hover {
   background-color: rgb(20, 20, 20);
 }
 
-.user-card-medium-info {
+.user-card-info {
   display: flex;
-  margin-bottom: 5px;
+  align-items: center;
 }
 
-.user-card-medium-body {
+.user-card-body {
   width: 100%;
 }
 
-.user-card-medium-item-message {
+.user-card-item-message {
+  max-width: 500px;
   font-size: 0.9rem;
 }
 
-/* profile small */
-
-.profile-small {
-  min-height: 72px;
-  cursor: pointer;
-}
-
-.user-card-small {
-  padding: 15px;
-  display: grid;
-  align-items: center;
-  grid-template-columns: var(--pfp-size) 120px 1fr;
-  gap: 15px;
-}
-
-.user-card-small:hover {
-  background-color: rgb(54, 53, 53);
-}
-
-.user-card-small-contact {
+.user-card .contact {
   line-height: 20px;
+  max-width: 350px;
 }
 
-.user-card-small-contact > * {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 0.9rem;
-}
-
-.user-card-small-display-name {
-  font-weight: 600;
-}
-
-.btn-follow {
-  padding: 7px 15px;
-  margin-right: 0;
-  margin-left: auto;
-  background-color: var(--text);
-  color: var(--background-color);
-  font-size: 0.9rem;
+#who-to-follow .user-card .contact {
+  max-width: 150px;
 }
 
 @media (prefers-color-scheme: light) {
@@ -1663,7 +1640,7 @@ header.search {
     background-color: rgb(230, 230, 230);
   }
 
-  .user-card-small:hover {
+  #who-to-follow .user-card:hover {
     background-color: rgb(220, 220, 220);
   }
 }

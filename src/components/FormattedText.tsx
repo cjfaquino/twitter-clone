@@ -12,7 +12,7 @@ interface IArgs {
 const FormattedText = ({ text, customClass, itemID }: IArgs) => {
   const textArr = textToCleanedTextArray(text);
   return (
-    <div className={`${customClass}-item-message`}>
+    <div className={`${customClass}-item-message formatted-text`}>
       {textArr.map((word, index) => {
         if (word.startsWith('#')) {
           return (

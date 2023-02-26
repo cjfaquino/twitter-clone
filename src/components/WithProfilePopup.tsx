@@ -41,7 +41,7 @@ const WithProfilePopup = ({ userProfile, type, grey, children }: IProps) => {
       <div
         onMouseEnter={handleEnter}
         onMouseLeave={handleLeave}
-        className={`profile-link ${grey ? 'grey' : ''} ${type}`}
+        className={`profile-link ellipsis ${grey ? 'grey' : ''} ${type}`}
       >
         {children}
       </div>

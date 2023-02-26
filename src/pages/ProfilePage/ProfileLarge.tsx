@@ -24,7 +24,7 @@ const ProfileLarge = ({ currentUser, targetUser, userProfile }: IProps) => {
   const [followed, handleFollow] = useFollowStatus(targetUser.userProfile);
   const [showEditProfilePopup, toggleEditProfilePopup] = useToggle();
 
-  const customClass = 'user-card';
+  const customClass = 'profile';
 
   const formatJoinedDate = () => {
     const joinedDate = new Date(

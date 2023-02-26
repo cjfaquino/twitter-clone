@@ -57,13 +57,11 @@ const ProfilePopup = ({ userProfile }: IProps) => {
           </Link>
         </section>
 
-        <section className='formatted-text'>
-          <FormattedText
-            text={bio!}
-            customClass={customClass}
-            itemID={userProfile.id}
-          />
-        </section>
+        <FormattedText
+          text={bio!}
+          customClass={customClass}
+          itemID={userProfile.id}
+        />
 
         <section className='stats'>
           <span className='following follow-link'>

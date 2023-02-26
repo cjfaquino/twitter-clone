@@ -8,12 +8,13 @@ import WithProfilePopup from './WithProfilePopup';
 
 interface IProps {
   userProfile: UserProfile;
+  noBio?: boolean;
 }
 
-const ProfileMedium = ({ userProfile }: IProps) => {
+const ProfileCard = ({ userProfile, noBio }: IProps) => {
   const [followed, handleFollow] = useFollowStatus(userProfile);
   const navigate = useNavigate();
-  const customClass = 'user-card-medium';
+  const customClass = 'user-card';
 
   const navToPage = (e: React.MouseEvent<HTMLDivElement>) => {
     const element = e.target as HTMLElement;
@@ -26,7 +27,7 @@ const ProfileMedium = ({ userProfile }: IProps) => {
   const { photoURL, displayName, userName, id, bio } = userProfile;
 
   return (
-    <div className='profile-medium'>
+    <div className='profile-card'>
       {userProfile && (
         <div className={`${customClass}`} onClick={navToPage} aria-hidden>
           <WithProfilePopup userProfile={userProfile} type='profile-icon'>
@@ -34,13 +35,17 @@ const ProfileMedium = ({ userProfile }: IProps) => {
               <img src={photoURL} alt='' className='profile-link' />
             </div>
           </WithProfilePopup>
-          <div className={`${customClass}-body`}>
+          <section className={`${customClass}-body`}>
             <div className={`${customClass}-info`}>
               <div className='contact'>
                 <WithProfilePopup userProfile={userProfile} type='display-name'>
                   {displayName}
                 </WithProfilePopup>
-                <WithProfilePopup userProfile={userProfile} type='username'>
+                <WithProfilePopup
+                  userProfile={userProfile}
+                  type='username'
+                  grey
+                >
                   @{userName}
                 </WithProfilePopup>
               </div>
@@ -58,20 +63,18 @@ const ProfileMedium = ({ userProfile }: IProps) => {
                 </button>
               )}
             </div>
-            <div>
-              {bio && (
-                <FormattedText
-                  text={bio}
-                  customClass={customClass}
-                  itemID={id}
-                />
-              )}
-            </div>
-          </div>
+            {!noBio && bio && (
+              <FormattedText text={bio} customClass={customClass} itemID={id} />
+            )}
+          </section>
         </div>
       )}
     </div>
   );
 };
 
-export default ProfileMedium;
+ProfileCard.defaultProps = {
+  noBio: false,
+};
+
+export default ProfileCard;
