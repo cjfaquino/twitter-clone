@@ -117,7 +117,9 @@ const ProfileLarge = ({ currentUser, targetUser, userProfile }: IProps) => {
                     <span>
                       <FontAwesomeIcon icon={faLink} />
                       <span className={`${customClass}-website`}>
-                        {targetUser.userProfile.website}
+                        <a href={targetUser.userProfile.website}>
+                          {targetUser.userProfile.website}
+                        </a>
                       </span>
                     </span>
                   )}
