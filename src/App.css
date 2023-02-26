@@ -399,13 +399,6 @@ button svg {
   width: 100%;
 }
 
-.tweet-input,
-.reply-input,
-.main-tweet-item-message,
-.tweet-item-message {
-  white-space: pre-line;
-}
-
 #home .input-container,
 #tweet-page .input-container {
   border-bottom: 1px solid var(--line-color);
@@ -1120,35 +1113,6 @@ button:disabled:hover > .btn-green,
 .main-tweet-item-stats {
   padding: 15px 0;
   border-color: var(--line-color);
-}
-
-/* tweet page replies */
-
-.reply-input-container {
-  display: flex;
-  padding: 0 15px 15px 15px;
-  align-items: center;
-  border-bottom: 1px solid var(--line-color);
-}
-
-.reply-input-img-container {
-  align-self: flex-start;
-}
-
-.reply-input {
-  padding: 10px;
-  width: 100%;
-  font-size: 1.3rem;
-  background-color: transparent;
-  border: none;
-  display: flex;
-  align-items: center;
-}
-
-.btn-submit-reply {
-  padding: 8px;
-  width: 120px;
-  background: var(--theme-color);
 }
 
 /* tweet page likes */
