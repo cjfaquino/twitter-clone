@@ -1095,9 +1095,7 @@ button:disabled:hover > .btn-green,
   text-decoration: underline;
 }
 
-.main-tweet-item-stats .retweets-number,
-.main-tweet-item-stats .views-number,
-.main-tweet-item-stats .likes-number {
+.main-tweet-item-stats .stats-number {
   font-weight: 700;
   color: var(--text);
 }

@@ -164,7 +164,7 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
               />
             </div>
           </WithProfilePopup>
-          <div className={`${customClass}-item-right-half`}>
+          <section className={`${customClass}-item-right-half`}>
             <div className='contact'>
               <WithProfilePopup
                 userProfile={targetUser.userProfile}
@@ -180,7 +180,7 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
                 @{targetUser.userProfile.userName}
               </WithProfilePopup>
             </div>
-          </div>
+          </section>
           <OptionsPopup
             handleDelete={handleDelete}
             toggleOptionsPopup={toggleOptionsPopup}
@@ -216,23 +216,29 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
         >
           {getTimeString(timestamp)}{' '}
         </div>
-        <div className={`${customClass}-item-stats`}>
+
+        <section className={`${customClass}-item-stats`}>
           <span className='views grey'>
-            <span className='views-number'>{fancyNumbers(views, true)}</span>{' '}
+            <span className='views-number stats-number'>
+              {fancyNumbers(views, true)}
+            </span>{' '}
             Views
           </span>
           <span className='retweets grey'>
-            <span className='retweets-number'>
+            <span className='retweets-number stats-number'>
               {fancyNumbers(retweets, true)}
             </span>{' '}
             Retweets
           </span>
           <Link to='likes' className='likes grey'>
-            <span className='likes-number'>{fancyNumbers(likes, true)}</span>{' '}
+            <span className='likes-number stats-number'>
+              {fancyNumbers(likes, true)}
+            </span>{' '}
             Likes
           </Link>
-        </div>
-        <div className={`${customClass}-item-buttons`}>
+        </section>
+
+        <section className={`${customClass}-item-buttons`}>
           <button
             type='button'
             className={`btn-replies grey ${
@@ -274,7 +280,7 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
               <FontAwesomeIcon icon={faArrowUpFromBracket} />
             </span>
           </button>
-        </div>
+        </section>
       </div>
     </div>
   );
