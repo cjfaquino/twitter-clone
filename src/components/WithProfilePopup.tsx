@@ -3,11 +3,14 @@ import React, { MutableRefObject, useRef, useState } from 'react';
 import { UserProfile } from '../interfaces/UserProfile';
 import ProfilePopup from './ProfilePopup';
 
-const DisplayNameWithPopup = ({
-  userProfile,
-}: {
+interface IProps {
   userProfile: UserProfile;
-}) => {
+  type: string;
+  grey?: boolean;
+  children: React.ReactNode;
+}
+
+const WithProfilePopup = ({ userProfile, type, grey, children }: IProps) => {
   const [showPopup, setShowPopup] = useState(false);
   const timerRef = useRef<NodeJS.Timeout>(
     null
@@ -38,9 +41,9 @@ const DisplayNameWithPopup = ({
       <div
         onMouseEnter={handleEnter}
         onMouseLeave={handleLeave}
-        className='display-name profile-link'
+        className={`profile-link ${grey ? 'grey' : ''} ${type}`}
       >
-        {userProfile.displayName}
+        {children}
       </div>
       {showPopup && (
         <section
@@ -55,4 +58,8 @@ const DisplayNameWithPopup = ({
   );
 };
 
-export default DisplayNameWithPopup;
+WithProfilePopup.defaultProps = {
+  grey: false,
+};
+
+export default WithProfilePopup;

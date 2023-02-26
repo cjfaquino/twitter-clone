@@ -32,7 +32,7 @@ import undoRetweet from '../utils/retweets/undoRetweet';
 import getContents from '../utils/tweets/getContents';
 import TweetHandlerContext from '../context/TweetHandlerContext';
 import Tweet from '../classes/Tweet';
-import DisplayNameWithPopup from './DisplayNameWithPopup';
+import WithProfilePopup from './WithProfilePopup';
 
 interface IProps {
   tweetObj: TweetObj;
@@ -200,15 +200,20 @@ const TweetItem = ({ tweetObj }: IProps) => {
       {targetUser.doneLoading && !repliesLoading && (
         <>
           <section className={`${customClass}-item-left-half`}>
-            <div
-              className={`${customClass}-item-img-container img-container profile-link`}
+            <WithProfilePopup
+              userProfile={targetUser.userProfile}
+              type='profile-icon'
             >
-              <img
-                src={targetUser.userProfile.photoURL}
-                alt=''
-                className='profile-link'
-              />
-            </div>
+              <div
+                className={`${customClass}-item-img-container img-container profile-link`}
+              >
+                <img
+                  src={targetUser.userProfile.photoURL}
+                  alt=''
+                  className='profile-link'
+                />
+              </div>
+            </WithProfilePopup>
             <div className='vert-line' />
           </section>
 
@@ -226,15 +231,19 @@ const TweetItem = ({ tweetObj }: IProps) => {
             )}
 
             <div className={`${customClass}-item-info`}>
-              {/* <div className={`${customClass}-item-display profile-link`}>
+              <WithProfilePopup
+                userProfile={targetUser.userProfile}
+                type='display-name'
+              >
                 {targetUser.userProfile.displayName}
-              </div> */}
-              <DisplayNameWithPopup userProfile={targetUser.userProfile} />
-              <div
-                className={`${customClass}-item-name profile-link grey username`}
+              </WithProfilePopup>
+              <WithProfilePopup
+                userProfile={targetUser.userProfile}
+                type='username'
+                grey
               >
                 @{targetUser.userProfile.userName}
-              </div>
+              </WithProfilePopup>
               <div
                 className={`${customClass}-item-time grey`}
                 title={getTimeString(timestamp)}

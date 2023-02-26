@@ -534,7 +534,7 @@ button svg {
 
 .profile-popup {
   position: absolute;
-  top: 25px;
+  top: calc(100% + 15px);
   left: 50%;
   width: 275px;
   padding: 15px;
