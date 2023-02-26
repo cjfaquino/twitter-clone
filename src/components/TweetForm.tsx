@@ -91,7 +91,7 @@ const TweetForm = ({
         <textarea
           name={`${type}`}
           id={`${type}-input`}
-          className='tweet-input'
+          className='tweet-input formatted-text'
           placeholder={placeholder}
           onChange={handleInput}
           value={input}
