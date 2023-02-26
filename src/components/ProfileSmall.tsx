@@ -1,8 +1,9 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useFollowStatus from '../hooks/useFollowStatus';
 import checkMatchingUser from '../utils/user/checkMatchingUser';
 import { UserProfile } from '../interfaces/UserProfile';
+import WithProfilePopup from './WithProfilePopup';
 
 interface IProps {
   userProfile: UserProfile;
@@ -26,20 +27,21 @@ const ProfileSmall = ({ userProfile }: IProps) => {
     <div className='profile-small'>
       {userProfile && (
         <div className={`${customClass}`} onClick={navToPage} aria-hidden>
-          <div
-            className={`${customClass}-img-container img-container profile-link`}
-          >
-            <img src={photoURL} alt='' className='profile-link' />
-          </div>
-          <div className={`${customClass}-contact`}>
-            <div className={`${customClass}-display-name profile-link`}>
-              {displayName}
-            </div>
-            <div
-              className={`${customClass}-user-name profile-link grey username`}
+          <WithProfilePopup userProfile={userProfile} type='profile-icon'>
+            <Link
+              to={`/${userProfile.userName}`}
+              className={`${customClass}-img-container img-container profile-link`}
             >
+              <img src={photoURL} alt='' className='profile-link' />
+            </Link>
+          </WithProfilePopup>
+          <div className='contact'>
+            <WithProfilePopup userProfile={userProfile} type='display-name'>
+              {displayName}
+            </WithProfilePopup>
+            <WithProfilePopup userProfile={userProfile} type='username' grey>
               @{userName}
-            </div>
+            </WithProfilePopup>
           </div>
           {followed !== null && !checkMatchingUser(id) && (
             <button

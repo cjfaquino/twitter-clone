@@ -4,6 +4,7 @@ import useFollowStatus from '../hooks/useFollowStatus';
 import { UserProfile } from '../interfaces/UserProfile';
 import checkMatchingUser from '../utils/user/checkMatchingUser';
 import FormattedText from './FormattedText';
+import WithProfilePopup from './WithProfilePopup';
 
 interface IProps {
   userProfile: UserProfile;
@@ -28,22 +29,20 @@ const ProfileMedium = ({ userProfile }: IProps) => {
     <div className='profile-medium'>
       {userProfile && (
         <div className={`${customClass}`} onClick={navToPage} aria-hidden>
-          <div
-            className={`${customClass}-img-container img-container profile-link`}
-          >
-            <img src={photoURL} alt='' className='profile-link' />
-          </div>
+          <WithProfilePopup userProfile={userProfile} type='profile-icon'>
+            <div className='img-container profile-link'>
+              <img src={photoURL} alt='' className='profile-link' />
+            </div>
+          </WithProfilePopup>
           <div className={`${customClass}-body`}>
             <div className={`${customClass}-info`}>
-              <div className={`${customClass}-contact`}>
-                <div className={`${customClass}-display-name profile-link`}>
+              <div className='contact'>
+                <WithProfilePopup userProfile={userProfile} type='display-name'>
                   {displayName}
-                </div>
-                <div
-                  className={`${customClass}-user-name profile-link grey username`}
-                >
+                </WithProfilePopup>
+                <WithProfilePopup userProfile={userProfile} type='username'>
                   @{userName}
-                </div>
+                </WithProfilePopup>
               </div>
               {followed !== null && !checkMatchingUser(id) && (
                 <button

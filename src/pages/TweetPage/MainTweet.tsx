@@ -26,6 +26,7 @@ import fancyNumbers from '../../utils/formatters/fancyNumbers';
 import checkAlreadyRetweeted from '../../utils/retweets/checkAlreadyRetweeted';
 import undoRetweet from '../../utils/retweets/undoRetweet';
 import retweet from '../../utils/retweets/retweet';
+import WithProfilePopup from '../../components/WithProfilePopup';
 
 interface IProps {
   tweetObj: TweetObj;
@@ -158,21 +159,31 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
     >
       <div id={TWEET_ID} className={`${customClass}-item`}>
         <div className={`${customClass}-item-user`}>
-          <div
-            className={`${customClass}-item-img-container img-container profile-link`}
+          <WithProfilePopup
+            userProfile={targetUser.userProfile}
+            type='profile-icon'
           >
-            <img src={USER_ICON} alt={USER_NAME} className='profile-link' />
-          </div>
+            <div
+              className={`${customClass}-item-img-container img-container profile-link`}
+            >
+              <img src={USER_ICON} alt={USER_NAME} className='profile-link' />
+            </div>
+          </WithProfilePopup>
           <div className={`${customClass}-item-right-half`}>
-            <div className={`${customClass}-item-info`}>
-              <div className={`${customClass}-item-display profile-link`}>
+            <div className='contact'>
+              <WithProfilePopup
+                userProfile={targetUser.userProfile}
+                type='display-name'
+              >
                 {USER_DISPLAY}
-              </div>
-              <div
-                className={`${customClass}-item-name profile-link grey username`}
+              </WithProfilePopup>
+              <WithProfilePopup
+                userProfile={targetUser.userProfile}
+                type='username'
+                grey
               >
                 @{USER_NAME}
-              </div>
+              </WithProfilePopup>
             </div>
           </div>
           <OptionsPopup
