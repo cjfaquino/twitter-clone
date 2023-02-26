@@ -557,6 +557,10 @@ button svg {
   gap: 10px;
 }
 
+.user-card-popup .contact > * {
+  display: block;
+}
+
 .user-card-popup .stats {
   display: flex;
   gap: 10px;
@@ -1018,6 +1022,10 @@ button:disabled:hover > .btn-green,
 }
 
 /* tweet page */
+
+.display-name {
+  color: var(--text);
+}
 
 .profile-link {
   cursor: pointer;

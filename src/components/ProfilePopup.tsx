@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useFollowStatus from '../hooks/useFollowStatus';
 import checkMatchingUser from '../utils/user/checkMatchingUser';
 import { UserProfile } from '../interfaces/UserProfile';
@@ -12,28 +12,21 @@ interface IProps {
 
 const ProfilePopup = ({ userProfile }: IProps) => {
   const [followed, handleFollow] = useFollowStatus(userProfile);
-  const navigate = useNavigate();
   const customClass = 'user-card-popup';
-
-  const navToPage = (e: React.MouseEvent<HTMLDivElement>) => {
-    const element = e.target as HTMLElement;
-    const targetName = element.className;
-    if (!targetName.includes('btn-follow'))
-      navigate(`/${userProfile.userName}`);
-  };
 
   const { photoURL, userName, displayName, id, followers, following, bio } =
     userProfile;
 
   return (
     userProfile && (
-      <div className={`${customClass}`} onClick={navToPage} aria-hidden>
+      <div className={`${customClass}`} aria-hidden>
         <section className='top-row'>
-          <div
-            className={`${customClass}-img-container img-container profile-link`}
+          <Link
+            to={`/${userProfile.userName}`}
+            className='img-container profile-link'
           >
             <img src={photoURL} alt='' className='profile-link' />
-          </div>
+          </Link>
           {followed !== null && !checkMatchingUser(id) && (
             <button
               type='button'
@@ -49,9 +42,19 @@ const ProfilePopup = ({ userProfile }: IProps) => {
           )}
         </section>
 
-        <section>
-          <div className='display-name profile-link'>{displayName}</div>
-          <div className='profile-link grey username'>@{userName}</div>
+        <section className='contact'>
+          <Link
+            to={`/${userProfile.userName}`}
+            className='display-name profile-link'
+          >
+            {displayName}
+          </Link>
+          <Link
+            to={`/${userProfile.userName}`}
+            className='profile-link grey username'
+          >
+            @{userName}
+          </Link>
         </section>
 
         <section className='formatted-text'>
