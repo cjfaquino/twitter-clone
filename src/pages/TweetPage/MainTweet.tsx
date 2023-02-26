@@ -71,16 +71,7 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
 
   if (!tweetObj) return <div id={`${customClass}-container`} />;
 
-  const {
-    views,
-    text,
-    imgURL,
-    timestamp,
-    USER_ICON,
-    USER_NAME,
-    USER_DISPLAY,
-    id: TWEET_ID,
-  } = tweetObj;
+  const { views, text, imgURL, timestamp, id: TWEET_ID } = tweetObj;
 
   const handleDelete = async () => {
     if (checkMatchingUser(getUserUid())) {
@@ -128,7 +119,7 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
     const btnText = btn.querySelector('.extra-btn-text')!;
 
     // copy link to tweet page and write to clipboard
-    const linkText = `${window.location.origin}/${USER_NAME}/tweet/${TWEET_ID}`;
+    const linkText = `${window.location.origin}/${targetUser.userProfile.userName}/tweet/${TWEET_ID}`;
     await navigator.clipboard.writeText(linkText);
 
     // show link is copied
@@ -146,7 +137,7 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
     // conditions
     if (targetName.includes('profile-link')) {
       // go to user page
-      navigate(`/${USER_NAME}`);
+      navigate(`/${targetUser.userProfile.userName}`);
     }
   };
 
@@ -166,7 +157,11 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
             <div
               className={`${customClass}-item-img-container img-container profile-link`}
             >
-              <img src={USER_ICON} alt={USER_NAME} className='profile-link' />
+              <img
+                src={targetUser.userProfile.photoURL}
+                alt=''
+                className='profile-link'
+              />
             </div>
           </WithProfilePopup>
           <div className={`${customClass}-item-right-half`}>
@@ -175,14 +170,14 @@ const MainTweet = ({ tweetObj, fetchedReplies }: IProps) => {
                 userProfile={targetUser.userProfile}
                 type='display-name'
               >
-                {USER_DISPLAY}
+                {targetUser.userProfile.displayName}
               </WithProfilePopup>
               <WithProfilePopup
                 userProfile={targetUser.userProfile}
                 type='username'
                 grey
               >
-                @{USER_NAME}
+                @{targetUser.userProfile.userName}
               </WithProfilePopup>
             </div>
           </div>
