@@ -42,12 +42,6 @@ a {
   text-decoration: inherit;
 }
 
-html,
-body {
-  min-height: 100vh;
-  min-width: 100vw;
-}
-
 input,
 textarea {
   background-color: var(--background-color);

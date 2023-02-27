@@ -9,25 +9,9 @@
   --line-color: rgb(50, 50, 50);
 }
 
-#root {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 100svh;
-  min-width: 100svw;
-}
-
-.wrapper {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
 .app {
-  height: 100%;
-  width: 100%;
   display: flex;
+  justify-content: center;
 }
 
 button svg {
@@ -231,7 +215,8 @@ button svg {
 #menubar {
   padding: 20px;
   height: 100vh;
-  position: fixed;
+  position: sticky;
+  top: 0;
   width: var(--menubar-width);
 }
 
@@ -580,7 +565,6 @@ button svg {
 /* Center column */
 
 #centerbar {
-  margin-left: var(--menubar-width);
   width: var(--feed-width);
   min-height: 100vh;
   border-left: 1px solid var(--line-color);
@@ -801,9 +785,9 @@ form button {
 #sidebar {
   padding: 20px;
   width: var(--sidebar-width);
-  margin-left: calc(var(--menubar-width) + var(--feed-width));
-  height: 100vh;
-  position: fixed;
+  height: 100svh;
+  position: sticky;
+  top: 0;
 }
 
 .sidebar-signup {
@@ -1621,10 +1605,6 @@ header.search {
     --menubar-width: 100px;
   }
 
-  .wrapper {
-    max-width: unset;
-  }
-
   .menu-list {
     align-items: center;
   }
@@ -1641,6 +1621,18 @@ header.search {
 
   .collapsible,
   .menu-list .more-options {
+    display: none;
+  }
+}
+
+@media (max-width: 1112px) {
+  #sidebar {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  #login-banner li:first-child {
     display: none;
   }
 }
