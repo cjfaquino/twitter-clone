@@ -35,12 +35,13 @@ const ProfileLarge = ({ currentUser, targetUser, userProfile }: IProps) => {
         <div className={`${customClass}`}>
           {targetUser.doneLoading && (
             <div id={`${customClass}-${targetUser.userProfile.id}`}>
-              <div className='top-half img-backdrop'>
+              <section className='top-half img-backdrop'>
                 {targetUser.userProfile.backdropURL && (
                   <img src={targetUser.userProfile.backdropURL} alt='' />
                 )}
-              </div>
-              <div className='bottom-half'>
+              </section>
+
+              <section className='bottom-half'>
                 <div className='user-pic edit'>
                   <div className='user-profile-img-container'>
                     <img src={targetUser.userProfile.photoURL} alt='' />
@@ -73,21 +74,21 @@ const ProfileLarge = ({ currentUser, targetUser, userProfile }: IProps) => {
                     )
                   )}
                 </div>
+
                 <div className={`${customClass}-display-name`}>
                   {targetUser.userProfile.displayName}
                 </div>
+
                 <div className={`${customClass}-username grey`}>
                   @{targetUser.userProfile.userName}
                 </div>
-                <div className={`${customClass}-bio`}>
-                  {targetUser.userProfile.bio && (
-                    <FormattedText
-                      text={targetUser.userProfile.bio!}
-                      customClass={customClass}
-                      itemID={targetUser.userProfile.id}
-                    />
-                  )}
-                </div>
+
+                <FormattedText
+                  text={targetUser.userProfile.bio}
+                  customClass={customClass}
+                  itemID={targetUser.userProfile.id}
+                />
+
                 <div className={`${customClass}-extra-info`}>
                   <LocationItem location={targetUser.userProfile.location} />
 
@@ -97,6 +98,7 @@ const ProfileLarge = ({ currentUser, targetUser, userProfile }: IProps) => {
                     createdAt={targetUser.userProfile.metadata!.createdAt}
                   />
                 </div>
+
                 <div className={`${customClass}-stats grey`}>
                   <span className={`${customClass}-followers follow-link`}>
                     <Link to='followers' state={{ targetUser }}>
@@ -115,7 +117,7 @@ const ProfileLarge = ({ currentUser, targetUser, userProfile }: IProps) => {
                     </Link>
                   </span>
                 </div>
-              </div>
+              </section>
             </div>
           )}
         </div>

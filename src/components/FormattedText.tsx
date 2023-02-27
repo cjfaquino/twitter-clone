@@ -4,16 +4,15 @@ import { createSearchParams, Link } from 'react-router-dom';
 import textToCleanedTextArray from '../utils/formatters/textToCleanedTextArray';
 
 interface IArgs {
-  text: string;
+  text: string | undefined;
   customClass: string;
   itemID: string;
 }
 
-const FormattedText = ({ text, customClass, itemID }: IArgs) => {
-  const textArr = textToCleanedTextArray(text);
-  return (
+const FormattedText = ({ text, customClass, itemID }: IArgs) =>
+  text ? (
     <div className={`${customClass}-item-message formatted-text`}>
-      {textArr.map((word, index) => {
+      {textToCleanedTextArray(text).map((word, index) => {
         if (word.startsWith('#')) {
           return (
             <Link
@@ -41,7 +40,6 @@ const FormattedText = ({ text, customClass, itemID }: IArgs) => {
         return `${word} `;
       })}
     </div>
-  );
-};
+  ) : null;
 
 export default FormattedText;
