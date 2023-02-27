@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
+  faFeather,
   faGear,
   faHashtag,
   faHomeUser,
@@ -46,7 +47,7 @@ const MyNav = ({ currentUser, userProfile, toggleTweetPopup }: IProps) => {
             <NavLink to='/home'>
               <div className='link-item'>
                 <FontAwesomeIcon icon={faHomeUser} />
-                <span>Home</span>
+                <span className='collapsible'>Home</span>
               </div>
             </NavLink>
           </li>
@@ -55,7 +56,7 @@ const MyNav = ({ currentUser, userProfile, toggleTweetPopup }: IProps) => {
           <NavLink to='/explore'>
             <div className='link-item'>
               <FontAwesomeIcon icon={faHashtag} />
-              <span>Explore</span>
+              <span className='collapsible'>Explore</span>
             </div>
           </NavLink>
         </li>
@@ -65,7 +66,7 @@ const MyNav = ({ currentUser, userProfile, toggleTweetPopup }: IProps) => {
               <NavLink end to={`${userProfile.userName}`}>
                 <div className='link-item'>
                   <FontAwesomeIcon icon={faUser} />
-                  <span>Profile</span>
+                  <span className='collapsible'>Profile</span>
                 </div>
               </NavLink>
             </li>
@@ -73,7 +74,7 @@ const MyNav = ({ currentUser, userProfile, toggleTweetPopup }: IProps) => {
               <NavLink to='/settings'>
                 <div className='link-item'>
                   <FontAwesomeIcon icon={faGear} />
-                  <span>Settings</span>
+                  <span className='collapsible'>Settings</span>
                 </div>
               </NavLink>
             </li>
@@ -83,7 +84,8 @@ const MyNav = ({ currentUser, userProfile, toggleTweetPopup }: IProps) => {
                 onClick={handleClick}
                 className='btn-nav-tweet'
               >
-                Tweet
+                <span className='collapsible'>Tweet</span>
+                <FontAwesomeIcon icon={faFeather} />
               </button>
             </li>
             <li className='nav-user'>
@@ -98,7 +100,8 @@ const MyNav = ({ currentUser, userProfile, toggleTweetPopup }: IProps) => {
                     alt={currentUser.displayName!}
                   />
                 </div>
-                <div className='nav-contact'>
+
+                <div className='nav-contact collapsible'>
                   <div className='nav-display-name'>
                     {currentUser.displayName}
                   </div>
@@ -134,7 +137,7 @@ const MyNav = ({ currentUser, userProfile, toggleTweetPopup }: IProps) => {
               <NavLink to='/signup/continue'>
                 <div className='link-item'>
                   <FontAwesomeIcon icon={faUser} />
-                  Continue sign-up
+                  <span className='collapsible'>Continue sign-up</span>
                 </div>
               </NavLink>
             </li>
