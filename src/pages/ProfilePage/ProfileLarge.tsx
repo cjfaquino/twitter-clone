@@ -31,97 +31,95 @@ const ProfileLarge = ({ currentUser, targetUser, userProfile }: IProps) => {
           toggleEditProfilePopup={toggleEditProfilePopup}
         />
       )}
-      <div className='profile-large'>
-        <div className={`${customClass}`}>
-          {targetUser.doneLoading && (
-            <div id={`${customClass}-${targetUser.userProfile.id}`}>
-              <section className='top-half img-backdrop'>
-                {targetUser.userProfile.backdropURL && (
-                  <img src={targetUser.userProfile.backdropURL} alt='' />
-                )}
-              </section>
+      <section className='profile-large'>
+        {targetUser.doneLoading && (
+          <div id={`${customClass}-${targetUser.userProfile.id}`}>
+            <section className='top-half img-backdrop'>
+              {targetUser.userProfile.backdropURL && (
+                <img src={targetUser.userProfile.backdropURL} alt='' />
+              )}
+            </section>
 
-              <section className='bottom-half'>
-                <div className='user-pic edit'>
-                  <div className='user-profile-img-container'>
-                    <img src={targetUser.userProfile.photoURL} alt='' />
-                  </div>
-                  {currentUser &&
-                  currentUser.uid === targetUser.userProfile.id ? (
+            <section className='bottom-half'>
+              <div className='user-pic edit'>
+                <div className='user-profile-img-container'>
+                  <img src={targetUser.userProfile.photoURL} alt='' />
+                </div>
+                {currentUser &&
+                currentUser.uid === targetUser.userProfile.id ? (
+                  <button
+                    type='button'
+                    className='btn-edit-profile'
+                    onClick={toggleEditProfilePopup}
+                  >
+                    Edit Profile
+                  </button>
+                ) : (
+                  currentUser &&
+                  followed !== null && (
                     <button
                       type='button'
-                      className='btn-edit-profile'
-                      onClick={toggleEditProfilePopup}
+                      onClick={handleFollow}
+                      className={
+                        followed ? 'btn-follow following' : 'btn-follow'
+                      }
                     >
-                      Edit Profile
+                      {followed ? (
+                        <span className='following'>Following</span>
+                      ) : (
+                        <span>Follow</span>
+                      )}
                     </button>
-                  ) : (
-                    currentUser &&
-                    followed !== null && (
-                      <button
-                        type='button'
-                        onClick={handleFollow}
-                        className={
-                          followed ? 'btn-follow following' : 'btn-follow'
-                        }
-                      >
-                        {followed ? (
-                          <span className='following'>Following</span>
-                        ) : (
-                          <span>Follow</span>
-                        )}
-                      </button>
-                    )
-                  )}
-                </div>
+                  )
+                )}
+              </div>
 
-                <div className={`${customClass}-display-name`}>
-                  {targetUser.userProfile.displayName}
-                </div>
+              <div className='display-name'>
+                {targetUser.userProfile.displayName}
+              </div>
 
-                <div className={`${customClass}-username grey`}>
-                  @{targetUser.userProfile.userName}
-                </div>
+              <div className='username grey'>
+                @{targetUser.userProfile.userName}
+              </div>
 
-                <FormattedText
-                  text={targetUser.userProfile.bio}
-                  customClass={customClass}
-                  itemID={targetUser.userProfile.id}
+              <FormattedText
+                text={targetUser.userProfile.bio}
+                customClass={customClass}
+                itemID={targetUser.userProfile.id}
+              />
+
+              <div className={`${customClass}-extra-info`}>
+                <LocationItem location={targetUser.userProfile.location} />
+
+                <WebsiteItem link={targetUser.userProfile.website} />
+
+                <JoinedDateItem
+                  createdAt={targetUser.userProfile.metadata!.createdAt}
                 />
+              </div>
 
-                <div className={`${customClass}-extra-info`}>
-                  <LocationItem location={targetUser.userProfile.location} />
-
-                  <WebsiteItem link={targetUser.userProfile.website} />
-
-                  <JoinedDateItem
-                    createdAt={targetUser.userProfile.metadata!.createdAt}
-                  />
-                </div>
-
-                <div className={`${customClass}-stats grey`}>
-                  <span className={`${customClass}-followers follow-link`}>
-                    <Link to='followers' state={{ targetUser }}>
-                      <span className={`${customClass}-followers-number`}>
-                        {targetUser.userProfile.followers}
-                      </span>{' '}
-                      <span className='grey'>Followers</span>
-                    </Link>
-                  </span>
-                  <span className={`${customClass}-following follow-link`}>
-                    <Link to='following' state={{ targetUser }}>
-                      <span className={`${customClass}-following-number`}>
-                        {targetUser.userProfile.following}
-                      </span>{' '}
-                      <span className='grey'>Following</span>
-                    </Link>
-                  </span>
-                </div>
-              </section>
-            </div>
-          )}
-        </div>
-      </div>
+              <div className={`${customClass}-stats grey`}>
+                <span className={`${customClass}-followers follow-link`}>
+                  <Link to='followers' state={{ targetUser }}>
+                    <span className={`${customClass}-followers-number`}>
+                      {targetUser.userProfile.followers}
+                    </span>{' '}
+                    <span className='grey'>Followers</span>
+                  </Link>
+                </span>
+                <span className={`${customClass}-following follow-link`}>
+                  <Link to='following' state={{ targetUser }}>
+                    <span className={`${customClass}-following-number`}>
+                      {targetUser.userProfile.following}
+                    </span>{' '}
+                    <span className='grey'>Following</span>
+                  </Link>
+                </span>
+              </div>
+            </section>
+          </div>
+        )}
+      </section>
     </>
   );
 };
