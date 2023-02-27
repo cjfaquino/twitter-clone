@@ -1,9 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faCalendarDays,
-  faLocationDot,
-} from '@fortawesome/free-solid-svg-icons';
+import { faCalendarDays } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { User } from 'firebase/auth';
 import useFollowStatus from '../../hooks/useFollowStatus';
@@ -13,6 +10,7 @@ import EditProfilePopup from './EditProfilePopup';
 import { UserProfile } from '../../interfaces/UserProfile';
 import FormattedText from '../../components/FormattedText';
 import WebsiteItem from './WebsiteItem';
+import LocationItem from './LocationItem';
 
 interface IProps {
   currentUser: User | null;
@@ -105,14 +103,7 @@ const ProfileLarge = ({ currentUser, targetUser, userProfile }: IProps) => {
                   )}
                 </div>
                 <div className={`${customClass}-extra-info`}>
-                  {targetUser.userProfile.location && (
-                    <span>
-                      <FontAwesomeIcon icon={faLocationDot} />
-                      <span className={`${customClass}-location grey`}>
-                        {targetUser.userProfile.location}
-                      </span>
-                    </span>
-                  )}
+                  <LocationItem location={targetUser.userProfile.location} />
 
                   <WebsiteItem link={targetUser.userProfile.website} />
 
