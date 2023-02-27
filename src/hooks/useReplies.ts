@@ -8,10 +8,11 @@ import {
 } from 'firebase/firestore';
 import { db } from '../firebase-config';
 import getUpdatedTweetByID from '../utils/tweets/getUpdatedTweetByID';
+import { TweetObj } from '../interfaces/TweetObj';
 
 export default function useReplies(
   tweetID: string
-): [DocumentData[], boolean, React.Dispatch<React.SetStateAction<any[]>>] {
+): [TweetObj[], boolean, React.Dispatch<React.SetStateAction<any[]>>] {
   const [replies, setReplies] = useState<DocumentData[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -39,5 +40,5 @@ export default function useReplies(
     };
   }, [tweetID]);
 
-  return [replies, loading, setReplies];
+  return [replies as TweetObj[], loading, setReplies];
 }

@@ -1,11 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useLayoutEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { faComment, faHeart } from '@fortawesome/free-regular-svg-icons';
-import {
-  faArrowUpFromBracket,
-  faChartSimple,
-  faRetweet,
-} from '@fortawesome/free-solid-svg-icons';
+import { faRetweet } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import deleteTweet from '../utils/tweets/deleteTweet';
 import OptionsPopup from './OptionsPopup';
@@ -13,26 +8,17 @@ import useToggle from '../hooks/useToggle';
 import getTimeString from '../utils/formatters/getTimeString';
 import checkMatchingUser from '../utils/user/checkMatchingUser';
 import useReplies from '../hooks/useReplies';
-import checkAlreadyLiked from '../utils/likes/checkAlreadyLiked';
-import undoLike from '../utils/likes/undoLike';
-import likeTweet from '../utils/likes/likeTweet';
-import isUserSignedIn from '../utils/user/isUserSignedIn';
 import FormattedText from './FormattedText';
 import useFindByUsername from '../hooks/useFindByUsername';
 import { TweetObj } from '../interfaces/TweetObj';
-import checkUserAlreadyReplied from '../utils/tweets/checkUserAlreadyReplied';
 import ProfileContext from '../context/ProfileContext';
 import { UserProfile } from '../interfaces/UserProfile';
-import TweetItemButton from './TweetItemButton';
-import checkAlreadyRetweeted from '../utils/retweets/checkAlreadyRetweeted';
-import retweet from '../utils/retweets/retweet';
 import getUpdatedTweetByID from '../utils/tweets/getUpdatedTweetByID';
 import getUpdatedUserByID from '../utils/user/getUpdatedUserByID';
-import undoRetweet from '../utils/retweets/undoRetweet';
 import getContents from '../utils/tweets/getContents';
 import TweetHandlerContext from '../context/TweetHandlerContext';
-import Tweet from '../classes/Tweet';
 import WithProfilePopup from './WithProfilePopup';
+import TweetItemSocials from './TweetItemSocials';
 
 interface IProps {
   tweetObj: TweetObj;
@@ -64,22 +50,6 @@ const TweetItem = ({ tweetObj }: IProps) => {
   } = getContents(tweetObj);
 
   const customClass = 'tweet';
-
-  if (tweetObj.aRetweetOf && retwt === null) {
-    // get updated stats of original tweet
-    getUpdatedTweetByID(tweetObj.aRetweetOf.id).then((data) => {
-      const twt = data as TweetObj;
-      setRetwt(twt);
-      setLikes(twt.likes);
-      setViews(twt.views);
-      setRetweets(twt.retweets);
-    });
-
-    // get updated info for the retweeter
-    getUpdatedUserByID(tweetObj.USER_ID).then((data) =>
-      setRetweeter(data as UserProfile)
-    );
-  }
 
   const handleDelete = async () => {
     // delete from DB
@@ -121,53 +91,23 @@ const TweetItem = ({ tweetObj }: IProps) => {
     }
   };
 
-  const handleLike = async () => {
-    if (!isUserSignedIn()) return navigate('/login');
-
-    if (checkAlreadyLiked(TWEET_ID, userProfile)) {
-      // already liked
-      await undoLike(TWEET_ID);
-      setLikes((prev) => prev - 1);
-    } else {
-      // not yet liked
-      await likeTweet(tweetObj);
-      setLikes((prev) => prev + 1);
-    }
-
-    return undefined;
-  };
-
-  const handleRetweet = async () => {
-    if (!isUserSignedIn()) return navigate('/login');
-
-    if (checkAlreadyRetweeted(TWEET_ID, userProfile)) {
-      // already retweeted
-      // use original tweet if aRetweetOf
-      // use current tweet if not
-      const tweetRef = (tweetObj.aRetweetOf && tweetObj.aRetweetOf) || tweetObj;
-      await undoRetweet(tweetRef, userProfile);
-      // remove from feed if clicked on retweet
-      if (tweetObj.aRetweetOf) {
-        tweetHandler.delete(tweetObj.id);
-      }
-      // update original tweets retweets count
-      setRetweets((prev) => prev - 1);
-    } else {
-      // not yet retweeted
-      const docID = await retweet(tweetObj);
-      // add to top of feed
-      const temp = new Tweet({
-        messageText: '',
-        messageImg: tweetObj.imgURL,
-        aRetweetOf: tweetObj,
+  useLayoutEffect(() => {
+    if (tweetObj.aRetweetOf && retwt === null) {
+      // get updated stats of original tweet
+      getUpdatedTweetByID(tweetObj.aRetweetOf.id).then((data) => {
+        const twt = data as TweetObj;
+        setRetwt(twt);
+        setLikes(twt.likes);
+        setViews(twt.views);
+        setRetweets(twt.retweets);
       });
-      const newTwt = { id: docID, ...temp } as TweetObj;
-      tweetHandler.add(newTwt);
-      // update retweet count
-      setRetweets((prev) => prev + 1);
+
+      // get updated info for the retweeter
+      getUpdatedUserByID(tweetObj.USER_ID).then((data) =>
+        setRetweeter(data as UserProfile)
+      );
     }
-    return undefined;
-  };
+  }, [tweetObj]);
 
   if (TWEET_ID.startsWith('null') || retwt?.id.startsWith('null')) {
     // prevent app from crashing when trying to load a tweet that doesn't exist
@@ -176,19 +116,6 @@ const TweetItem = ({ tweetObj }: IProps) => {
     // TODO delete all retweets of deleted tweet
     return null;
   }
-
-  const handleShare = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const btn = e.currentTarget as HTMLElement;
-    const btnText = btn.querySelector('.extra-btn-text')!;
-
-    // show link is copied
-    btn.classList.add('copied');
-    btnText.textContent = 'copied';
-
-    // copy link to tweet page and write to clipboard
-    const linkText = `${window.location.origin}/${targetUser.userProfile.userName}/tweet/${TWEET_ID}`;
-    navigator.clipboard.writeText(linkText);
-  };
 
   return (
     <div
@@ -278,70 +205,18 @@ const TweetItem = ({ tweetObj }: IProps) => {
                 <img src={imgURL} alt='' />
               </div>
             )}
-            <div className={`${customClass}-item-buttons`}>
-              <TweetItemButton
-                className={`btn-replies grey ${
-                  checkUserAlreadyReplied(replies as TweetObj[])
-                    ? 'replied'
-                    : ''
-                }`}
-                handleClick={() =>
-                  navigate(
-                    `/${targetUser.userProfile.userName}/tweet/${TWEET_ID}`
-                  )
-                }
-                color='blue'
-                icon={faComment}
-                type='replies'
-                number={replies.length}
-              />
-
-              <TweetItemButton
-                className={`btn-retweets grey ${
-                  checkAlreadyRetweeted(TWEET_ID, userProfile)
-                    ? 'retweeted'
-                    : ''
-                }`}
-                handleClick={handleRetweet}
-                disabled={
-                  (!tweetObj.aRetweetOf &&
-                    tweetObj.USER_ID === userProfile.id) ||
-                  (tweetObj.aRetweetOf! &&
-                    tweetObj.aRetweetOf.USER_ID === userProfile.id)
-                }
-                color='green'
-                icon={faRetweet}
-                type='retweets'
-                number={retweets}
-              />
-
-              <TweetItemButton
-                className={`btn-likes grey ${
-                  checkAlreadyLiked(TWEET_ID, userProfile) ? 'liked' : ''
-                }`}
-                handleClick={handleLike}
-                color='red'
-                icon={faHeart}
-                type='likes'
-                number={likes}
-              />
-
-              <TweetItemButton
-                className='btn-views grey'
-                color='blue'
-                icon={faChartSimple}
-                type='views'
-                number={views}
-              />
-
-              <TweetItemButton
-                className='btn-shares grey'
-                handleClick={handleShare}
-                color='blue'
-                icon={faArrowUpFromBracket}
-                type='copy link'
-              />
-            </div>
+            <TweetItemSocials
+              customClass={customClass}
+              tweetObj={tweetObj.aRetweetOf || tweetObj}
+              targetUser={targetUser}
+              userProfile={userProfile}
+              replies={replies}
+              likes={likes}
+              views={views}
+              retweets={retweets}
+              setLikes={setLikes}
+              setRetweets={setRetweets}
+            />
           </section>
         </>
       )}
