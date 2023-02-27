@@ -1,6 +1,4 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarDays } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { User } from 'firebase/auth';
 import useFollowStatus from '../../hooks/useFollowStatus';
@@ -11,6 +9,7 @@ import { UserProfile } from '../../interfaces/UserProfile';
 import FormattedText from '../../components/FormattedText';
 import WebsiteItem from './WebsiteItem';
 import LocationItem from './LocationItem';
+import JoinedDateItem from './JoinedDateItem';
 
 interface IProps {
   currentUser: User | null;
@@ -23,19 +22,6 @@ const ProfileLarge = ({ currentUser, targetUser, userProfile }: IProps) => {
   const [showEditProfilePopup, toggleEditProfilePopup] = useToggle();
 
   const customClass = 'profile';
-
-  const formatJoinedDate = () => {
-    const joinedDate = new Date(
-      Number(targetUser.userProfile.metadata!.createdAt)
-    );
-
-    const options: Intl.DateTimeFormatOptions = {
-      year: 'numeric',
-      month: 'short',
-    };
-
-    return joinedDate.toLocaleDateString('en-us', options);
-  };
 
   return (
     <>
@@ -107,14 +93,9 @@ const ProfileLarge = ({ currentUser, targetUser, userProfile }: IProps) => {
 
                   <WebsiteItem link={targetUser.userProfile.website} />
 
-                  {targetUser.userProfile.metadata && (
-                    <span>
-                      <FontAwesomeIcon icon={faCalendarDays} />
-                      <span className={`${customClass}-joined grey`}>
-                        Joined {formatJoinedDate()}
-                      </span>
-                    </span>
-                  )}
+                  <JoinedDateItem
+                    createdAt={targetUser.userProfile.metadata!.createdAt}
+                  />
                 </div>
                 <div className={`${customClass}-stats grey`}>
                   <span className={`${customClass}-followers follow-link`}>
