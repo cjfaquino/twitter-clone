@@ -1450,6 +1450,7 @@ header.search {
 
 .profile-extra-info {
   display: flex;
+  flex-wrap: wrap;
   flex: 1 1 auto;
   gap: 15px;
   margin-bottom: 15px;
@@ -1457,6 +1458,13 @@ header.search {
 
 .profile-extra-info svg {
   margin-right: 5px;
+}
+
+.website-item {
+  max-width: calc(var(--feed-width) / 2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .profile-stats {

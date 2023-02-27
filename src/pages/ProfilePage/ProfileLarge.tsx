@@ -2,7 +2,6 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCalendarDays,
-  faLink,
   faLocationDot,
 } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
@@ -13,6 +12,7 @@ import useToggle from '../../hooks/useToggle';
 import EditProfilePopup from './EditProfilePopup';
 import { UserProfile } from '../../interfaces/UserProfile';
 import FormattedText from '../../components/FormattedText';
+import WebsiteItem from './WebsiteItem';
 
 interface IProps {
   currentUser: User | null;
@@ -113,16 +113,9 @@ const ProfileLarge = ({ currentUser, targetUser, userProfile }: IProps) => {
                       </span>
                     </span>
                   )}
-                  {targetUser.userProfile.website && (
-                    <span>
-                      <FontAwesomeIcon icon={faLink} />
-                      <span className={`${customClass}-website`}>
-                        <a href={targetUser.userProfile.website}>
-                          {targetUser.userProfile.website}
-                        </a>
-                      </span>
-                    </span>
-                  )}
+
+                  <WebsiteItem link={targetUser.userProfile.website} />
+
                   {targetUser.userProfile.metadata && (
                     <span>
                       <FontAwesomeIcon icon={faCalendarDays} />
