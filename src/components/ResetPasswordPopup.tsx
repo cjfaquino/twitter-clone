@@ -4,6 +4,7 @@ import { sendPasswordResetEmail } from 'firebase/auth';
 import React, { useState } from 'react';
 import { auth } from '../firebase-config';
 import useInput from '../hooks/useInput';
+import setErrorMessage from '../utils/setErrorMessage';
 import SubmitButton from './SubmitButton';
 
 const ResetPasswordPopup = ({
@@ -16,6 +17,10 @@ const ResetPasswordPopup = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // clear on new try
+    setErrorMessage('.verify-reset-password', '');
+
     setSubmitting(true);
     sendPasswordResetEmail(auth, email)
       .then(() => {
@@ -23,8 +28,10 @@ const ResetPasswordPopup = ({
         toggleResetPopup(e as React.MouseEvent);
       })
       .catch((error) => {
-        console.log(error);
+        setErrorMessage('.verify-reset-password', error.code);
       });
+
+    setSubmitting(false);
   };
   return (
     <>
@@ -36,7 +43,7 @@ const ResetPasswordPopup = ({
         <h2>Reset your password</h2>
         <form onSubmit={handleSubmit}>
           <label htmlFor='reset-email'>
-            Email
+            Email <span className='verify-reset-password verify error' />
             <input
               type='email'
               name='email'

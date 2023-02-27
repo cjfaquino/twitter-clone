@@ -35,7 +35,7 @@ const ChangeUsernameForm = ({
       const errorMessage = error.message;
 
       switch (errorName) {
-        case 'Username Error':
+        case 'Username Error' || 'FirebaseError':
           setErrorMessage('.verify-username', errorMessage);
           break;
 

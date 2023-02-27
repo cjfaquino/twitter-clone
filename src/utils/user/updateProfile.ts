@@ -26,36 +26,29 @@ const updateProfile = async ({
   location,
   bio,
 }: IArgs) => {
-  try {
-    const currentUser = auth.currentUser!;
-    // update stored profile
-    const userRef = doc(db, 'users', currentUser.uid);
+  const currentUser = auth.currentUser!;
+  // update stored profile
+  const userRef = doc(db, 'users', currentUser.uid);
 
-    await Promise.all([
-      updateDisplayNameAndPhoto({
-        displayName: displayName || currentUser.displayName!,
-        photoURL: photoURL || currentUser.photoURL || getProfilePicUrl(),
-      }),
-      updateDoc(userRef, {
-        userName: userName || userProfile.userName,
-        displayName: displayName || currentUser.displayName,
-        photoURL: photoURL || getProfilePicUrl(),
-        backdropURL: backdropURL || userProfile.backdropURL,
-        website: website || userProfile.website,
-        location: location || userProfile.location,
-        bio: bio || userProfile.bio,
-        metadata: { ...currentUser.metadata },
-      }),
-    ]);
+  await Promise.all([
+    updateDisplayNameAndPhoto({
+      displayName: displayName || currentUser.displayName!,
+      photoURL: photoURL || currentUser.photoURL || getProfilePicUrl(),
+    }),
+    updateDoc(userRef, {
+      userName: userName || userProfile.userName,
+      displayName: displayName || currentUser.displayName,
+      photoURL: photoURL || getProfilePicUrl(),
+      backdropURL: backdropURL || userProfile.backdropURL,
+      website: website || userProfile.website,
+      location: location || userProfile.location,
+      bio: bio || userProfile.bio,
+      metadata: { ...currentUser.metadata },
+    }),
+  ]);
 
-    // fire profile event
-    eventProfileEdit();
-
-    return true;
-  } catch (error) {
-    console.error('Error updating user profile to Firebase Database', error);
-    return false;
-  }
+  // fire profile event
+  eventProfileEdit();
 };
 
 export default updateProfile;

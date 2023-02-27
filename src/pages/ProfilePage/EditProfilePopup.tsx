@@ -41,6 +41,16 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
     e.preventDefault();
     setSubmitting(true);
 
+    // clear errors on new try
+    [
+      '.verify-display-name',
+      '.verify-bio',
+      '.verify-location',
+      '.verify-website',
+      '.verify-pic',
+      '.verify-edit',
+    ].forEach((item) => setErrorMessage(item, ''));
+
     try {
       validateProfile({
         bio,
@@ -67,7 +77,7 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
         );
       }
 
-      const result = await updateProfile({
+      await updateProfile({
         userProfile,
         displayName,
         bio,
@@ -77,10 +87,7 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
         photoURL: newPhotoURL,
       });
 
-      if (result) (toggleEditProfilePopup as Function)();
-      else {
-        // error
-      }
+      (toggleEditProfilePopup as Function)();
     } catch (er) {
       const error = er as Error;
       const errorName = error.name;
@@ -89,6 +96,10 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
       let errorCss = '';
 
       switch (errorName) {
+        case 'FirebaseError':
+          errorCss = '.verify-edit';
+          break;
+
         case 'DisplayName Error':
           errorCss = '.verify-display-name';
           break;
@@ -141,6 +152,7 @@ const EditProfilePopup = ({ userProfile, toggleEditProfilePopup }: IProps) => {
               <FontAwesomeIcon icon={faClose} />
             </button>
             <h2>Edit profile</h2>
+            <span className='verify-edit error' />
             <SubmitButton
               submitting={submitting}
               text='Save'

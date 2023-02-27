@@ -30,7 +30,9 @@ const SignupContinue = ({ currentUser }: IProps) => {
     let newPhotoURL = photoURL;
 
     // clear error on new try
-    setErrorMessage('.verify-username', '');
+    ['.verify-username', '.verify-display-name', '.verify-pic'].forEach(
+      (item) => setErrorMessage(item, '')
+    );
     setSubmitting(true);
 
     try {
@@ -49,40 +51,40 @@ const SignupContinue = ({ currentUser }: IProps) => {
       }
 
       // create create new profile
-      const created = await createProfile({
+      await createProfile({
         userName,
         displayName,
         photoURL: newPhotoURL,
         user: currentUser!,
       });
 
-      if (created) {
-        navigate(`/explore`);
-      } else {
-        // error
-      }
+      navigate(`/explore`);
     } catch (er) {
       const error = er as Error;
       const errorName = error.name;
       const errorMessage = error.message;
 
+      let errorCss = '';
+
       switch (errorName) {
         case 'Username Error':
-          setErrorMessage('.verify-username', errorMessage);
+          errorCss = '.verify-username';
           break;
 
         case 'DisplayName Error':
-          setErrorMessage('.verify-display-name', errorMessage);
+          errorCss = '.verify-display-name';
           break;
 
-        case 'Pic Error':
-          setErrorMessage('.verify-pic', errorMessage);
+        case 'Pic Error' || 'FirebaseError':
+          errorCss = '.verify-pic';
           break;
 
         default:
           console.log(error);
           break;
       }
+
+      setErrorMessage(errorCss, errorMessage);
     }
     setSubmitting(false);
   };

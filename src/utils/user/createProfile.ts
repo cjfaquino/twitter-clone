@@ -19,43 +19,36 @@ const createProfile = async ({
   displayName,
   photoURL = getProfilePicUrl(),
 }: CreateProfile) => {
-  try {
-    // update firebase auth user
-    const profilePromise = updateDisplayNameAndPhoto({ displayName, photoURL });
+  // update firebase auth user
+  const profilePromise = updateDisplayNameAndPhoto({ displayName, photoURL });
 
-    // save new profile to firestore 'users' collection
-    const userRef = doc(db, 'users', user.uid);
+  // save new profile to firestore 'users' collection
+  const userRef = doc(db, 'users', user.uid);
 
-    const newUser = {
-      userName,
-      displayName,
-      photoURL,
-      metadata: { ...user.metadata },
-      followers: 0,
-      following: 0,
-      backdropURL: '',
-      bio: '',
-      location: '',
-      website: '',
-    };
-    const firestorePromise = setDoc(userRef, newUser);
+  const newUser = {
+    userName,
+    displayName,
+    photoURL,
+    metadata: { ...user.metadata },
+    followers: 0,
+    following: 0,
+    backdropURL: '',
+    bio: '',
+    location: '',
+    website: '',
+  };
+  const firestorePromise = setDoc(userRef, newUser);
 
-    // save new profile to algolia 'users' index
-    const algoliaPromise = indexUsers.saveObject({
-      ...newUser,
-      objectID: user.uid,
-    });
+  // save new profile to algolia 'users' index
+  const algoliaPromise = indexUsers.saveObject({
+    ...newUser,
+    objectID: user.uid,
+  });
 
-    await Promise.all([profilePromise, firestorePromise, algoliaPromise]);
+  await Promise.all([profilePromise, firestorePromise, algoliaPromise]);
 
-    // dispatch event 'profile edit'
-    eventProfileEdit();
-
-    return true;
-  } catch (error) {
-    console.error('Error saving new profile to Firebase Database', error);
-    return false;
-  }
+  // dispatch event 'profile edit'
+  eventProfileEdit();
 };
 
 export default createProfile;

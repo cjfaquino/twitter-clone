@@ -23,37 +23,43 @@ const SignupStart = ({ currentUser }: IProps) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // clean up inputs
-    setErrorMessage('.verify-password', '');
-    setErrorMessage('.verify-confirm-password', '');
+
+    // clear errors on new try
+    ['.verify-password', '.verify-confirm-password', '.verify-signup'].forEach(
+      (item) => setErrorMessage(item, '')
+    );
     setSubmitting(true);
 
     try {
       // will throw error if invalid
       validatePassword(password, confirmPassword);
 
-      const created = await createUser(email, password);
-
-      if (!created) {
-        // error
-      }
+      await createUser(email, password);
     } catch (er: unknown) {
       const error = er as Error;
       const errorName = error.name;
       const errorMessage = error.message;
 
+      let errorCss = '';
+
       switch (errorName) {
+        case 'FirebaseError':
+          errorCss = 'verify-signup';
+          break;
+
         case 'Confirm Password Error':
-          setErrorMessage('.verify-confirm-password', errorMessage);
+          errorCss = '.verify-confirm-password';
           break;
         case 'Password Error':
-          setErrorMessage('.verify-password', errorMessage);
+          errorCss = '.verify-password';
           break;
 
         default:
           console.log(error);
           break;
       }
+
+      setErrorMessage(errorCss, errorMessage);
     }
     setSubmitting(false);
   };
@@ -61,6 +67,7 @@ const SignupStart = ({ currentUser }: IProps) => {
   return (
     <form onSubmit={handleSubmit} className='sign-up-form'>
       <h2>Create your account</h2>
+      <span className='verify-signup verify error' />
 
       <InputEmail
         email={email}
