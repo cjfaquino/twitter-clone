@@ -10,7 +10,7 @@
 }
 
 .spinner {
-  border: 6px solid rgb(74, 74, 74);
+  border: 6px solid rgba(99, 177, 255, 0.25);
   border-top: 6px solid var(--theme-color);
   border-radius: 50%;
   width: 50px;
